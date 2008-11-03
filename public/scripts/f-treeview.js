@@ -1,0 +1,1 @@
+jQuery(document).ready( function(){$("#categories-treeview").treeview({ animated:"fast", collapsed: true, unique: true});});

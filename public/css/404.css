@@ -1,0 +1,21 @@
+
+/**
+ * $Id 404.css, 0002 10/27/2008 9:27:46 PM ck $
+ * 404 stylesheets
+ * 
+ */
+ 
+#meta-title h1{color:#933} 
+#content-top{background-repeat:no-repeat;background-color:#f4f4f4 !important;background-position:0% 0%}
+#content-top #main{width:auto}
+	
+#content{padding:18px 20px}
+.hentry{padding:0pt 10px 18px 11px}
+.ptime cite{color:#933}
+.postmeta-tags{clear:both;margin-top:18px !important}
+.entry-title a{color:#111 !important}
+.entry-title a:hover{color:#369 !important}
+#wp-content-mid .outer{background-color:#1787BF}
+#content-mid{border-top:10px solid #f4f4f4}
+#main textarea{border:0pt;background-color:#f4f4f4}
+#main div img.thumb{background-color:#fff;border:1px solid #ddd}

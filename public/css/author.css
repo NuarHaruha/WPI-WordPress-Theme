@@ -1,0 +1,48 @@
+
+/**
+ * $Id author.css, 0021 10/26/2008 1:41:43 PM ck $
+ * author stylesheet
+ */
+
+#content-top{background-repeat:no-repeat;background-color:#fff !important;background-position:0% 0%}
+
+.hentry .entry-title{border:0pt}
+
+.hentry .entry-content{padding:10px}
+
+#sidebar{margin:18px 4px 18px 0pt;width:324px}
+#sidebar #sidebar-2-page.span-5,#sidebar #sidebar-3-page.span-5{width:160px}
+
+/* widget */
+
+/* stalker-pass */
+#stalker-pass{background-repeat:repeat-x;background-position:0% 100%;border-bottom:4px solid #eee}
+#stalker-pass,#stalker-pass .widget-title cite{background-color:#f8f8f8}  
+
+
+#stalker-pass .profile{width:230px;height:250px;padding:70px 40px 0pt 31px!important;text-align:center;margin:0pt auto;background-position:0px -30px}
+
+/* info */
+#stalker-pass .profile #display-name{display:block;font-size:1.3em;padding:7px}
+#stalker-pass .profile #profession{font-weight:700}
+#stalker-pass .profile #job_title{color:#666;margin-top:-3px;padding-bottom:3px;margin-bottom:8px}
+#stalker-pass .profile #stalker-info ul{line-height:1.15em;font-size:0.8em;margin-left:-46px}
+#stalker-pass .profile #user-avatar img{border:4px solid #eee}
+#stalker-pass .profile #stalker-info ul li{color:#444;letter-spacing:-1px}
+#stalker-pass .profile #stalker-info abbr{border:0pt}
+/* typo */
+#stalker-pass .profile #display-name,#stalker-pass .profile #profession,{font-family:arial,helvetica,verdana,"Sans Serif"}
+#stalker-pass .profile #stalker-info{font-family:"courier new",helvetica,arial,"Sans Serif"}
+
+/* author info */
+#author-data,#author-data .widget-title cite{background-color:#f2f2f2;}
+#author-data .author-content ul{width:300px;margin:0pt auto}
+#author-data .author-content ul li{padding: 2px 12px 3px 12px !important;border-bottom:1px dotted #ddd}
+/* rss */
+.widget_rss .widget-title dfn a.rsswidget{padding-left:16px;background-position:0px 3px}
+.widget_rss .widget-title dfn a.rsswidget[title='Syndicate this content']{display:none}
+.widget_rss .widget-content ul{padding:0pt 6px}
+.widget_rss .widget-content li{border-bottom:1px solid #ddd;padding:3px 0pt}
+.widget_rss .widget-content a.rsswidget{display:block}
+.widget_rss .rss-date{color:#999}
+#sidebar .widget-content{padding-bottom:0pt}
