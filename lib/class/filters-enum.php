@@ -83,6 +83,8 @@ final class wpiFilter
 	
 	const RANDOM_COMMENT_AVA = 'wpi_random_comments_avatar';
 	
+	const EXTRA_JS = 'wpi_extra_js';
+	
 	private function __construct(){}
 	
 	private function __clone(){}
