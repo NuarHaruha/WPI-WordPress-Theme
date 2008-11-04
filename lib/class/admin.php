@@ -86,6 +86,16 @@ class wpiAdmin
 	public function printCSS()
 	{		
 		t('link','',array('rel'=>'stylesheet','href'=>WPI_THEME_URL.'admin.css','type'=>'text/css'));
+		if (is_wp_version('2.7') || is_wp_version('2.7-beta1')){
+?>
+		<style type="text/css">
+		    #wpi-theme-options{background-position:253% 0%;margin:0pt !important}
+			#wpi-theme-options .main{width:600px}
+			#wpi-theme-options .options-item{width:98%}
+			#wpi-theme-options .side-panel h2{margin-top:8px}
+		</style>
+<?php			
+		}
 	}
 	
 	
