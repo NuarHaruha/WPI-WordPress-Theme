@@ -85,6 +85,10 @@ final class wpiFilter
 	
 	const EXTRA_JS = 'wpi_extra_js';
 	
+	const FILTER_ELM_ID = 'wpi_element_id_';
+	
+	const ACTION_BANNER_CONTENT = 'wpi_banner_content';
+	
 	private function __construct(){}
 	
 	private function __clone(){}
