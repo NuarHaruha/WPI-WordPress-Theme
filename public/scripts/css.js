@@ -1,0 +1,1 @@
+jQuery(document).ready( function(){if(!$.browser.opera){ $(".select-odd li:nth-child(odd)").addClass('odd');$(".select-even li:nth-child(even)").addClass('even');}	});
