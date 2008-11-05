@@ -271,20 +271,4 @@ function wpi_get_stylesheet_directory_filter($stylesheet_dir=false, $stylesheet=
 	
 	return $dir;
 }
-
-
-function wpi_filter_debug(){
-	$arr = array();
-	// filter: stylesheet
-	$arr[] = get_stylesheet();
-	// filter: stylesheet_directory
-	$arr[] = get_stylesheet_directory();
-	// filter: stylesheet_uri ($stylesheet_uri,$stylesheet_dir_uri)
-	$arr[] = get_stylesheet_uri();
-	// filter: stylesheet_directory_uri
-	$arr[] = get_stylesheet_directory_uri();
-	wpi_dump($arr);exit;
-	
-}
-
 ?>
