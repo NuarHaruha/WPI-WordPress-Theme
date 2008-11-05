@@ -99,6 +99,7 @@ function wpi_widget_post_summary()
 	$section = is_at();
 	$name 	= 'about-articles';
 	$title	= ($section == 'single') ? 'About this articles': 'About';
+	$title 	= apply_filters('widget_title',$title);
 	
 	wpi_widget_start($title,$name);		
 	$title	= apply_filters( 'the_title', $post->post_title );
@@ -130,7 +131,8 @@ function wpi_widget_post_summary()
 function wpi_widget_single_nav()
 { 
 	$name 	= 'entry-navigation';
-	$title	= 'Keep looking';
+	$title	= __('Keep looking',WPI_META);
+	$title 	= apply_filters('widget_title',$title);
 	
 	wpi_widget_start($title,$name);
 	rewind_posts();
@@ -152,8 +154,8 @@ function wpi_widget_related_post()
 	$title  = wpi_option('related_post_widget_title');
 	
 	$name 	= 'related-article';
-	$title	= ( ($title) ? $title : 'Related articles' );
-	
+	$title	= ( ($title) ? $title : __('Related articles',WPI_META)  );
+	$title 	= apply_filters('widget_title',$title);
 	if ( ($rel_post = wpi_get_related_post_tag()) != false)
 	{
 		wpi_widget_start($title,$name);
@@ -191,7 +193,8 @@ function wpi_widget_subpages()
 	{
 		$name 	= 'subpages';
 		$title  = __('Similar page(s)',WPI_META);
-				
+		$title 	= apply_filters('widget_title',$title);	
+			
 		wpi_widget_start($title,$name);
 		t('ul',$children,array( 'class'=>'xoxo r cf') );
 		wpi_widget_end();
@@ -321,7 +324,8 @@ function wpi_category_treeview_widget($args, $widget_args = 1)
 function wpi_widget_author_stalker_pass()
 { global $authordata;
 	$name 	= 'stalker-pass';
-	$title	= $authordata->display_name.'&apos;s press badge';
+	$title  = sprintf(__('%s&apos;s press badge',WPI_META),$authordata->display_name);
+	$title  = apply_filters('widget_title',$title);
 	
 	if (is_object($authordata)){
 		$user_name = $authordata->display_name;
@@ -383,8 +387,9 @@ function wpi_most_download_widget(){
 	if (get_option('download_page_url') != self_uri()) return;	
 
 	$limit  = 5;
+	$title  = apply_filters('widget_title',__('Most downloads',WPI_META));
 	
-	wpi_widget_start('Most downloads','most-downloads');
+	wpi_widget_start($title,'most-downloads');
 		$htm = get_most_downloaded($limit,0,false);
 		t('ul',$htm,array('class'=>'select-odd'));	
 	wpi_widget_end();
@@ -398,7 +403,8 @@ function wpi_widget_author_summary()
 	}
 	
 	$name 	= 'author-data';
-	$title	= 'Author details';
+	$title	= apply_filters('widget_title',__('Author details',WPI_META) );
+	
 	wpi_widget_start($title,$name);
 	$name = convert_chars($authordata->display_name);
 	$url = ($authordata->user_url != 'http://') ? $authordata->user_url : BLOGURL;
@@ -449,6 +455,42 @@ function wpi_widget_author_summary()
 	wpi_widget_end();
 }
 
+
+function wpi_tags_widget()
+{
+	$options = get_option('widget_tag_cloud');
+	
+	$title = empty($options['title']) ? __('Tags',WPI_META) : apply_filters('widget_title', $options['title']);
+	
+	wpi_widget_start($title,'tag_cloud');
+	wp_tag_cloud();
+	wpi_widget_end();
+}
+
+function wpi_pages_widget()
+{
+	// inherit settings from default pages options widgets	
+	$options = get_option( 'widget_pages' );
+	$title = empty( $options['title'] ) ? __( 'Pages',WPI_META ) : apply_filters('widget_title', $options['title']);
+	$sortby = empty( $options['sortby'] ) ? 'menu_order' : $options['sortby'];
+	$exclude = empty( $options['exclude'] ) ? '' : $options['exclude'];	
+
+	if ( $sortby == 'menu_order' ) {
+		$sortby = 'menu_order, post_title';
+	}
+
+	$output = wp_list_pages( array('title_li' => '', 'echo' => 0, 'sort_column' => $sortby, 'exclude' => $exclude) );
+	// return false  if there is no pages
+	if ( empty( $output ) ) return false;
+	
+	// Conflict maybe?
+	$elmID = apply_filters(wpiFilter::FILTER_ELM_ID.'wpi_pages_widget','pages');
+	
+	wpi_widget_start($title,$elmID);
+	t('ul',$output,array('class'=>'xoxo'));
+	wpi_widget_end();
+}
+
 function wpi_register_widgets()
 { global $wp_query;
 	if (wpi_option('widget_treeview')){
@@ -465,7 +507,8 @@ function wpi_register_widgets()
 		wpi_foreach_hook(array(
 			'wpi_before_sidebar_4',
 			'wpi_sidebar_4_nowidget',
-			'wpi_before_sidebar_7'),'wpi_widget_post_summary');
+			'wpi_before_sidebar_7',
+			'wpi_sidebar_7_nowidget'),'wpi_widget_post_summary');
 			
 		if (wpi_option('widget_related_post')){
 			wpi_foreach_hook(array(
@@ -490,6 +533,16 @@ function wpi_register_widgets()
 	add_action('wpi_after_sidebar_7','wpi_widget_subpages');	
 	add_action('wpi_before_sidebar_7','wpi_most_download_widget',11);
 	
+	
+	// main sidebar 1 (active when there is no widgets)
+		
+		foreach(array('tags','pages') as $name){
+			$priority = ($name == 'tags') ? 10 : wpiTheme::LAST_PRIORITY;
+			wpi_foreach_hook(array(
+					'wpi_sidebar_1_nowidget',
+					'wpi_sidebar_7_nowidget'),'wpi_'.$name.'_widget',$priority);	
+		}
+	
 }
 
 function wpi_overwrite_widget_cat(){
@@ -510,7 +563,6 @@ function wpi_overwrite_widget_cat(){
 function sidebar_has_widgets($id){
 	return wpiSidebar::hasWidget($id);
 }
-
 
 function sidebar_has_widgets_array(array $sidebar_id){
 	
