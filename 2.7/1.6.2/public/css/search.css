@@ -1,0 +1,18 @@
+
+/**
+ * $Id search.css, 0001 10/26/2008 8:39:35 AM ck$
+ * Search stylesheet
+ */
+ 
+#content-top{background-repeat:no-repeat;background-position:0% 0%}
+#sidebar{margin:18px 4px 18px 0pt;width:324px}
+#sidebar #sidebar-2-page.span-5,#sidebar #sidebar-3-page.span-5{width:160px}
+
+/* google */
+#goog-wm { }
+#goog-wm h3.closest-match { }
+#goog-wm h3.closest-match a { }
+#goog-wm h3.other-things { }
+#goog-wm ul li { }
+#goog-wm li.search-goog { display: block; }
+#goog-wm-sb{margin-left:10px}

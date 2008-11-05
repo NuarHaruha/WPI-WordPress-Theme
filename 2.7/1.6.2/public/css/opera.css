@@ -1,0 +1,21 @@
+/**
+ * Opera Stylesheet
+ * 
+ * @rev opera.css rev 0.1, 10/13/2008 4:48:31 PM $ck
+ */
+#searchform button{margin-left:-1px}
+/* css 3  */
+.column-2{column-count:2}
+.column-3{column-count:3}
+.column-4{column-count:4}
+.column-5{column-count:5}
+
+.select-odd li:nth-child(2n+1){
+	background-color:#EDF3FE
+}
+
+.select-even li:nth-child(2n){
+	background-color:#EFEFEF
+}
+
+.entry-content ol li:before{counter-increment: kitty;content: counters(kitty, ".") ". ";}

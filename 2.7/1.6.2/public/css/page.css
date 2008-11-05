@@ -1,0 +1,43 @@
+
+/**
+ * $Id page.css, 0021 10/26/2008 1:41:43 PM ck $
+ * Page stylesheet
+ */
+
+#content-top{background-repeat:no-repeat;background-color:#f4f4f4 !important;background-position:0% 0%}
+
+.hentry{padding-left:0pt}
+.hentry .entry-title{border:0pt}
+
+.hentry .entry-content{padding:10px}
+
+#sidebar{margin:18px 4px 18px 0pt;width:324px}
+#sidebar #sidebar-2-page.span-5,#sidebar #sidebar-3-page.span-5{width:160px}
+
+/* widget */
+
+/* rss */
+.widget_rss .widget-title dfn a.rsswidget{padding-left:16px;background-position:0px 3px}
+.widget_rss .widget-title dfn a.rsswidget[title='Syndicate this content']{display:none}
+.widget_rss .widget-content ul{padding:0pt 6px}
+.widget_rss .widget-content li{border-bottom:1px solid #ddd;padding:3px 0pt}
+.widget_rss .widget-content a.rsswidget{display:block}
+.widget_rss .rss-date{color:#999}
+
+/* most downloads & archives */
+.odd{background-color:#f2f2f2}
+#most-downloads,#most-downloads .widget-title cite,
+#archives,#archives .widget-title cite{background-color:#fff !important}
+#most-downloads ul,
+#archives ul{list-style:none !important; margin:0pt 1px !important}
+#most-downloads ul li,
+#archives ul li{padding:5px 4px 5px  12px !important;clear:left;font-weight:400;color:#888}
+#most-downloads small,
+#archives small{color:#999}
+#most-downloads ul li a,
+#archives ul li a{color:#666}
+#most-downloads ul li a:hover,
+#archives ul li a:hover{color:#369;text-decoration:underline}
+#most-downloads .widget-content,
+#archives .widget-content{padding:0pt 4px 0pt 0px !important}
+
