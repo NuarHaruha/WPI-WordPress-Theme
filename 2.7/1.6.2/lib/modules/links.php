@@ -15,9 +15,7 @@ function wpi_get_stylesheets_url($css){
 	if (get_query_var('preview') == 1){
 		$output = wpi_theme_content_url($css);
 	}	
-		
-	$output = apply_filters(wpiFilter::FILTER_LINKS,$output);
-		
+					
 	return $output;	
 }
 
