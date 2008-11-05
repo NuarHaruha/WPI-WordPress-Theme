@@ -99,16 +99,16 @@ function wpi_foreach_hook($hook_array,$is_callback = false,$priority = 10)
 	
 }
 
-function wpi_foreach_hook_filter($hook_array,$is_callback = false)
+function wpi_foreach_hook_filter($hook_array,$is_callback = false,$priority = 10)
 {
 	if($is_callback){
 		foreach($hook_array as $filter_name){
-			add_filter($filter_name,$is_callback);
+			add_filter($filter_name,$is_callback,$priority);
 		}
 		
 	} else {
 		foreach($hook_array as $filter_name => $callback){
-			add_filter($filter_name,$callback);
+			add_filter($filter_name,$callback,$priority);
 		}		
 	}
 	
