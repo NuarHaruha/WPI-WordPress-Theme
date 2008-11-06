@@ -1512,23 +1512,48 @@ function wpi_profile_options()
 <?php	
 }
 
+/**
+ * XMDP profile URI
+ */
 function wpi_head_profile_uri($separator = ','){
 	$uri = array();
-
-	// XFN
+	
+	// hAtom/0.1
+	$uri[] = 'http://purl.org/uF/hAtom/0.1/';
+	
+	// XFN/1.1
 	$uri[] = 'http://gmpg.org/xfn/11';
+	
+	// microformats
+	$uri[] = 'http://purl.org/uF/2008/03/';
+	
+	// rel-tags/1.0
+	$uri[] = 'http://purl.org/uF/rel-tag/1.0/';
+	
+	// rel-license/1.0
+	$uri[] = 'http://purl.org/uF/rel-license/1.0/';
+	
+	// rel-nofollow/1.0
+	$uri[] = 'http://purl.org/uF/rel-nofollow/1.0/';
+	
+	// VoteLinks/1.0
+	$uri[] = 'http://purl.org/uF/VoteLinks/1.0/';
 	
 	// GRDDL
 	$uri[] = 'http://www.w3.org/TR/grddl-primer/';
 	
-	// Foaf
+	// foaf/0.91
 	$uri[] = 'http://purl.org/NET/erdf/profile';
-	
+		
 	// Standard DC
 	$uri[] = 'http://dublincore.org/documents/dcq-html/';
 	
-	// hCalendar working draf profile
-	$uri[] = 'http://purl.org/uF/hCalendar/1.0/'; 
+	// hCard/1.0
+	$uri[] = 'http://purl.org/uF/hCard/1.0/';
+	
+	// hCalendar/1.0
+	$uri[] = 'http://purl.org/uF/hCalendar/1.0/'; 	
+	
 	
 	$uri = apply_filters(wpiFilter::FILTER_HEAD_PROFILE,$uri);
 	
