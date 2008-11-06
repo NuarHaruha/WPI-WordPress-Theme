@@ -1510,4 +1510,28 @@ function wpi_profile_options()
 	</tr>	
 </table>
 <?php	
-}?>
+}
+
+function wpi_head_profile_uri($separator = ','){
+	$uri = array();
+
+	// XFN
+	$uri[] = 'http://gmpg.org/xfn/11';
+	
+	// GRDDL
+	$uri[] = 'http://www.w3.org/TR/grddl-primer/';
+	
+	// Foaf
+	$uri[] = 'http://purl.org/NET/erdf/profile';
+	
+	// Standard DC
+	$uri[] = 'http://dublincore.org/documents/dcq-html/';
+	
+	// hCalendar working draf profile
+	$uri[] = 'http://purl.org/uF/hCalendar/1.0/'; 
+	
+	$uri = apply_filters(wpiFilter::FILTER_HEAD_PROFILE,$uri);
+	
+	echo join($separator,$uri);
+}
+?>
