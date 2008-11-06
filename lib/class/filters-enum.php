@@ -89,6 +89,8 @@ final class wpiFilter
 	
 	const ACTION_BANNER_CONTENT = 'wpi_banner_content';
 	
+	const FILTER_HEAD_PROFILE = 'wpi_head_profile';
+	
 	private function __construct(){}
 	
 	private function __clone(){}
