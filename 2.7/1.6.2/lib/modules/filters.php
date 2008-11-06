@@ -244,6 +244,8 @@ function wpi_default_filters(){
 	$f['stylesheet_directory_uri'] = 'wpi_stylesheet_directory_uri_filter';
 	$f['stylesheet_uri'] = 'wpi_get_stylesheet_uri_filter';
 	
+	$f['the_password_form'] = 'wpi_password_form_filters';
+	
 	wpi_foreach_hook_filter($f);
 	
 }
@@ -271,4 +273,17 @@ function wpi_get_stylesheet_directory_filter($stylesheet_dir=false, $stylesheet=
 	
 	return $dir;
 }
+
+/**
+ * Microformats require proper 'summary'.
+ * filter: the_password_form
+ */
+function wpi_password_form_filters($content){
+	$patt = '<p>'.__("This post is password protected. To view it please enter your password below:");
+	
+	$rep = _t('p',get_the_title(),array('class'=>'summary dn'));
+	
+	return str_replace($patt,$rep.$patt,$content);	
+}
+
 ?>
