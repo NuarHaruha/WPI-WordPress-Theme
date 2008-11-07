@@ -79,11 +79,11 @@ function wpi_cat_links($echo= 1, $index = false, $separator = '&#184;'){
 					    'href'	=> '#content',
 					    'rel'	=> 'category foaf.topic',
 					    'title' => 'category',
-					    'rev'	=> 'site:archive');
-
+					    'rev'	=> 'site:archive');	
+	$links 	= '';
+	
 		if (is_bool($index)):
 		
-			$links 	= "\n";
 			$ismore	= false;			
 			$cnt 	= count($cats);
 			

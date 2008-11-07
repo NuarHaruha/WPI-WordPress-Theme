@@ -27,7 +27,7 @@ global $authordata;
 		$attribs = array( 
 			'href' => $author_url,
 			'class' => 'url fn dc-creator',
-			'rel' => 'colleague foaf.homepage foaf.maker',
+			'rel' => 'me foaf.homepage foaf.maker',
 			'title' => 'Visit '.$display_name.'&apos;s Website',
 			'rev' => 'author:'.$authordata->user_nicename );
 		
