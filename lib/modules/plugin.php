@@ -185,22 +185,9 @@ function wpi_get_gt_translate_links()
 }
 
 function wpi_text_size()
-{
-?>
-			<ul id="acc" class="r fr cfr cf">
-				<li class="first-">
-<?php 
-	t('a',__('Increase text size',WPI_META),array('id'=>'font','class'=>'rtxt ttip','rel'=>'noarchive','type'=>'application/x-javascript','href'=>'#iscontent','title'=>'Increase | text size'));
-?>
-				</li>
-				<li class="last-">
-<?php 
-	t('a',__('Decrease text size',WPI_META),array('id'=>'font-','class'=>'rtxt ttip','rel'=>'noarchive','type'=>'application/x-javascript','href'=>'#iscontent','title'=>'Decrease | text size'));
-?>				
-				</li>
-			</ul>
-<?php 	
-}
+{?>
+			
+					<ul id="acc" class="r fr cfr cf"><li class="first-"><?php t('a',__('Increase text size',WPI_META),array('id'=>'font','class'=>'rtxt ttip','rel'=>'noarchive','type'=>'application/x-javascript','href'=>'#iscontent','title'=>'Increase | text size'));?></li><li class="last-"><?php t('a',__('Decrease text size',WPI_META),array('id'=>'font-','class'=>'rtxt ttip','rel'=>'noarchive','type'=>'application/x-javascript','href'=>'#iscontent','title'=>'Decrease | text size'));?></li></ul><?php }
 
 function wpi_get_bookmarks()
 {	global $post;
