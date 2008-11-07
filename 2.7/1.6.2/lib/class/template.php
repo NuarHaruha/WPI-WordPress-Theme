@@ -103,6 +103,18 @@ class wpiTemplate
 										   wpiFilter::FILTER_COM_DATE),
 										   'wpi_get_relative_date');					
 		}
+		if (wpi_option('post_excerpt')){
+			wpi_foreach_hook(array(
+			wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'home',
+			wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'single',
+			wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'author'
+			),'wpi_post_excerpt');
+		}
+		
+		if (wpi_option('post_author_description')){
+			add_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.'single','wpi_post_author_descriptions');
+		}
+		
 		add_action(wpiFilter::ACTION_SECTION_PREFIX.'meta-title_content',
 			'wpi_content_meta_title_filter');
 		
@@ -637,8 +649,8 @@ class wpiTemplate
 		
 		$output = '<dd id="wp-'.$this->section.'">'.PHP_EOL;
 		$output .= PHP_T.'<div class="'.$outer_class.'">'.PHP_EOL;
-		$output .= stab(2).'<div class="'.$inner_class.'">'.PHP_EOL;
-		$output .= stab(3).'<div id="'.$this->section.'" class="content cb cf">'.PHP_EOL;
+		$output .= PHP_T.PHP_T.'<div class="'.$inner_class.'">'.PHP_EOL;
+		$output .= stab(0).'<div id="'.$this->section.'" class="content cb cf">'.PHP_EOL;
 		echo $output;
 		unset($output,$outer_class,$inner_class);
 		
@@ -647,8 +659,8 @@ class wpiTemplate
 	
 	public function sectionEnd()
 	{		
-		$output = stab(3).'</div>'.PHP_EOL;
-		$output .= stab(2).'</div>'.PHP_EOL;
+		$output = stab(0).'</div>'.PHP_EOL;
+		$output .= PHP_T.PHP_T.'</div>'.PHP_EOL;
 		$output .= PHP_T.'</div>'.PHP_EOL;
 		$output .= '</dd>'.'<!-- /#wp-'.$this->section.' -->'.PHP_EOL;
 		echo $output;
