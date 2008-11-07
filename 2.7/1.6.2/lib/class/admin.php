@@ -314,7 +314,8 @@ class wpiAdmin
 			$this->lang['enabled'] =>1,
 			$this->lang['disabled'] =>0 ),$prop);?>
 				</select>			
-		</li>		
+		</li>
+				
 		<li><?php $prop = self::option('post_hrating'); ?>
 			<label><?php _e('hReview rating',WPI_META);?>			
 				<small>Show hreview ratings</small></label>
@@ -457,6 +458,15 @@ class wpiAdmin
 						$this->lang['disabled'] => 0 ),$prop);?>
 				</select> 	
 		</li>
+		<li><?php $prop = self::option('post_excerpt'); ?>
+			<label><?php _e('Show excerpt',WPI_META);?>
+				<small>Show excerpt on post</small></label>
+				<select name="wpi_post_excerpt" id="wpi_post_excerpt" size="2" class="row-2">
+			<?php self::htmlOption(array(
+			$this->lang['enabled'] =>1,
+			$this->lang['disabled'] =>0 ),$prop);?>
+				</select>			
+		</li>		
 		<li><?php $prop = self::option('meta_title');?>
 			<label><?php _e('Page title',WPI_META);?>
 			<small>Enable custom page title.</small></label>
