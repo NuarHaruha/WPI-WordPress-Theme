@@ -91,6 +91,12 @@ final class wpiFilter
 	
 	const FILTER_HEAD_PROFILE = 'wpi_head_profile';
 	
+	const FILTER_ENTRY_CONTENT_CLASS = 'wpi_entry_content_class';
+	
+	const ACTION_BEFORE_CONTENT_PREFIX = 'wpi_before_content_';
+	
+	const ACTION_AFTER_CONTENT_PREFIX = 'wpi_after_content_';
+	
 	private function __construct(){}
 	
 	private function __clone(){}
