@@ -189,60 +189,37 @@ function wpi_img_url($filename){
 
 function wpi_acl_links()
 {
-		$m 			= array();
-		$acl_links	= array();
+		$m 	= $acl_links = array();
+		$m['register'] = array(); 
+		$m['loginout'] = array(WPI_URL_SLASHIT.'wp-login.php','log-in','Log-in to '.WPI_BLOG_NAME,'Log-in');
 
-		$m['register'] = array(); // sort first.
-		$m['loginout'] = array(
-							'/wp-login.php',
-							'log-in',
-							'Log-in to '.WPI_BLOG_NAME,
-							'Log-in');
-
-		if (get_option('users_can_register'))
-		{
-			$m['register'] = array(
-								'/wp-login.php?action=register',
-								'registration-open',
-								'Register an Account',
-								'Register');
+		if (get_option('users_can_register')){
+			$m['register'] = array(WPI_URL_SLASHIT.'/wp-login.php?action=register','registration-open','Register an Account','Register');
+			
 		} else {
-			$m['register']= array(
-							'/#'.wpiTemplate::bodyID(),
-							'registration-closed',
-							'Registration is Closed',
-							'Registration is Closed');
+			$m['register']= array('#'.wpiTemplate::bodyID(),'registration-closed','Registration is Closed','Registration is Closed');
 		}
 
 		if (is_user_logged_in())
 		{
-			$m['register'] = array(
-								'/wp-admin/',
-								'dashboard',
-								WPI_BLOG_NAME.'&apos;s WP Admin Dashboard',
-								'Dashboard');
+			$m['register'] = array(WPI_URL_SLASHIT.'/wp-admin/','dashboard',WPI_BLOG_NAME.'&apos;s WP Admin Dashboard','Dashboard');
 			$req_uri = get_req_url();		
-			$uri = (is_wp_version('2.6')) ? wpi_logout_url() : '/wp-login.php?action=logout&amp;redirect_to='.$req_uri;
+			$uri = (is_wp_version('2.6')) ? wpi_logout_url() : WPI_URL_SLASHIT.'wp-login.php?action=logout&amp;redirect_to='.urlencode(rel(self_uri()));
 						
 			$m['loginout'] = array($uri,'log-out','Log-out from '.WPI_BLOG_NAME,'Log-out');
 		}
-
 
 		foreach ( $m as $k => $v ){
 			// attributes
 			$attribs = array();
 
 			$attribs['id']		= $v[1];
-			if ($k != 'loginout'){
-				$attribs['href']	= rel(WPI_URL.$v[0]);
-			} else {
-				$attribs['href']	= $v[0];
-			}
+			$attribs['href']	= rel($v[0]);
+			
 			
 				if ($k == 'log-in'){
 					$attribs['href'] = apply_filters($k,$attribs['href']);
 				}
-		
 
 				$attribs['title']	= 'Info | '. $v[2];
 
@@ -255,13 +232,15 @@ function wpi_acl_links()
 			$acl_links[]		= _t('a',$v[3],$attribs);
 		}
 
-		$output = "\n";
+		$output = PHP_EOL;
 		if (is_array($acl_links)){
 			$cnt = 1;
 			foreach($acl_links as $link){
 				$output .= stab(4)._t('li',$link,array('id'=>'acl-'.$cnt));
 				$cnt++;
 			}
+			
+			unset($acl_links);
 		}
 		
 		t('ul',$output.stab(2).PHP_T,array('id'=>'cl-options','class'=>'xoxo r cfl cf'));
