@@ -41,7 +41,7 @@ ul.r,ol.r,dl.r,#pages .widget-content ul{list-style:none}
 .cc--{background-position:50% 50% !important}
 .ry,#content-top,#content-bottom,.icontent{background-repeat:repeat-y}
 .rx,.hr-line,body,#about-articles .widget-content p,#about-articles,#subpages,#pages,#iscontent h2,#related-article{background-repeat:repeat-x}
-.rn,#tools,a.more-link,.postmeta-info .ptime,.entry-content,.widget-title,.edit-links a,#wpi-bookmarks a,#pages .widget-content ul li.page_item li,#subpages .widget-content li.parent li,.claimid,#tooltip span,.single .widget-title dfn a.rsswidget,.page .widget-title dfn a.rsswidget,acronym.share{background-repeat:no-repeat !important}
+.rn,#tools,a.more-link,.postmeta-info .ptime,.entry-content,.widget-title,.edit-links a,#wpi-bookmarks a,#wp-footer .inner,#pages .widget-content ul li.page_item li,#subpages .widget-content li.parent li,.claimid,#tooltip span,.single .widget-title dfn a.rsswidget,.page .widget-title dfn a.rsswidget,acronym.share{background-repeat:no-repeat !important}
 .pa{position:absolute}
 .pr{position:relative}
 .ps{position:static}
@@ -110,6 +110,7 @@ h2.fr,h3.fr{margin-left:5px}
 .smallbox{height:30px}
 .past-entry .thumb-80,.past-entry .thumb-90,.past-entry .thumb-100{background-color:#f7f7f7;border:1px solid #C6D9E9;margin-top:5px}
 .dropcap,#metasummary p big{display:block;float:left;font-family:Georgia,"Times New Roman", serif,tahoma;font-size:38px;height:32px;line-height:1em;padding:0 8px 0 3px;width:20px}
+#wp-footer .inner{background-position:97% 100%;height:40px}
 .icn-l{padding-left:18px}
 .icn-r,.curie,.ext{padding-right:18px}
 .sticky{background-position:4px 8px;border:0;margin:9px 0 !important;padding-left:36px !important}

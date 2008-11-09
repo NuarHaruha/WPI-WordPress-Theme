@@ -904,10 +904,14 @@ class wpiTemplate
 		$js			= get_query_var(wpiTheme::PUB_QUERY_VAR_JS);
 				
 		if ( ($option = get_query_var(wpiTheme::PUB_QUERY_VAR)) != false ){
-			switch ($option):
-				case 'osd':	wpi_get_osd(); break;
-			endswitch;			
-			exit; 
+			
+			if ($option == 'osd') wpi_get_osd();
+			
+			if ( stristr($option,'reply') ){
+				$args = explode(",",$option);
+				wpi_get_reply_form($args);
+			}
+
 		}
 		
 		if ($css){
@@ -930,7 +934,9 @@ class wpiTemplate
 	{
 	  $new_rules = array( 
 	    wpiTheme::PUB_QUERY_VAR.'/(.+)' => 
-		'index.php?'.wpiTheme::PUB_QUERY_VAR.'='.$wp_rewrite->preg_index(1),		wpiTheme::PUB_QUERY_VAR_CSS.'/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR_CSS.'='.$wp_rewrite->preg_index(1),
+		'index.php?'.wpiTheme::PUB_QUERY_VAR.'='.$wp_rewrite->preg_index(1),
+		wpiTheme::PUB_QUERY_VAR.'/reply/(.+)' => 
+		'index.php?'.wpiTheme::PUB_QUERY_VAR.'=reply/'.$wp_rewrite->preg_index(1),		wpiTheme::PUB_QUERY_VAR_CSS.'/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR_CSS.'='.$wp_rewrite->preg_index(1),
 		wpiTheme::PUB_QUERY_VAR_JS.'/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR_JS.'='.$wp_rewrite->preg_index(1));
 	
 	  $wp_rewrite->rules = $new_rules + $wp_rewrite->rules;

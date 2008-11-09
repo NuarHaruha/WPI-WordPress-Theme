@@ -1,6 +1,6 @@
 <?php do_action(wpiFilter::ACTION_DOCUMENT_DTD); ?>
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes('xhtml');?>>
-<head profile="http://www.w3.org/TR/grddl-primer/,http://purl.org/NET/erdf/profile,http://gmpg.org/xfn/11,http://dublincore.org/documents/dcq-html/">
+<head profile="<?php wpi_head_profile_uri();?>">
 <?php do_action('wp_head');?>
 </head><?php do_action(wpiFilter::ACTION_FLUSH);?>
 

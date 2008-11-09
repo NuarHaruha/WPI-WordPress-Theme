@@ -240,14 +240,17 @@ function wpi_default_filters(){
 
 	$f = array();	
 	
-	$f['stylesheet_directory'] = 'wpi_get_stylesheet_directory_filter';
-	$f['stylesheet_directory_uri'] = 'wpi_stylesheet_directory_uri_filter';
-	$f['stylesheet_uri'] = 'wpi_get_stylesheet_uri_filter';
+	$f['stylesheet_directory'] 		= 'wpi_get_stylesheet_directory_filter';
+	$f['stylesheet_directory_uri'] 	= 'wpi_stylesheet_directory_uri_filter';
+	$f['stylesheet_uri'] 			= 'wpi_get_stylesheet_uri_filter';	
+	$f['the_password_form'] 		= 'wpi_password_form_filters';	
+	$f['comments_template'] 		= 'wpi_comments_template_filter';
 	
-	$f['the_password_form'] = 'wpi_password_form_filters';
+	if (is_wp_version('2.6')){
+		$f['login_form'] = 'wpi_login_form_action';
+	}
 	
-	wpi_foreach_hook_filter($f);
-	
+	wpi_foreach_hook_filter($f);	
 }
 
 function wpi_stylesheet_directory_uri_filter($stylesheet_dir_uri=false, $stylesheet=false){
@@ -293,4 +296,32 @@ function wpi_password_form_filters($content){
 	return $content;
 }
 
+function wpi_comments_template_filter($file){
+	
+	$version_file = WPI_DIR.'comments-'.WP_VERSION_MAJ.'.php';
+	if (file_exists($version_file)) $file = $version_file;
+	return $file;
+}
+
+function wpi_login_form_action(){
+}
+
+function wpi_selector_protected($selector){
+	return $selector.' protected';
+}
+
+function wpi_selector_grid($selector){
+	return $selector.' grid';
+}
+
+function wpi_section_class_filter($callback,$type='inner'){	
+	$hook = ($type == 'inner') ? wpiFilter::FILTER_SECTION_INNER_CLASS : wpiFilter::FILTER_SECTION_OUTER_CLASS;
+	
+	add_filter($hook,$callback);
+}
+
+function wpi_remove_section_class_filter($callback,$type='inner'){
+		$hook = ($type == 'inner') ? wpiFilter::FILTER_SECTION_INNER_CLASS : wpiFilter::FILTER_SECTION_OUTER_CLASS;
+	remove_filter($hook,$callback);
+}
 ?>

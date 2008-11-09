@@ -2,14 +2,14 @@
 	if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
 		die ('Please do not load this page directly. Thanks!');
 
-	if ( post_password_required() ) { wpi_add_inner_filter('wpi_comments_inner_class_filters')?>
+	if ( post_password_required() ) { wpi_section_class_filter('wpi_selector_protected')?>
 <?php wpi_section_start('comments');?>
 		<?php wpi_comments_title();?>
 			<p class="nocomments">
 				<?php _e('<big>This post is <cite class="fw" title="password protected">password protected</cite>. Enter the password to view comments.</big>');?>
 			</p>
 <?php wpi_section_end(); 
-		  wpi_remove_inner_filter('wpi_comments_inner_class_filters');
+		  wpi_remove_section_class_filter('wpi_selector_protected');
 		return;
 	}
 	
@@ -18,45 +18,19 @@
 <dd id="wp-comments" class="<?php echo $com_class;?>">
 	<div class="outer cf">
 		<div class="inner c">	
-			<div id="comments" class="content cb cf append-1 prepend-1">
-				<h2 class="heading-title cf"><span class="fl"><?php comments_number('No Responses', 'One Response', '% Responses' );?></span><strong class="fl">to &#8220;<?php echo string_len(get_the_title(),80); ?>&#8221;</strong></h2><?php if ($comments) : ?>	
-				<ol id="comments-list" class="commentlist xoxo r cb cf"><?php $cnt = 0; foreach ($comments as $comment) : $alt = ($cnt % 2) ? 'light' : 'normal'; $alt .= ' list-'.$cnt; $alt = apply_filters(wpiFilter::FILTER_COMMENTS_SELECTOR,$alt);?>		
-					<li id="comment-<?php comment_ID(); ?>" class="<?php echo $alt; ?> hreview"><?php $author_uri = get_comment_author_url(); $author_uri = ($author_uri != '' && $author_uri != 'http://') ? $author_uri : get_permalink($post->ID).'#comment-'.get_comment_ID(); $microid = get_microid_hash(get_comment_author_email(),$author_uri);?>		
-						<ul class="reviewier-column cf r">
-							<li class="span-3 fl rn hcard">
-								<address class="vcard microid-mailto+http:sha1:<?php echo $microid;?> dc-source"><img src="<?php wpi_comment_avatar_src();?>" width="80" height="80" alt="<?php comment_author(); ?>&apos;s photo" class="url cc rn <?php echo wpiGravatar::commentGID(); ?> photo" longdesc="#comment-<?php comment_ID() ?>" /><a href="<?php echo $author_uri; ?>" class="url fn db" rel="external me" title="<?php echo get_comment_author();?>"><?php wpi_comment_author(); ?></a></address>						
-							</li>
-							<li class="span-16 fl review-content">
-								<dl class="review r cf">
-									<dt class="item title summary"><a rel="dc:source robots-anchortext" href="#comment-<?php comment_ID(); ?>" class="url fn" title="<?php the_title(); ?>"><span>RE:</span> <?php the_title(); ?></a></dt>	
-									<dd class="reviewer-meta"><span class="date-since"><?php echo apply_filters(wpiFilter::FILTER_POST_DATE,get_comment_date());?></span> on <abbr class="dtreviewed" title="<? echo comment_date('Y-m-dTH:i:s:Z'); ?>"><?php comment_date('F jS, Y'); ?> at <?php comment_time(); ?></abbr><?php if(function_exists('hreview_rating')): hreview_rating(); else: ?><span class="rating dn">3</span><span class="type dn">url</span><?php endif;?> &middot; <a href="#microid-<?php comment_ID();?>" class="hreviewer-microid ttip" title="Micro ID | <?php comment_author();?>&apos;s Hash">microId</a> <?php edit_comment_link('edit','<span class="edit-comment">','</span>'); ?></dd>
-									<dd id="microid-<?php comment_ID();?>" class="microid-embed" style="display:none"><input class="on-click-select claimid icn-l" type="text" value="mailto+http:sha1:<?php echo $microid;?>" /></dd><?php $counter = $cnt + 1;?>				
-									<dd class="reviewer-entry"><big class="comment-count fr" title="Post no #<?php echo $counter; ?>"><?php echo $counter; ?></big><div class="description"><?php echo get_comment_text();?>
-									</div><?php if ($comment->comment_approved == '0') : ?><p class="notice rn">Your comment is awaiting moderation.</p><?php endif; ?></dd>	
-								</dl>		
-							</li>
-						</ul>
-							<!--
-							<rdf:RDF xmlns="http://web.resource.org/cc/"
-							    xmlns:dc="http://purl.org/dc/elements/1.1/"
-							    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-							<Work rdf:about="<?php the_permalink();?>#comment-<?php comment_ID(); ?>">
-							<license rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
-							</Work>
-							<License rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
-							   <requires rdf:resource="http://web.resource.org/cc/Attribution" />
-							   <requires rdf:resource="http://web.resource.org/cc/ShareAlike" />
-							   <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
-							   <permits rdf:resource="http://web.resource.org/cc/Distribution" />
-							   <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
-							   <requires rdf:resource="http://web.resource.org/cc/Notice" />
-							</License>
-							</rdf:RDF>
-							-->			
-					</li><?php $cnt++; endforeach; /* end for each comment */ ?>
-					<?php wpi_comment_guide($post,$comments,$cnt);?>
+			<div id="comments" class="content cb cf append-1 prepend-1">			
+				<?php wpi_comments_title();?>
+				<?php if (have_comments()) : ?>				
+				<?if (get_query_var('cpage'))  wpi_comment_paging_heading(); ?>		
+				<ol id="comments-list" class="commentlist xoxo r cb cf">
+				<?php wp_list_comments(array('walker' => null, 'max_depth' => 3, 'style' => 'ol', 'callback' => 'wpi_comment_start', 'end-callback' => 'wpi_comment_end', 'type' => 'all',
+		'page' => '', 'per_page' => '', 'avatar_size' => 48, 'reverse_top_level' => null, 'reverse_children' => ''));?>
+					<?php wpi_comment_guide($post,$comments,0);?>
 				</ol>
-				<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative">RSS feed for comments in this post</a></p>
+				<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative" class="rn cl">RSS feed for comments in this post</a></p>
+	<p class="comment-nav cb cf">
+	<?php paginate_comments_links();?>
+	</p>				
 			 <?php else: // displayed if there are no comments so far ?>	
 				<?php if ('open' == $post->comment_status) : ?>	
 				<ol id="comments-list" class="commentlist r cf">				
@@ -68,6 +42,7 @@
 			
 				<?php endif; ?>
 			<?php endif; ?>	
+
 			</div>
 		</div>
 	</div>
@@ -95,7 +70,7 @@
 </li>
 <li id="respond-meta" class="fl span-8">
 <?php if ( $user_ID ) : ?>
-<p>Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="Log out of this account">Logout &raquo;</a></p>
+<p>Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo wpi_logout_url(); ?>" title="Log out of this account">Logout &raquo;</a></p>
 
 <?php else : ?>
 	<?php $is_reqs = ($req) ?  '<cite>('.__('required').')</cite>' : ''; ?>
@@ -122,21 +97,22 @@
 	<?php endif; ?>
 	</ul><?php endif; ?>
 <!-- <p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
-
+<?php comment_id_fields(); ?>
 <?php do_action('comment_form', $post->ID); ?>
 </li>
 </ul>
+
 </form>
-<p class="notice cb comment-disclaimer cc-by-sa rn">
+<p id="disclaimer" class="notice cb comment-disclaimer cc-by-sa rn">
 <span class="disclaimer db"><span class="fw">Disclaimer:</span> For any content that you post, you hereby grant to <strong><a href="<?php echo WPI_URL_SLASHIT;?>"><?php echo WPI_BLOG_NAME;?></a></strong> the royalty-free, irrevocable, perpetual, exclusive and fully sublicensable license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display such content in whole or in part, world-wide and to incorporate it in other works, in any form, media or technology now known or later developed.</span>
 <span class="license b1s b1t db">
 <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">Some rights reserved.</a>
 </span>
 </p>
 </div>
-<?php endif; // If registration required and not logged in ?>
-<?php else:?>
 	</div>
 	</div>
 </dd><!-- /wp-respond -->
+<?php endif; // If registration required and not logged in ?>
+<?php else:?>
 <?php endif; // if you delete this the sky will fall on your head ?>

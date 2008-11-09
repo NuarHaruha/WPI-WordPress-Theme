@@ -75,7 +75,25 @@ function wpi_get_favicon_url(){
 	return ( (file_exists(WP_ROOT.'favicon.ico') ? WPI_URL.'/favicon.ico' : WPI_THEME_URL.'favicon.ico') );	
 }	
 
-
+function wpi_comment_reply_uri($post,$comment){
+	global $wp_rewrite;
+	
+	$thickbox = 'height=418&amp;width=710';
+	
+	$query = '?'.wpiTheme::PUB_QUERY_VAR.'=%params%&amp;'.$thickbox;
+	
+	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
+		$query = wpiTheme::PUB_QUERY_VAR.'/%params%/?'.$thickbox;
+	}	
+	
+	$params = array();
+	$params[] = 'pid-'.$post->ID;
+	$params[] = 'cid-'.$comment->comment_ID;
+	$params[] = 'pcid-'.$comment->comment_parent;
+	
+	$uri = str_replace("%params%",'reply,'.join(",",$params),$query);
+	echo rel(WPI_URL_SLASHIT.$uri);	
+}
 
 function wpi_cat_links($echo= 1, $index = false, $separator = '&#184;'){
 	global $wp_query;
@@ -203,12 +221,10 @@ function wpi_acl_links()
 								'dashboard',
 								WPI_BLOG_NAME.'&apos;s WP Admin Dashboard',
 								'Dashboard');
-			$req_uri = get_req_url();					
-			$m['loginout'] = array(
-								'/wp-login.php?action=logout&amp;redirect_to='.$req_uri,
-								'log-out',
-								'Log-out from '.WPI_BLOG_NAME,
-								'Log-out');
+			$req_uri = get_req_url();		
+			$uri = (is_wp_version('2.6')) ? wpi_logout_url() : '/wp-login.php?action=logout&amp;redirect_to='.$req_uri;
+						
+			$m['loginout'] = array($uri,'log-out','Log-out from '.WPI_BLOG_NAME,'Log-out');
 		}
 
 
@@ -217,11 +233,16 @@ function wpi_acl_links()
 			$attribs = array();
 
 			$attribs['id']		= $v[1];
-			$attribs['href']	= rel(WPI_URL.$v[0]);
-
-				if ($k == 'login'){
+			if ($k != 'loginout'){
+				$attribs['href']	= rel(WPI_URL.$v[0]);
+			} else {
+				$attribs['href']	= $v[0];
+			}
+			
+				if ($k == 'log-in'){
 					$attribs['href'] = apply_filters($k,$attribs['href']);
 				}
+		
 
 				$attribs['title']	= 'Info | '. $v[2];
 

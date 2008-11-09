@@ -151,9 +151,13 @@ class wpiGravatar
 		echo self::T_POST_AUTHOR.md5(get_the_author_email() );
 	}
 	
-	public static function commentGID()
+	public static function commentGID($comment=false)
 	{
-		echo self::T_COMMENT_AUTHOR.md5(get_comment_author_email() );
+		if (!$comment){
+			global $comment;
+		}
+		
+		echo self::T_COMMENT_AUTHOR.md5($comment->comment_author_email );
 	}
 		
 	public static function getURL($h,$s=64,$r='G')

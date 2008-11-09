@@ -85,7 +85,7 @@ final class wpiTheme
 	const PUB_QUERY_VAR_CSS = 'wpi-styles';
 	
 	const PUB_QUERY_VAR_JS = 'wpi-scripts';
-	
+		
 	const CTYPE_XML = 'Content-Type: application/xml';
 	
 	const CTYPE_CSS = 'Content-Type: text/css';

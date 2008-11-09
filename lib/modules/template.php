@@ -45,6 +45,81 @@ function wpi_get_osd(){
 	unset($osd);
 }
 
+function wpi_get_reply_form($args){
+	global $wp_query, $withcomments, $post, $wpdb, $id, $comment, $user_login, $user_ID, $user_identity, $overridden_cpage;
+		
+	list($reply,$pid,$cid,$pcid) = $args;
+	$cid = (int) str_rem('cid-',$cid);
+	$cpid = (int) str_rem('cpid-',$cpid);
+	$pid = (int) str_rem('pid-',$pid);
+	
+	
+	$comment = $GLOBALS['comment'] = get_comment($cid);
+	$post = $GLOBALS['post'] = get_post($pid);
+	
+	echo '<dl class="r">';
+	wpi_section_start('reply');	
+	$ava = _t('p',get_avatar($comment,'45','identicon'),array('class'=>'fl'));
+	t('blockquote',$ava.'<small style="display:block">Excerpt</small>'.get_comment_excerpt(),array('style'=>'width:90%','class'=>'r'));
+	//wpi_dump($args);
+	t('hr','',array('style'=>'clear:both'));
+?>
+<?php if ( get_option('comment_registration') && !$user_ID ) : ?>
+	<p>You must be <a href="<?php echo WPI_URL_SLASHIT; ?>wp-login.php?redirect_to=<?php echo urlencode(get_permalink($pid)); ?>">logged in</a> to post a comment.</p>
+<?php else :?>
+<!-- reply form start -->
+<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
+<ul id="respond-column" class="r cf">
+<li id="respond-textarea" class="fl span-8"><?php $tabindex = ($is_opid) ? '5' : '4'; ?>
+	<textarea name="comment" id="comment" cols="200" rows="10" tabindex="<?php echo $tabindex;?>" class="span-8"></textarea>
+	<p><?php $tabindex = ($is_opid) ? '6' : '5'; ?>
+		<button name="submit" type="submit" id="submit" tabindex="<?php echo $tabindex;?>"><span class="combtn"><?php _e('Submit Comment',WPI_META);?></span></button><input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
+	</p>
+</li>
+<li id="respond-meta" class="fl span-8">
+<?php if ( $user_ID ) : ?>
+<p class="cb">Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo wpi_logout_url(); ?>" title="Log out of this account">Logout &raquo;</a></p>
+
+<?php else : ?>
+	<?php $is_reqs = ($req) ?  '<cite>('.__('required').')</cite>' : ''; ?>
+	<ul class="r cf">
+	<li>
+		<input type="text" class="claimid rn" name="author" id="author" value="<?php echo $comment_author; ?>" tabindex="1" />
+		<label for="author">Name <?php echo $is_reqs; ?></label>
+	</li>
+	<li>
+		<input type="text" class="gravatar rn" name="email" id="email" value="<?php echo $comment_author_email; ?>" tabindex="2" />
+		<label for="email">Email <?php echo $is_reqs; ?></label>
+	</li>
+	<li>
+		<input type="text" class="favicon rn" name="url" id="url" value="<?php echo $comment_author_url; ?>" tabindex="3" />
+		<label for="url">Website</label>
+	</li>
+	<?php if( class_exists('WordpressOpenID')): ?>
+	<li>
+		<input type="text" name="openid_url" class="openid rn" id="openid_url" tabindex="4" />
+		<label for="openid_url">OpenID URL</label>
+	</li>
+	<?php else: ?>
+	<li>Email will not be published.</li>
+	<?php endif; ?>
+	</ul><?php endif; ?>
+<!-- <p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
+	<input type='hidden' name='comment_post_ID' value='<?php echo $pid;?>' />
+	<input type='hidden' name='comment_parent' id='comment_parent' value='<?php echo $cid;?>' />
+<?php do_action('comment_form', $post->ID); ?>
+</li>
+</ul>
+</form>
+<!-- /reply form end -->
+<?php endif; ?>
+<?php	
+	//t('a','close',array('href'=>'#comment-'.$cid,'onclick'=>'tb_remove();'));
+	wpi_section_end();
+	echo '</dl>';
+	exit;
+}
+
 /**
  * Entry content class
  * 
@@ -113,6 +188,7 @@ function wpi_get_public_content($content, $type = 'css'){
 		
 		if ($type == 'js'){
 			$type = 'javascript';
+			$contents = str_replace("%theme_url%",json_encode(WPI_THEME_URL),$contents);
 		}
 		
 		$h[] = "Content-Type: text/" .$type;
@@ -612,7 +688,7 @@ function wpi_template_author(){
 			<dd class="<?php echo wpi_get_entry_content_class(has_excerpt($post->ID));?>">
 		<?php do_action(wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'author',$post); ?>	
 				<?php the_content('Read the rest of this entry &raquo;'); ?>
-				<?php do_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.'author',$post); ?>
+		<?php do_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.'author',$post); ?>
 			</dd>		
 			<?php the_tags('<dd class="postmeta-tags"><acronym  class="rtxt fl" title="Tags &#187; Taxonomy">Tags:</acronym> <ul class="tags r cfl cf"><li>', '<span class="sep">,</span>&nbsp;</li><li>', '</li></ul></dd>'); ?>
 			<dd class="postmeta-comments cf">
@@ -669,11 +745,11 @@ function wpi_template_category()
 		$pby_class = ($pby) ? 'pby' : 'pby dn';
 		$range 	= wpi_get_range_increment(3,3);
 		$cnt 	= 1;
-		//wpi_dump($range);exit;
+		$rating_class = (wpi_get_theme_option('post_hrating') ) ? 'rating-count' : 'rating-count dn';
 ?>
 	<ul class="hfeed r cf">
 	<?php while (have_posts()) : the_post(); ?>
-	<li class="xfolkentry hentry hreview hlisting span-7 fl prepend-1">		
+	<li class="xfolkentry hentry hreview hlisting vevent span-7 fl prepend-1">		
 		<dl class="r">			
 			<dd class="postmeta-head">
 			<span class="ptime r" title="<?php echo get_the_time('Y-m-dTH:i:s:Z');?>"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span>
@@ -682,18 +758,11 @@ function wpi_template_category()
 			<span class="<?php echo $pby_class;?> dn"><?php printf(__('Posted by <acronym class="reviewer author" title="%1$s">%2$s</acronym>',WPI_META),get_the_author_nickname(),wpi_get_post_author());?></span>				
 			</div>	
 			</dd>
-			<?php if (has_excerpt($post->ID)): ?>
-			<dd class="entry-summary summary span-4 fr">
-				<blockquote cite="<?php the_permalink();?>#excerpt">
-					<?php the_excerpt(); ?>
-				</blockquote>
-			</dd>
-			<?php else: ?>
 			<dd class="entry-content description entry ox">
-				<?php the_content('Continue reading &raquo;'); ?>
+		<?php do_action(wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.is_at(),$post); ?>	
+				<?php the_content('Read the rest of this entry &raquo;'); ?>
+		<?php do_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.is_at(),$post); ?>
 			</dd>
-			<?php endif; ?>
-			<?php $rating_class = (wpi_get_theme_option('post_hrating') ) ? 'rating-count' : 'rating-count dn'; ?>
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
 				<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
@@ -701,9 +770,7 @@ function wpi_template_category()
 				<?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
 				</li>
 			</ul>
-			</dd>			
-			<dd class="dn">
-				<ul class="more">
+				<ul class="more dn">
 					<li>				
 						<abbr class="dtstart published dtreviewed dc-date" title="<?php the_time('Y-m-dTH:i:s:Z');?>"><?php the_time('F j, Y'); ?> at <?php the_time('g:i a'); ?></abbr>	
 					</li>
@@ -712,7 +779,7 @@ function wpi_template_category()
 					</li>
 					<li class="version">0.3</li>
 					<li class="type">url</li>					
-				</ul>
+				</ul>			
 			</dd>			
 		</dl>
 <!--
@@ -720,11 +787,8 @@ function wpi_template_category()
 -->			
 	</li>
 	<?php if (isset($range[$cnt])): ?>	
-	<li class="hr-line cb cf">
-	&nbsp;
-	</li>
-	<?php endif; ?>
-	
+	<li class="hr-line cb cf">&nbsp;</li>
+	<?php endif; ?>	
 	<?php $cnt++?>
 	<?php endwhile; ?>
 	</ul>
@@ -774,13 +838,10 @@ function wpi_template_search()
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
 			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
-			<li class="comments-link">
-			<?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
+			<li class="comments-link"><?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
 			</li>
 			</ul>
-			</dd>
-			<dd class="dn">
-				<ul class="more">
+				<ul class="more dn">
 					<li>				
 						<abbr class="dtstart published dtreviewed dc-date" title="<?php the_time('Y-m-dTH:i:s:Z');?>"><?php the_time('F j, Y'); ?> at <?php the_time('g:i a'); ?></abbr>	
 					</li>
@@ -789,8 +850,8 @@ function wpi_template_search()
 					</li>						
 					<li class="version">0.3</li>
 					<li class="type">url</li>					
-				</ul>
-			</dd>			
+				</ul>			
+			</dd>		
 		</dl>
 <!--
 <?php trackback_rdf(); ?>
@@ -1137,7 +1198,12 @@ function wpi_template_comment_pingback($post,$comment,$cnt)
 }
 
 function wpi_comment_guide($post,$comments,$cnt){
+	global $comment_alt;
+	if (isset($comment_alt)){
+		$cnt = (int) $comment_alt;
+	}
 	$alt = ($cnt % 2) ? 'light' : 'normal';
+
 ?>					
 						<li id="comment-00" class="hreview <?php echo $alt;?>">
 			<ul class="reviewier-column cf r">
@@ -1146,7 +1212,7 @@ function wpi_comment_guide($post,$comments,$cnt){
 							<?php	$photo_url = THEME_IMG_URL.'default-avatar.png';?>
 							<img src="<?php echo wpi_img_url('avatar-wrap.png');?>" width="80" height="80" alt="stalker's photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
 								<a href="<?php echo WPI_URL; ?>" class="url fn db">
-								<?php echo WPI_BLOG_NAME;?></a>
+								<?php echo WPI_BLOG_NAME ;?></a> 
 							</address>				
 							</li>
 							<li class="span-16 fl review-content">
