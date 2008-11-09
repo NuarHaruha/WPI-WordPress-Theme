@@ -8,9 +8,10 @@ function wpi_get_stylesheets_url($css){
 		
 	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
 		$params = wpiTheme::PUB_QUERY_VAR_CSS.'/';	
+		$output = trailingslashit(WPI_URL_SLASHIT.$params.$css);
+	} else {
+		$output = WPI_URL_SLASHIT.$params.$css;
 	}
-	
-	$output = trailingslashit(WPI_URL_SLASHIT.$params.$css);
 	
 	if (get_query_var('preview') == 1){
 		$output = wpi_theme_content_url($css);
@@ -51,10 +52,11 @@ function wpi_get_scripts_url($js){
 	$params = '?'.wpiTheme::PUB_QUERY_VAR_JS.'=';
 		
 	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
-		$params = wpiTheme::PUB_QUERY_VAR_JS.'/';	
-	}
-
-	$output = trailingslashit(WPI_URL_SLASHIT.$params.$js);
+		$params = wpiTheme::PUB_QUERY_VAR_JS.'/';
+		$output = trailingslashit(WPI_URL_SLASHIT.$params.$js);	
+	} else {
+		$output = WPI_URL_SLASHIT.$params.$js;	
+	}	
 
 	if (get_query_var('preview') == 1){
 		$output = wpi_theme_content_url($js,'.js');
