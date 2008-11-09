@@ -387,7 +387,7 @@ class wpiTemplate
 				$m[] = array('name'		=> 'author',
 							 'content'	=> $name);
 			}	
-		if (get_option('blog_public') != '0'){
+		if (get_option('blog_public') != '0' && wpi_option('meta_robots')){
 	        $robots = sprintf('%s, follow', (((is_home() || is_single() || is_page()) && !is_paged()) ? 'index' : 'noindex'));        
 	        $m[] = array('name'		=> 'robots','content' => $robots.', noodp');	
 		}	 

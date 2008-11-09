@@ -466,7 +466,16 @@ class wpiAdmin
 			$this->lang['enabled'] =>1,
 			$this->lang['disabled'] =>0 ),$prop);?>
 				</select>			
-		</li>		
+		</li>
+		<li><?php $prop = self::option('meta_robots');?>
+			<label><?php _e('Meta robots',WPI_META);?>
+			<small>Auto append meta robots.</small></label>
+				<select name="wpi_meta_robots" id="wpi_meta_robots" size="2" class="row-2">
+			<?php self::htmlOption(array(
+						$this->lang['enabled'] => 1,
+						$this->lang['disabled'] => 0 ),$prop);?>
+				</select> 	
+		</li>				
 		<li><?php $prop = self::option('meta_title');?>
 			<label><?php _e('Page title',WPI_META);?>
 			<small>Enable custom page title.</small></label>
