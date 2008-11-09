@@ -82,6 +82,8 @@ class wpiScripts{
 		
 		$this->flushJs();
 		
+		$this->setExtraJS();
+		
 		if (has_count($this->head)){
 			
 			$this->head = array_unique($this->head);
@@ -122,9 +124,18 @@ class wpiScripts{
 					'charset'=>'utf-8') );
 	}
 	
-	public function getHeaderScripts(){		
+	public function getHeaderScripts(){			
 		$this->getScripts('head');
 		$this->printScripts();
+	}
+	
+	public function setExtraJS()
+	{	global $wp_query;
+	
+		if ($wp_query->is_singular){
+		 // && $wp_query->post->comment_status  == 'open'
+		 $this->register('thickbox','head');
+		}		
 	}
 	
 	public function embedScript()
@@ -161,6 +172,8 @@ class wpiScripts{
 				
 		echo PHP_T;
 		t('script',$js,array('id'=>'wp-js-head-embed','type'=>'text/javascript','defer'=>'defer','charset'=>'utf-8'));
+		
+
 	}
 
 }

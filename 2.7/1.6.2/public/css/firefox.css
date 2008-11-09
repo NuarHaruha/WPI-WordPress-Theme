@@ -12,3 +12,12 @@ blockquote:before,blockquote:after,q:before,q:after{content:""}blockquote,q{quot
 
 .entry-content ol li:before{counter-increment: kitty;content: counters(kitty, ".") ". ";}
 
+/* thickbox */
+.TB_overlayBG {
+	background-color:#000;
+	-moz-opacity: 0.75;
+}
+
+#TB_HideSelect{
+	-moz-opacity: 0;
+}

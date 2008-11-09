@@ -56,7 +56,7 @@
 					</li><?php $cnt++; endforeach; /* end for each comment */ ?>
 					<?php wpi_comment_guide($post,$comments,$cnt);?>
 				</ol>
-				<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative">RSS feed for comments in this post</a></p>
+				<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative" class="rn">RSS feed for comments in this post</a></p>
 			 <?php else: // displayed if there are no comments so far ?>	
 				<?php if ('open' == $post->comment_status) : ?>	
 				<ol id="comments-list" class="commentlist r cf">				

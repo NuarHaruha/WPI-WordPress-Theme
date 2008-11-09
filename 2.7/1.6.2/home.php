@@ -3,7 +3,9 @@
 		<div id="main" class="start">
 <?php if ( have_posts() ): ?>
 <?php wpi_current_template(); ?>
+<?php if(wpiSidebar::hasWidget(2)): ?>
 <?php wpi_pagination();?>		
+<?php endif; ?>
 <?php else:?>
 <?php wpi_template_nopost(); ?>	
 <?php endif;?>

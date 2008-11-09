@@ -6,7 +6,7 @@
  * 
  */
 #wp-comments .outer{background-color:#0A78AF}
-
+#wp-comments .protected #comments{background-color:#0A78AF;border-bottom:0pt}
 #wp-comments #comments{
 	background-color:#339bcf;
 	color:#fff;
@@ -57,7 +57,7 @@
 	
 .commentlist{background-color:#2d96cb;padding:10px;margin:0pt 8px}
 .commentlist .hreview{background-color:#45acdf;border:1px solid #45acdf; border-width:1px 0pt;border-top-color:#6fcfff;height:auto;min-height:150px;padding:0pt;margin: 2px 0pt}
-.commentlist .light{background-color:transparent;border-color:#339bcf}
+.commentlist .light,.commentlist .alt{background-color:transparent;border-color:#339bcf}
 .commentlist .hreview:hover big{color:#eee;font-size:74px}
 .commentlist .hreview li{padding:10px}
 .commentlist .hreview .item{margin:0pt}
@@ -78,7 +78,28 @@
 .commentlist .hreview .reviewer-meta .vcard a{text-decoration:none;font-style:normal}
 .commentlist .hreview big{color:#379fd3;font-weight:400;text-align:right;font-family:arial,helvetica,tahoma,verdana,serif;font-size:86px;letter-spacing:-4px;width:80px;height:80px;overflow:hidden;margin:0pt;padding:0pt;white-space:nowrap}
 
-
+p.comments-feed{padding-top:18px !important;clear:both}
+p.comments-feed a{background-position: 2px 50%;color:#eee !important;padding:2px 6px 2px 22px}
+p.comments-feed a:hover{text-decoration:underline}
+/**
+ * comments pagination
+ */
+.comment-paging{color:#3F5C7F}
+.comment-nav span.prev a,
+.comment-nav span.next a,
+.comment-nav a.prev,
+.comment-nav a.next,
+.comment-nav .page-numbers{
+	background-color:#2D96CB;color:#eee !important;padding:2px 6px;margin:0pt 4px} 
+.comment-nav span.prev a:hover,
+.comment-nav span.next a:hover,
+.comment-nav a.prev:hover,
+.comment-nav a.next:hover,
+.comment-nav a.page-numbers:hover{background-color:#0080BF ;color:#fff !important}
+.comment-nav span.prev{display:block;float:left}
+.comment-nav span.next{display:block;float:right}
+.comment-nav a.page-numbers{}
+.comment-nav span.current{color:#ccc !important}
 /* comments form */
 #wp-respond #respond{color:#777 !important; background-color:#f6f6f6;border-bottom:10px solid #2D96CB;padding:18px 40px 0pt}
 .nt #wp-respond #respond{border-bottom-color:#b2b2b2}
@@ -151,7 +172,7 @@
 .commentlist a.hreviewer-microid{text-decoration: none; color:#ddd !important}
 .commentlist a.hreviewer-microid:hover{ color:#fff !important;text-decoration:underline}
 
-.edit-comment{background-color: #379FD3;padding:0px 3px}
+.edit-comment{padding:0px 3px}
 .edit-comment a{color:#ddd !important}
 
 /* comment-footer */
@@ -159,3 +180,14 @@
 
 /* section */
 .page #content-top{border-bottom:10px solid #339BCF}
+
+/* comment''s children */
+li.thread-even ol.children{background-color:#2D96CB;margin: 18px 0pt 0pt!important;padding: 0pt 0pt 18px 36px;list-style:none }
+li.depth-2 li.review-content{width:590px}
+li.depth-3 li.review-content{width:540px}
+p.reply-links a{background-color:#379FD3;padding:1px 6px;color:#eee !important}
+/* reply documents */
+#wp-reply .inner{width:685px !important;margin:0pt auto}
+#wp-reply #reply{margin:6px auto;background-color:#f6f6f6;padding: 18px;border:1px solid #ddd}
+#wp-reply #respond-textarea p{margin-bottom:0pt}
+#wp-reply #respond-textarea textarea{width:304px}

@@ -116,7 +116,7 @@ class Wpi
 			self::getFile('scripts','class');			
 			$this->Script = new wpiScripts();
 			
-			$js = array('jquery'=>'head','tooltip'=>'head','footer'=>'footer','css'=>'footer');	
+			$js = array('jquery'=>'head','scroll'=>'head','tooltip'=>'head','footer'=>'footer','css'=>'footer');	
 					
 			if (wpi_option('client_time_styles')){
 				$js['cookie'] = 'head';
