@@ -33,6 +33,18 @@ function wpi_theme_content_url($params,$ext = '.css'){
 		
 }
 
+function wpi_logout_self_return_uri(){
+	return WPI_URL_SLASHIT.'wp-login.php?action=logout&amp;redirect_to='. urlencode(rel(self_uri()));
+}
+
+
+function wpi_logout_url($redirect = '') {
+
+		$redirect = '&amp;redirect_to='.urlencode(rel(self_uri()));
+	
+	return wp_nonce_url( site_url("wp-login.php?action=logout$redirect", 'login'), 'log-out' );
+}
+
 function wpi_get_scripts_url($js){
 	global $wp_rewrite;
 
@@ -127,7 +139,6 @@ function wpi_cat_links($echo= 1, $index = false, $separator = '&#184;'){
 
 		if ($echo == 1): echo $links; else:	return $links; endif;
 }
-
 
 
 function wpi_get_pages_link(){
