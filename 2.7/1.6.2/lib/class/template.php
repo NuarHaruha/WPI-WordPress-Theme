@@ -153,7 +153,7 @@ class wpiTemplate
 	public function validationServices(){
 ?>
 			<div id="validation" class="pa">
-			<a href="http://validator.w3.org/check?uri=referer" title="Valid XHTML">XHTML</a> <a href="http://www.validome.org/xml/validate/?lang=en&amp;onlyWellFormed=1&amp;url=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Valid XHTML+XML Documents (structured well-formed)">XML/DOM</a> <a href="http://jigsaw.w3.org/css-validator/check/referer" title="Valid CSS 2.1/3.d Specifications">CSS</a> <a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Web Content Accessibility Valid Section 508 Standards" rel="nofollow noarchive">508</a> <a href="http://tools.microformatic.com/transcode/rss/hatom/<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Raw hAtom feeds" rel="atom" type="application/rss+xml">hAtom</a>
+			<a href="http://validator.w3.org/check?uri=referer" title="Valid XHTML">XHTML</a> <a href="http://www.validome.org/xml/validate/?lang=en&amp;onlyWellFormed=1&amp;url=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Valid XHTML+XML Documents (structured well-formed)">XML/DOM</a> <a href="http://jigsaw.w3.org/css-validator/check/referer" title="Valid CSS 2.1/3.d Specifications">CSS</a> <a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Web Content Accessibility Valid Section 508 Standards" rel="nofollow noarchive">508</a> <a href="http://tools.microformatic.com/transcode/rss/hatom/<?php echo WPI_URL;?>" title="Raw hAtom feeds" rel="atom" type="application/rss+xml">hAtom</a>
 			</div>
 <?php		
 	}
