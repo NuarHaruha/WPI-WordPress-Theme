@@ -1,11 +1,15 @@
-<?php // Do not delete these lines
+<?php 
+/**
+ * $Id$ 
+ */
 	if ('comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
 		die ('Please do not load this page directly. Thanks!');
 
 	if (!empty($post->post_password)) { // if there's a password
 		if ($_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password) {  // and it doesn't match the cookie
 			?>
-			<p class="nocomments">This post is password protected. Enter the password to view comments.</p>
+			<p class="nocomments">
+			<?php _e('This post is password protected. Enter the password to view comments.',WPI_META);?></p>
 			<?php
 			return;
 		}
@@ -19,7 +23,8 @@
 	<div class="outer cf">
 		<div class="inner c">	
 			<div id="comments" class="content cb cf append-1 prepend-1">
-				<h2 class="heading-title cf"><span class="fl"><?php comments_number('No Responses', 'One Response', '% Responses' );?></span><strong class="fl">to &#8220;<?php echo string_len(get_the_title(),80); ?>&#8221;</strong></h2><?php if ($comments) : ?>	
+				<?php wpi_comments_title();?>
+				<?php if ($comments) : ?>	
 				<ol id="comments-list" class="commentlist xoxo r cb cf"><?php $cnt = 0; foreach ($comments as $comment) : $alt = ($cnt % 2) ? 'light' : 'normal'; $alt .= ' list-'.$cnt; $alt = apply_filters(wpiFilter::FILTER_COMMENTS_SELECTOR,$alt);?>		
 					<li id="comment-<?php comment_ID(); ?>" class="<?php echo $alt; ?> hreview"><?php $author_uri = get_comment_author_url(); $author_uri = ($author_uri != '' && $author_uri != 'http://') ? $author_uri : get_permalink($post->ID).'#comment-'.get_comment_ID(); $microid = get_microid_hash(get_comment_author_email(),$author_uri);?>		
 						<ul class="reviewier-column cf r">
@@ -29,10 +34,10 @@
 							<li class="span-16 fl review-content">
 								<dl class="review r cf">
 									<dt class="item title summary"><a rel="dc:source robots-anchortext" href="#comment-<?php comment_ID(); ?>" class="url fn" title="<?php the_title(); ?>"><span>RE:</span> <?php the_title(); ?></a></dt>	
-									<dd class="reviewer-meta"><span class="date-since"><?php echo apply_filters(wpiFilter::FILTER_POST_DATE,get_comment_date());?></span> on <abbr class="dtreviewed" title="<? echo comment_date('Y-m-dTH:i:s:Z'); ?>"><?php comment_date('F jS, Y'); ?> at <?php comment_time(); ?></abbr><?php if(function_exists('hreview_rating')): hreview_rating(); else: ?><span class="rating dn">3</span><span class="type dn">url</span><?php endif;?> &middot; <a href="#microid-<?php comment_ID();?>" class="hreviewer-microid ttip" title="Micro ID | <?php comment_author();?>&apos;s Hash">microId</a> <?php edit_comment_link('edit','<span class="edit-comment">','</span>'); ?></dd>
+									<dd class="reviewer-meta"><span class="date-since"><?php echo apply_filters(wpiFilter::FILTER_POST_DATE,get_comment_date());?></span> on <abbr class="dtreviewed" title="<? echo comment_date('Y-m-dTH:i:s:Z'); ?>"><?php comment_date(__('F jS, Y',WPI_META) ); ?> at <?php comment_time(); ?></abbr><?php if(function_exists('hreview_rating')): hreview_rating(); else: ?><span class="rating dn">3</span><span class="type dn">url</span><?php endif;?> &middot; <a href="#microid-<?php comment_ID();?>" class="hreviewer-microid ttip" title="Micro ID | <?php comment_author();?>&apos;s Hash">microId</a> <?php edit_comment_link('edit','<span class="edit-comment">','</span>'); ?></dd>
 									<dd id="microid-<?php comment_ID();?>" class="microid-embed" style="display:none"><input class="on-click-select claimid icn-l" type="text" value="mailto+http:sha1:<?php echo $microid;?>" /></dd><?php $counter = $cnt + 1;?>				
 									<dd class="reviewer-entry"><big class="comment-count fr" title="Post no #<?php echo $counter; ?>"><?php echo $counter; ?></big><div class="description"><?php echo get_comment_text();?>
-									</div><?php if ($comment->comment_approved == '0') : ?><p class="notice rn">Your comment is awaiting moderation.</p><?php endif; ?></dd>	
+									</div><?php if ($comment->comment_approved == '0') : ?><p class="notice rn"><?php _e('Your comment is awaiting moderation.',WPI_META);?></p><?php endif; ?></dd>	
 								</dl>		
 							</li>
 						</ul>
@@ -56,7 +61,7 @@
 					</li><?php $cnt++; endforeach; /* end for each comment */ ?>
 					<?php wpi_comment_guide($post,$comments,$cnt);?>
 				</ol>
-				<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative" class="rn">RSS feed for comments in this post</a></p>
+				<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative" class="rn"><?php _e('RSS feed for comments in this post',WPI_META);?></a></p>
 			 <?php else: // displayed if there are no comments so far ?>	
 				<?php if ('open' == $post->comment_status) : ?>	
 				<ol id="comments-list" class="commentlist r cf">				
@@ -64,7 +69,7 @@
 				</ol>
 				 <?php else : // comments are closed ?>
 					<!-- If comments are closed. -->
-					<p class="comments-closed notice rn">Comments are closed.</p>
+					<p class="comments-closed notice rn"><?php _e('Comments are closed.',WPI_META);?></p>
 			
 				<?php endif; ?>
 			<?php endif; ?>	
@@ -80,8 +85,8 @@
 	<div id="respond" class="content cb cf append-1 prepend-1">
 		<div id="respond-heading" class="rn cl">	
 		<p class="hint">
-		<small class="rgb-hgray" title="Write as if you were talking to a good friend (in front of your mother)">"write as if you were talking to a good friend (in front of your mother)."</small></p>
-		<h3 id="respond-title">.have<span>your</span><cite>say</cite></h3>		
+		<small class="rgb-hgray" title="Write as if you were talking to a good friend (in front of your mother)"><?php _e('"write as if you were talking to a good friend (in front of your mother)."',WPI_META);?></small></p>
+		<h3 id="respond-title"><?php _e('.have<span>your</span><cite>say</cite>',WPI_META);?></h3>		
 		</div>
 <?php if ( get_option('comment_registration') && !$user_ID ) : ?>
 <p>You must be <a href="<?php echo WPI_URL_SLASHIT; ?>wp-login.php?redirect_to=<?php echo urlencode(get_permalink()); ?>">logged in</a> to post a comment.</p><?php else : $is_opid = ( class_exists('WordpressOpenID') ); ?>
@@ -102,15 +107,15 @@
 	<ul class="r cf">
 	<li>
 		<input type="text" class="claimid rn" name="author" id="author" value="<?php echo $comment_author; ?>" tabindex="1" />
-		<label for="author">Name <?php echo $is_reqs; ?></label>
+		<?php printf(__('<label for="author">Name %1$s</label>',WPI_META),$is_reqs);?>
 	</li>
 	<li>
 		<input type="text" class="gravatar rn" name="email" id="email" value="<?php echo $comment_author_email; ?>" tabindex="2" />
-		<label for="email">Email <?php echo $is_reqs; ?></label>
+		<?php printf(__('<label for="email">Email %1$s</label>',WPI_META),$is_reqs);?>
 	</li>
 	<li>
 		<input type="text" class="favicon rn" name="url" id="url" value="<?php echo $comment_author_url; ?>" tabindex="3" />
-		<label for="url">Website</label>
+		<?php _e('<label for="url">Website</label>',WPI_META);?>
 	</li>
 	<?php if( class_exists('WordpressOpenID')): ?>
 	<li>
@@ -118,7 +123,7 @@
 		<label for="openid_url">OpenID URL</label>
 	</li>
 	<?php else: ?>
-	<li>Email will not be published.</li>
+	<li><?php _e('Email will not be published.',WPI_META);?></li>
 	<?php endif; ?>
 	</ul><?php endif; ?>
 <!-- <p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
@@ -128,9 +133,9 @@
 </ul>
 </form>
 <p class="notice cb comment-disclaimer cc-by-sa rn">
-<span class="disclaimer db"><span class="fw">Disclaimer:</span> For any content that you post, you hereby grant to <strong><a href="<?php echo WPI_URL_SLASHIT;?>"><?php echo WPI_BLOG_NAME;?></a></strong> the royalty-free, irrevocable, perpetual, exclusive and fully sublicensable license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display such content in whole or in part, world-wide and to incorporate it in other works, in any form, media or technology now known or later developed.</span>
+<span class="disclaimer db"><?php printf(__('<span class="fw">Disclaimer:</span> For any content that you post, you hereby grant to <strong>%1$s</strong> the royalty-free, irrevocable, perpetual, exclusive and fully sublicensable license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display such content in whole or in part, world-wide and to incorporate it in other works, in any form, media or technology now known or later developed.</span>',WPI_META),_t('a',WPI_BLOG_NAME,array('href'=>WPI_URL_SLASHIT)) );?>
 <span class="license b1s b1t db">
-<a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">Some rights reserved.</a>
+<a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license"><?php _e('Some rights reserved.',WPI_META);?></a>
 </span>
 </p>
 </div>
