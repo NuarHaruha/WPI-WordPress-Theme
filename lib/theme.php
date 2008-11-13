@@ -1,5 +1,11 @@
 <?php
 if ( !defined('KAIZEKU') ) {die( 42);}
+/**
+ * $Id$
+ * WPI Template functions
+ * @package WordPress
+ * @subpackage Template
+ */
 require WPI_LIB_CLASS.'theme-enum.php';
 
 class Wpi
@@ -116,7 +122,7 @@ class Wpi
 			self::getFile('scripts','class');			
 			$this->Script = new wpiScripts();
 			
-			$js = array('jquery'=>'head','scroll'=>'head','tooltip'=>'head','footer'=>'footer','css'=>'footer');	
+			$js = array('jquery'=>'head','tooltip'=>'head','scroll'=>'head','footer'=>'footer','css'=>'footer');	
 					
 			if (wpi_option('client_time_styles')){
 				$js['cookie'] = 'head';
@@ -146,6 +152,10 @@ class Wpi
 			
 			if (wpi_option('widget_treeview')){
 				$this->Style->register('image-treeview');
+			}
+			
+			if (strtolower($this->Browser->Browser) == 'ie'){
+				$this->Style->register('image-ie');
 			}
 			
 			if (is_active_widget('widget_flickrRSS')){
@@ -182,11 +192,14 @@ class Wpi
 		// custom header
 		$this->Template = new wpiTemplate();
 		
-		if (defined(WPI_DEBUG)) {
+		if (defined('WPI_DEBUG')) {
 			add_action('wp_footer',array($this,'debug'));
 		}
 		
 		// self::debugDefaultFilters()
+		if (defined('FIREBUG_CONSOLE')){
+			add_action('wp_head','wpi_firebug_console',wpiTheme::LAST_PRIORITY);
+		}			
 	}
 	
 	public function registerScript(array $arr)
