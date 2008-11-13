@@ -1,6 +1,21 @@
 <?php
+/**
+ * $Id$
+ * WPI Template functions
+ * @package WordPress
+ * @subpackage Template
+ */
 if ( !defined('KAIZEKU') ) { die( 42); }
 
+/**
+ * Start def child template wrapper
+ * 
+ * @since 1.6.2
+ * @see wpiTemplate::sectionStart()
+ * @param string $section_name valid id name
+ * @uses $Wpi wpi object
+ * @return string Formatted output in HTML
+ */
 function wpi_section_start($section_name){
 	global $Wpi;
 	
@@ -10,6 +25,14 @@ function wpi_section_start($section_name){
 	}		
 }
 
+/**
+ * End def child template wrapper
+ * 
+ * @since 1.6.2
+ * @see wpiTemplate::sectionStart()
+ * @uses $Wpi wpi object
+ * @return string Formatted output in HTML
+ */
 function wpi_section_name(){
 	global $Wpi;
 	return $Wpi->Template->section;
@@ -165,9 +188,6 @@ function wpi_get_public_content($content, $type = 'css'){
 		$contents = '';
 		reset($files);
 		
-		$pattern = 'url(\'images/';
-		$replace = 'url(\''.THEME_IMG_URL;
-		
 		while (list(,$file) = each($files)) {
 			$path = realpath($base.$file.'.'.$type);			
 			
@@ -209,7 +229,7 @@ function wpi_write_css($filename,$path){
 	$time = date('c',SV_CURRENT_TIMESTAMP);
 	$content = PHP_EOL.'/** $Id '.$filename.', wpi-cached:0162 '.$time.' '.WPI_BLOG_NAME.' $ **/'.PHP_EOL;
 	$content .= file_get_contents($path);	
-	$content = str_replace('url(\'images/','url(\''.THEME_IMG_URL,$content);
+	$content = str_replace('url(images/','url(\''.THEME_IMG_URL,$content);
 	
 	wpi_write_cache('css'.DIRSEP.$filename,$content);
 	
@@ -1328,11 +1348,14 @@ function wpi_template_comment_trackback($post,$comment,$cnt)
 function wpi_metabox_start($title,$id,$hide = false){
 	
 	$tog = _t('a','+',array('href'=>'#','class'=>'togbox'));
+	
+	$title = ( (is_wp_version('2.6')) ? $tog.$title : $title );
+	
 	$class = 'postbox';
 	if ($hide) $class .= ' closed';
 	
 	$output = '<div id="post'.$id.'" class="'.$class.'">'.PHP_EOL;
-	$output .= _t('h3',$tog.$title);
+	$output .= _t('h3',$title);
 	$output .= '<div class="inside">';	
 	echo $output;
 }
