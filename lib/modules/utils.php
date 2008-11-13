@@ -1,6 +1,11 @@
 <?php
 if ( !defined('KAIZEKU') ) {die( 42);}
-
+/**
+ * $Id$
+ * WPI Template functions
+ * @package WordPress
+ * @subpackage Template
+ */
 function wpi_dump($var){
 	$style = 'overflow:auto;width:500px;height:250px';
 	
@@ -111,5 +116,13 @@ function wpi_write_cache($file,$content){
 	wpi_fwrite(WPI_CACHE_DIR.DIRSEP.$file,$content,'wb',5);
 }
 
+function wpi_firebug_console(){	
+	t('script','',array(
+		'src'=>'http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js',
+		'type'=> 'text/javascript') 
+	);	
+	
+	t('script','firebug.env.height = 500;',array('type'=> 'text/javascript'));	
+}
 
 ?>
