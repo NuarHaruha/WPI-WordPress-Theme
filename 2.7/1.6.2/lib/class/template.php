@@ -1,7 +1,10 @@
 <?php
 if (!defined('KAIZEKU')) { die(42); }
 /**
+ * $Id$
  * Wp-Istalker template class
+ * @package WordPress
+ * @subpackage Template 
  */
 
 class wpiTemplate
@@ -429,7 +432,7 @@ class wpiTemplate
 					$prop = WPI_BLOG_NAME;
 				}
 				
-				$m[] = array('name'	=> 'keywords','content' => $prop );
+				$m[] = array('name'	=> 'keywords','content' => strtolower($prop) );
 			}			
 		}
 		
