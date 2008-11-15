@@ -224,12 +224,12 @@ function wpi_get_public_content($content, $type = 'css'){
 	echo $contents;	
 	exit;	
 }
-
+/**
+ * Temporary workaround for rel images
+ */
 function wpi_write_css($filename,$path){
-	$time = date('c',SV_CURRENT_TIMESTAMP);
-	$content = PHP_EOL.'/** $Id '.$filename.', wpi-cached:0162 '.$time.' '.WPI_BLOG_NAME.' $ **/'.PHP_EOL;
 	$content .= file_get_contents($path);	
-	$content = str_replace('url(images/','url(\''.THEME_IMG_URL,$content);
+	$content = str_replace('url(images/','url('.THEME_IMG_URL,$content);
 	
 	wpi_write_cache('css'.DIRSEP.$filename,$content);
 	
@@ -1230,7 +1230,7 @@ function wpi_comment_guide($post,$comments,$cnt){
 							<li class="span-3 fl rn hcard">
 							<address class="vcard microid-mailto+http:sha1:<?php echo get_microid_hash(get_comment_author_email(),WPI_URL)?>">
 							<?php	$photo_url = THEME_IMG_URL.'default-avatar.png';?>
-							<img src="<?php echo wpi_img_url('avatar-wrap.png');?>" width="80" height="80" alt="stalker's photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
+							<img src="<?php echo wpi_img_url('avatar-wrap.png');?>" width="80" height="80" alt="stalker&apos;s photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
 								<a href="<?php echo WPI_URL; ?>" class="url fn db">
 								<?php echo WPI_BLOG_NAME ;?></a> 
 							</address>				
@@ -1239,10 +1239,10 @@ function wpi_comment_guide($post,$comments,$cnt){
 							<dl class="review r cf">				
 							<dt class="item title summary">	
 								<a href="#comment-00" class="url fn" title="<?php the_title(); ?>">
-								<span>RE:</span> <?php the_title(); ?> - 'Commenting Guidlines' &darr;</a> 				
+								<span>RE:</span> <?php the_title(); ?> - <?php _e('&apos;Commenting Guidlines&apos;',WPI_META);?> &darr;</a> 				
 							</dt>	
 							<dd class="reviewer-meta">
-								<span class="date-since">						
+								<span class="date-since">				
 									<?php echo apply_filters(wpiFilter::FILTER_POST_DATE,$post->post_date);?>
 								</span> on <abbr class="dtreviewed" title="<? echo date('Y-m-dTH:i:s:Z',$post->post_date); ?>">
 								<?php the_time('l, F jS, Y') ?> at <?php the_time(); ?>
@@ -1252,16 +1252,17 @@ function wpi_comment_guide($post,$comments,$cnt){
 							</dd>
 							<dd class="reviewer-entry">		
 								<big class="comment-count fr">0%</big>
-								<p id="comment-guidline" class="description">If you want to comment, please read the following guidelines.These are designed to protect you and other users of the site.</p>
+								<p id="comment-guidline" class="description">
+								<?php _e('If you want to comment, please read the following guidelines. These are designed to protect you and other users of the site.',WPI_META);?></p>
 								<ol class="xoxo">
-									<li><strong>Be relevant:</strong> Your comment should be a thoughtful contribution to the subject of the entry. Keep your comments constructive and polite. </li>
-									<li><strong>No advertising or spamming:</strong> Do not use the comment feature to promote commercial entities/products, affiliates services or websites. You are allowed to post a link as long as it's relevant to the entry.</li>						
-									<li><strong>Keep within the law:</strong> Do not link to offensive or illegal content websites. Do not make any defamatory or disparaging comments which might damage the reputation of a person or organisation.</li>
-									<li><strong>Privacy:</strong> Do not post any personal information relating to yourself or anyone else - (ie: address, place of employment, telephone or mobile number or email address).</li>
+									<li><?php _e('<strong>Be relevant:</strong> Your comment should be a thoughtful contribution to the subject of the entry. Keep your comments constructive and polite.',WPI_META);?></li>
+									<li><?php _e('<strong>No advertising or spamming:</strong> Do not use the comment feature to promote commercial entities/products, affiliates services or websites. You are allowed to post a link as long as it&apos;s relevant to the entry.',WPI_META);?></li>						
+									<li><?php _e('<strong>Keep within the law:</strong> Do not link to offensive or illegal content websites. Do not make any defamatory or disparaging comments which might damage the reputation of a person or organisation.',WPI_META);?></li>
+									<li><?php _e('<strong>Privacy:</strong> Do not post any personal information relating to yourself or anyone else (i.e., address, place of employment, telephone or mobile number or email address).',WPI_META);?></li>
 								</ol>
-								<p>In order to keep these experiences enjoyable and interesting for all of our users, we ask that you follow the above guidlines. Feel free to engage, ask questions, and tell us what you are thinking! insightful comments are most welcomed.</p>
+								<p><?php _e('In order to keep these experiences enjoyable and interesting for all of our users, we ask that you follow the above guidlines. Feel free to engage, ask questions, and tell us what you are thinking! insightful comments are most welcomed.',WPI_META);?></p>
 								<?php if( (count($comments))  == false):?>
-								<p class="no-comments notice rn prepend-3">be the first to comment.</p><?php endif;?></dd>	
+								<p class="no-comments notice rn prepend-3"><?php _e('be the first to comment.',WPI_META);?></p><?php endif;?></dd>	
 							</dl>		
 							</li>
 			</ul>					
@@ -1349,7 +1350,7 @@ function wpi_metabox_start($title,$id,$hide = false){
 	
 	$tog = _t('a','+',array('href'=>'#','class'=>'togbox'));
 	
-	$title = ( (is_wp_version('2.6')) ? $tog.$title : $title );
+	$title = ( (is_wp_version('2.6','=')) ? $tog.$title : $title );
 	
 	$class = 'postbox';
 	if ($hide) $class .= ' closed';
@@ -1364,7 +1365,7 @@ function wpi_metabox_end(){
 	echo '</div>'.PHP_EOL.'</div>';
 }
 
-function wpi_postmeta_input($postmeta_id,$style='width:70%', $ifnone = ''){
+function wpi_postmeta_input($postmeta_id,$style='width:78%', $ifnone = ''){
 	$prop = wpi_get_postmeta($postmeta_id);
 	t('input','',array(
 		'id'	=> 'wpi_'.$postmeta_id,
@@ -1376,7 +1377,7 @@ function wpi_postmeta_input($postmeta_id,$style='width:70%', $ifnone = ''){
 }
 
 function wpi_postmeta_label($id,$label){
-	t('label',$label,array('for'=>'wpi_'.$id,'style'=>'color:#555;width:160px;float:left;display:block;font-weight:700'));
+	t('label',$label,array('for'=>'wpi_'.$id,'style'=>'color:#555;width:100px;float:left;display:block;font-weight:700'));
 }
 
 function wpi_post_metaform(){
