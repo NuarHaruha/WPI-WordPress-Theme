@@ -174,8 +174,7 @@ class wpiTemplate
 	
 	
 	public static function bodyID()
-	{
-		
+	{		
 		return strtr(WPI_URL,array('http://'=>'','.'=>'-','/'=>'-') );
 	}
 	
@@ -185,7 +184,7 @@ class wpiTemplate
 		$html_type = get_bloginfo('html_type');
 		
 		if (defined('WPI_CLIENT_ACCEPT_XHTML_XML') 
-		&& WPI_CLIENT_ACCEPT_XHTML_XML){
+		&& WPI_CLIENT_ACCEPT_XHTML_XML && wpi_option('xhtml_mime_type')){
 			$html_type = 'application/xhtml+xml';
 		} else {
 			$html_type = 'text/html';
@@ -194,26 +193,45 @@ class wpiTemplate
 		return $html_type;
 	}
 	
-
-	public function headCustomContent(){
-		global $wp_query;
+	/**
+	 * Display custom header content on singular sections
+	 * @since 1.6.2
+	 * @uses wp_query WP_Query object
+	 * @uses wpi_get_postmeta() get head content postmeta
+	 * @return string HTML output
+	 */
+	public function headCustomContent()
+	{	global $wp_query;
+		
 		if (!$wp_query->is_singular) return;
+		
 		if ( ($content = wpi_get_postmeta('header_content') ) != false ){
-				echo PHP_EOL.PHP_T.$content.PHP_EOL;
+			$content = apply_filters(wpiFilter::FILTER_CUSTOM_HEAD_CONTENT,$content);
+			echo PHP_EOL.PHP_T.$content.PHP_EOL;
 		}			
 	}
-			
-	public function footerCustomContent(){
-		global $wp_query;
+	
+	/**
+	 * Display custom footer content on singular sections
+	 * @since 1.6.2
+	 * @uses wp_query WP_Query object
+	 * @uses wpi_get_postmeta() get head content postmeta
+	 * @return string HTML output
+	 */			
+	public function footerCustomContent()
+	{	global $wp_query;
+		
 		if (!$wp_query->is_singular) return;
+		
 		if ( ($content = wpi_get_postmeta('footer_content') ) != false ){
-				echo PHP_EOL.PHP_T.$content.PHP_EOL;
+			$content = apply_filters(wpiFilter::FILTER_CUSTOM_FOOTER_CONTENT,$content);
+			echo PHP_EOL.PHP_T.$content.PHP_EOL;
 		}		
 	}
+	
 
 	public function textDirection($content)
-	{
-			
+	{			
 		// lazy style
 		$content = str_replace('ltr',wpi_option('text_dir'),$content);
 		$content = str_replace('rtl',wpi_option('text_dir'),$content);
@@ -421,18 +439,22 @@ class wpiTemplate
 					$prop = attribute_escape(get_option('blogdescription'));
 				}				
 				
+				$prop = apply_filters(wpiFilter::FILTER_META_DESCRIPTION,$prop);
+				
 				$m[] = array('name'	=> 'description','content' => $prop );
 			}
 			
 			// keywords
 			if (wpi_option('meta_keywords')){	
-				$prop = wpi_safe_stripslash(wpi_option('def_meta_keywords'));	
+				$prop = wpi_option('def_meta_keywords');	
 				
 				if ('' == $prop){
 					$prop = WPI_BLOG_NAME;
 				}
 				
-				$m[] = array('name'	=> 'keywords','content' => strtolower($prop) );
+				$prop = apply_filters(wpiFilter::FILTER_META_KEYWORDS,$prop);
+				
+				$m[] = array('name'	=> 'keywords','content' => $prop);
 			}			
 		}
 		
