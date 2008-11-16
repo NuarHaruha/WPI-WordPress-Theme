@@ -1,14 +1,12 @@
 <?php
 if (!defined('KAIZEKU')) { die(42); }
 /**
- * Wp-Istalker Action Filters
+ * $Id$
+ * WPI filters
  * 
- *   
- * @author	Avice Devereux, http://kaizeku.com 
- * @since	17.march.2008
- * @license	MIT License  
+ * @since 1.6
+ * @author Avice D <ck+filtered@animepaper.net> 
  */
-
 final class wpiFilter
 {
 	const ACTION_FLUSH = 'wpi_flush';
@@ -97,9 +95,12 @@ final class wpiFilter
 	
 	const ACTION_AFTER_CONTENT_PREFIX = 'wpi_after_content_';
 	
+	const FILTER_META_DESCRIPTION = 42000;
+	
+	const FILTER_META_KEYWORDS = 42001;
+	
 	private function __construct(){}
 	
 	private function __clone(){}
-} 
-
+}
 ?>
