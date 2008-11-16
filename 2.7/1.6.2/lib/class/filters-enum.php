@@ -99,6 +99,10 @@ final class wpiFilter
 	
 	const FILTER_META_KEYWORDS = 42001;
 	
+	const FILTER_CUSTOM_HEAD_CONTENT = 42002;
+	
+	const FILTER_CUSTOM_FOOTER_CONTENT = 42003;
+	
 	private function __construct(){}
 	
 	private function __clone(){}
