@@ -19,8 +19,8 @@
 .cf, .c {display: inline-block;}
 * html .cf,* html .c {height: 1%;}
 .cf, .c {display: block;}
-.row-2{height:39px !important}
-.row-4{height:68px !important}
+.row-2{height:42px !important}
+.row-4{height:76px !important}
 .row-5{height:78px !important}
 
 .ta-r{text-align:right}
