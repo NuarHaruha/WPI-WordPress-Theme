@@ -6,4 +6,5 @@ jQuery(document).ready( function(){
 	jQuery('.title-').click(function(){
 		wpi.toggle(jQuery(this).next());
 	}); 
+	if (adminMenu != 'undefined') adminMenu.fold();
 });
