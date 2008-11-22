@@ -2,19 +2,16 @@
 if (!defined('KAIZEKU')) { die(42); }
 require WPI_LIB_CLASS.'section-enum.php';
 /**
- * Wp-Istalker config
- * 
- *   
- * @author	Avice Devereux, http://kaizeku.com 
- * @since	17.march.2008
- * @license	MIT License  
+ * $Id$
+ * Wp-Istalker default configuration
+ * @since 1.2
  */
 
 final class wpiTheme
 {
 	const UID = 'wp-istalker-chrome';
 	
-	const VERSION = '1.6.2';
+	const VERSION = '1.6.2 RC 2';
 	
 	const AUTHOR = 'ChaosKaizer';
 	
@@ -45,6 +42,8 @@ final class wpiTheme
 	const DEFAULT_FILE_EXTENSION = '.php';
 	
 	const BLOG_TITLE_SEPARATOR = '&#187;';
+	
+	const PARAMS_SEP = ',';
 	
 	const WP_CONSTANT_REGEX = '/WP/';
 	
@@ -95,6 +94,8 @@ final class wpiTheme
 	const CL_COOKIE_TIME = 'wpi-cl';
 	
 	const LAST_PRIORITY = 11;
+	
+	const GD_FONT_TYPE = "(\.(TTF|ttf|OTF|otf|FON|fon))";
 	
 	private function __construct(){}		
 }
