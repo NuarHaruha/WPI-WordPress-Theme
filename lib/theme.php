@@ -84,20 +84,26 @@ class Wpi
 		self::getFile(array('browscap','body_class'),'import');
 		self::getFile(array('utils','formatting','filters','query','links','template','plugin','widgets','comments','author') );
 		
+		$this->_defaultSettings();
+					
+			
 		if ( is_admin() ) {		
 			add_action('admin_menu', array($this,'setThemeOptions') );
 			
-			// post template form			
+			// singular template form		
+			$callback = (is_wp_version('2.6','>=')) ? 'wpi_register_metaform' : 'wpi_post_metaform';
+			
 			wpi_foreach_hook(array(
 								'simple_edit_form',
 								'edit_form_advanced',
-								'edit_page_form'),'wpi_post_metaform');
-											
+								'edit_page_form'),$callback);			
+							
 			wpi_foreach_hook(array(
 								'edit_post',
 								'publish_post',
 								'save_post',
 								'edit_page_form'),'wpi_update_post_form');
+			
 			// User profile form
 			wpi_foreach_hook(array(
 				'profile_personal_options'=>'wpi_profile_options',
@@ -202,6 +208,34 @@ class Wpi
 		}			
 	}
 	
+
+	private function _defaultSettings(){
+		
+		$meta = WPI_META_PREFIX.'flag';
+		
+		if ( ($flag = get_option($meta) ) <= 0 ){
+			
+			$options = array(
+			'pathway_enable' => 1, 
+			'relative_date' => 1,
+			'post_hrating' => 1, /* require for hReview */
+			'relative_links'=> 1, /* make links relative (seo) */
+			'meta_robots' => 1,
+			'meta_title' => 1,
+			'meta_description' => 1,
+			'def_meta_description' => apply_filters(wpiFilter::FILTER_META_DESCRIPTION,get_option('blogdescription')),
+			'text_dir'=>'ltr',
+			'post_bookmarks'=>1	
+			);
+		
+		foreach($options as $k=>$v){
+			wpi_update_theme_options($k,$v);
+		}
+			update_option($meta, 1);
+		}
+	}
+	
+		
 	public function registerScript(array $arr)
 	{
 		if (is_object($this->Script) && has_count($arr)){
@@ -283,7 +317,7 @@ class Wpi
 			$this->Browser->updateMethod = Browscap::UPDATE_CURL;
 		}
 		
-		$this->Browser = $this->Browser->getBrowser($_SERVER['HTTP_USER_AGENT']);
+		$this->Browser = $this->Browser->getBrowser(SV_UA_STRING);
 	}
 	
 	
@@ -332,7 +366,6 @@ class Wpi
     	}		
 	}
 	
-	
 	/**
 	 * Wpi::debug()
 	 * 
@@ -341,8 +374,6 @@ class Wpi
 	public function debug()
 	{
 		wpi_dump($this);
-	}
-	
-		
+	}		
 }	
 ?>
