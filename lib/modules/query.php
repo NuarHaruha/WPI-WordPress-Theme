@@ -293,6 +293,10 @@ function wpi_update_post_form($id = false){
 		wpi_update_form_meta($id,'banner_repeat');
 	}
 
+	if ( is_post('wpi_banner_position') ) {
+		wpi_update_form_meta($id,'banner_position');
+	}
+	
 	if ( is_post('wpi_banner_height') ) {
 		wpi_update_form_meta($id,'banner_height');
 	}
@@ -336,7 +340,7 @@ function wpi_profile_options_update($id = false)
 {
 	$id = intval($_POST['user_id']);	
 	$key = array('profession','job_title','birthdate','show_banner',
-				 'banner_url','banner_repeat','banner_height');
+				 'banner_url','banner_repeat','banner_height','banner_position');
 				 	
 	foreach($key as $index){
 		wpi_update_usermeta($id,'user_'.$index);
