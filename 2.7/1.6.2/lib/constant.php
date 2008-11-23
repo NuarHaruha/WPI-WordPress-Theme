@@ -48,7 +48,19 @@ define('WPI_JS_DIR',WPI_PUB.'scripts'.DIRSEP);
 // public javascript cached dir
 define('WPI_CACHE_JS_DIR',WPI_CACHE_DIR.DIRSEP.'js'.DIRSEP);
 
+/**
+ * Fonts dir
+ * @since 1.2
+ */
+define('WPI_FONTS_DIR',(strtr(realpath(WPI_PUB.'webfonts'), array("\\", DIRSEP))).DIRSEP);
 
+/**
+ * GD fonts Image cache dir
+ * @since 1.2
+ */
+define('WPI_CACHE_FONTS_DIR',(strtr(realpath(WPI_CACHE_DIR.DIRSEP.'webfonts'), array("\\", DIRSEP))));
+
+define('WPI_CACHE_AVATAR_DIR',WPI_CACHE_DIR.DIRSEP.'avatar');
 /**
  * Wordpress blog URL
  * @since	1.6
@@ -97,4 +109,12 @@ define('PHP_T',"\t");
 if (!defined('WP_VERSION'))  define('WP_VERSION', get_bloginfo('version'));
 
 if (!defined('WP_VERSION_MAJ')) define('WP_VERSION_MAJ', (float) WP_VERSION);
+
+//define('FIREBUG_CONSOLE',1);
+
+/**
+ * Client User agent string
+ * @since 1.6.2
+ */
+define('SV_UA_STRING',$_SERVER['HTTP_USER_AGENT']); 
 ?>
