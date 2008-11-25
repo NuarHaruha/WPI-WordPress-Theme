@@ -9,7 +9,7 @@ if (!defined('KAIZEKU')) { die(42); }
  */
 final class wpiFilter
 {
-	const ACTION_FLUSH = 'wpi_flush';
+	const ACTION_FLUSH = 40000;
 	
 	const ACTION_SEND_HEADER = 'wpi_send_http_header';
 	
@@ -35,9 +35,11 @@ final class wpiFilter
 	
 	const ACTION_COPYRIGHT_STATEMENTS = 'wpi_copyright';	
 	
-	const ACTION_EMBED_CSS = 'wpi_embed_css';
+	const ACTION_EMBED_CSS = 45000;
 	
-	const ACTION_INTERNAL_CSS = 'wpi_internal_css';
+	const ACTION_INTERNAL_CSS = 45001;
+	
+	const ACTION_GRAVATAR_CSS = 45002;
 	
 	const ACTION_POST_PAGINATION = 'wpi_post_pagination';
 	
@@ -57,11 +59,13 @@ final class wpiFilter
 	
 	const FILTER_SECTION_INNER_CLASS = 'wpi_template_inner_class';
 	
-	const FILTER_LINKS = 'wpi_all_links';	
+	const FILTER_LINKS = 40100;	
+	
+	const FILTER_WEBFONT_LINKS = 40101;
 	
 	const FILTER_AUTHOR_NAME = 'wpi_html_display_name';
 	
-	const FILTER_PUBLIC_CSS = 'wpi_public_css';
+	const FILTER_PUBLIC_CSS = 45003;
 	
 	const NONCE_THEME_OPTIONS = 'wpi-theme-options';
 	
@@ -102,6 +106,8 @@ final class wpiFilter
 	const FILTER_CUSTOM_HEAD_CONTENT = 42002;
 	
 	const FILTER_CUSTOM_FOOTER_CONTENT = 42003;
+	
+	const FILTER_ROOT_CLASS_SELECTOR = 42004;
 	
 	private function __construct(){}
 	

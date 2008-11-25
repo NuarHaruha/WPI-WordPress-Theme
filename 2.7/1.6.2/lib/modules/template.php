@@ -68,6 +68,41 @@ function wpi_get_osd(){
 	unset($osd);
 }
 
+
+/**
+ * function wpi_get_webfont()
+ * PHP GD text to image replacement
+ * 
+ * @since 1.5
+ * @params mixed|array font settings 
+ * @return output PNG type image 
+ */
+function wpi_get_webfont($args){
+	
+	if (!wpi_option('gdfont_image')) wpi_http_error_cat();	
+	
+	$gdtxt = WPI_LIB_IMPORT.'gdtxt.php';
+	
+	$cache_folder   = WPI_CACHE_FONTS_DIR;
+	$background_color = wpi_get_bg_hex_color();
+	$transparent_background  = true ;
+	$cache_images = true ;
+
+	list(,$type,$rfont,$rsize,$rcolor,$rbgcolor) = $args;
+		
+	switch ($type){
+		case 'blog-name':
+			if (!wpi_option('gd_blogname')) wpi_http_error_cat();
+				$the_text = wpi_option('gd_blogname_text');
+				$font_size = (float) wpi_option('gd_blogname_text_size');
+				$font_color = wpi_option('gd_blogname_color');
+				$font_file = WPI_FONTS_DIR.wpi_option('gd_blogname_font');
+				require $gdtxt;		
+			break;
+		}
+	exit;
+}
+
 function wpi_get_reply_form($args){
 	global $wp_query, $withcomments, $post, $wpdb, $id, $comment, $user_login, $user_ID, $user_identity, $overridden_cpage;
 		
@@ -274,9 +309,7 @@ function wpi_get_body_class($browser_object = false){
 		
 		Wpi::getFile('body_class',wpiTheme::LIB_TYPE_IMPORT);
 	}
-	
-	 
-	
+		
 	$output = sandbox_body_class(false);
 	
 	// append client useragent data  
@@ -292,9 +325,12 @@ function wpi_get_body_class($browser_object = false){
 	
 	if (wpi_option('client_time_styles') && is_cookie(wpiTheme::CL_COOKIE_TIME)){
 		$output .= ' '. (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME];
+		//$output .= ' nt';
 	}
 	
-	return $output.' '.$ua.' -foaf-Document';
+	$output = $output.' '.$ua.' -foaf-Document';
+	
+	return apply_filters(wpiFilter::FILTER_ROOT_CLASS_SELECTOR,$output);
 }	
 
 
@@ -707,7 +743,7 @@ function wpi_template_author(){
 			</dd>
 			<dd class="<?php echo wpi_get_entry_content_class(has_excerpt($post->ID));?>">
 		<?php do_action(wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'author',$post); ?>	
-				<?php the_content('Read the rest of this entry &raquo;'); ?>
+				<?php the_content('<span>Read the rest of this entry &raquo;</span>'); ?>
 		<?php do_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.'author',$post); ?>
 			</dd>		
 			<?php the_tags('<dd class="postmeta-tags"><acronym  class="rtxt fl" title="Tags &#187; Taxonomy">Tags:</acronym> <ul class="tags r cfl cf"><li>', '<span class="sep">,</span>&nbsp;</li><li>', '</li></ul></dd>'); ?>
@@ -1223,14 +1259,20 @@ function wpi_comment_guide($post,$comments,$cnt){
 		$cnt = (int) $comment_alt;
 	}
 	$alt = ($cnt % 2) ? 'light' : 'normal';
-
+	$ava = 'avatar-wrap.png';
+	if (wpi_option('client_time_styles')){
+		$file = (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME].'-'.$ava;
+		if (file_exists(WPI_IMG_DIR.$file) ){
+			$ava = $file;
+		}
+	}
 ?>					
 						<li id="comment-00" class="hreview <?php echo $alt;?>">
 			<ul class="reviewier-column cf r">
 							<li class="span-3 fl rn hcard">
 							<address class="vcard microid-mailto+http:sha1:<?php echo get_microid_hash(get_comment_author_email(),WPI_URL)?>">
 							<?php	$photo_url = THEME_IMG_URL.'default-avatar.png';?>
-							<img src="<?php echo wpi_img_url('avatar-wrap.png');?>" width="80" height="80" alt="stalker&apos;s photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
+							<img src="<?php echo wpi_img_url($ava);?>" width="80" height="80" alt="stalker&apos;s photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
 								<a href="<?php echo WPI_URL; ?>" class="url fn db">
 								<?php echo WPI_BLOG_NAME ;?></a> 
 							</address>				
@@ -1380,11 +1422,185 @@ function wpi_postmeta_label($id,$label){
 	t('label',$label,array('for'=>'wpi_'.$id,'style'=>'color:#555;width:100px;float:left;display:block;font-weight:700'));
 }
 
+/**
+ * Page title singular post form
+ */
+function wpi_postform_metatitle(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('maintitle',__('Title: ',WPI_META));
+		wpi_postmeta_input('maintitle');
+		echo '</p>'; ?>
+	<p><?php _e('<strong>Tips: </strong> Try keep the title tag as unique as possible and make sure the title is relevant to the content on the page. Avoid repeated keywords phrases in title tag.',WPI_META);?></p>
+<?php	
+}
+
+/**
+ * Abstract 'Sub title' singular post form
+ */
+function wpi_postform_metasubtitle(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('subtitle',__('Sub title',WPI_META));
+		wpi_postmeta_input('subtitle');
+		echo '</p>'; ?>
+	<p><?php _e('<strong>Note: </strong> Entry sub title will be added as meta-abstract.',WPI_META);?></p>
+<?php	
+} 
+
+/**
+ * Meta description singular post form
+ */
+function wpi_postform_metadescription(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('meta_description',__('Descriptions',WPI_META));
+		wpi_postmeta_input('meta_description');
+		echo '</p>'; ?>
+	<p><?php _e('<strong>Tips: </strong> Make it descriptive and include relevant keywords or keyphrases, 25-30 words, no more than two sentences.',WPI_META);?></p>
+<?php	
+} 
+
+/**
+ * Meta keywords singular post form
+ */
+function wpi_postform_metakeywords(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('meta_keywords',__('Keywords',WPI_META));
+		wpi_postmeta_input('meta_keywords');
+		echo '</p>'; ?>
+	<p><?php _e('<strong>Tips: </strong> Pick the 10 or 15 terms that most accurately describe the content of the page. Use comma to separate the keywords.',WPI_META);?></p>
+<?php	
+}
+
+/**
+ * Banner singular post form
+ */
+function wpi_postform_banner(){
+		echo '<p id="banner-enabled" style="padding-bottom:9px">';
+		wpi_postmeta_label('banner',__('Show banner',WPI_META));
+		echo '<select name="wpi_banner" id="wpi_banner" size="2" class="row-4" style="height:36px">';
+		$prop = wpi_get_postmeta('banner');  if (empty($prop))	$prop = 1;
+		wpiAdmin::htmlOption(array('Enabled' => 1,'Disabled' => 0),$prop);?>		
+	</select></p>
+			<p id="banner-url" style="clear:both;border-top:1px solid #dfdfdf;padding-top:18px;padding-bottom:9px">
+				<?php $ltitle = __('Image URL ',WPI_META);?>
+				<?php wpi_postmeta_label('banner_url',$ltitle);?>
+				<?php wpi_postmeta_input('banner_url');?>			
+			</p>	
+			<p id="banner-height" style="clear:both;border-top:1px solid #dfdfdf;padding-top:18px;padding-bottom:9px">
+				<?php $ltitle = __('Banner height ',WPI_META);?>
+				<?php wpi_postmeta_label('banner_height',$ltitle);?>				
+				<?php wpi_postmeta_input('banner_height','width:10%','72px');?>	
+			</p>	
+			<p style="clear:both;border-top:1px solid #dfdfdf;padding-top:18px;padding-bottom:9px">			
+				<?php $ltitle = __('Background repeat:',WPI_META);?>
+				<?php wpi_postmeta_label('banner_repeat',$ltitle);?>
+					<select name="wpi_banner_repeat" id="wpi_banner_repeat" size="2" class="row-4" style="height:68px">
+			<?php	$prop = wpi_get_postmeta('banner_repeat'); 
+					if(empty($prop))	$prop = 'no-repeat';
+					wpiAdmin::htmlOption(array('None' => 'no-repeat','Tile' => 'repeat',
+					'Horizontal'=>'repeat-x','Vertical'=>'repeat-y'),$prop);?>		
+					</select>
+			</p>
+			<p id="banner-position" style="clear:both;border-top:1px solid #dfdfdf;padding-top:18px;padding-bottom:9px">
+				<?php $ltitle = __('Background position ',WPI_META);?>
+				<?php wpi_postmeta_label('banner_position',$ltitle);?>				
+				<?php wpi_postmeta_input('banner_position','width:10%','left top');?>	
+			</p>					
+
+<?php	
+}
+ 
+/**
+ * Head custom content singular post form
+ */
+function wpi_postform_headcontent(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('header_content',__('Content',WPI_META));
+ ?><textarea id="wpi_header_content" name="wpi_header_content" style="width:70%;height:200px"><?php echo stripslashes_deep(wpi_get_postmeta('header_content'));?></textarea></p>
+	<p><?php _e('Content will be added before the &#60;&#47;head&#62; tag.',WPI_META);?></p>
+<?php	
+}
+
+
+/**
+ * Footer custom content singular post form
+ */
+function wpi_postform_footercontent(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('footer_content',__('Content',WPI_META));
+ ?><textarea id="wpi_footer_content" name="wpi_footer_content" style="width:70%;height:200px"><?php echo stripslashes_deep(wpi_get_postmeta('footer_content'));?></textarea></p>
+	<p><?php _e('Content will be added before the &#60;&#47;body&#62; tag.',WPI_META);?></p>
+<?php	
+}
+
+
+/**
+ * hReview singular post form
+ */
+function wpi_postform_hreview(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('hrating',__('Content rating',WPI_META));
+		wpi_postmeta_input('hrating','width:10%',3);
+		echo '</p>'; ?>	
+	<p><?php _e('<strong>Note: </strong> content rating for this entry. Max is 5',WPI_META);?></p>
+<?php	
+}
+
+ 
+function wpi_register_metaform(){
+	$args = array();
+	
+	if (wpi_option('meta_title')){
+		$args[] = array('meta-title',__('Title',WPI_META),'metatitle');
+	}
+	
+	// Entry sub title
+	$args[] = array('meta-subtitle',__('Entry sub title',WPI_META),'metasubtitle');
+	
+	// meta descriptions
+	if(wpi_option('meta_description')){
+		$args[] = array('meta-descriptions',__('Meta descriptions',WPI_META),'metadescription');
+	}
+	
+	// meta keywords
+	if(wpi_option('meta_keywords')){
+		$args[] = array('meta-keywords',__('Meta Keywords',WPI_META),'metakeywords');
+	}
+	
+	// banner
+	if(wpi_option('banner')){
+		$args[] = array('wpi-banner',__('Banner Settings',WPI_META),'banner');
+	}		
+
+	// Head custom contents
+	$args[] = array('meta-headcontent',__('Head content',WPI_META),'headcontent');
+
+	// Footer custom contents
+	$args[] = array('meta-footercontent',__('Footer content',WPI_META),'footercontent');
+	
+	// hReview
+	$args[] = array('meta-hreviewcontent',__('hReview',WPI_META),'hreview');	
+			
+	if (has_count($args)){
+		
+		foreach($args as $k=>$option){
+			
+			list($id,$title,$callback) = $option;
+			$callback = 'wpi_postform_'.$callback;
+			add_meta_box($id,$title,$callback,'post','advanced');
+			add_meta_box($id,$title,$callback,'page','advanced');
+			
+		}
+		
+		unset($args);
+	}
+}
+
 function wpi_post_metaform(){
 	
 ?>
 <h2>WP-iStalker Theme options</h2>
-	<?php if(wpi_option('meta_title')):?>
+	<?php 
+	if(wpi_option('meta_title')):?>
 	<?php $ptitle = __('Page Title',WPI_META); $ltitle = __('Title: ',WPI_META); ?>
 	<?php wpi_metabox_start($ptitle,'maintitle');?>
 		<p>
@@ -1392,7 +1608,7 @@ function wpi_post_metaform(){
 			<?php wpi_postmeta_input('maintitle');?>					
 		</p>
 	<?php wpi_metabox_end();?>
-	<?php endif;?>
+	<?php endif; ?>
 	<?php if(wpi_option('meta_description')):?>
 	<?php $ptitle = __('Meta Description',WPI_META); $ltitle = __('Descriptions: ',WPI_META); ?>
 	<?php wpi_metabox_start($ptitle,'metadescription');?>
@@ -1506,7 +1722,10 @@ function wpi_profile_options()
 	$user_banner_repeat = ($user_banner_repeat) ? $user_banner_repeat : 'repeat';
 
 	$user_banner_height = get_usermeta($user_id,'user_banner_height');
-	$user_banner_height = ($user_banner_height) ? $user_banner_height : '72px';		
+	$user_banner_height = ($user_banner_height) ? $user_banner_height : '72px';	
+	
+	$user_banner_position = get_usermeta($user_id,'user_banner_position');
+	$user_banner_position = ($user_banner_position) ? $user_banner_position : '0% 0%';			
 ?>
 <h3><?php _e('WPI Profile badge settings');?></h3>
 <table class="form-table">
@@ -1550,7 +1769,12 @@ function wpi_profile_options()
 		<th><label for="user_banner_height"><?php _e('Banner Height'); ?></label></th>
 		<td><?php t('input', '', array('type' => 'text', 'name' => 'user_banner_height','id' =>'user_banner_height','value' => $user_banner_height)); ?>		
 		</td>
-	</tr>	
+	</tr>
+	<tr>	
+		<th><label for="user_banner_position"><?php _e('Background position'); ?></label></th>
+		<td><?php t('input', '', array('type' => 'text', 'name' => 'user_banner_position','id' =>'user_banner_position','value' => $user_banner_position)); ?>		
+		</td>
+	</tr>		
 </table>
 <?php	
 }

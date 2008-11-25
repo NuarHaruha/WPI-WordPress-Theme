@@ -1,5 +1,5 @@
 /**
- * $Id: image.css 70 2008-11-13 03:31:27Z chaoskaizer $
+ * $Id$
  * background image lib
  */
 #calendar_wrap th {
@@ -24,6 +24,10 @@ background-image:url(images/search-start.png)
 
 #searchform button,.dl-search button {
 background-image:url(images/search-end.png)
+}
+
+.nt .rss16 {
+background-image:url(images/icons/nt-feed.png)
 }
 
 .rss16 {
@@ -76,6 +80,10 @@ background-image:url(images/icons/tv-item-last.gif)
 
 .single #content-top,.page #content-top,.category #content-top,.tag #content-top,.search #content-top,.archive #content-top,.four04 #content-top {
 background-image:url(images/single-meta-bar.png)
+}
+
+.nt.single #content-top,.nt.page #content-top,.nt.category #content-top,.nt.tag #content-top,.nt.search #content-top,.nt.archive #content-top,.nt.four04 #content-top {
+background-image:url(images/nt-single-meta-bar.png)
 }
 
 #commentform textarea {
@@ -236,4 +244,8 @@ background-image:url(images/stalker-pass.png)
 
 .toggle-content {
 background-image:url(images/sprites/expand.gif)
+}
+
+.nt #sidebar-mid dl.w,.nt .commentlist .hreview{
+background-image: url(images/nt-htop.gif)
 }

@@ -155,8 +155,7 @@ class wpiStyle
 					'rel'=>'stylesheet',
 					'href'=> wpi_get_stylesheets_url($this->css),
 					'media'=>'screen',
-					'title'=> wpiTheme::UID));
-		
+					'title'=> wpiTheme::UID));		
 	}
 	
 	public function internalStyles()
@@ -166,7 +165,7 @@ class wpiStyle
 	
 	@import url('<?php echo wpi_get_stylesheets_url($this->css);?>');
 		<?php endif; ?>	<?php do_action( wpiFilter::ACTION_INTERNAL_CSS); ?>
-	
+		<?php do_action( wpiFilter::ACTION_GRAVATAR_CSS ); ?>
 	/*]]>*/
 	</style>	
 	<?php		

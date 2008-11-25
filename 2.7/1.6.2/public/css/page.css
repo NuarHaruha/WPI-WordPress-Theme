@@ -3,7 +3,7 @@
  * $Id page.css, 0021 10/26/2008 1:41:43 PM ck $
  * Page stylesheet
  */
-
+.nt #content-top{border-bottom-color:#333 !important}
 #content-top{background-repeat:no-repeat;background-color:#f4f4f4 !important;background-position:0% 0%}
 
 .hentry{padding-left:0pt}
