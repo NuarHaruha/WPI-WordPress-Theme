@@ -97,7 +97,7 @@ class wpiPathway
 			// append tooltips  class if there is title
 			if (isset($att['title']))
 			{
-				$att['class'] = $att['class'] . ' ttip';
+				$att['class'] = $att['class'] . ' ttip';				
 			}
 
 			$links = _t('a', $value[0], $att);
@@ -131,7 +131,7 @@ class wpiPathway
 		$text = (!empty($text)) ? $text : __('Frontpage', WPI_META);
 		return array($text, array('href' => '#main',
 			// skip to content
-			'title' => __('You are here | ' . WPI_BLOG_NAME . '&apos;s Frontpage', WPI_META),
+			'title' => __('You are here | ' . WPI_BLOG_NAME . '&#39;s Frontpage', WPI_META),
 			'rel' => 'home robots-anchortext','class'=>'scroll-to'));
 	}
 
@@ -160,7 +160,7 @@ class wpiPathway
 			$pathway['home'] = $home;
 			$att = $pathway['home'][1];
 
-			$att['title'] = __(WPI_BLOG_NAME . '&apos;s Frontpage', WPI_META);
+			$att['title'] = __(WPI_BLOG_NAME . '&#39;s Frontpage', WPI_META);
 			$att['href'] = WPI_URL;
 
 			$pathway['home'][1] = $att;
@@ -578,7 +578,7 @@ class wpiPathway
 		//$this->drool;
 		$pathway = array();
 		//  rss
-		$pathway['first'] = array( sprintf(__('%s&apos;s Feeds',WPI_META),WPI_BLOG_NAME), 
+		$pathway['first'] = array( sprintf(__('%s&#39;s Feeds',WPI_META),WPI_BLOG_NAME), 
 		array(	'href' => get_feed_link(), 
 				'type' => 'application/rss+xml', 
 				'title' => sprintf(__('%s | Subscribe to this feed', WPI_META),WPI_BLOG_NAME), 
