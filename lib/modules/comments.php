@@ -66,7 +66,14 @@ function wpi_comment_start($comment,$option,$depth){
 	$microid	= get_microid_hash($email,$author_uri);
 	$author		= apply_filters('get_comment_author',$comment->comment_author);	
 	$rclass		= comment_class('hreview',$cid,$post->ID,false);
-	$ava 		= ( stristr($rclass,'bypostauthor')) ? 'avatar-author-wrap.png' : 'avatar-wrap.png'; 
+	$ava 		= ( stristr($rclass,'bypostauthor')) ? 'avatar-author-wrap.png' : 'avatar-wrap.png';
+	
+	if (wpi_option('client_time_styles')){
+		$file = (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME].'-'.$ava;
+		if (file_exists(WPI_IMG_DIR.$file) ){
+			$ava = $file;
+		}
+	} 
 ?>
 				<li id="comment-<?php echo $cid;?>" <?php echo $rclass;?>>
 						<ul class="reviewier-column cf r">
@@ -179,6 +186,7 @@ function wpi_comment_time( $d = '', $gmt = false, $comment = false ) {
 function wpi_comment_avatar_src($cid=false,$pid=false){
 	
 	$src = 'avatar-wrap.png';	
+
 	if (stristr(wpi_post_author_selector_filter(),'post-author') ){
 		$src = 'avatar-author-wrap.png';
 	}
@@ -188,6 +196,12 @@ function wpi_comment_avatar_src($cid=false,$pid=false){
 			$src = 'avatar-author-wrap.png';
 		}
 	}
+	
+	
+	$file = (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME].'-'.$src;
+	if (file_exists(WPI_IMG_DIR.$file)){
+		$src = $file;
+	}		
 	
 	echo wpi_img_url($src);
 }

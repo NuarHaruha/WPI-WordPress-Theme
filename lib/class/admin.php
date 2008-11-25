@@ -59,8 +59,8 @@ class wpiAdmin
         	
             if (preg_match(self::REQUEST_PREFIX, $key) ) {				                
 				$key = str_rem(self::OPTIONS_PREFIX,$key);
-				if ($key == 'flush_css'){
-					$this->_flushCSS();
+				if (stristr($key,'flush_')){
+					$this->_flushType($key);
 				} else {
 					self::save($key,$val);
 				}     
@@ -71,15 +71,23 @@ class wpiAdmin
   
     }
     
-    private function _flushCSS(){
-    	if ( ($css = wpi_get_dir(WPI_CACHE_CSS_DIR)) != false ){
-	    	foreach($css as $filename){
-	    		$file = WPI_CACHE_CSS_DIR.$filename;
+    private function _flushType($type = 'flush_css'){
+    	
+    	switch ($type){
+    		case 'flush_css': $path = WPI_CACHE_CSS_DIR;break;
+    		case 'flush_webfont': $path = WPI_CACHE_FONTS_DIR.DIRSEP;break;
+    		case 'flush_avatar': $path = WPI_CACHE_AVATAR_DIR.DIRSEP;break;
+    	}
+    	
+    	if ( ($files = wpi_get_dir($path)) != false ){
+	    	foreach($files as $filename){
+	    		$file = $path.$filename;
 	    		
 	    		if (file_exists($file)){
 	    			unlink($file);
 	    		}
 	    	}
+	    	unset($files);
     	}
     }
     
@@ -89,8 +97,9 @@ class wpiAdmin
 		if (is_wp_version('2.7') || is_wp_version('2.7-beta1')){
 ?>
 		<style type="text/css">
-		    #wpi-theme-options{background-position:253% 0%;margin:0pt !important}
-			#wpi-theme-options .main{width:600px}
+		    #wpi-theme-options{background-image:none;margin:0pt !important}
+			#wpi-theme-options .main{width:80%}
+			#wpi-theme-options .side-panel{width:18%}
 			#wpi-theme-options .options-item{width:98%}
 			#wpi-theme-options .side-panel h2{margin-top:8px}
 		</style>
@@ -141,7 +150,7 @@ class wpiAdmin
 	</h4>
 	<div class="dn">
 	<ul class="mtb">
-		<li class="last">
+		<li>
 			<h4><?php _e('Stylesheet',WPI_META);?></h4>
 			<?php $css = wpi_get_dir(WPI_CACHE_CSS_DIR);?>
 			<?php if (has_count($css) && !empty($css)):?>
@@ -160,6 +169,7 @@ class wpiAdmin
 					t('dd',$c.$a.$s,array('style'=>'display:block;clear:both'));
 					$n++;
 				}
+				unset($css);
 			?>
 			<small> Cache directory size : <?php echo format_filesize($size);?>
 			</small>
@@ -167,11 +177,63 @@ class wpiAdmin
 			<button class="sbtn" type="submit" name="wpi_flush_css" id="wpi_flush_css" value="1">Erase Cache</button>
 			<?php else:?>
 			<p>No cached files.</p>
-			<?php endif; ?>
-			
-			
-			
+			<?php endif; ?>			
 		</li>
+		<li>
+			<h4><?php _e('GD webfont image',WPI_META);?></h4>
+			<?php $fonts = wpi_get_dir(WPI_CACHE_FONTS_DIR);?>
+			<?php if (has_count($fonts) && !empty($fonts)):?>
+			<dl>
+			<?php 
+			$size = 0;
+			$n = 1;
+				foreach($fonts as $tag){
+					$s = filesize(WPI_CACHE_FONTS_DIR.DIRSEP.$tag);
+					$size += $s;
+					$s = format_filesize($s);
+					$s = _t('small',' - '.$s);
+					$a = _t('a',str_rem('.png',$tag),array('href'=>WPI_THEME_URL.'public/cache/webfonts/'.$tag,'target'=>'_blank' ));
+					$c = _t('small',$n.'. ');
+					t('dd',$c.$a.$s,array('style'=>'display:block;clear:both'));
+					$n++;
+				}
+				unset($fonts);
+			?>
+			<small> Cache directory size : <?php echo format_filesize($size);?>
+			</small>
+			</dl>
+			<button class="sbtn" type="submit" name="wpi_flush_webfont" id="wpi_flush_webfont" value="1">Erase Cache</button>
+			<?php else:?>
+			<p>No cached files.</p>
+			<?php endif; ?>			
+		</li>		
+		<li class="last">
+			<h4><?php _e('Avatar image',WPI_META);?></h4>
+			<?php $ava = wpi_get_dir(WPI_CACHE_AVATAR_DIR);?>
+			<?php if (has_count($ava) && !empty($ava)):?>
+			<dl>
+			<?php 
+			$size = 0;
+			$n = 1;
+				foreach($ava as $tag){
+					$s = filesize(WPI_CACHE_AVATAR_DIR.DIRSEP.$tag);
+					$size += $s;
+					$s = format_filesize($s);
+					$s = _t('small',' - '.$s);
+					$a = _t('a',str_rem('.png',$tag),array('href'=>WPI_THEME_URL.'public/cache/avatar/'.$tag,'target'=>'_blank' ));
+					$c = _t('small',$n.'. ');
+					t('dd',$c.$a.$s,array('style'=>'display:block;clear:both'));
+					$n++;
+				}
+			?>
+			<small> Cache directory size : <?php echo format_filesize($size);?>
+			</small>
+			</dl>
+			<button class="sbtn" type="submit" name="wpi_flush_avatar" id="wpi_flush_avatar" value="1">Erase Cache</button>
+			<?php else:?>
+			<p>No cached files.</p>
+			<?php endif; ?>			
+		</li>		
 	</ul>
 	</div>
 	</li>
@@ -266,20 +328,36 @@ class wpiAdmin
 						$this->lang['disabled'] => 0 ),$menu['pages']); ?>
 				</select> 	
 			
-		</li><?php if ($menu['pages']): ?><li>
-		<label for="wpi_menu_page_exclude">
-			<?php _e('Exclude Page',WPI_META); ?>
-		</label><?php t('input', '', array('type' => 'text', 'name' => 'wpi_menu_page_exclude','id' =>'wpi_menu_page_exclude','value' => self::option('menu_page_exclude'))); ?>
-		<small>separate page id with comma (e.g., 42,101,31,337)</small>			
-		</li><?php endif; ?>
-	
+		</li><?php if ($menu['pages']): ?>
+		<ul>
+			<li>
+			<label for="wpi_menu_page_exclude">
+				<?php _e('Exclude Page',WPI_META); ?>
+			</label><?php t('input', '', array('type' => 'text', 'name' => 'wpi_menu_page_exclude','id' =>'wpi_menu_page_exclude','value' => self::option('menu_page_exclude'))); ?>
+			<small>separate page id with comma (e.g., 42,101,31,337)</small>			
+			</li>
+		</ul>	
+		<?php endif; ?>	
 		<li class="last">		
 			<label><?php _e('Pathway:',WPI_META);?></label>
 				<select name="wpi_pathway_enable" id="wpi_pathway_enable" size="2" class="row-2">
 			<?php self::htmlOption(array(
 						$this->lang['enabled'] => 1,
 						$this->lang['disabled'] => 0 ),$menu['pathway']); ?>
-				</select> 		
+				</select> 
+				<?php if($menu['pathway']): ?>
+				<?php $prop = self::option('pathway_frontpage_text');?>
+				<?php $prop = (!empty($prop)) ? $prop : 'Frontpage'; ?>
+					<ul>
+						<li class="last">
+						<label for="wpi_pathway_frontpage_text">
+							<?php _e('Frontpage label',WPI_META); ?>
+							<small><?php _e('Default: Frontpage',WPI_META); ?></small>
+						</label><?php t('input', '', array('type' => 'text', 'name' => 'wpi_pathway_frontpage_text','id' =>'wpi_pathway_frontpage_text','value' => $prop)); ?>
+									
+						</li>
+					</ul>				
+				<?php endif;?>
 		</li>
 	</ul>
 		<?php self::saveButton();?>
@@ -318,7 +396,7 @@ class wpiAdmin
 				
 		<li><?php $prop = self::option('post_hrating'); ?>
 			<label><?php _e('hReview rating',WPI_META);?>			
-				<small>Show hreview ratings</small></label>
+				<small>Show hreview ratings star</small></label>
 				<select name="wpi_post_hrating" id="wpi_post_hrating" size="2" class="row-2">
 			<?php self::htmlOption(array(
 			$this->lang['enabled'] =>1,
@@ -377,23 +455,23 @@ class wpiAdmin
 				<small>X-XRDS-Location</small>
 			</label>
 			<?php t('input','', array('type' => 'text', 'name' => 'wpi_xxrds','id' =>'wpi_xxrds','value' => self::option('xxrds'))); ?>
-		</li>			
-		<li>
-			<label>
-				<?php _e('Geo positioning',WPI_META);?>
-				<small>Geographical coordinates to URL</small>
-			</label>
-			<?php t('input', '', array('type' => 'text', 'name' => 'wpi_geourl','id' =>'wpi_geourl','value' => self::option('geourl'))); ?>
-		</li>					
+		</li>
 		<?php if (file_exists(WP_ROOT.DIRSEP.'labels.rdf')) : ?>
-		<li class="last">
+		<li>
 			<label>
 				<?php _e('PICS',WPI_META);?>
 				<small>Platform for Internet Content Selection (PICS)</small>
 			</label>
 			<textarea id="wpi_icra_label" name="wpi_icra_label" style="width:50%"><?php echo stripslashes_deep(self::option('icra_label'));?></textarea>		
 		</li>
-		<?php endif; ?>
+		<?php endif; ?>					
+		<li class="last">
+			<label>
+				<?php _e('Geo positioning',WPI_META);?>
+				<small>Geographical coordinates to URL</small>
+			</label>
+			<?php t('input', '', array('type' => 'text', 'name' => 'wpi_geourl','id' =>'wpi_geourl','value' => self::option('geourl'))); ?>
+		</li>
 	</ul>
 	<?php self::saveButton();?>
 	</div>
@@ -576,6 +654,16 @@ class wpiAdmin
 					  } ?>						
 						<?php t('input', '', array('type' => 'text', 'name' => 'wpi_banner_height','id' =>'wpi_banner_height','value' => $bheight)); ?>					
 					</li>
+					<li>
+						<label>
+							<?php _e('Background position',WPI_META);?>
+							<small>default: left top</small>
+						</label>
+						<?php $bpos = self::option('banner_position');?>
+					<?php  if (!$bpos || empty($bpos)){
+					  	$bpos = 'left top';
+					  } t('input','', array('type' => 'text', 'name' => 'wpi_banner_position','id' =>'wpi_banner_position','value' => $bpos)); ?>					
+					</li>					
 					<li class="last">
 						<label>
 							<?php _e('Exclude banner',WPI_META);?>
@@ -596,17 +684,96 @@ class wpiAdmin
 				</ul>
 				<?php endif;?>	
 		</li>						
-		<li class="last"><?php $prop = self::option('client_time_styles');?>
+		<li><?php $prop = self::option('client_time_styles');?>
 			<label>
 				<?php _e('Client time CSS',WPI_META);?>
 				<small>Stylesheets switcher</small>
 			</label>
-				<select name="wpi_client_time_styles" id="wpi_client_time_styles" size="2" class="row-2" disabled="disabled">
+				<select name="wpi_client_time_styles" id="wpi_client_time_styles" size="2" class="row-2">
 			<?php self::htmlOption(array(
 						$this->lang['enabled'] => 1,
 						$this->lang['disabled'] => 0 ),$prop);?>
 				</select> 	
-		</li>															
+		</li><?php if(function_exists('ImageCreate')): ?>
+		<li><?php $prop = self::option('gdfont_image');?>
+			<label>
+				<?php _e('GD font',WPI_META);?>
+				<small>Enable <a href="http://my.php.net/gd">PHP GD</a> text to image replacement</small>
+			</label>
+				<select name="wpi_gdfont_image" id="wpi_gdfont_image" size="2" class="row-2">
+			<?php self::htmlOption(array($this->lang['enabled'] => 1,$this->lang['disabled'] => 0 ),$prop);?>
+				</select> 	
+				<?php if ($prop && ( ($fonts = wpi_get_fonts()) != false ) ): ?>
+					<ul>						
+						<li><?php $prop = self::option('gd_blogname'); ?>
+							<label for="wpi_gd_blogname"><?php _e('Blog name',WPI_META);?>
+							<small>Replace blog name heading with gdfont-image. <abbr title="Search Engine Friendly">SEF</abbr></small>
+							</label>
+								<select name="wpi_gd_blogname" id="wpi_gd_blogname" size="2" class="row-2">
+							<?php self::htmlOption(array(
+							$this->lang['enabled'] =>1,
+							$this->lang['disabled'] =>0 ),$prop);?>
+								</select>
+						</li>
+						<li>
+							<label for="wpi_gd_blogname_text">
+								<?php _e('Custom text',WPI_META);?>
+								<small>Default heading text: "<?php echo WPI_BLOG_NAME;?>"</small>
+							</label>
+							<?php $txt = self::option('gd_blogname_text');?>
+						<?php  if (''== $txt){
+						  	$txt = WPI_BLOG_NAME;
+						  } t('input','', array('type' => 'text', 'name' => 'wpi_gd_blogname_text','id' =>'wpi_gd_blogname_text','value' => $txt)); ?>					
+						</li>	
+						<li><?php $prop = self::option('gd_blogname_font'); ?>
+							<label for="wpi_gd_blogname_font"><?php _e('Font face',WPI_META);?>
+							<small>Select available font</small>
+							</label>
+								<select name="wpi_gd_blogname_font" id="wpi_gd_blogname_font" size="2" class="row-4">
+								<?php $prop = (empty($prop)) ? $fonts[0] : $prop ?>
+								<?php self::htmlOption($fonts,$prop,true);?>
+								</select>
+						</li>	
+						<li>
+							<label for="wpi_gd_blogname_color">
+								<?php _e('Foreground color',WPI_META);?>
+								<small>Hex: #336699, 336699, #369, 369 </small>
+							</label>
+							<?php $txt = self::option('gd_blogname_color');?>
+						<?php  if (!$txt || empty($txt)){
+						  	$txt = 'ffffff';
+						  } t('input','', array('type' => 'text', 'name' => 'wpi_gd_blogname_color','id' =>'wpi_gd_blogname_color','value' => $txt)); ?>					
+						</li>	
+						<li class="last">
+							<label for="gd_blogname_text_size">
+								<?php _e('Pixel size',WPI_META);?>
+								<small>Default: 36<sub>px</sub></small>
+							</label>
+							<?php $txt = self::option('gd_blogname_text_size');?>
+						<?php  if (!$txt || empty($txt)){
+						  	$txt = 36;
+						  } t('input','', array('type' => 'text', 'name' => 'wpi_gd_blogname_text_size','id' =>'wpi_gd_blogname_text_size','value' => $txt)); ?>					
+						</li>																											
+					</ul>
+				<?php elseif(wpi_get_fonts() == false):?>
+				<ul>
+					<li class="last">
+					<p><?php _e('<strong>Whoops</strong> No fonts found',WPI_META);?></p>
+					<p><?php _e('Please upload your font at  the following directory <tt>'. WPI_FONTS_DIR.'</tt>',WPI_META);?></p></li>					
+				</ul>
+				<?php endif;?>
+		</li><?php endif; ?>	
+		<li class="last"><?php $prop = self::option('iframe_breaker');?>
+			<label>
+				<?php _e('Frame Breaker',WPI_META);?>
+				<small>Disabled client view inside frame or iframe</small>
+			</label>
+				<select name="wpi_iframe_breaker" id="wpi_iframe_breaker" size="2" class="row-2">
+			<?php self::htmlOption(array(
+						$this->lang['enabled'] => 1,
+						$this->lang['disabled'] => 0 ),$prop);?>
+				</select> 	
+		</li>																	
 	</ul>	
 	<?php self::saveButton();?>
 	</div>		

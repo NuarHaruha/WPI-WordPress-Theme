@@ -10,10 +10,13 @@
 #meta-title h1{color:#111}
 #meta-title h1 cite{display:block;padding: 6px 0pt 0pt;font-size:0.6em;color:#888}
 
+.nt #content-top{border-bottom-color:#333}
+
 #content-top
 {
 	background-repeat:no-repeat;background-color:#f9f9f9 !important;background-position:0% 0%; border-bottom:10px solid #339BCF;
 }
+
 	
 #content{padding:18px 20px}
 

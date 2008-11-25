@@ -1,7 +1,7 @@
 #MOD_REWRITE
 <ifmodule mod_rewrite.c> 
 RewriteEngine On
-RewriteCond %{REQUEST_URI} (\.(css|js|thumb|ava))$ [NC]
+RewriteCond %{REQUEST_URI} (\.(css|js|thumb|ava|webfont|e64|d64))$ [NC]
 RewriteRule ^(.*.css)$ theme-engine.php?type=css&files=$1
 RewriteRule ^(.*.js)$ theme-engine.php?type=javascript&files=$1
 RewriteRule ^(.*.e64)$ theme-engine.php?type=e64&files=$1

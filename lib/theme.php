@@ -84,10 +84,10 @@ class Wpi
 		self::getFile(array('browscap','body_class'),'import');
 		self::getFile(array('utils','formatting','filters','query','links','template','plugin','widgets','comments','author') );
 		
-		$this->_defaultSettings();
-					
-			
 		if ( is_admin() ) {		
+			
+			$this->_defaultSettings();
+			
 			add_action('admin_menu', array($this,'setThemeOptions') );
 			
 			// singular template form		

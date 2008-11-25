@@ -158,9 +158,13 @@ class wpiScripts{
 			
 		$js .= ',script:{path:'.$jspath.',url:'.$jsurl.'}';
 		if (wpi_option('client_time_styles')){
-			$js .= ',pid:'.$pid.',cl_type:td};jQuery(document).ready(function(){if( $(\'#\'+wpi.id).hasClass(wpi.cl_type) == false){ $(\'#\'+wpi.id).addClass(wpi.cl_type);jQuery.cookie(\'wpi-cl\',wpi.cl_type,{duration: 1/24,path: "/"});};});'.PHP_EOL;
+			$js .= ',pid:'.$pid.',cl_type:td};jQuery(document).ready(function(){if( jQuery(\'#\'+wpi.id).hasClass(wpi.cl_type) == false){ jQuery(\'#\'+wpi.id).addClass(wpi.cl_type);jQuery.cookie(\'wpi-cl\',wpi.cl_type,{duration: 1/24,path: "/"});};});'.PHP_EOL;
 		} else {
 			$js .= ',pid:'.$pid.'};'.PHP_EOL;
+		}
+		
+		if (wpi_option('iframe_breaker') && !$wp_query->is_preview){
+			$js .= PHP_T.PHP_T.'if(top.location!=location){top.location.href=document.location.href;};'.PHP_EOL;
 		}
 		
 		// check client cookie;				

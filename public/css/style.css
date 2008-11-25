@@ -15,9 +15,9 @@ body
 	background-color:#bfbfbf
 }
 
-.nt #wp-content-top .outer,.nt #wp-content-bottom .outer,.nt #wp-meta-title .outer,.nt #wp-respond .outer
+.nt #wp-content-top .outer,.nt #wp-content-bottom .outer,.nt #wp-meta-title .outer,.nt #wp-respond .outer,.nt #wp-banner .outer
 {
-	background-color:#eee
+	background-color:#7f7f7f
 }
 
 #nav,#pathway,#pathway-column,#content-end,#wp-content-mid #content-mid
@@ -51,12 +51,18 @@ body
 	padding-bottom:2px
 }
 
+
 #blog-meta
 {
 	height:26px;
 	padding:6px 0 0 10px!important;
 	width:718px
 }
+
+#header #blog-meta{
+	height:72px
+}
+
 
 #blog-title
 {
@@ -65,6 +71,8 @@ body
 	line-height:1.5em;
 	margin:0!important
 }
+
+#header #blog-title a{color:#fff}
 
 #blog-title a:hover
 {
@@ -75,6 +83,8 @@ body
 {
 	padding-right:10px
 }
+
+#header blockquote.description{display:block;float:none;clear:left}
 
 blockquote.description
 {
@@ -96,6 +106,12 @@ blockquote.description p
 {
 	color:#777
 }
+
+.nt #header blockquote.description p
+{
+	color:#ddd
+}
+
 
 #wp-nav #nav
 {
@@ -152,6 +168,7 @@ blockquote.description p
 	width:29px
 }
 
+
 #pathway
 {
 	background-color:#eee;
@@ -163,7 +180,9 @@ blockquote.description p
 .nt #pathway
 {
 	background-color:#4f4f4f;
-	border-top-color:#ccc
+	border-top-color:#ccc;
+	border-bottom-color:#777;
+	color:#bbb
 }
 
 #breadcrumb
@@ -183,10 +202,21 @@ blockquote.description p
 	width:24px
 }
 
+.nt #breadcrumb li a
+{
+	color:#aaa	
+}
+
 #breadcrumb li a
 {
 	color:#888
 }
+
+.nt #breadcrumb li a:hover
+{
+	color:#ccc;
+}
+
 
 #breadcrumb li a:hover
 {
@@ -286,6 +316,11 @@ blockquote.description p
 	background-position:-53px 0
 }
 
+.nt #meta-title
+{
+	background-color:#4f4f4f	
+}
+
 #meta-title
 {
 	background-color:#fff;
@@ -299,6 +334,12 @@ blockquote.description p
 	color:#555;
 	font-size:2.3em;
 	margin-bottom:9px
+}
+
+.nt #meta-title h1
+{
+	color:#c2c2c2;
+	
 }
 
 #meta-title h1 cite
@@ -316,6 +357,12 @@ blockquote.description p
 	padding:0;
 	width:918px
 }
+
+.nt.home #content-top{border-bottom-color:#333}
+.home #content-top{border-bottom:10px solid #2D96CB}
+
+.nt #content-bottom{border-bottom-color:#B2B2B2}
+#content-bottom{border-bottom:4px solid #2D96CB}
 
 #main,#main-bottom
 {
@@ -370,7 +417,8 @@ blockquote.description p
 {
 	color:#505050;
 	font-size:1em;
-	padding-left:20px
+	padding-left:20px;
+	text-align: justify
 }
 
 .home .entry-content
@@ -799,6 +847,7 @@ acronym.share:hover
 {
 	background-position:0 -14px;
 	background-repeat:repeat-x;
+	border-bottom: 10px solid #fff;
 	padding:24px 0
 }
 
@@ -825,7 +874,7 @@ acronym.share:hover
 .nt #sidebar-mid dl.w
 {
 	background-color:#393939;
-	border-color:#393939
+	border-color:#393939	
 }
 
 #sidebar-2 .widgets
@@ -848,7 +897,7 @@ acronym.share:hover
 
 .nt #sidebar-2 .widget-title
 {
-	border-bottom-color:#333
+	border-bottom-color:#222
 }
 
 #sidebar-2 .widget-content
@@ -879,16 +928,19 @@ acronym.share:hover
 
 .nt #sidebar-2 .widget-content li
 {
-	border-color:#393939 #393939 #555
+	border-color:#444 #333 #222
 }
+
 
 #sidebar-2 .widget-content li:hover
 {
 	background-color:#2080AF;
-	border-color:#5FCAFF!important;
+	border-color:#5FCAFF !important;
 	border-style:solid;
 	color:#eee
 }
+
+.nt #sidebar-2 .widget-content li:hover{border-color:#333 #222 #222 !important}
 
 #sidebar-2 .textwidget
 {
@@ -957,7 +1009,7 @@ acronym.share:hover
 
 .nt #sidebar-2 .widget_rss a.rsswidget
 {
-	color:#777
+	color:#bbb
 }
 
 #sidebar-2 .widget_rss .widget-content li cite:before
@@ -975,6 +1027,8 @@ acronym.share:hover
 {
 	color:#888
 }
+
+.nt #sidebar-2 .widget-content ul:first-child li{border-top-color:#333}
 
 #sidebar-2 .widget_rss li:hover
 {
@@ -1245,7 +1299,7 @@ acronym.share:hover
 
 .nt #wp-content-mid .outer
 {
-	background-color:#353535
+	background-color:#4F4F4F
 }
 
 #wp-content-mid #content-mid
@@ -1253,9 +1307,16 @@ acronym.share:hover
 	background-color:#2D96CB
 }
 
-.nt #wp-content-mid #content-mid
+.nt #wp-content-mid #content-mid,.nt #sidebar-mid dl.w 
 {
-	background-color:#505051
+	background-repeat: repeat-x;
+	background-position: 0% 0%;
+	background-color:#333
+}
+
+.nt #sidebar-mid dl.w{ 
+	border:1px solid #000;
+	
 }
 
 #content-end
@@ -1294,10 +1355,19 @@ acronym.share:hover
 {
 	color:#fff
 }
-
-.nt #blog-title a,.nt#sidebar-2 .widget-content li:hover a,.nt #sidebar-2 .widget-content a:hover
+.nt #sidebar-2 .widget-content li:hover
 {
-	color:#555
+	background-color:#444;
+	border-color:#777 !important
+}
+
+.nt #sidebar-2 .widget-content li:hover a,.nt #sidebar-2 .widget-content a:hover
+{	
+	color:#999
+}
+
+.nt #blog-title a{
+	color:#444	
 }
 
 #blog-title a:focus,#breadcrumb li a:focus,a.more-link:focus,#sidebar a:focus,#sidebar-mid a:focus,.pagination a:focus,#content-end a:focus
@@ -1410,6 +1480,11 @@ acronym.share:hover
 	margin:0 auto
 }
 
+.nt #banner
+{
+	border-bottom-color:#777
+}
+
 .ext,.entry-content a[rel^=external]
 {
 	background-position:100% 50%;
@@ -1447,6 +1522,8 @@ acronym.share:hover
 	padding-bottom:18px
 }
 
+.nt #validation a{background-color:#7a7a7a}
+
 #validation a
 {
 	background-color:#1787BF;
@@ -1457,6 +1534,7 @@ acronym.share:hover
 	text-decoration:none!important
 }
 
+.nt #validation a:hover{background-color:#5f5f5f}
 #validation a:hover
 {
 	background-color:#157CAF;

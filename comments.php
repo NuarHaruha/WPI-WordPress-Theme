@@ -76,7 +76,7 @@
 			</div>
 		</div>
 	</div>
-</dd><!-- /wp-comments --><?php $comstatus = ( 'open' == $post->comment_status) ? 'is_open' : 'is_closed';?>
+</dd><!-- /#wp-comments --><?php $comstatus = ( 'open' == $post->comment_status) ? 'is_open' : 'is_closed';?>
 
 <dd id="wp-respond" class="<?php echo $comstatus;?>">
 	<div class="outer cf">
@@ -143,8 +143,5 @@
 <?php else:?>
 <?php endif; // if you delete this the sky will fall on your head ?>
 	</div>
-	<!-- /respond-inner -->
 	</div>
-	<!-- /respond-outer -->
-</dd>
-<!-- /wp-respond -->
+</dd><!-- /#wp-respond -->
