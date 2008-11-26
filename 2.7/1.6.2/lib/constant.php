@@ -1,13 +1,13 @@
 <?php
 define('KAIZEKU',1);
-
+/**
+ * $Id$
+ * WP-iStalker Constant
+ */
 // wordpress root dir
 if ( !defined('WP_ROOT') ) {
     define( 'WP_ROOT', (strtr(realpath(ABSPATH), array("\\", DIRSEP))) );
 }
-
-// non expensive current timestamp -time();
-define('SV_CURRENT_TIMESTAMP',$_SERVER['REQUEST_TIME']);
 
 // template root dir
 define('WPI_DIR',TEMPLATEPATH.DIRSEP);
@@ -23,6 +23,11 @@ define('WPI_LIB_MOD',WPI_LIB.'modules'.DIRSEP);
 // import class dir
 define('WPI_LIB_IMPORT',WPI_LIB.'import'.DIRSEP);
 
+/**
+ * Import WP shortcode dir
+ * @since 1.6.2
+ */
+define('WPI_LIB_IMPORT_SHORTCODE',WPI_LIB_IMPORT.'shortcode'.DIRSEP);
 
 // public dir
 define('WPI_PUB',WPI_DIR.'public'.DIRSEP);
@@ -111,6 +116,9 @@ if (!defined('WP_VERSION'))  define('WP_VERSION', get_bloginfo('version'));
 if (!defined('WP_VERSION_MAJ')) define('WP_VERSION_MAJ', (float) WP_VERSION);
 
 //define('FIREBUG_CONSOLE',1);
+
+// non expensive current timestamp -time();
+define('SV_CURRENT_TIMESTAMP',$_SERVER['REQUEST_TIME']);
 
 /**
  * Client User agent string
