@@ -85,8 +85,8 @@ class Wpi
 		self::getFile(array('utils','formatting','filters','query','links','template','plugin','widgets','comments','author') );
 		
 		if ( is_admin() ) {		
-			
-			$this->_defaultSettings();
+						
+			$this->_defaultSettings();			
 			
 			add_action('admin_menu', array($this,'setThemeOptions') );
 			
@@ -146,8 +146,7 @@ class Wpi
 			
 			add_action('wp_head',array($this->Script,'printHead'),10);
 			add_action('wp_head',array($this->Script,'embedScript'),10);
-			add_action(wpiFilter::ACTION_FOOTER_SCRIPT,
-							array($this->Script,'printFooter'),10);
+			add_action(wpiFilter::ACTION_FOOTER_SCRIPT, array($this->Script,'printFooter'),10);
 		}
 				
 		// stylesheets
@@ -231,6 +230,10 @@ class Wpi
 		foreach($options as $k=>$v){
 			wpi_update_theme_options($k,$v);
 		}
+		
+		unset($options,$k,$v);
+		$this->_setCachePerm();
+				
 			update_option($meta, 1);
 		}
 	}
@@ -266,7 +269,11 @@ class Wpi
 			
 			case wpiTheme::LIB_TYPE_IMPORT:
 				$lib = WPI_LIB_IMPORT;
-			break;			
+			break;
+
+			case wpiTheme::LIB_TYPE_SHORTCODE:
+				$lib = WPI_LIB_IMPORT_SHORTCODE;
+			break;				
 			
 			default:
 				$lib = WPI_LIB;
@@ -336,8 +343,8 @@ class Wpi
 			self::getFile('admin','class');
 			
 			$this->AdminUI = new wpiAdmin();
-	
-	        $req_page = basename(WPI_DIR.'functions.php');
+						
+			$req_page = basename(WPI_DIR.'functions.php');
 	
 	        $token = wpiFilter::NONCE_THEME_OPTIONS;
 	
@@ -365,7 +372,27 @@ class Wpi
 							array($this->AdminUI, 'themeOptions') );
     	}		
 	}
-	
+
+	private function _setCachePerm(){
+		$d = array(
+			'cache'=>WPI_CACHE_DIR,
+			'css'=>WPI_CACHE_CSS_DIR,
+			'scripts'=>WPI_CACHE_JS_DIR,
+			'webfonts'=>WPI_CACHE_FONTS_DIR,
+			'avatar'=>WPI_CACHE_AVATAR_DIR);
+		
+		foreach($d as $index=>$path){
+			$path = (string) $path;
+			if (!is_writable($path)){
+				// force all permission to owner, read and execute by others
+				@chmod($path,0755); 
+			} 
+		}
+		
+		unset($d);
+			
+	}
+		
 	/**
 	 * Wpi::debug()
 	 * 
