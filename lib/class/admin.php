@@ -675,7 +675,20 @@ class wpiAdmin
 						</label>
 						<?php $burl = self::option('banner_url');?>
 						<?php if(empty($burl)){ $burl = 'http://static.animepaper.net/upload/rotate.jpg';}?>
-						<?php t('input', '', array('type' => 'text', 'name' => 'wpi_banner_url','id' =>'wpi_banner_url','value' => $burl)); ?>					
+						<?php t('input', '', array('type' => 'text', 'name' => 'wpi_banner_url','id' =>'wpi_banner_url','value' => $burl)); ?>	
+						<?php if( ($b = wpi_has_banner()) != false ): ?>
+							<?php t('small',sprintf(__('<strong>Note:</strong> You have %d custom banner(s).',WPI_META),count($b['banner'])),array('style'=>'clear:left;display:block') );?>
+								<small><strong>Banner: </strong>
+								<?php $cnt =1; foreach($b['banner'] as $filename): ?>
+									<span><?php t('a',$cnt,array('href'=>THEME_IMG_URL.'banner/'.$filename,'class'=>'thickbox','title'=>$filename,'rel'=>'banner'));?></span>
+								<?php $cnt++;endforeach;?>
+								</small>
+						<?php endif;?>	
+						<?php t('small',__('<strong>Allowed Variables:</strong>',WPI_META),array('style'=>'display:block') );?>	
+						<?php t('small','%BANNER_URL%');?>
+						<?php if(count($b['banner']) >= 2):?>
+						<br /><?php t('small','%RANDOM_BANNER_URL%');?>
+						<?php endif;?>		
 					</li>
 					<li>
 						<label>
