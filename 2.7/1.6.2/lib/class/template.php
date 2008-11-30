@@ -425,7 +425,7 @@ class wpiTemplate
 					 'content'	=> 'general');	
 					 	
 		$m[] = array('name'		=> 'designer',
-					 'content'	=> 'Avice De&apos;v&eacute;reux; url:http://blog.kaizeku.com');
+					 'content'	=> 'Avice De&#39;v&eacute;reux; url:http://blog.kaizeku.com');
 
 			if ($wp_query->is_singular ){
 				$aid = (int) $wp_query->post->post_author;
@@ -523,7 +523,7 @@ class wpiTemplate
 					$m[] = array('name'		=> 'description',
 						 'content'	=> attribute_escape($desc));				
 				} else {
-					$desc = WPI_BLOG_NAME.'&apos;s archive for '.$cat->name.', there is '.$cat->count.' articles in this category';
+					$desc = WPI_BLOG_NAME.'&#39;s archive for '.$cat->name.', there is '.$cat->count.' articles in this category';
 					$m[] = array('name'		=> 'description',
 						 'content'	=> attribute_escape($desc));				
 				}
@@ -618,31 +618,31 @@ class wpiTemplate
 		$m[] = array('rel'	=> 'alternate',
 					 'href'	=> get_bloginfo('rss_url'),
 					 'type'	=> 'application/rss+xml',
-					 'title'=> WPI_BLOG_NAME.'&apos;s RSS 0.92 Feed',
+					 'title'=> WPI_BLOG_NAME.'&#39;s RSS 0.92 Feed',
 					 'rev'	=> 'syndication:rss');
 					 
 		$m[] = array('rel'	=> 'alternate',
 					 'href'	=> get_bloginfo('rss2_url'),
 					 'type'	=> 'application/rss+xml',
-					 'title'=> WPI_BLOG_NAME.'&apos;s RSS 2.0 Feed',
+					 'title'=> WPI_BLOG_NAME.'&#39;s RSS 2.0 Feed',
 					 'rev'	=> 'syndication:rss2');
 	
 		$m[] = array('rel'	=> 'alternate',
 					 'href'	=> get_bloginfo('atom_url'),
 					 'type'	=> 'application/rss+xml',
-					 'title'=> WPI_BLOG_NAME.'&apos;s Atom Feed',
+					 'title'=> WPI_BLOG_NAME.'&#39;s Atom Feed',
 					 'rev'	=> 'syndication:atom');
 	
 		$m[] = array('rel'	=> 'alternate',
 					 'href'	=> get_bloginfo('rdf_url'),
 					 'type'	=> 'application/rss+xml',
-					 'title'=> WPI_BLOG_NAME.'&apos;s RDF Feed',
+					 'title'=> WPI_BLOG_NAME.'&#39;s RDF Feed',
 					 'rev'	=> 'syndication:rdf');
 					 
 		$m[] = array('rel'	=> 'alternate',
 					 'href'	=> get_bloginfo('comments_rss2_url'),
 					 'type'	=> 'application/rss+xml',
-					 'title'=> WPI_BLOG_NAME.'&apos;s comments RSS 2.0 Feed',
+					 'title'=> WPI_BLOG_NAME.'&#39;s comments RSS 2.0 Feed',
 					 'rev'	=> 'syndication:rdf');
 
 		$m[] = array('rel' 	=> 'pingback',
@@ -778,8 +778,9 @@ class wpiTemplate
 		$base_height = 72;
 		$height = abs(wpi_option('gd_blogname_text_size'));
 		$inc = 8;
+		$cache = wpi_option('cache_webfont');
 		
-		$uri = wpi_get_webfont_url(wpi_option('gd_blogname_text'),$height,wpi_option('gd_blogname_font'),wpi_option('gd_blogname_color'));
+		$uri = wpi_get_webfont_url(wpi_option('gd_blogname_text'),$height,wpi_option('gd_blogname_font'),wpi_option('gd_blogname_color'),$cache);
 		
 		$css = PHP_T.'#blog-meta{';
 		$css .= 'height:'.(ceil($base_height+$height)) .'px !important';
@@ -955,6 +956,11 @@ class wpiTemplate
 						
 			unset($puser);				
 		}		
+		
+		if ( ($hbanner = wpi_has_banner()) != false) {		
+			$burl = strtr($burl,array('%RANDOM_BANNER_URL%'=>$hbanner['uri'],'%BANNER_URL%'=>THEME_IMG_URL) );
+			unset($hbanner);		
+		}
 		
 		
 		$css .= PHP_T.'#banner{background-color:#f9f9f9;background-image:url(';
