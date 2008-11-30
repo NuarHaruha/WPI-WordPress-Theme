@@ -51,7 +51,7 @@ define('WPI_CACHE_CSS_DIR',WPI_CACHE_DIR.DIRSEP.'css'.DIRSEP);
 define('WPI_JS_DIR',WPI_PUB.'scripts'.DIRSEP);
 
 // public javascript cached dir
-define('WPI_CACHE_JS_DIR',WPI_CACHE_DIR.DIRSEP.'js'.DIRSEP);
+define('WPI_CACHE_JS_DIR',WPI_CACHE_DIR.DIRSEP.'scripts'.DIRSEP);
 
 /**
  * Fonts dir
