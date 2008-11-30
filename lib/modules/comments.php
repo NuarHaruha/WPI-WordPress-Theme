@@ -86,7 +86,6 @@ function wpi_comment_start($comment,$option,$depth){
 									<dd class="reviewer-meta"><span class="date-since"><?php echo apply_filters(wpiFilter::FILTER_POST_DATE,wpi_get_comment_date('',$comment));?></span> on <abbr class="dtreviewed" title="<? echo wpi_get_comment_date('Y-m-dTH:i:s:Z'); ?>"><?php wpi_get_comment_date('F jS, Y'); ?> at <?php wpi_comment_time('',false,$comment); ?></abbr><?php if(function_exists('hreview_rating')): hreview_rating(); else: ?><span class="rating dn">3</span><span class="type dn">url</span><?php endif;?> &middot; <a href="#microid-<?php echo $cid;?>" class="hreviewer-microid ttip" title="Micro ID | <?php echo $author;?>&apos;s Hash">microId</a> <?php wpi_edit_comment_link('edit','<span class="edit-comment">','</span>',$comment,$post); ?></dd>
 									<dd id="microid-<?php echo $cid;?>" class="microid-embed" style="display:none"><input class="on-click-select claimid icn-l" type="text" value="mailto+http:sha1:<?php echo $microid;?>" /></dd>			
 									<dd class="reviewer-entry">
-									<big class="comment-count fr" title="Post no #<?php echo $cid; ?>"><?php echo $cid; ?></big>
 									<div class="description"><?php echo apply_filters('get_comment_text', $comment->comment_content);?>
 									<?php if ('open' == $post->comment_status && $depth <=2) : ?>	
 									<p class="cb reply-links"><small>
