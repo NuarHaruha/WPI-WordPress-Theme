@@ -134,7 +134,12 @@ class wpiRouter
 	{
 		$lastmodified = 0;
 		//wpi_cache_header();
-		
+		// settings
+		$cache_images = true;
+		$mime_type = 'image/png' ;
+		$extension = '.png' ;
+		$send_buffer_size = $this->_max_buffer;	
+				
 		$font_size = 36;		
 		$text = 'WP-iStalker';		
 		$data = self::strip(self::REQ_WEBFONT,$this->request);		
@@ -160,6 +165,12 @@ class wpiRouter
 		if (isset($prop[3])){
 			$font_color = $this->b64d($prop[3]);
 		}
+		
+		// cache image
+		if (isset($prop[4])){
+			$intbool = (int) $prop[4];
+			$cache_images = (($intbool === 1) ? true : false );
+		}		
 
 		$default = '1787BF';
 		
@@ -167,13 +178,8 @@ class wpiRouter
 		$hex['nt'] = '707071';
 		$hex['dy'] = '1787BF';
 		
-		$client = (string) $_COOKIE['wpi-cl'];
-		
-		// settings
-		$cache_images = true;
-		$mime_type = 'image/png' ;
-		$extension = '.png' ;
-		$send_buffer_size = $this->_max_buffer;		
+		$client = (string) $_COOKIE['wpi-cl'];	
+	
 		
 		$background_color = '#'.( (!empty($client) && isset($hex[$client])) ? $hex[$client] : $default );
 			
