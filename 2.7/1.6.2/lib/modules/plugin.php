@@ -1,7 +1,11 @@
 <?php
-
+if (!defined('KAIZEKU')) { die(42); }
 /**
- * Plugins function
+ * $Id$
+ * Wp-Istalker Plugins function
+ * @package WordPress
+ * @subpackage Template
+ * 
  */
 
 function wpi_plugin_init(){
@@ -20,7 +24,8 @@ function wpi_plugin_init(){
 	
 	$call_plug[] = 'wp-pagenavi/wp-pagenavi.php,wp_pagenavi,wpi_post_pagination';
 	$call_plug[] = 'global-translator/translator.php,wpi_get_gt_translate_links,widget_single_summary_after';
-		$call_plug[] = 'global-translator/translator.php,wpi_global_translator_metalinks,wpi_meta_link';
+	$call_plug[] = 'global-translator/translator.php,wpi_global_translator_metalinks,wpi_meta_link';
+	
 	//wpi_global_translator_metalinks
 	if (has_count($call_plug)){
 		foreach($call_plug as $index){
@@ -30,6 +35,11 @@ function wpi_plugin_init(){
 	}
 	
 	unset($rm_plug,$call_plug);
+	
+	// shortcode
+	if (wpi_option('nwp_caption')){
+		Wpi::getFile('caption','shortcode');
+	}
 }
 
 function wpi_curl_remote_file($url)
@@ -165,7 +175,7 @@ function wpi_get_gt_translate_links()
       $url 		= gltr_get_translated_url($key, $self_url);
       $url		= apply_filters(wpiFilter::FILTER_LINKS,$url);
 	  $name		= $translations[$key];	
-      $output 	.= _t('a', 'Translate &apos;'.$post_title.'&apos; in '.$name,
+      $output 	.= _t('a', sprintf(__('Translate &#39;%1$s&#39; in %2$s',WPI_META),$post_title,$name),
 	  			   array(
 					 	'id'	=> 'flag_'.$key,
 						'href'	=> $url,
@@ -389,7 +399,7 @@ function wpi_global_translator_metalinks()
 		$attribs['hreflang'] = $iso;
 		$attribs['lang'] = $iso;
 		$attribs['xml:lang'] = $iso;		
-		$attribs['title'] = WPI_BLOG_NAME.'&apos;s in '.$language;		
+		$attribs['title'] = WPI_BLOG_NAME.' in '.$language;		
 		$output .= PHP_T._t('link','',$attribs);
 	}
 	
@@ -397,4 +407,20 @@ function wpi_global_translator_metalinks()
 	echo $output;		
 }
 
+/**
+ * WPI random banner
+ */
+function wpi_has_banner(){
+	
+	$images = false;
+	$path = WPI_IMG_DIR.'banner'.DIRSEP;
+	
+	if ( ($images = wpi_get_dir($path,wpiTheme::BANNER_IMAGE_TYPE)) != false){	
+		$rand = $images[rand_array($images)];
+		$uri = wpi_img_url('banner/'.$rand);
+		$images = array('banner'=>$images,'uri'=>$uri);
+	} 
+	
+	return $images;	
+} 
 ?>
