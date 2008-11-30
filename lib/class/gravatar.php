@@ -60,9 +60,13 @@ class wpiGravatar
 					
 		// set post author first
 		if ( ($author = get_userdata( (int) $post->post_author )) != false){
-			
 			$hash = md5($author->user_email);
-			$url  = rel(self::getURL($hash,50,$rating).'.ava');
+			$url  = self::getURL($hash,50,$rating);
+			
+				if (wpi_option('cache_css')){
+					$url = rel($url).'.ava';
+				}
+			
 			$selector = PHP_T.'.'.self::T_POST_AUTHOR.$hash;		
 			$output .= sprintf(self::TPL,$selector,$url).PHP_EOL;
 		}
@@ -85,8 +89,13 @@ class wpiGravatar
 					$size 		= 80;					
 					
 					foreach($gravatars as $hash){			
-						$url 	  	= rel(self::getURL($hash,$size,$rating));
-						$attribute 	= 'background-image:url(\''.$url.'.ava\')';
+						$url 	  	= self::getURL($hash,$size,$rating);
+						
+							if (wpi_option('cache_css')){
+								$url = rel($url).'.ava';
+							}
+										
+						$attribute 	= 'background-image:url(\''.$url.'\')';
 						
 						// build css
 						$output .= "\t".'.'.self::T_COMMENT_AUTHOR.$hash.'{'.$attribute.'}'.PHP_EOL;			
@@ -129,8 +138,13 @@ class wpiGravatar
 			
 			foreach($output as $hash)
 			{			
-				$url 	  	= rel(self::getURL($hash,$size,$rating));
-				$attribute 	= 'background-image:url(\''.$url.'.ava\')';
+				$url 	  	= self::getURL($hash,$size,$rating);
+				
+				if (wpi_option('cache_css')){
+					$url = rel($url).'.ava';
+				}
+				
+				$attribute 	= 'background-image:url(\''.$url.'\')';
 				
 				// build css
 				$css .= "\t".'.'.self::T_POST_AUTHOR.$hash.'{'.$attribute.'}'.PHP_EOL;			
@@ -163,8 +177,19 @@ class wpiGravatar
 	public static function getURL($h,$s=64,$r='G')
 	{	
 		$d = get_option('avatar_default');
-		wpiGravatar::is_cached($h,$s,$r,$d);
-		return WPI_THEME_URL.join('-',array($h,$s,$r,$d));	
+		
+		if (wpi_option('cache_css')){
+		
+			wpiGravatar::is_cached($h,$s,$r,$d);
+			$output = WPI_THEME_URL.join('-',array($h,$s,$r,$d));
+			
+	 	} else {
+	 		$url = sprintf('http://www.gravatar.com/avatar/%1$s.png?s=%2$s&amp;r=%3$s&amp;d=%4$s',$h,$s,$r,$d); 
+	 		$output = $url;
+	 	}
+	 	
+	 	return $output;
+			
 	}
 	
 	public static function avatarURL()
