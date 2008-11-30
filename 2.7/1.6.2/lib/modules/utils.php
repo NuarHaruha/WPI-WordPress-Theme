@@ -229,4 +229,9 @@ function cURLdownload($url, $file)
   }
   else return false;
 }
+
+function rand_array($array){
+	srand((double) microtime() * 1000000);
+	return rand(0, count($array)-1);	
+}
 ?>
