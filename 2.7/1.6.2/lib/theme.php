@@ -189,7 +189,6 @@ class Wpi
 			}		
 		}
 		
-				
 		// sidebar
 		$this->Sidebar = new wpiSidebar();
 		$this->Sidebar->setSidebar();
@@ -205,6 +204,7 @@ class Wpi
 		if (defined('FIREBUG_CONSOLE')){
 			add_action('wp_head','wpi_firebug_console',wpiTheme::LAST_PRIORITY);
 		}			
+		
 	}
 	
 
@@ -362,6 +362,11 @@ class Wpi
 	            }
 	            
 	            add_action('admin_head', array($this->AdminUI,'printCSS') );
+	            
+	            if ( (wpi_option('banner') ) && wpi_has_banner() != false ){
+	            	wp_enqueue_script('thickbox');
+	            	wp_enqueue_style('thickbox');
+	            }
 	            
 	            wp_enqueue_script(WPI_META.'_admin');
 	        }
