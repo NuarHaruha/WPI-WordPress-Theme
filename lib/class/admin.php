@@ -34,6 +34,7 @@ class wpiAdmin
 	{
 		$this->lang['enabled'] = __('Enabled',WPI_META);
 		$this->lang['disabled'] = __('Disabled',WPI_META);
+		$this->lang['cache_dir_size'] = __('Cache directory size : %s',WPI_META);
 	}
 	
 	
@@ -52,8 +53,7 @@ class wpiAdmin
     public function filterRequest($request)
     {    			
 		
-		if (!is_array($request)) return false;
-		
+		if (!is_array($request)) return false;		
 		
         foreach ($request as $key => $val) {
         	
@@ -81,10 +81,14 @@ class wpiAdmin
     	
     	if ( ($files = wpi_get_dir($path)) != false ){
 	    	foreach($files as $filename){
-	    		$file = $path.$filename;
+	    		$file = (string) $path.$filename;
 	    		
-	    		if (file_exists($file)){
-	    			unlink($file);
+	    		if (file_exists($file) && is_writable($file)){
+	    				unlink($file);
+	    		} else {
+	    				// suppress error (expensive), force chmod
+	    				@chmod($file,0777);
+	    				@unlink($file);
 	    		}
 	    	}
 	    	unset($files);
@@ -94,7 +98,7 @@ class wpiAdmin
 	public function printCSS()
 	{		
 		t('link','',array('rel'=>'stylesheet','href'=>WPI_THEME_URL.'admin.css','type'=>'text/css'));
-		if (is_wp_version('2.7') || is_wp_version('2.7-beta1')){
+		if (is_wp_version(2.7)){
 ?>
 		<style type="text/css">
 		    #wpi-theme-options{background-image:none;margin:0pt !important}
@@ -135,12 +139,13 @@ class wpiAdmin
 		  <li><a href="http://wp.istalker.net/chrome-milk/quick-start/" title="Quick start guide">Quick start</a></li>
 		  <li><a href="http://wp.istalker.net/chrome-milk/features/" title="Features">Features</a></li>
 		  <li><a href="http://wp.istalker.net/" title="Project Home">Project Home</a></li>
-		  <li><a href="http://blog.kaizeku.com" title="Author Blog">Kaizeku Ban</a></li>
+		  <li><a href="http://blog.kaizeku.com" title="Author Blog">Kaizeku Ban</a></li>		  
 		</ul>
 		</div>
 		</div>
 <?php		
-	}
+	}	
+	
 	
 	public function optionCache(){
 ?>
@@ -152,6 +157,21 @@ class wpiAdmin
 	<ul class="mtb">
 		<li>
 			<h4><?php _e('Stylesheet',WPI_META);?></h4>
+			<p>
+			<?php $disabled = is_writable(WPI_CACHE_CSS_DIR) ? '' : 'disabled="disabled"'?>
+			<label for="wpi_cache_css"><?php _e('Cache CSS:',WPI_META);?>
+			<?php if ($disabled != ''):?>
+			<small><?php _e('Notice: Public CSS cache dir is not writable');?></small>
+			<?php endif;?>
+			</label>
+				<select name="wpi_cache_css" id="wpi_cache_css" size="2" <?php echo $disabled;?> class="row-2">
+			<?php	$prop = self::option('cache_css'); 
+			self::htmlOption(array(
+						$this->lang['enabled'] => 1,
+						$this->lang['disabled'] => 0 ),$prop); ?>
+				</select>
+			</p>
+			<?php if($prop): ?>					
 			<?php $css = wpi_get_dir(WPI_CACHE_CSS_DIR);?>
 			<?php if (has_count($css) && !empty($css)):?>
 			<dl>
@@ -171,17 +191,32 @@ class wpiAdmin
 				}
 				unset($css);
 			?>
-			<small> Cache directory size : <?php echo format_filesize($size);?>
-			</small>
+			<small><?php sprintf($this->lang['cache_dir_size'], format_filesize($size)) ;?></small>			
 			</dl>
 			<button class="sbtn" type="submit" name="wpi_flush_css" id="wpi_flush_css" value="1">Erase Cache</button>
 			<?php else:?>
-			<p>No cached files.</p>
-			<?php endif; ?>			
+			<p><?php _e('No cached files.',WPI_META);?></p>
+			<?php endif; ?>		
+			<?php endif; ?>	
 		</li>
 		<li>
 			<h4><?php _e('GD webfont image',WPI_META);?></h4>
-			<?php $fonts = wpi_get_dir(WPI_CACHE_FONTS_DIR);?>
+			<p>
+			<?php $disabled = is_writable(WPI_CACHE_FONTS_DIR) ? '' : 'disabled="disabled"'?>
+			<label for="wpi_cache_webfont"><?php _e('Cache GD font images',WPI_META);?>
+			<?php if ($disabled != ''):?>
+			<small><?php _e('Notice: Public webfont cache dir is not writable');?></small>
+			<?php endif;?>
+			</label>
+				<select name="wpi_cache_webfont" id="wpi_cache_webfont" size="2" <?php echo $disabled;?> class="row-2">
+			<?php	$prop = self::option('cache_webfont'); 
+			self::htmlOption(array(
+						$this->lang['enabled'] => 1,
+						$this->lang['disabled'] => 0 ),$prop); ?>
+				</select>		
+			</p>
+			<?php if($prop): ?>									
+			<?php $fonts = wpi_get_dir(WPI_CACHE_FONTS_DIR);?>	
 			<?php if (has_count($fonts) && !empty($fonts)):?>
 			<dl>
 			<?php 
@@ -199,16 +234,31 @@ class wpiAdmin
 				}
 				unset($fonts);
 			?>
-			<small> Cache directory size : <?php echo format_filesize($size);?>
-			</small>
+			<small><?php sprintf($this->lang['cache_dir_size'], format_filesize($size)) ;?></small>
 			</dl>
 			<button class="sbtn" type="submit" name="wpi_flush_webfont" id="wpi_flush_webfont" value="1">Erase Cache</button>
 			<?php else:?>
-			<p>No cached files.</p>
-			<?php endif; ?>			
+			<p><?php _e('No cached files.',WPI_META);?></p>
+			<?php endif; ?>	
+			<?php endif;?>		
 		</li>		
 		<li class="last">
 			<h4><?php _e('Avatar image',WPI_META);?></h4>
+			<p>
+			<?php $disabled = is_writable(WPI_CACHE_AVATAR_DIR) ? '' : 'disabled="disabled"'?>
+			<label for="wpi_cache_avatar"><?php _e('Cache Avatar images',WPI_META);?>
+			<?php if ($disabled != ''):?>
+			<small><?php _e('Notice: Public avatar cache dir is not writable');?></small>
+			<?php endif;?>
+			</label>
+				<select name="wpi_cache_avatar" id="wpi_cache_avatar" size="2" <?php echo $disabled;?> class="row-2">
+			<?php	$prop = self::option('cache_avatar'); 
+			self::htmlOption(array(
+						$this->lang['enabled'] => 1,
+						$this->lang['disabled'] => 0 ),$prop); ?>
+				</select>				
+			</p>
+			<?php if($prop): ?>	
 			<?php $ava = wpi_get_dir(WPI_CACHE_AVATAR_DIR);?>
 			<?php if (has_count($ava) && !empty($ava)):?>
 			<dl>
@@ -226,15 +276,16 @@ class wpiAdmin
 					$n++;
 				}
 			?>
-			<small> Cache directory size : <?php echo format_filesize($size);?>
-			</small>
+			<small><?php sprintf($this->lang['cache_dir_size'], format_filesize($size)) ;?></small>
 			</dl>
 			<button class="sbtn" type="submit" name="wpi_flush_avatar" id="wpi_flush_avatar" value="1">Erase Cache</button>
 			<?php else:?>
-			<p>No cached files.</p>
+			<p><?php _e('No cached files.',WPI_META);?></p>
+			<?php endif; ?>
 			<?php endif; ?>			
 		</li>		
 	</ul>
+		<?php self::saveButton();?>	
 	</div>
 	</li>
 </ol>					
@@ -813,7 +864,18 @@ class wpiAdmin
 						$this->lang['disabled'] => 0 ),$prop);?>
 				</select>			
 		</li>
-		<li><?php $prop = self::option('meta_wp_generator');?>
+		<?php if(is_wp_version(2.6, '>=') ):?>
+		<li>
+			<label><?php _e('Patch caption',WPI_META);?><small>unofficial patch for Wordpress caption shortcode</small></label>
+				<select name="wpi_nwp_caption" id="wpi_nwp_caption" size="2" class="row-2">
+			<?php self::htmlOption(array(
+			__('Enabled',WPI_META)=>1,
+			__('Disabled',WPI_META)=>0 ),$nwp_caption);?>
+				</select> 	
+			
+		</li>
+		<?php endif;?>		
+		<li class="last"><?php $prop = self::option('meta_wp_generator');?>
 			<label>
 				<?php _e('Meta generator',WPI_META);?>
 				<small>WordPress version number</small>
@@ -823,15 +885,6 @@ class wpiAdmin
 						$this->lang['enabled'] => 1,
 						$this->lang['disabled'] => 0 ),$prop);?>
 				</select> 
-		</li>	
-		<li class="last">
-			<label><?php _e('patch caption',WPI_META);?><small>unofficial patch for Wordpress caption shortcode</small></label>
-				<select name="wpi_nwp_caption" id="wpi_nwp_caption" size="2" class="row-2">
-			<?php self::htmlOption(array(
-			__('Enabled',WPI_META)=>1,
-			__('Disabled',WPI_META)=>0 ),$nwp_caption);?>
-				</select> 	
-			
 		</li>		
 	</ul>	
 	<?php self::saveButton();?>
