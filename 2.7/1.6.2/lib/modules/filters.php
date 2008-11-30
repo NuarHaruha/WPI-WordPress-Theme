@@ -166,7 +166,7 @@ function wpi_content_meta_title_filter(){
 		if ( ($desc = $wp_query->queried_object->category_description) != '' ){
 			$output .= _t('blockquote',_t('p',$desc.'&nbsp;'),array('cite'=>self_uri(),'class'=>'entry-summary r'));
 		} else {
-			$desc = WPI_BLOG_NAME.'&apos;s archive for '.$title.', there is '.$wp_query->queried_object->count.' articles for this &apos;main&apos; category.';
+			$desc = WPI_BLOG_NAME.'&apos;s archive for '.$title.', there is '.$wp_query->queried_object->count.' articles for this &#39;main&#39; category.';
 			$output .= _t('blockquote',_t('p',$desc.'&nbsp;'),array('cite'=>self_uri(),'class'=>'entry-summary r'));
 		}	
 	}
@@ -177,7 +177,7 @@ function wpi_content_meta_title_filter(){
 		$htm 	= _t('strong',$title);			
 		$output = _t('h1',$htm,array('title'=>$title));
 		
-		$desc = WPI_BLOG_NAME.'&apos;s taxonomy archive for '.$title.', there is '.$wp_query->queried_object->count.' article(s) for this tag.';		
+		$desc = WPI_BLOG_NAME.'&#39;s taxonomy archive for '.$title.', there is '.$wp_query->queried_object->count.' article(s) for this tag.';		
 		$output .= _t('blockquote',_t('p',$desc.'&nbsp;'),array('cite'=>self_uri(),'class'=>'entry-summary r'));		
 	}
 
@@ -225,7 +225,7 @@ function wpi_content_meta_title_filter(){
 		$htm 	= _t('strong',__('404 Not Found',WPI_META));	
 		$output = _t('h1',$htm,array('title'=>$title));
 		
-		$desc = 'Sorry, but you are looking for something that isn&apos;t here';
+		$desc = 'Sorry, but you are looking for something that isn&#39;t here';
 		$output .= _t('blockquote',_t('p',$desc.'&nbsp;'),array('cite'=>self_uri(),'class'=>'entry-summary r'));		
 	}
 	
@@ -241,6 +241,7 @@ function wpi_google_ads_targeting_filter($content){
 	return PHP_EOL.'<!-- google_ad_section_start -->'.PHP_EOL . $content . '<!-- google_ad_section_end -->'.PHP_EOL;
 }
 
+
 function wpi_default_filters(){
 
 	$f = array();	
@@ -250,16 +251,21 @@ function wpi_default_filters(){
 	$f['stylesheet_uri'] 			= 'wpi_get_stylesheet_uri_filter';	
 	$f['the_password_form'] 		= 'wpi_password_form_filters';	
 	$f['comments_template'] 		= 'wpi_comments_template_filter';
+	$f['language_attributes'] 		= 'wpi_filter_language_attributes';
 	
-	// head
+	// head	
 	$f[wpiFilter::FILTER_META_DESCRIPTION] = 'wpi_meta_description_filter';
 	$f[wpiFilter::FILTER_META_KEYWORDS] = 'wpi_meta_keywords_filter';
 	$f[wpiFilter::FILTER_CUSTOM_HEAD_CONTENT] = 'wpi_custom_content_filter';
-	$f[wpiFilter::FILTER_CUSTOM_FOOTER_CONTENT] = 'wpi_custom_content_filter';
+	$f[wpiFilter::FILTER_CUSTOM_FOOTER_CONTENT] = 'wpi_custom_content_filter';	
 	
-	if (is_wp_version('2.6')){
+	if (is_wp_version(2.6)){
 		$f['login_form'] = 'wpi_login_form_action';
 	}
+	
+	if (is_wp_version(2.7,'>=')){
+		$f['http_headers_useragent'] = 'wpi_append_http_ua_string_filter';
+	}	
 	
 	wpi_foreach_hook_filter($f);	
 }
@@ -358,5 +364,33 @@ function wpi_meta_keywords_filter($content){
 
 function wpi_custom_content_filter($content){
 	return str_replace("\n",PHP_EOL.PHP_T,$content);
+}
+
+/**
+ * Filter for language_attributes()
+ * Strip localization string
+ * {@link http://www.w3.org/TR/xhtml1/#C_7 HTML compatibility Guidline C.7} 
+ * 
+ * function wpi_filter_language_attributes()
+ * hook: language_attributes
+ * 
+ * @params mixed|string HTML tag attributes
+ * @see language_attributes() Display the language attributes for the html tag.
+ */
+function wpi_filter_language_attributes($content){
+	
+	$lang = get_bloginfo('language');
+	list($i18n,$l10n) = explode('-',$lang);	
+	
+	return str_replace($lang,$i18n,$content);
+}
+
+/**
+ * for WP 2.7
+ * hook: http_headers_useragent
+ */
+function wpi_append_http_ua_string_filter($content){
+	$content .= ' ('.wpiTheme::UID.' '.wpiTheme::VERSION.')';	
+	return $content;	
 }
 ?>
