@@ -33,6 +33,8 @@ final class wpiTheme
 	
 	const LIB_TYPE_IMPORT = 'import';
 	
+	const LIB_TYPE_SHORTCODE = 'shortcode';
+	
 	const REGISTER_ACTIONS = 'wpi_register_actions';
 	
 	const REGISTER_SIDEBAR = 'register_sidebar';
@@ -96,6 +98,8 @@ final class wpiTheme
 	const LAST_PRIORITY = 11;
 	
 	const GD_FONT_TYPE = "(\.(TTF|ttf|OTF|otf|FON|fon))";
+	
+	const BANNER_IMAGE_TYPE = "(\.(jpg|JPG|jpeg|JPEG|jpe|JPE|png|PNG|gif|GIF))";
 	
 	private function __construct(){}		
 }
