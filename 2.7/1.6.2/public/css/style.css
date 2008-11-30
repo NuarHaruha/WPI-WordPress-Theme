@@ -1050,6 +1050,12 @@ acronym.share:hover
 	padding:7px 12px 18px
 }
 
+#sidebar-3 #tag_cloud .widget-content
+{
+	padding:0 14px 0 12px
+}
+
+
 #pages.widgets,#pages .widget-title cite,#subpages,#subpages .widget-title cite
 {
 	background-color:#f0f0f0

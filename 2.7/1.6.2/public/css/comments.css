@@ -91,12 +91,16 @@
 }
 
 .commentlist
-{
+{	
 	background-color:#2d96cb;
 	padding:10px;
 	margin:0 8px
 }
 
+.commentlist .children{list-style:lower-greek inside}
+
+.nt .commentlist .children{color:#666}
+.nt .commentlist .description{color:#aaa}
 .nt .commentlist .hreview
 {
 	border-top-color:#444;
@@ -119,7 +123,7 @@
 
 .nt .commentlist .light,.nt .commentlist .alt
 {
-	border-color:#333;
+	border-color:#3e3e3e;
 	background-color:transparent;
 	background-image:none
 }
@@ -316,12 +320,22 @@ p.comments-feed a:hover
 	color:#3F5C7F
 }
 
+.nt .comment-nav span.prev a, .nt .comment-nav span.next a, .nt .comment-nav a.prev, .nt .comment-nav a.next, .nt .comment-nav .page-numbers
+{
+	background-color:#3e3e3e
+}
+
 .comment-nav span.prev a,.comment-nav span.next a,.comment-nav a.prev,.comment-nav a.next,.comment-nav .page-numbers
 {
 	background-color:#2D96CB;
 	color:#eee!important;
 	padding:2px 6px;
 	margin:0 4px
+}
+
+.nt .comment-nav span.prev a:hover,.nt .comment-nav span.next a:hover,.nt .comment-nav a.prev:hover,.nt .comment-nav a.next:hover,.nt .comment-nav a.page-numbers:hover
+{
+	background-color:#5E676B;
 }
 
 .comment-nav span.prev a:hover,.comment-nav span.next a:hover,.comment-nav a.prev:hover,.comment-nav a.next:hover,.comment-nav a.page-numbers:hover
