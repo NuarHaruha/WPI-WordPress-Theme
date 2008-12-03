@@ -269,8 +269,20 @@ function wpi_default_filters(){
 	
 	// robots
 	$f['do_robotstxt'] = 'wpi_robots_rules_filter';
+
+	// feeds
+	if (wpi_option('exclude_feed')){
+		// for RSS 0.92 & RSS 2 feeds
+		$f['rss_head'] = $f['rss2_head'] = 'wpi_noindex_rss_header';
+	}
+			
+	wpi_foreach_hook_filter($f);
 	
-	wpi_foreach_hook_filter($f);	
+	// extended action hook
+	// feeds
+	if (wpi_option('exclude_ypipe')){
+		wpi_foreach_hook(array('rss_head','rss2_head'),'wpi_ypipe_noindex_rss_meta');		
+	}	
 }
 
 function wpi_stylesheet_directory_uri_filter($stylesheet_dir_uri=false, $stylesheet=false){
@@ -553,5 +565,9 @@ function wpi_get_robots_rules()
 
 function wpi_noindex_rss_header(){
 	echo '<xhtml:meta xmlns:xhtml="http://www.w3.org/1999/xhtml" name="robots" content="noindex" />'.PHP_EOL;
+}
+
+function wpi_ypipe_noindex_rss_meta(){
+	echo '<meta xmlns="http://pipes.yahoo.com" name="pipes" content="noprocess" />'.PHP_EOL;
 }
 ?>
