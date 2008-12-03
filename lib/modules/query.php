@@ -1,15 +1,29 @@
 <?php
 if ( !defined('KAIZEKU') ) { die( 42); }
-	
-function wpi_get_theme_option($name){
-	
-    $options = get_option(WPI_META_PREFIX.'settings');
+/**
+ * $Id$
+ * WPI Query functions
+ */
+ 	
+function wpi_get_theme_option($name, $extra = false){
+
+    $metakey = WPI_META_PREFIX.'settings';
+    if ($extra){
+    	$metakey = WPI_META_PREFIX.'extra';
+    }
+		
+    $options = get_option($metakey);
 
     if (isset($options[$name])) {
+    	
+    	if ($extra){
+    		$options[$name] = call_user_func_array(wpiTheme::DECODE_CONFIG_ENGINE, array($options[$name]) );
+    	}
+		    	
         return $options[$name];
     } else {
-        wpi_update_theme_options($name);
-        return wpi_get_theme_option($name);
+        wpi_update_theme_options($name,'',$extra);
+        return wpi_get_theme_option($name,$extra);
     }
 }
 
@@ -19,20 +33,28 @@ function wpi_blog_since_year(){
 }
 
 
-function wpi_theme_option($name){
-    echo wpi_get_theme_option($name);
+function wpi_theme_option($name,$extra=false){
+    echo wpi_get_theme_option($name,$extra);
 }
 
-function wpi_option($name){
-	return wpi_get_theme_option($name);
+function wpi_option($name,$extra=false){
+	return wpi_get_theme_option($name,$extra);
 }
 
 
-function wpi_update_theme_options($name, $value = ''){
+function wpi_update_theme_options($name, $value = '',$extra = false){
 	
     $metakey = WPI_META_PREFIX.'settings';
+    if ($extra){
+    	$metakey = WPI_META_PREFIX.'extra';
+    }
+    
     $options = $noptions = get_option($metakey);
     $noptions[$name] = $value;
+    
+    if ($extra){
+    	$noptions[$name] = call_user_func_array(wpiTheme::ENCODE_CONFIG_ENGINE, array($value) );
+    }
 
     if ($options != $noptions) {
         $options = $noptions;
@@ -41,11 +63,15 @@ function wpi_update_theme_options($name, $value = ''){
 }
 
 function wpi_update_form_meta($pid,$tag){
+	
 	delete_post_meta( $pid, $tag );
+	$meta = 'wpi_'.$tag;
+	
 	if ($tag == 'header_content' || $tag == 'footer_content'){
-		$_POST['wpi_'.$tag] = stripslashes_deep($_POST['wpi_'.$tag]);
+		$_POST[$meta] = stripslashes_deep($_POST[$meta]);
 	}
-	add_post_meta( $pid, $tag, $_POST['wpi_'.$tag] );	
+	
+	add_post_meta( $pid, $tag, $_POST[$meta] );	
 }
 
 
