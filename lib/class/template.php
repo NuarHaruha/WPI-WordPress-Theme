@@ -98,9 +98,7 @@ class wpiTemplate
 			$this->action(wpiFilter::ACTION_SECTION_PREFIX.'nav_before','htmlBlogHeader');
 		}
 		
-		// content 
-		
-
+		// content
 		if (wpi_option('relative_date')){
 			
 			if (!wpi_user_func_exists('time_since')){
@@ -159,7 +157,7 @@ class wpiTemplate
 			</div>
 		</div>
 	</div>		
-</dd> <!-- /#header -->
+</dd> <!-- /#wp-header -->
 <?php		
 		
 	}
@@ -181,13 +179,7 @@ class wpiTemplate
 ?>
 			<div id="validation" class="pa">
 			<a href="http://qa-dev.w3.org/unicorn/observe?ucn_task=conformance&amp;ucn_uri=<?php echo urlencode(WPI_URL_SLASHIT);?>&amp;ucn_lang=en" title="W3C Unicorn Universal Conformance Checker">W3C Unicorn</a>
-			<!--
-			<a href="http://validator.w3.org/check?uri=referer" title="Valid XHTML">XHTML</a>
-			-->
 			<a href="http://www.validome.org/xml/validate/?lang=en&amp;onlyWellFormed=1&amp;url=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Valid XHTML+XML Documents (structured well-formed)">XML</a> 
-			<!--
-			<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Valid CSS 2.1/3.d Specifications">CSS</a> 
-			-->
 			<a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Web Content Accessibility Valid Section 508 Standards" rel="nofollow noarchive">508</a> <a href="http://tools.microformatic.com/transcode/rss/hatom/<?php echo WPI_URL;?>" title="Raw hAtom feeds" rel="atom" type="application/rss+xml">Atom</a>
 			</div>
 <?php		
@@ -216,7 +208,7 @@ class wpiTemplate
 		$html_type = get_bloginfo('html_type');
 		
 		if (defined('WPI_CLIENT_ACCEPT_XHTML_XML') 
-		&& WPI_CLIENT_ACCEPT_XHTML_XML && wpi_option('xhtml_mime_type')){
+			&& WPI_CLIENT_ACCEPT_XHTML_XML && wpi_option('xhtml_mime_type')){
 			$html_type = 'application/xhtml+xml';
 		} else {
 			$html_type = 'text/html';
@@ -312,8 +304,7 @@ class wpiTemplate
 		$lang = get_option('rss_language');		
 		$lang = ($lang == 'en') ? 'en-US' : 'en';
 		
-		return apply_filters(wpiFilter::FILTER_CONTENT_LANGUAGE,$lang);
-		
+		return apply_filters(wpiFilter::FILTER_CONTENT_LANGUAGE,$lang);		
 	}
 	
 	public static function dtd()
@@ -384,14 +375,9 @@ class wpiTemplate
 	public function registerMetaActionFilters()
 	{
 		
-		$filters = array(
-			wpiFilter::ACTION_META_HTTP_EQUIV,
-			wpiFilter::ACTION_META,
-			wpiFilter::ACTION_META_LINK);
+		$filters = array(wpiFilter::ACTION_META_HTTP_EQUIV,wpiFilter::ACTION_META,wpiFilter::ACTION_META_LINK);
 		
-		foreach($filters as $action){
-			do_action($action);
-		}
+		foreach($filters as $action) do_action($action);
 		
 		unset($filters,$action);
 	}
@@ -418,14 +404,9 @@ class wpiTemplate
 		$m = array();
 		$section = is_at();
 	
-		$m[] = array('name'		=> 'distribution',
-					 'content'	=> 'global');
-					 
-		$m[] = array('name'		=> 'rating',
-					 'content'	=> 'general');	
-					 	
-		$m[] = array('name'		=> 'designer',
-					 'content'	=> 'Avice De&#39;v&eacute;reux; url:http://blog.kaizeku.com');
+		$m[] = array('name'=> 'distribution','content'=> 'global');					 
+		$m[] = array('name'=>'rating','content'=>'general');						 	
+		$m[] = array('name'=>'designer','content'=>'Avice De&#39;v&eacute;reux; url:http://blog.kaizeku.com');
 
 			if ($wp_query->is_singular ){
 				$aid = (int) $wp_query->post->post_author;
@@ -434,33 +415,49 @@ class wpiTemplate
 				
 				unset($aid,$user);
 				
-				$m[] = array('name'		=> 'author',
-							 'content'	=> $name);
-			}	
+				$m[] = array('name'=> 'author','content'=> $name);
+			}
+			
 		if (get_option('blog_public') != '0' && wpi_option('meta_robots')){
-	        $robots = sprintf('%s, follow', (((is_home() || is_single() || is_page()) && !is_paged()) ? 'index' : 'noindex'));        
-	        $m[] = array('name'		=> 'robots','content' => $robots.', noodp');	
-		}	 
-		$m[] = array('name'		=> 'DC.type',
-					 'content'	=> 'text',
-					 'scheme'	=> 'DCTERMS.DCMIType');		
+			
+			$nodp = false; // @todo get theme options
+			
+	        $robots = sprintf('%s, follow', (((is_home() || is_single() || is_page()) && !is_paged()) ? 'index' : 'noindex'));  
+	        
+			if ($wp_query->is_author && wpi_option('wpi_meta_robots_author')){
+				$robots = 'noindex, follow';	
+			}
+			
+			if ($wp_query->is_search && wpi_option('wpi_meta_robots_search')){
+				$robots = 'noindex, follow';	
+			} 
+			
+			if ($nodp){
+				$robots .= ', noodp';
+			} 
+			
+				if (is_wp_version(2.7,'>=')){					
+					if ($wp_query->is_singular && get_option('page_comments'))
+					{			
+						if (isset($wp_query->query['cpage']) 
+							&& absint($wp_query->query['cpage']) >= 1 )
+						{
+							$robots = 'noindex';			
+						}
+					}	
+				}
+									   
+			   
+	        $m[] = array('name'	=> 'robots','content' => $robots);	
+		}
+			 
+		$m[] = array('name'=> 'DC.type','content'=>'text','scheme'=>'DCTERMS.DCMIType');					 
+		$m[] = array('name'=> 'DC.format','content'=>self::getContentMIMEType(),'scheme'=>'DCTERMS.IMT');	
+		$m[] = array('name'=> 'DC.language','content'=> self::getContentLanguage(),'scheme'=> 'DCTERMS.RFC3066');	
+		$m[] = array('name'=> 'DC.identifier','content'=> self_uri(),'scheme'=> 'DCTERMS.URI');
+		$m[] = array('name'=> 'DC.title','content'=> wp_title('&#187;',false,'right').WPI_BLOG_NAME );
 					 
-		$m[] = array('name'		=> 'DC.format',
-					 'content'	=> self::getContentMIMEType(),
-					 'scheme'	=> 'DCTERMS.IMT');
-	
-		$m[] = array('name'		=> 'DC.language',
-					 'content'	=> self::getContentLanguage(),
-					 'scheme'	=> 'DCTERMS.RFC3066');
-	
-		$m[] = array('name'		=> 'DC.identifier',
-					 'content'	=> self_uri(),
-					 'scheme'	=> 'DCTERMS.URI');
-
-		$m[] = array('name'		=> 'DC.title',
-					 'content'	=> wp_title('&#187;',false,'right').WPI_BLOG_NAME );
-					 
-		if ($section == 'home'){
+		if ($section == wpiSection::HOME){
 			if (wpi_option('meta_description')){
 				$prop = wpi_safe_stripslash(wpi_option('def_meta_description'));
 				
@@ -470,7 +467,7 @@ class wpiTemplate
 				
 				$prop = apply_filters(wpiFilter::FILTER_META_DESCRIPTION,$prop);
 				
-				$m[] = array('name'	=> 'description','content' => $prop );
+				$m[] = array('name'=>'description','content' => $prop );
 			}
 			
 			// keywords
@@ -483,49 +480,43 @@ class wpiTemplate
 				
 				$prop = apply_filters(wpiFilter::FILTER_META_KEYWORDS,$prop);
 				
-				$m[] = array('name'	=> 'keywords','content' => $prop);
+				$m[] = array('name'=>'keywords','content' => $prop);
 			}			
 		}
 		
 		$is_desc = wpi_option('meta_description');
 		$is_keyswords = wpi_option('meta_keywords');
 		
-		if ($section == 'single' || $section == 'page'){
+		if ($section == wpiSection::SINGLE || $section == wpiSection::PAGE){
 			global $post;
 		
 			if ( ($subtitle = wpi_get_postmeta('subtitle') ) != false ){
-				$m[] = array('name'		=> 'abstract',
-					 'content'	=> attribute_escape($subtitle));
-			}	
-			
+				$m[] = array('name'=>'abstract','content'=> attribute_escape($subtitle));
+			}			
 			
 			if ($is_desc){
 				if ( ($desc = wpi_get_postmeta('meta_description')) != false){				
-					$m[] = array('name'		=> 'description',
-						 'content'	=> attribute_escape($desc));
+					$m[] = array('name'=>'description','content'=> attribute_escape($desc));
 				}	 				
 			}
 			
 			if ($is_keyswords){
 				if ( ($keywords = wpi_get_postmeta('meta_keywords')) != false){				
-					$m[] = array('name'		=> 'keywords',
-						 'content'	=> attribute_escape($keywords));
+					$m[] = array('name'=>'keywords','content'=> attribute_escape($keywords));
 				}	 				
 			}			
 		}	
 		
-		if ($section == 'category' || $section == 'tag'){			
+		if ($section == wpiSection::CATEGORY || $section == wpiSection::TAG){			
 			if ($is_desc){
 			global $cat;
 				
 				$cat = get_category($cat);
 				if ( ($desc = $cat->category_description) != '' ){
-					$m[] = array('name'		=> 'description',
-						 'content'	=> attribute_escape($desc));				
+					$m[] = array('name'=>'description','content'=> attribute_escape($desc));				
 				} else {
 					$desc = WPI_BLOG_NAME.'&#39;s archive for '.$cat->name.', there is '.$cat->count.' articles in this category';
-					$m[] = array('name'		=> 'description',
-						 'content'	=> attribute_escape($desc));				
+					$m[] = array('name'=>'description','content'=> attribute_escape($desc));				
 				}
 			}	
 		}	
@@ -537,18 +528,14 @@ class wpiTemplate
 			
 			$geo_position = explode(",",$geourl);
 			
-			$m[] = array('name'	=> 'geo.position',
-						 'content'	=> $geo_position[0].';'.$geo_position[1]);
-						 		
-			$m[] = array('name'	=> 'ICBM',
-						 'content'	=> $geourl);					 				 	
+			$m[] = array('name'=>'geo.position','content'=> $geo_position[0].';'.$geo_position[1]);						 		
+			$m[] = array('name'=>'ICBM','content'=> $geourl);					 				 	
 		}
 		
 		$microid = wpi_get_theme_option('microid_hash');	
 				 
 		if ($microid && !empty($microid)){
-			$m[] = array('name'	=> 'microid',
-						 'content'	=> $microid);				 				 	
+			$m[] = array('name'=>'microid','content'=> $microid);				 				 	
 		}
 		
 		if (has_count($m)){	
