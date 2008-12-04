@@ -507,7 +507,7 @@ class wpiTemplate
 			}			
 		}	
 		
-		if ($section == wpiSection::CATEGORY || $section == wpiSection::TAG){			
+		if ($section == wpiSection::CATEGORY || $section == wpiSection::TAXONOMY){			
 			if ($is_desc){
 			global $cat;
 				
