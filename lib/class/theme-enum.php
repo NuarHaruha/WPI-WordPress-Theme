@@ -19,7 +19,7 @@ final class wpiTheme
 	
 	const THEME_RELEASE_TYPE = 'Public Edition';
 	
-	const SIDEBAR_COUNT = 16;
+	const SIDEBAR_COUNT = 17;
 	
 	const LIB_TYPE_CONFIG = 'lib';
 	
