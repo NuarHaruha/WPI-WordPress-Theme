@@ -30,7 +30,7 @@ class wpiSidebar
 							'page-1','page-2','page-3', /* 7,9 */
 							'category','tag','archive', /* 10,12 */
 							'author-1','author-2','author-3', /* 13,15 */
-							'others,comment' /* 16 */
+							'others','comment' /* 16, 17 */
 						);
 						
 			$this->register($options,'register_sidebar');
