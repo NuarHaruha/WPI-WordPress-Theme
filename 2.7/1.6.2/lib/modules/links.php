@@ -1,5 +1,12 @@
 <?php
 if ( !defined('KAIZEKU') ) { die( 42); }
+/**
+ * $Id$
+ * WPI links functions
+ * @package WordPress
+ * @subpackage Template
+ */
+ 
 
 function wpi_get_stylesheets_url($css){
 	global $wp_rewrite;
@@ -224,7 +231,7 @@ function wpi_acl_links()
 
 		if (is_user_logged_in())
 		{
-			$m['register'] = array(WPI_URL_SLASHIT.'wp-admin/','dashboard',WPI_BLOG_NAME.'&apos;s WP Admin Dashboard','Dashboard');
+			$m['register'] = array(WPI_URL_SLASHIT.'wp-admin/','dashboard',WPI_BLOG_NAME.'&#39;s WP Admin Dashboard','Dashboard');
 			$req_uri = get_req_url();		
 			$uri = (is_wp_version('2.6')) ? wpi_logout_url() : WPI_URL_SLASHIT.'wp-login.php?action=logout&amp;redirect_to='.urlencode(rel(self_uri()));
 						
@@ -322,7 +329,7 @@ function wpi_get_adjacent_post_link($in_same_cat = false, $excluded_categories =
 	return array($link,$title);
 }
 
-function wpi_get_webfont_url($text = WPI_META, $font_size = 36, $font_face_name = 'danube', $rgb_hex = 'ffffff'){
+function wpi_get_webfont_url($text = WPI_META, $font_size = 36, $font_face_name = 'danube', $rgb_hex = 'ffffff',$cache = 1){
 	
 	$config = array();
 	
@@ -331,7 +338,7 @@ function wpi_get_webfont_url($text = WPI_META, $font_size = 36, $font_face_name 
 	}
 	
 	$uri = WPI_THEME_URL;									
-	$uri .= $config['text'].'-'.$font_size.'-'.$config['font'].'-'.$config['hex'];
+	$uri .= implode('-',array($config['text'],$font_size,$config['font'],$config['hex'],$cache));
 	$uri .= '.webfont';
 	$uri  = apply_filters(wpiFilter::FILTER_LINKS,$uri);
 	
@@ -341,4 +348,8 @@ function wpi_get_webfont_url($text = WPI_META, $font_size = 36, $font_face_name 
 
 function wpi_webfont_url($hash = false, $font_size = 36, $font_face_name = 'danube', $rgb_hex = 'ffffff'){
 	echo wpi_get_webfont_url($hash,$font_size,$font_face_name,$rgb_hex);
+}
+
+function wpi_get_curie_url($url){
+	return rel(WPI_THEME_URL.b64_safe_encode(str_rem('http://',$url)).'.curie');
 }
