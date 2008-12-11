@@ -417,7 +417,8 @@ class wpiTemplate
 				
 				$m[] = array('name'=> 'author','content'=> $name);
 			}
-			
+		
+		// Robots exclusion rules	
 		if (get_option('blog_public') != '0' && wpi_option('meta_robots')){
 			
 			$nodp = false; // @todo get theme options
@@ -450,7 +451,18 @@ class wpiTemplate
 			   
 	        $m[] = array('name'	=> 'robots','content' => $robots);	
 		}
-			 
+
+		/**
+		 * Prevents Google Translation services
+		 * {@link http://googlewebmastercentral.blogspot.com/2008/10/helping-you-break-language-barrier.html Excluding Google translator}
+		 */			 		
+		if (wpi_option('google_notranslate')){
+			// the attributes should be 'content=%s' not 
+			// 'value=%s; but google has their own standards pigeon
+			$m[] = array('name'=> 'google','value'=>'notranslate');
+		}
+		
+		// DC metadata
 		$m[] = array('name'=> 'DC.type','content'=>'text','scheme'=>'DCTERMS.DCMIType');					 
 		$m[] = array('name'=> 'DC.format','content'=>self::getContentMIMEType(),'scheme'=>'DCTERMS.IMT');	
 		$m[] = array('name'=> 'DC.language','content'=> self::getContentLanguage(),'scheme'=> 'DCTERMS.RFC3066');	
