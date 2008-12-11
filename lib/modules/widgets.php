@@ -83,12 +83,12 @@ function wpi_widget_start($title='random widget',$name= false)
 	$tpl = $Wpi->Sidebar->tpl['widget'];
 	
 	printf($tpl['before_widget'],$name,'widget_'.$name);
-	echo "\n".$tpl['before_title'].$title.$tpl['after_title']."\n";
+	echo PHP_EOL.$tpl['before_title'].$title.$tpl['after_title'].PHP_EOL;
 }
 
 function wpi_widget_end()
 {	global $Wpi;	
-	echo $Wpi->Sidebar->tpl['widget']['after_widget']."\n";
+	echo $Wpi->Sidebar->tpl['widget']['after_widget'].PHP_EOL;
 }
 /**
  * Post summary, active at single & page
@@ -335,7 +335,9 @@ function wpi_widget_author_stalker_pass()
 		$user_desc = (!empty($user_desc)) ? $user_desc : 'unknown stalkers';
 		
 		$avatar_uri = wpiGravatar::getURL(md5($authordata->user_email),92,'G');
-		$avatar_uri = apply_filters(wpiFilter::FILTER_LINKS,$avatar_uri.'.ava');
+		if (wpi_option('cache_avatar')){
+			$avatar_uri = apply_filters(wpiFilter::FILTER_LINKS,$avatar_uri.'.ava');
+		}
 		
 		// jobs
 		
@@ -407,7 +409,7 @@ function wpi_widget_author_summary()
 	
 	wpi_widget_start($title,$name);
 	$name = convert_chars($authordata->display_name);
-	$url = ($authordata->user_url != 'http://') ? $authordata->user_url : BLOGURL;
+	$url = ($authordata->user_url != 'http://') ? $authordata->user_url : WPI_URL_SLASHIT;
 	
 	$im = array();	
 	
@@ -467,6 +469,51 @@ function wpi_tags_widget()
 	wpi_widget_end();
 }
 
+function wpi_dynacloud_widget()
+{	
+	$title =apply_filters('widget_title', 'Most used terms');
+	
+	wpi_widget_start($title,'widget_dyna_cloud');
+	t('div','',array('id'=>'dynacloud'));
+	wpi_widget_end();
+}
+
+function wpi_trackback_pingback_widget()
+{	global $wp_query;
+	$title =apply_filters('widget_title', 'Trackback &amp; Pingback');
+	$len   = 69; 
+	$count = 0;
+	$htm = PHP_EOL;
+	
+	wpi_widget_start($title,'widget_tping');	
+
+	foreach($wp_query->comments as $comment){
+			$GLOBALS['comment'] = $comment;
+		if ( ($type = get_comment_type()) != 'comment'){
+			
+			$title = get_comment_author();			
+			$uri = get_comment_author_url();
+			$host = get_host($uri);
+			
+			if ($type == 'pingback'){
+				$count = wpi_count_pingback_by($comment);
+			} else {
+				$count = wpi_count_trackback_by($comment);
+			}
+			
+			
+			$by = _t('cite', sprintf(__('%1$s %2$s from %3$s',WPI_META),$count ,$type ,$host));
+			$link = _t('a',string_len($title,$len),array('href'=>wpi_get_curie_url($uri),
+			'title'=> sprintf(__('%1$s from %2$s | %3$s',WPI_META),ucfirst($type),$host,$title),'class'=> 'ttip'));
+						
+			$htm .= _t('li',$link.$by);
+		}
+	}
+	t('ol',$htm);
+	
+	wpi_widget_end();
+}
+
 function wpi_pages_widget()
 {
 	// inherit settings from default pages options widgets	
@@ -489,6 +536,23 @@ function wpi_pages_widget()
 	wpi_widget_start($title,$elmID);
 	t('ul',$output,array('class'=>'xoxo'));
 	wpi_widget_end();
+}
+
+function wpi_technorati_backlink()
+{	global $post, $commentdata;
+
+	$class = 'cf';
+	
+	if (wpi_is_plugin_active('global-translator/translator.php')
+	&& wpi_option('widget_gtranslator')){
+		$class .=' hr-line';
+	}
+	
+	echo '<div id="technorati_til" class="'.$class.'">'.PHP_EOL;
+	t('script','',array('src'=>'http://embed.technorati.com/linkcount', 'type'=> 'text/javascript', 'charset'=>'utf-8'));
+	$title = __('View blog reactions',WPI_META);	
+	t('a',$title,array('href'=>'http://technorati.com/search/'.get_permalink($posts->ID ),'title'=> $title,'class'=>'tr-linkcount'));
+	echo '</div>';	
 }
 
 function wpi_register_widgets()
@@ -542,6 +606,17 @@ function wpi_register_widgets()
 					'wpi_sidebar_1_nowidget',
 					'wpi_sidebar_7_nowidget'),'wpi_'.$name.'_widget',$priority);	
 		}
+	// comments
+	wpi_foreach_hook(array('wpi_before_sidebar_17','wpi_sidebar_17_nowidget'),'wpi_trackback_pingback_widget');
+	wpi_foreach_hook(array('wpi_before_sidebar_17','wpi_sidebar_17_nowidget'),'wpi_tags_widget');
+	
+	if (wpi_option('widget_dynacloud')){
+		wpi_foreach_hook(array('wpi_before_sidebar_17','wpi_sidebar_17_nowidget'),'wpi_dynacloud_widget');
+	}
+	
+	if (wpi_option('widget_technorati_backlink')){
+		add_action('widget_single_summary_after','wpi_technorati_backlink');	
+	}
 	
 }
 
