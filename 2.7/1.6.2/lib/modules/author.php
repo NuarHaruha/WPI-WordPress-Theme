@@ -126,15 +126,18 @@ function wpi_get_current_author(){
 	return $user;
 }
 
-function wpi_get_blog_since_year(){
+function wpi_get_blog_since_year($year = false){
 	
 	$cur = date('Y',SV_CURRENT_TIMESTAMP);
-	$since = wpi_blog_since_year();
+	if (!$year){
+		$since = wpi_blog_since_year();
+	} else {
+		$since = absint($year);
+	}
+	
 	$date = $since.' - '.$cur;
 	
-	if ($cur == $since){
-		$date = $cur;
-	} 
+	if ($cur == $since)	$date = $cur; 
 	
 	return _t('span',$date,array('class'=>'since-year') );
 }
