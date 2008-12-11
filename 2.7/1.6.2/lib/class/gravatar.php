@@ -86,7 +86,7 @@ class wpiGravatar
 				if (has_count($gravatars)){
 					// removed duplicate hash;
 					$gravatars = array_unique($gravatars);					
-					$size 		= 80;					
+					$size 		= 42;					
 					
 					foreach($gravatars as $hash){			
 						$url 	  	= self::getURL($hash,$size,$rating);
