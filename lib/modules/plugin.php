@@ -23,10 +23,28 @@ function wpi_plugin_init(){
 	}
 	
 	$call_plug[] = 'wp-pagenavi/wp-pagenavi.php,wp_pagenavi,wpi_post_pagination';
-	$call_plug[] = 'global-translator/translator.php,wpi_get_gt_translate_links,widget_single_summary_after';
-	$call_plug[] = 'global-translator/translator.php,wpi_global_translator_metalinks,wpi_meta_link';
 	
-	//wpi_global_translator_metalinks
+	/**
+	 * N2H's Global Translator
+	 */
+	if (wpi_option('widget_gtranslator')){
+		$call_plug[] = 'global-translator/translator.php,wpi_get_gt_translate_links,widget_single_summary_after';
+		
+		// Global Translator's language meta-link
+		if (wpi_option('widget_gtranslator_meta')){
+			$call_plug[] = 'global-translator/translator.php,wpi_global_translator_metalinks,wpi_meta_link';
+		}
+	}
+	
+	/**
+	 * Lester Chan's WP-Postviews
+	 */
+	if (wpi_option('widget_wppostview')){
+		$call_plug[] = 'wp-postviews/wp-postviews.php,wpi_the_views,wpi_content_bar_home';
+		$call_plug[] = 'wp-postviews/wp-postviews.php,wpi_the_views,wpi_content_bar_single';
+	}
+	
+	
 	if (has_count($call_plug)){
 		foreach($call_plug as $index){
 			list($plugin,$callback,$hook) = explode(',',$index);
@@ -423,4 +441,22 @@ function wpi_has_banner(){
 	
 	return $images;	
 } 
+
+/**
+ * void wpi_the_views()
+ * wp-postview wrapper
+ * @link http://lesterchan.net/wordpress/readme/wp-postviews.html
+ */
+function wpi_the_views(){
+	
+	$view = get_option('views_options');
+	$view = str_replace('%VIEW_COUNT%','0',$view['template']);
+	
+	if ( ($count = the_views(false)) == $view) {
+		return false;
+	} else {
+		t('li',_t('span',$count. ' &middot; '),array('class'=>'wp-postview'));
+	}
+}
+
 ?>
