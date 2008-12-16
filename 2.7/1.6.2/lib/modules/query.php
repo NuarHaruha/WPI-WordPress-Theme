@@ -289,6 +289,13 @@ function wpi_count_trackback_by($comment)
 	return $wpdb->get_var($wpdb->prepare($query,1, 'trackback',$url));	
 }
 
+function wpi_has_trackback_pingback($post_id){
+	global $wpdb;
+	
+	$query = "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_approved = %d AND comment_post_ID = %s AND comment_type != ''";
+	return $wpdb->get_var($wpdb->prepare($query,1,$post_id));
+}
+
 function wpi_update_post_form($id = false){
 
 	if ( is_post('wpi_maintitle') ) {
