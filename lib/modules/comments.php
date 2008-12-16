@@ -1,6 +1,12 @@
 <?php
 if ( !defined('KAIZEKU') ) { die( 42); }
-
+/**
+ * $Id$
+ * Comment template functions
+ *
+ * @package WordPress
+ * @subpackage Template
+ */
 function wpi_get_comment_author(){ 
 	global $comment;	
 	if (get_comment_type() != 'comment'){
@@ -59,17 +65,22 @@ function wpi_comments_title($len=80){
 function wpi_comment_start($comment,$option,$depth){	
 	global $wp_query, $post;
 	$GLOBALS['comment'] = $comment;	
+	
 	$cid 		= $comment->comment_ID;
 	$author_uri	= $comment->comment_author_url;
 	$email 		= $comment->comment_author_email; 
 	$author_uri = ($author_uri != '' && $author_uri != 'http://') ? $author_uri : htmlspecialchars( get_comment_link( $cid, $page )); 
 	$microid	= get_microid_hash($email,$author_uri);
 	$author		= apply_filters('get_comment_author',$comment->comment_author);	
+	if (get_comment_type() != 'comment'){
+		$author = str_rem('www.',get_host($author_uri));
+	}
 	$rclass		= comment_class('hreview',$cid,$post->ID,false);
 	$ava 		= ( stristr($rclass,'bypostauthor')) ? 'avatar-author-wrap.png' : 'avatar-wrap.png';
 	
 	if (wpi_option('client_time_styles')){
-		$file = (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME].'-'.$ava;
+		$cl = (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME];		
+		$file = (string) $cl.'-'.$ava;
 		if (file_exists(WPI_IMG_DIR.$file) ){
 			$ava = $file;
 		}
@@ -77,20 +88,23 @@ function wpi_comment_start($comment,$option,$depth){
 ?>
 				<li id="comment-<?php echo $cid;?>" <?php echo $rclass;?>>
 						<ul class="reviewier-column cf r">
-							<li class="span-3 fl rn hcard">
-								<address class="vcard microid-mailto+http:sha1:<?php echo $microid;?> dc-source"><img src="<?php echo wpi_img_url($ava);?>" width="80" height="80" alt="<?php echo $author; ?>&apos;s photo" class="url cc rn <?php echo wpiGravatar::commentGID($comment); ?> photo" longdesc="#comment-<?php echo $cid ?>" /><a href="<?php echo $author_uri; ?>" class="url fn db" rel="external me" title="<?php echo $author;?>"><?php echo $author; ?></a></address>						
+							<li class="span-2 fl rn hcard">
+								<address class="vcard microid-mailto+http:sha1:<?php echo $microid;?> dc-source"><img src="<?php echo wpi_img_url($ava);?>" width="42" height="42" alt="<?php echo $author; ?>&apos;s photo" class="url cc rn <?php echo wpiGravatar::commentGID($comment); ?> photo" longdesc="#comment-<?php echo $cid ?>" /></address>						
 							</li>
-							<li class="span-16 fl review-content">
+							<li class="span-9 fl review-content">
 								<dl class="review r cf">
 									<dt class="item title summary"><?php wpi_comment_reply_title($comment,$page);?></dt>	
 									<dd class="reviewer-meta"><span class="date-since"><?php echo apply_filters(wpiFilter::FILTER_POST_DATE,wpi_get_comment_date('',$comment));?></span> on <abbr class="dtreviewed" title="<? echo wpi_get_comment_date('Y-m-dTH:i:s:Z'); ?>"><?php wpi_get_comment_date('F jS, Y'); ?> at <?php wpi_comment_time('',false,$comment); ?></abbr><?php if(function_exists('hreview_rating')): hreview_rating(); else: ?><span class="rating dn">3</span><span class="type dn">url</span><?php endif;?> &middot; <a href="#microid-<?php echo $cid;?>" class="hreviewer-microid ttip" title="Micro ID | <?php echo $author;?>&apos;s Hash">microId</a> <?php wpi_edit_comment_link('edit','<span class="edit-comment">','</span>',$comment,$post); ?></dd>
 									<dd id="microid-<?php echo $cid;?>" class="microid-embed" style="display:none"><input class="on-click-select claimid icn-l" type="text" value="mailto+http:sha1:<?php echo $microid;?>" /></dd>			
 									<dd class="reviewer-entry">
-									<div class="description"><?php echo apply_filters('get_comment_text', $comment->comment_content);?>
-									<?php if ('open' == $post->comment_status && $depth <=2) : ?>	
-									<p class="cb reply-links"><small>
-									<a href="<?php wpi_comment_reply_uri($post,$comment);?>" title="Reply to <?php echo $author;?>&apos;s comment" class="thickbox">Reply</a></small></p><?php endif;?>
-									</div><?php if ($comment->comment_approved == '0') : ?><p class="notice rn">Your comment is awaiting moderation.</p><?php endif; ?></dd>	
+									<div class="description dynacloud"><?php echo apply_filters('get_comment_text', $comment->comment_content);?>
+									<?php if ('open' == $post->comment_status && $depth <=2 && get_comment_type() == 'comment') : ?>	
+									<span class="cb reply-links"><small><a href="<?php wpi_comment_reply_uri($post,$comment);?>" title="Reply to <?php echo $author;?>&apos;s comment" class="thickbox" rel="nofollow noarchive">[Reply]</a></small></span><?php endif;?>
+									</div>
+									<address class="vcard comment-footer">
+										<small>(cc)</small> <span><?php echo wpi_get_blog_since_year(date('Y',strtotime($comment->comment_date) ));?></span> <a href="<?php echo $author_uri; ?>" class="url fn" rel="external me" title="<?php echo $author;?>"><?php echo $author; ?></a>. <a href="<?php echo get_permalink( $cid ) . '#comment-' . $cid;?>">#<?php echo $cid ?> permalinks</a>
+									</address>
+									<?php if ($comment->comment_approved == '0') : ?><p class="notice rn">Your comment is awaiting moderation.</p><?php endif; ?></dd>	
 								</dl>		
 							</li>
 						</ul>
@@ -126,12 +140,17 @@ function wpi_comment_end($comment,$option,$depth){
 
 function wpi_comment_reply_title($comment,$page){
 	$label = 'RE:';
+	$rep_id = $comment->comment_ID;
 	if ($comment->comment_parent > 0){
 		$pauthor = get_comment($comment->comment_parent);
-		$label = sprintf(__('Replying to %s &rarr;',WPI_META),$pauthor->comment_author);
+		$label = sprintf(__('Replying to <dfn>%s.</dfn> #%d; ',WPI_META),$pauthor->comment_author,$pauthor->comment_ID);
+		$rep_id = $pauthor->comment_ID;
+	}
+	if ( ($comtype = get_comment_type() ) != 'comment'){
+		$label = ucfirst($comtype).' : ';
 	}
 ?>
-<a rel="dc:source robots-anchortext" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID, $page )); ?>" class="url fn" title="<?php the_title(); ?>"><span><?php echo $label;?></span> <?php the_title(); ?></a>
+<a rel="dc:source robots-anchortext" href="<?php echo htmlspecialchars( get_comment_link( $rep_id, $page )); ?>" class="url fn scroll-to" title="<?php the_title(); ?>"><span><?php echo $label;?></span><?php if ($comment->comment_parent <= 0): ?><?php the_title(); ?><?php endif;?></a>
 <?php	
 }
 
