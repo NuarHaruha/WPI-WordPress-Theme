@@ -480,6 +480,14 @@ function wpi_dynacloud_widget()
 
 function wpi_trackback_pingback_widget()
 {	global $wp_query;
+	
+	// has comments?
+	if (!$wp_query->comments) return; 
+	
+	// has ping, pingback or trackback;
+	$has_ping = intval(wpi_has_trackback_pingback($wp_query->post->ID));
+	if ( $has_ping <= 0  ) return;
+
 	$title =apply_filters('widget_title', 'Trackback &amp; Pingback');
 	$len   = 69; 
 	$count = 0;
@@ -512,6 +520,7 @@ function wpi_trackback_pingback_widget()
 	t('ol',$htm);
 	
 	wpi_widget_end();
+	
 }
 
 function wpi_pages_widget()
