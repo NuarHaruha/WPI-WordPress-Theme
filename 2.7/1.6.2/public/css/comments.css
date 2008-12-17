@@ -9,6 +9,11 @@
 	background-color:#4f4f4f
 }
 
+.dw #wp-comments .outer
+{
+	background-color:#CFCFA8
+}
+
 #wp-comments .outer
 {
 	background-color:#0A78AF
@@ -34,6 +39,12 @@
 	background-repeat:repeat-x
 }
 
+.dw #wp-comments #comments
+{
+	background-color:#F3F3CC
+	
+}
+
 #comments .heading-title
 {
 	color:#fff;
@@ -45,6 +56,7 @@
 	background-color:#444
 }
 
+.dw #comments .heading-title span{background-color:#70704C}
 #comments .heading-title span
 {
 	background-color:#3F5C7F;
@@ -75,6 +87,10 @@
 {
 	background-color:#5f5f5f
 }
+.dw #comments .heading-title strong
+{
+	background-color:#8E8F50
+}
 
 #comments .heading-title strong
 {
@@ -90,14 +106,15 @@
 	background-color:#3e3e3e
 }
 
+.dw .commentlist{background-color:#70704C}
+
+
 .commentlist
 {	
 	background-color:#2d96cb;
 	padding:10px;
 	margin:0 8px
 }
-
-.commentlist .children{list-style:lower-greek inside}
 
 .nt .commentlist .children{color:#666}
 .nt .commentlist .description{color:#aaa}
@@ -108,6 +125,8 @@
 	background-repeat:repeat-x;
 	border-bottom-color:#353535
 }
+
+
 
 .commentlist .hreview
 {
@@ -121,11 +140,29 @@
 	margin:2px 0
 }
 
+.dw .commentlist .children{color:#666;background-color:#70704C}
+
+.dw .commentlist .hreview
+{
+	border-top-color:#CECF8E;
+	background-color:#BEBF6B;
+	border-bottom-color:#9E9F4F;
+	
+}
+
 .nt .commentlist .light,.nt .commentlist .alt
 {
 	border-color:#3e3e3e;
 	background-color:transparent;
 	background-image:none
+}
+
+.dw .commentlist .light,.dw .commentlist .alt
+{
+	border-color:#70704C;
+	background-color:transparent;
+	background-image:none
+	
 }
 
 .commentlist .light,.commentlist .alt
@@ -160,13 +197,7 @@
 	color:#fff!important
 }
 
-.commentlist .hreview .item span
-{
-	font-size:.9em;
-	color:#555!important
-}
-
-.nt .commentlist .hcard
+.nt .commentlist .hcard,.dw .commentlist .hcard
 {
 	background-image:none!important
 }
@@ -174,10 +205,15 @@
 .commentlist .hcard
 {
 	overflow:hidden;
-	background-position:0 135px;
+	background-position:0 92px;
 	height:auto;
-	min-height:140px
+	min-height:90px;
+	width:50px
 }
+
+.comments .children .hcard{
+	background-image:none !important;
+} 
 
 .commentlist .vcard
 {
@@ -189,8 +225,13 @@
 {
 	background-color:#5E676B!important;
 	border-color:#5E676B
-}
+} 
 
+.dw .commentlist .vcard .photo
+{
+	background-color:#737d57!important;
+	border-color:#737d57
+}
 .commentlist .vcard .photo
 {
 	margin:0 0 3px;
@@ -214,9 +255,13 @@
 
 .commentlist .hreview .description
 {
-	text-align:justify;
-	font-size:1.2em
+	border-top: 1px solid #81B5CF;
+	font-size:1em;
+	padding: 9px 0pt
 }
+
+.nt .commentlist .hreview .description{border-top-color:#555}
+.dw .commentlist .hreview .description{border-top-color:#CECF8E;color:#fff}
 
 .commentlist .hreview .dtreviewed
 {
@@ -243,14 +288,23 @@
 
 .commentlist .hreview .reviewer-meta
 {
-	color:#eee;
+	font-size:0.9em;
+	color:#fff;
 	border-bottom:1px solid #379FD3
 }
-
+.commentlist .depth-3{min-height:90px}
+.commentlist .odd .reviewer-meta{border-bottom-color:#0A78AF}
+.even.depth-3 .reviewer-meta{border-bottom-color:#379FD3}
 .nt .commentlist .hreview .reviewer-meta
 {
-	border-bottom-color:#555
+	border-bottom-color:#222
 }
+
+.dw .commentlist .hreview .reviewer-meta
+{
+	border-bottom-color:#9E9F4F
+}
+
 
 .commentlist .normal .reviewer-entry
 {
@@ -262,31 +316,15 @@
 	border-top-color:#555
 }
 
+.dw .commentlist .normal .reviewer-entry
+{
+	border-top-color:#BFBF9B
+}
+
 .commentlist .hreview .reviewer-meta .vcard a
 {
 	text-decoration:none;
 	font-style:normal
-}
-
-.commentlist .hreview big
-{
-	color:#379fd3;
-	font-weight:400;
-	text-align:right;
-	font-family:arial,helvetica,tahoma,verdana,serif;
-	font-size:86px;
-	letter-spacing:-4px;
-	width:80px;
-	height:80px;
-	overflow:hidden;
-	margin:0;
-	padding:0;
-	white-space:nowrap
-}
-
-.nt .commentlist .hreview big
-{
-	color:#444
 }
 
 p.comments-feed
@@ -302,6 +340,8 @@ p.comments-feed a
 	padding:2px 6px 2px 22px
 }
 
+.dw p.comments-feed a{color:#5F5F3B !important}
+
 p.comments-feed a:hover
 {
 	text-decoration:underline
@@ -314,6 +354,8 @@ p.comments-feed a:hover
 {
 	color:#777
 }
+
+.dw .comment-paging{color:#5F5F3B}
 
 .comment-paging
 {
@@ -377,6 +419,11 @@ p.comments-feed a:hover
 .nt #wp-respond #respond
 {
 	border-bottom-color:#b2b2b2
+}
+
+.dw #wp-respond #respond
+{
+	border-bottom-color:#444
 }
 
 #respond-textarea textarea
@@ -602,6 +649,7 @@ p.comments-feed a:hover
 	font-size:.95em
 }
 
+.dw #respond .notice{background-color:#ededed}
 #respond .notice a
 {
 	color:#777
@@ -633,12 +681,15 @@ p.comments-feed a:hover
 
 .commentlist .microid-embed input
 {
+	font-family:Consolas,Monaco,Courier,monospace;
+	font-size:0.9em;
 	border:0;
-	width:388px;
+	width:380px;
 	margin:.5em auto;
 	background-color:transparent;
 	padding:3px 8px 3px 18px;
-	color:#fff
+	color:#fff;
+	overflow:hidden
 }
 
 .commentlist a.hreviewer-microid
@@ -667,7 +718,7 @@ p.comments-feed a:hover
 .comment-footer
 {
 	color:#eee;
-	font-size:.7em
+	font-size:.8em
 }
 
 /* section */
@@ -677,6 +728,9 @@ p.comments-feed a:hover
 }
 
 /* comments children */
+.commentlist .children{list-style: none;margin: 0pt 0pt 0pt auto }
+.commentlist .children li{border-bottom:0pt}
+.commentlist .children .children{margin: 0pt -10px -10px !important}
 .nt li.thread-even ol.children
 {
 	background-color:#3e3e3e
@@ -692,17 +746,27 @@ li.thread-even ol.children
 
 li.depth-2 li.review-content
 {
-	width:590px
+	width:310px
 }
 
 li.depth-3 li.review-content
 {
-	width:540px
+	width:260px
 }
 
 .nt p.reply-links a
 {
 	background-color:#222
+}
+
+.dw .odd .reply-links a,.dw .even .odd .reply-links a
+{
+	color:#99BF00 !important
+}
+
+.dw .even .reply-links a
+{
+	color:#596F00 !important
 }
 
 p.reply-links a
@@ -736,3 +800,45 @@ p.reply-links a
 {
 	width:304px
 }
+
+/**
+ * comment column
+ */
+#comment-column #comment-entry{width:520px}
+
+#comments-list .hreview dt.title a{
+	color:#eee !important;
+	font-size: 0.9em
+}
+
+#comments-list .hreview dt.title a span{
+	padding-right:4px
+}
+
+/** com guide **/
+#comment-00 .reviewer-entry ol{list-style-type:lower-roman}
+
+/* comment sidebar */
+
+#comment-sidebar{background-color:#2D96CB; width:300px;margin: 0px 0pt 18px 10px;padding-top:18px}
+.nt #comment-sidebar{background-color:#3e3e3e}
+.dw #comment-sidebar{background-color:#BEBF6B}
+#comment-sidebar .widget-title{border-bottom: 1px solid #81B5CF}
+.nt #comment-sidebar .widget-title{border-bottom-color:#555}
+.dw #comment-sidebar .widget-title{border-bottom-color:#CECF8E}
+#comment-sidebar .widget-title cite{width:0px}
+#comment-sidebar .widget-title dfn,#comment-sidebar .widget-title dfn a{color:#fff}
+#comment-sidebar .widget-title dfn{display:block;border-bottom:1px solid #0A78AF;float:none;padding-bottom:6px}
+.nt #comment-sidebar .widget-title dfn{border-bottom-color:#222}
+.dw #comment-sidebar .widget-title dfn{border-bottom-color:#9E9F4F;color:#6E6F22}
+#comment-sidebar .widget-content a{color:#fff}
+.dw #comment-sidebar .widget-content a{color:#70704C}
+/** widget trackbacks */
+#widget_tping ol{list-style: decimal}
+#widget_tping li a{}
+#widget_tping li cite{color:#ddd;display:block}
+#widget_tping li{color:#ddd;padding: 3px 0pt;border-bottom: 1px solid #379FD3}
+.nt #widget_tping li{border-bottom-color:#555}
+.nt .comment-footer,.nt .comment-footer a{color:#666 !important}
+.dw #widget_tping li{border-bottom-color:#AEAF57}
+.comment-footer .scroll-to{color:#ddd !important}

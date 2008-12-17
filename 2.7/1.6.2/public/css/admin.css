@@ -6,8 +6,8 @@
 .options-item p.e{background-color:#fff}
 .options-item label{color:#555;width:300px;float:left;display:block;font-weight:700}
 .options-item label:hover{cursor:help}
-.options-item label small{display:block;font-weight:normal}
-
+.options-item label small{display:block;font-weight:normal;color:#777}
+.options-item label small strong{color:#555}
 .nf{float:none}
 .cf:after, .c:after {
     content: "."; 
@@ -30,7 +30,7 @@
 .options-item{padding-bottom:18px !important}
 .options-item,.dn ul,.dn ol{list-style:none}
 .options-item h4.title-{margin-bottom:0pt !important;padding:10px !important;color:#111;font-size:1.1em;margin-top:0pt}
-.options-item .dn{background-color:#f4f4f4;padding:10px 0pt 0pt !important;border:1px solid #ededed}
+.options-item .dn{background-color:transparent;padding:10px 0pt 0pt !important;border:1px solid #ededed}
 .options-item .dn p.cb{margin-bottom:0pt}
 .dn ul,.dn ol{padding: 0pt 10px 0pt;margin-bottom:0pt}
 p.savebtn,.dn li,.options-item h4.title-{background: transparent url('images/hr.gif') repeat-x 0% 0%}
@@ -38,10 +38,13 @@ p.savebtn,.dn li,.options-item h4.title-{background: transparent url('images/hr.
 .options-item h4.title-:hover{background-color:#E4F2FD !important}
 .dn li{padding:9px 18px 18px!important;margin:9px 0pt;background-position:0% 100%;min-height:50px}
 .dn li.last{background-image: none;}
-.dn li ul,.dn li p{background-color:#eee;border:1px solid #ddd;margin-top:18px}
+.dn li ul,.dn li p{background-color:#ececec;border:1px solid #ccc;border-width:2px 1px;margin-top:18px}
+.dn li ul,.dn li p{-moz-border-radius:0.3em;-moz-background-clip:border;-moz-border-bottom-colors:#bbb #fff;-moz-border-top-colors:#bbb #fff}
+.dn li ul ul{background-color:#e9e9e9}
 .options-item p{clear:left;background-color:#E4F2FD;padding:9px 40px}
 textarea, input, select{border:1px solid #ddd}
 .dn input{width:250px}
+.dn textarea{font-family:Consolas,Monaco,Courier,monospace;font-size:0.9em}
 .dn input:focus,.dn textarea:focus{background-color:#E4F2FD;color:#222;border-color:#ccc}
 .cf:after{clear:both;content:".";display:block;height:0;visibility:hidden}.cf,.db{display:block}
 div.main{width:800px;float:left}
@@ -59,3 +62,9 @@ li.ss{margin-bottom:0pt !important}
 p.savebtn{background-color:#f6f6f6}
 .savebtn button,button.sbtn{width:100px;padding:6px;font-size:1.4em;cursor:pointer}
 button.sbtn{width:140px;margin-top:10px}
+.mtb h4{color:#933;margin-bottom:0pt}
+.mtb .notice{background: #fff url(images/import/notice/warning.png) no-repeat 5px 50%;}
+#message.updated{background: #fff url(images/import/notice/accepted.png) no-repeat 5px 50% !important;border-color:#fff}
+.mtb .notice,.updated{padding:40px 10px 40px 90px;-moz-border-radius:6px}
+.mtb .notice strong{color:#993;font-size:1.3em}
+#wpi-theme-options li.ss{background: transparent url(images/pattern/pinstripe.gif) repeat 0px 0px}
