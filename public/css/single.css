@@ -11,7 +11,7 @@
 #meta-title h1 cite{display:block;padding: 6px 0pt 0pt;font-size:0.6em;color:#888}
 
 .nt #content-top{border-bottom-color:#333}
-
+.dw #content-top{border-bottom-color:#F3F3CC}
 #content-top
 {
 	background-repeat:no-repeat;background-color:#f9f9f9 !important;background-position:0% 0%; border-bottom:10px solid #339BCF;
@@ -65,7 +65,7 @@
 
 /* next/previous widget */
 #entry-navigation,#entry-navigation .widget-title cite{background-color:#f8f8f8 !important}
-#entry-navigation{background-image:none !important}
+#entry-navigation{background-position:0px 0px;background-repeat:repeat-x;border-top:4px solid #f8f8f8}
 #entry-navigation .widget-content dt{border-bottom:1px dotted #ccc;color:#bbb;font-size:0.7em;font-weight:600;margin-top:3px !important;text-transform:uppercase}
 #entry-navigation .widget-content dd{margin-top:2px !important;padding:3px 0pt 3px 3px !important}
 #entry-navigation .widget-content dd a{display:block;color:#555;background-position:99% 0px;background-repeat:no-repeat;padding-right:24px}

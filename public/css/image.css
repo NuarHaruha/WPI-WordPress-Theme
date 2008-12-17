@@ -26,7 +26,7 @@ background-image:url(images/search-start.png)
 background-image:url(images/search-end.png)
 }
 
-.nt .rss16 {
+.nt .rss16,.dw .rss16 {
 background-image:url(images/icons/nt-feed.png)
 }
 
@@ -110,7 +110,9 @@ background-image:url(images/sprites/sp-arrow.png)
 background-image:url(images/icons/curie.gif)
 }
 
-.pagination,.hr-line,#content .entry-title,#about-articles,#about-articles .widget-content p,#subpages,#pages,.single #iscontent h2,.page #iscontent h2,#stalker-pass,#related-article,.single .hentry .postmeta-info {
+.pagination,.hr-line,#content .entry-title,#about-articles,#about-articles .widget-content p,
+#subpages,#pages,.single #iscontent h2,.page #iscontent h2,#stalker-pass,.single .hentry .postmeta-info,
+.single #entry-navigation{
 background-image:url(images/hr.gif)
 }
 
@@ -130,7 +132,8 @@ background-image:url(images/tip.png)
 background-image:url(images/tip-left.png)
 }
 
-#sidebar-2 .widget_rss .widget-title cite,.single .widget-title dfn a.rsswidget,.page .widget-title dfn a.rsswidget,.comments-feed a {
+#sidebar-2 .widget_rss .widget-title cite,.single .widget-title dfn a.rsswidget,.page .widget-title dfn a.rsswidget,.comments-feed a,
+.home #sidebar-3 .widget_rss .widget-title dfn a.rsswidget {
 background-image:url(images/icons/feed-dblue.png)
 }
 
@@ -248,4 +251,11 @@ background-image:url(images/sprites/expand.gif)
 
 .nt #sidebar-mid dl.w,.nt .commentlist .hreview{
 background-image: url(images/nt-htop.gif)
+}
+
+.trackback-icn{
+	background-image: url(images/icons/trackback.png)
+}
+li.icn-trackback, #widget_tping .widget-title dfn{
+	list-style-image: url(images/icons/trackback.png)
 }

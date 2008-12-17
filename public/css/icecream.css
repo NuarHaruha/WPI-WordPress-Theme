@@ -1,3 +1,8 @@
+
+/**
+ * $Id$
+ * WPI fancy class
+ */
 .typo-mac,#comments .heading-title,.commentlist .hreview .item,#tooltip h5 {
 font-family:"Lucida Grande", Verdana, Arial, Helvetica, sans-serif
 }
@@ -71,7 +76,7 @@ line-height:0;
 visibility:hidden
 }
 
-.dn,#wpstats,.safari #searchsubmit{
+.dn,#wpstats,.safari #searchsubmit,.home #sidebar-3 .widget-title dfn img{
 display:none
 }
 
@@ -179,7 +184,8 @@ background-repeat:repeat-y
 background-repeat:repeat-x
 }
 
-.rn,#tools,a.more-link,.postmeta-info .ptime,.entry-content,.widget-title,.edit-links a,#wpi-bookmarks a,#wp-footer .inner,#pages .widget-content ul li.page_item li,#subpages .widget-content li.parent li,.claimid,#tooltip span,.single .widget-title dfn a.rsswidget,.page .widget-title dfn a.rsswidget,acronym.share {
+.rn,#tools,a.more-link,.postmeta-info .ptime,.entry-content,.widget-title,.edit-links a,#wpi-bookmarks a,#wp-footer .inner,#pages .widget-content ul li.page_item li,#subpages .widget-content li.parent li,.claimid,#tooltip span,.single .widget-title dfn a.rsswidget,.page .widget-title dfn a.rsswidget,acronym.share,
+.home #sidebar-3 .widget-title dfn a.rsswidget {
 background-repeat:no-repeat!important
 }
 
@@ -572,26 +578,29 @@ padding-right:10px
 padding-left:10px
 }
 
-.hilite-1,.hilite-2,.hilite-3,.hilite-4,.hilite-5 {
+.hilite,.hilite-1,.hilite-2,.hilite-3,.hilite-4,.hilite-5,.description blockquote {
 padding:3px 4px 3px 3px
 }
 
+.hilite{background-color:#3080CB !important;color:#fff}
 .hilite-1 {
 background-color:#FFF7C7;
 color:#333
 }
 
-.hilite-2 {
+.hilite-2,.description blockquote{
 background-color:#3080CB;
 color:#fff
 }
+
+
 
 .hilite-3 {
 background-color:#c33;
 color:#fff
 }
 
-.hilite-4 {
+.hilite-4,.dw .description blockquote {
 background-color:#990;
 color:#fff
 }
@@ -632,3 +641,12 @@ list-style:inside none none!important
 .pad-10 {
 padding:10px!important
 }
+
+/* font size (taxonomy) */
+.fs-20{font-size: 2em}
+.fs-18{font-size: 1.8em}
+.fs-16{font-size: 1.6em}
+.fs-14{font-size: 1.4em}
+.fs-12{font-size: 1.2em;color:#eee !important}
+.fs-10, #comment-sidebar .fs-8{font-size: 1.1em}
+.fs-8, #comment-sidebar .fs-8{font-size: 1em;color:#ddd !important}
