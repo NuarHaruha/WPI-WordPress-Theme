@@ -66,14 +66,32 @@ define('WPI_FONTS_DIR',(strtr(realpath(WPI_PUB.'webfonts'), array("\\", DIRSEP))
 define('WPI_CACHE_FONTS_DIR',(strtr(realpath(WPI_CACHE_DIR.DIRSEP.'webfonts'), array("\\", DIRSEP))));
 
 define('WPI_CACHE_AVATAR_DIR',WPI_CACHE_DIR.DIRSEP.'avatar');
+
 /**
  * Wordpress blog URL
- * @since	1.6
+ * @since	1.6 site_url()
  */
-define( 'WPI_URL', get_bloginfo('url') );
+define('WPI_URL', get_option('siteurl') );
 
-// minus 1 redirection dude!
 define('WPI_URL_SLASHIT', trailingslashit( WPI_URL ) );
+
+/**
+ * Blog home URL
+ * @since 1.6.2
+ */
+define('WPI_HOME_URL', get_option('home') );
+
+/**
+ * Blog home URL with trailing slash (not user trailing slash)
+ * @since 1.6.2
+ */
+define('WPI_HOME_URL_SLASHIT', trailingslashit(get_option('home')) );
+
+/**
+ * WordPress Admin URL
+ * @since 1.6.2
+ */
+define('WPI_ADMIN_URL', site_url('wp-admin/','admin') );
 
 /**
  * Wordpress Blog Name
