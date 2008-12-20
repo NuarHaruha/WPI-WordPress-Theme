@@ -153,8 +153,7 @@ function wpi_content_meta_title_filter(){
 	
 	if ($wp_query->is_single || $wp_query->is_page){			
 		$htm 	= _t('strong',$title);
-		$htm 	.= wpi_get_subtitle();	
-		
+		$htm 	.= wpi_get_subtitle();
 		$output = _t('h1',$htm);
 	}
 	
@@ -271,18 +270,18 @@ function wpi_default_filters(){
 	$f['do_robotstxt'] = 'wpi_robots_rules_filter';
 
 	// feeds
-	if (wpi_option('exclude_feed')){
-		// for RSS 0.92 & RSS 2 feeds
-		$f['rss_head'] = $f['rss2_head'] = 'wpi_noindex_rss_header';
-	}
-			
-	wpi_foreach_hook_filter($f);
+	$f['rss_head'] = $f['rss2_head'] = 'wpi_rss_header';
 	
-	// extended action hook
-	// feeds
-	if (wpi_option('exclude_ypipe')){
-		wpi_foreach_hook(array('rss_head','rss2_head'),'wpi_ypipe_noindex_rss_meta');		
-	}	
+	if ( '' != wpi_option('delay_rss')  
+		&& absint(wpi_option('delay_rss')) >= 1 ){
+		$f['posts_where'] = 'wpi_delay_feeds';
+	}
+	
+	$f[wpiFilter::ACTION_FOOTER_SCRIPT] = 'wpi_google_analytics_tracking_script';
+	
+	$f['get_comment_text'] = 'wpautop';
+			
+	wpi_foreach_hook_filter($f);	
 }
 
 function wpi_stylesheet_directory_uri_filter($stylesheet_dir_uri=false, $stylesheet=false){
@@ -568,6 +567,63 @@ function wpi_noindex_rss_header(){
 }
 
 function wpi_ypipe_noindex_rss_meta(){
-	echo '<meta xmlns="http://pipes.yahoo.com" name="pipes" content="noprocess" />'.PHP_EOL;
+	echo PHP_T.'<meta xmlns="http://pipes.yahoo.com" name="pipes" content="noprocess" />'.PHP_EOL;
+}
+
+function wpi_rss_logo(){
+	$htm = PHP_T.'<image>'.PHP_EOL;
+	$htm .= PHP_T.PHP_T.'<link>'.WPI_URL_SLASHIT.'</link>'.PHP_EOL;
+	$htm .= PHP_T.PHP_T.'<url>'.wpi_option('rss_logo').'</url>'.PHP_EOL;
+	$htm .= PHP_T.PHP_T.'<title>'.get_bloginfo_rss('name').'</title>'.PHP_EOL;
+	$htm .= PHP_T.'</image>'.PHP_EOL;
+	
+	echo $htm;
+	unset($htm);
+}
+
+function wpi_rss_header(){
+	
+	if (wpi_option('exclude_feed')){
+		wpi_noindex_rss_header();
+	}
+	
+	if (wpi_option('exclude_ypipe')){
+		wpi_ypipe_noindex_rss_meta();
+	}
+	
+	if ( '' != wpi_option('rss_logo') ){
+		wpi_rss_logo();
+	}
+}
+
+/**
+ * wpi_delay_feeds()
+ * @link http://wpengineer.com/publish-the-feed-later/
+ */
+function wpi_delay_feeds($clause) {
+	global $wpdb;
+
+	if ( is_feed() ) {
+		
+		$now = gmdate('Y-m-d H:i:s');
+		$wait = absint(wpi_option('rss_delay')) >= 1  ? absint(wpi_option('rss_delay')) : 5 ; 
+		$device = 'MINUTE';
+		$clause .= " AND TIMESTAMPDIFF($device, $wpdb->posts.post_date_gmt, '$now') > $wait ";
+	}
+	
+	return $clause;
+}
+
+/**
+ * void wpi_google_analytics_tracking_script()
+ * Google Analytics Tracking script
+ */
+function wpi_google_analytics_tracking_script()
+{
+	if ( ($id = wpi_option('google_analytics_tracking_code')) != '') :
+?>
+	<script type="text/javascript" charset="utf-8">/*<![CDATA[*/ var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); /*]]>*/ </script>
+	<script type="text/javascript" charset="utf-8">/*<![CDATA[*/ try {var pageTracker = _gat._getTracker("<?php echo $id;?>"); pageTracker._trackPageview(); } catch(err) {}; /*]]>*/ </script>
+<?php endif;
 }
 ?>
