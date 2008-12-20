@@ -76,9 +76,11 @@ function wpi_update_form_meta($pid,$tag){
 
 
 function wpi_get_postmeta($key){ 
-	global $post;
+	global $wp_query, $post;
 
-	if ( ($meta = wpi_get_post_meta($post->ID,$key)) != false){
+	$pid = (!is_admin()) ? $wp_query->post->ID : $post->ID;
+	
+	if ( ($meta = get_post_meta($pid,$key)) != false){
 		if (!isset($meta[0])){
 			return false;
 		}
