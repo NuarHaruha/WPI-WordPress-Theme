@@ -138,7 +138,7 @@ class wpiTemplate
 		
 		// footer			
 		$this->action('wp_footer','footerCopyright',1);
-		$this->action(wpiFilter::ACTION_COPYRIGHT_STATEMENTS,'validationServices');
+		$this->action(wpiFilter::ACTION_COPYRIGHT_STATEMENTS,'leftBottomContent');
 		
 		add_action('wp_footer','wpi_register_widgets');	
 	}
@@ -165,7 +165,7 @@ class wpiTemplate
 	public function navLink()
 	{
 		$str = ' WordPress Themes';
-		$url = _t('a',WPI_BLOG_NAME,array('href'=>WPI_URL_SLASHIT,'title'=>WPI_BLOG_NAME,'rev'=>'vote-for'));
+		$url = _t('a',WPI_BLOG_NAME,array('href'=>WPI_HOME_URL_SLASHIT,'title'=>WPI_BLOG_NAME,'rev'=>'vote-for'));
 		$htm = _t('a',wpiTheme::THEME_NAME.$str,array('href'=>wpiTheme::THEME_URL,'class'=>'rn rtxt','id'=>'designer','title'=> wpiTheme::THEME_NAME.' WordPress Theme') );
 		
 		$htm .= _t('a','top',array('href'=>'#'.self::bodyID(),'title'=>'back to top','class'=>'rn rtxt top'));
@@ -175,13 +175,35 @@ class wpiTemplate
 		echo $htm;
 	}
 	
-	public function validationServices(){
+	public function leftBottomContent(){
 ?>
 			<div id="validation" class="pa">
-			<a href="http://qa-dev.w3.org/unicorn/observe?ucn_task=conformance&amp;ucn_uri=<?php echo urlencode(WPI_URL_SLASHIT);?>&amp;ucn_lang=en" title="W3C Unicorn Universal Conformance Checker">W3C Unicorn</a>
-			<a href="http://www.validome.org/xml/validate/?lang=en&amp;onlyWellFormed=1&amp;url=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Valid XHTML+XML Documents (structured well-formed)">XML</a> 
-			<a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=<?php echo urlencode(WPI_URL_SLASHIT);?>" title="Web Content Accessibility Valid Section 508 Standards" rel="nofollow noarchive">508</a> <a href="http://tools.microformatic.com/transcode/rss/hatom/<?php echo WPI_URL;?>" title="Raw hAtom feeds" rel="atom" type="application/rss+xml">Atom</a>
+				<dl class="validation xoxo fl">
+					<dt><?php _e('Validation');?></dt>
+					<dd>
+						<a href="http://qa-dev.w3.org/unicorn/observe?ucn_task=conformance&amp;ucn_uri=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>&amp;ucn_lang=en" title="W3C Unicorn Universal Conformance Checker">W3C Unicorn</a>
+					</dd>
+					<dd>
+						<a href="http://www.validome.org/xml/validate/?lang=en&amp;onlyWellFormed=1&amp;url=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Valid XHTML+XML Documents (structured well-formed)">XML</a>
+					</dd>
+					<dd> 
+						<a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Web Content Accessibility Valid Section 508 Standards" rel="nofollow noarchive">508</a>
+					</dd>
+				</dl>
+				<dl class="syndication xoxo fl cf">
+					<dt><?php _e('Syndication');?></dt>
+					<dd> 
+						<a href="<?php bloginfo('comments_rss2_url'); ?>" title="Comments RSS feed" rel="rss2" type="application/rss+xml">Comments</a>
+					</dd>
+					<dd> 
+						<a href="<?php bloginfo('rss2_url'); ?>" title="Articles RSS feed" rel="rss2" type="application/rss+xml">Articles</a>
+					</dd>										
+					<dd> 
+						<a href="http://tools.microformatic.com/transcode/rss/hatom/<?php echo WPI_HOME_URL_SLASHIT;?>" title="Raw hAtom feeds" rel="atom" type="application/rss+xml">Atom</a>
+					</dd>
+				</dl>				
 			</div>
+			
 <?php		
 	}
 	
@@ -199,7 +221,7 @@ class wpiTemplate
 	
 	public static function bodyID()
 	{		
-		return strtr(WPI_URL,array('http://'=>'','.'=>'-','/'=>'-') );
+		return strtr(WPI_HOME_URL_SLASHIT,array('http://'=>'','.'=>'-','/'=>'-') );
 	}
 	
 			
@@ -423,16 +445,8 @@ class wpiTemplate
 			
 			$nodp = false; // @todo get theme options
 			
-	        $robots = sprintf('%s, follow', (((is_home() || is_single() || is_page()) && !is_paged()) ? 'index' : 'noindex'));  
+	        $robots = sprintf('%s, follow', (((is_home() || is_single() || is_page()) && !is_paged()) ? 'index' : 'noindex')); 
 	        
-			if ($wp_query->is_author && wpi_option('wpi_meta_robots_author')){
-				$robots = 'noindex, follow';	
-			}
-			
-			if ($wp_query->is_search && wpi_option('wpi_meta_robots_search')){
-				$robots = 'noindex, follow';	
-			} 
-			
 			if ($nodp){
 				$robots .= ', noodp';
 			} 
@@ -447,7 +461,14 @@ class wpiTemplate
 						}
 					}	
 				}
-									   
+				
+			if ($wp_query->is_author && wpi_option('meta_robots_author')){
+				$robots = 'noindex, follow';	
+			}
+			
+			if ($wp_query->is_search && wpi_option('meta_robots_search')){
+				$robots = 'noindex, follow';	
+			} 									   
 			   
 	        $m[] = array('name'	=> 'robots','content' => $robots);	
 		}
@@ -462,12 +483,31 @@ class wpiTemplate
 			$m[] = array('name'=> 'google','value'=>'notranslate');
 		}
 		
+		
 		// DC metadata
 		$m[] = array('name'=> 'DC.type','content'=>'text','scheme'=>'DCTERMS.DCMIType');					 
 		$m[] = array('name'=> 'DC.format','content'=>self::getContentMIMEType(),'scheme'=>'DCTERMS.IMT');	
 		$m[] = array('name'=> 'DC.language','content'=> self::getContentLanguage(),'scheme'=> 'DCTERMS.RFC3066');	
 		$m[] = array('name'=> 'DC.identifier','content'=> self_uri(),'scheme'=> 'DCTERMS.URI');
 		$m[] = array('name'=> 'DC.title','content'=> wp_title('&#187;',false,'right').WPI_BLOG_NAME );
+		
+		/**
+		 * Site Meta-tag verifications
+		 */
+		 
+		 $prop = array(
+		 	'verify_google_webmaster' => 'verify-v1',
+		 	'verify_yahoo_explorer' => 'y_key',
+		 	'verify_msn' => 'msvalidate.01'
+		 );
+		 
+		foreach($prop as $meta => $name){
+			if ( ($token = wpi_option($meta)) != '' ){
+				$m[] = array('name'=> $name, 'content'=> stripslashes_deep($token) );
+			} 
+		}
+		
+		unset($prop,$meta,$name);
 					 
 		if ($section == wpiSection::HOME){
 			if (wpi_option('meta_description')){
@@ -589,13 +629,13 @@ class wpiTemplate
 		
 		if (file_exists(WP_ROOT.'my-pavatar.png')){
 			$m[] = array('rel'	=> 'pavatar',
-						 'href'	=> WPI_URL.'my-pavatar.png',
+						 'href'	=> WPI_URL_SLASHIT.'my-pavatar.png',
 						 'title'=> WPI_BLOG_NAME);		
 		}
 		
 		if (file_exists(WP_ROOT.DIRSEP.'labels.rdf')) {
 			$m[] = array('rel'	=> 'meta',
-						 'href'	=> WPI_URL.'/labels.rdf',
+						 'href'	=> WPI_URL_SLASHIT.'labels.rdf',
 						 'type'	=> 'application/rdf+xml');					 
 		}	
 	
@@ -659,7 +699,7 @@ class wpiTemplate
 					$href = rel($href);
 				} else {
 					$ref = wp_get_referer();
-					$href = (!empty($ref)) ? $ref : WPI_URL_SLASHIT;
+					$href = (!empty($ref)) ? $ref : WPI_HOME_URL_SLASHIT;
 					$title = 'Previous referrer '.WPI_BLOG_NAME;
 				}	
 				
@@ -677,7 +717,7 @@ class wpiTemplate
 		}				 				 				 
 
 		$m[] = array('rel'	=> 'copyright',
-					 'href'	=> rel(WPI_URL.'/#copyright') );			
+					 'href'	=> rel(WPI_HOME_URL_SLASHIT.'/#copyright') );			
 
 				 
 	// 
@@ -747,7 +787,7 @@ class wpiTemplate
 	
 		$blog_name = (wpi_option('gd_blogname_text')) ? wpi_option('gd_blogname_text') : WPI_BLOG_NAME;
 		
-		$attribs = array('href'=> rel(trailingslashit(WPI_URL)),
+		$attribs = array('href'=> rel(trailingslashit(WPI_HOME_URL_SLASHIT)),
 		'rel'=>'home','title'=> $blog_name,'class'=>'url fn');
 			
 		if (wpi_option('gd_blogname')){
@@ -957,7 +997,7 @@ class wpiTemplate
 		}		
 		
 		if ( ($hbanner = wpi_has_banner()) != false) {		
-			$burl = strtr($burl,array('%RANDOM_BANNER_URL%'=>$hbanner['uri'],'%BANNER_URL%'=>THEME_IMG_URL) );
+			$burl = strtr($burl,array('%RANDOM_BANNER_URL%'=>$hbanner['uri'],'%BANNER_URL%'=>THEME_IMG_URL.'banner/') );
 			unset($hbanner);		
 		}
 		
@@ -969,6 +1009,7 @@ class wpiTemplate
 		$css .= '}'.PHP_EOL;
 		
 		echo $css;
+		unset($css,$burl,$height,$position,$repeat);
 	}
 	
 	public function osdLink()
@@ -980,7 +1021,7 @@ class wpiTemplate
 			$params = wpiTheme::PUB_QUERY_VAR.'/osd/';	
 		}
 		
-		$url = apply_filters(wpiFilter::FILTER_LINKS,WPI_URL_SLASHIT.$params);
+		$url = apply_filters(wpiFilter::FILTER_LINKS,WPI_HOME_URL_SLASHIT.$params);
 		
 		return _t('link','',array(
 			'rel'=>'search',
