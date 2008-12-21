@@ -1,9 +1,14 @@
-var dx = new Date();
+/**
+ * $Id$
+ * WPI client date scripts 
+ *  
+ */
+wpi.date = new Date();
 // 25th December (christmas) 
-if (dx.getDate() == 25 && dx.getMonth() == 11 ){
-	jQuery.getScript(wpi.script.url + "snow.js", function(){
-	  wpi.snowStorm = new SnowStorm();
+if (wpi.date.getDate() == 25 && wpi.date.getMonth() == 11 ){
+	jQuery.getScript(wpi.theme_url + "snow.js", function(){
+	  snowStorm=new SnowStorm();
 	});	
 }
 
-// others festival events maybe ...
+// others festive events drop it here ...
