@@ -42,5 +42,4 @@ var didInit=false;this.start=function(bFromOnLoad){if(!didInit){didInit=true;}el
 if(typeof targetElement=='string'){targetElement=document.getElementById(targetElement);if(!targetElement)throw new Error('Snowstorm: Unable to get targetElement');}
 if(!targetElement){targetElement=(!isIE?(document.documentElement?document.documentElement:document.body):document.body);}
 if(targetElement!=document.documentElement&&targetElement!=document.body)s.resizeHandler=s.resizeHandlerAlt;s.resizeHandler();if(screenX&&screenY&&!s.disabled){s.init();s.active=true;}}
-if(document.addEventListener){document.addEventListener('DOMContentLoaded',function(){s.start(true)},false);window.addEventListener('load',function(){s.start(true)},false);}else{addEvent(window,'load',function(){s.start(true)});}}
-snowStorm=new SnowStorm();
+if(document.addEventListener){document.addEventListener('DOMContentLoaded',function(){s.start(true)},false);window.addEventListener('load',function(){s.start(true)},false);}else{addEvent(window,'load',function(){s.start(true)});}};
