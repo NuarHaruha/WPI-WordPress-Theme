@@ -153,12 +153,15 @@ class wpiScripts{
 	public function embedScript()
 	{	global $wp_query;
 	
+		$attribs = array('id'=>'wp-js-head-embed','type'=>'text/javascript','defer'=>'defer','charset'=>'utf-8');
+		
 		list($lang, $locale) = explode('-',get_bloginfo('language'));
 		$pid = (isset($wp_query->post->ID)) ? $wp_query->post->ID : 0;
 				
 		$js = PHP_EOL.PHP_T;
 		$js .= '/*<![CDATA[*/'.PHP_EOL.PHP_T.PHP_T;	
 		$js .= 'var wpi = {url:'.json_encode(WPI_URL_SLASHIT);
+		$js .= ',home_url:'.json_encode(WPI_HOME_URL_SLASHIT);
 		$js .= ',id:'.json_encode(wpiTemplate::bodyID());
 		$js .= ',blogname:'.json_encode(WPI_BLOG_NAME);
 		$js .= ',theme_url:'.json_encode(WPI_THEME_URL);
@@ -170,6 +173,7 @@ class wpiScripts{
 		$jsurl  = json_encode(wpi_get_scripts_url('%s'));	
 			
 		$js .= ',script:{path:'.$jspath.',url:'.$jsurl.'}';
+		
 		if (wpi_option('client_time_styles')){
 			$js .= ',pid:'.$pid.',cl_type:td};jQuery(document).ready(function(){if( jQuery(\'#\'+wpi.id).hasClass(wpi.cl_type) == false){ jQuery(\'#\'+wpi.id).addClass(wpi.cl_type);jQuery.cookie(\'wpi-cl\',wpi.cl_type,{duration: 1/24,path: "/"});};});'.PHP_EOL;
 		} else {
@@ -178,18 +182,18 @@ class wpiScripts{
 		
 		if (wpi_option('iframe_breaker') && !$wp_query->is_preview){
 			$js .= PHP_T.PHP_T.'if(top.location!=location){top.location.href=document.location.href;};'.PHP_EOL;
+			unset($attribs['defer']);
 		}
 		
-		// check client cookie;				
-		if ($wp_query->is_search || $wp_query->is_404){
-		// google webmaster 404 widget
-		$js .= PHP_T.PHP_T.'var GOOG_FIXURL_LANG = \''.$lang.'\';var GOOG_FIXURL_SITE = wpi.url;'.PHP_EOL;
+		// google webmaster 404 widget		
+		if ($wp_query->is_search || $wp_query->is_404){		
+			$js .= PHP_T.PHP_T.'var GOOG_FIXURL_LANG = \''.$lang.'\';var GOOG_FIXURL_SITE = wpi.url;'.PHP_EOL;
 		}
+		
 		$js .= PHP_T.'/*]]>*/'.PHP_EOL.PHP_T;
 				
-		echo PHP_T;
-		t('script',$js,array('id'=>'wp-js-head-embed','type'=>'text/javascript','defer'=>'defer','charset'=>'utf-8'));
-		
+		echo PHP_T;		
+		t('script',$js,$attribs);	
 
 	}
 
