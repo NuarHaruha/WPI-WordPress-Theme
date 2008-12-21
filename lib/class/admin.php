@@ -1,6 +1,20 @@
 <?php
 if (!defined('KAIZEKU')) { die(42); }
-
+/**
+ * $Id$
+ * Wp-Istalker Theme options
+ * 
+ * @package WordPress
+ * @subpackage Administration
+ */
+ 
+ 
+/**
+ * wpiAdmin
+ * 
+ * @access public
+ * @since 1.4 
+ */
 class wpiAdmin
 {
 	const REQUEST_PREFIX = '/^wpi_/';
@@ -16,7 +30,7 @@ class wpiAdmin
 	{
 		$this->registerDefaultScript();
 		
-		$options = array('optionPagesMenu',	'optionAdvance','optionPostLayout',
+		$options = array('optionPagesMenu','optionSEO','optionAdvance','optionPostLayout',
 		'optionWidgets','optionPlugins','optionMisc','optionCache');
 		
 		foreach($options as $method){
@@ -26,7 +40,7 @@ class wpiAdmin
 		unset($options,$method);
 		
 		$this->_lang();
-			
+		$this->select_options = array($this->lang['enabled'] => 1,$this->lang['disabled'] => 0 );	
 	}
 	
 	
@@ -35,12 +49,13 @@ class wpiAdmin
 		$this->lang['enabled'] = __('Enabled',WPI_META);
 		$this->lang['disabled'] = __('Disabled',WPI_META);
 		$this->lang['cache_dir_size'] = __('Cache directory size : %s',WPI_META);
+		$this->lang['update_settings'] = __('Update settings',WPI_META);
 	}
 	
 	
 	public function registerDefaultScript()
 	{
-		wp_register_script(WPI_META.'_admin', WPI_THEME_URL.'admin.js',false, '0.1');	
+		wp_register_script(WPI_META.'_admin', WPI_THEME_URL.'admin.js',false, '20081203');	
 	}
 	
 	
@@ -58,10 +73,17 @@ class wpiAdmin
         foreach ($request as $key => $val) {
         	
             if (preg_match(self::REQUEST_PREFIX, $key) ) {				                
-				$key = str_rem(self::OPTIONS_PREFIX,$key);
+				$key = str_rem(self::OPTIONS_PREFIX,$key);				
 				if (stristr($key,'flush_')){
 					$this->_flushType($key);
 				} else {
+					
+				if ($key == 'verify_google_webmaster'
+					|| $key == 'verify_yahoo_explorer'
+					|| $key == 'verify_msn'){
+					$val =  stripslashes_deep($val);
+				}
+									
 					self::save($key,$val);
 				}     
             }            
@@ -77,7 +99,24 @@ class wpiAdmin
     		case 'flush_css': $path = WPI_CACHE_CSS_DIR;break;
     		case 'flush_webfont': $path = WPI_CACHE_FONTS_DIR.DIRSEP;break;
     		case 'flush_avatar': $path = WPI_CACHE_AVATAR_DIR.DIRSEP;break;
+    		case 'flush_robotstxt': 
+				$file = ABSPATH.'robots.txt';
+				$content = htmlspecialchars( (string) $_REQUEST['wph_robots_txt_rules']);					
+					wpi_fwrite($file,$content);
+				return;
+			break;
+    		case 'flush_update_robotstxt': 
+				$file = ABSPATH.'robots.txt';
+				$content = htmlspecialchars( (string) $_REQUEST['wph_robots_txt_rules']);	
+					if (file_exists($file) && is_writable($file)){				
+						wpi_fwrite($file,$content,'w+');
+					}
+				return;
+			break;			
+			
     	}
+    	
+    	
     	
     	if ( ($files = wpi_get_dir($path)) != false ){
 	    	foreach($files as $filename){
@@ -106,6 +145,7 @@ class wpiAdmin
 			#wpi-theme-options .side-panel{width:18%}
 			#wpi-theme-options .options-item{width:98%}
 			#wpi-theme-options .side-panel h2{margin-top:8px}
+			.row-2{height:48px !important}
 		</style>
 <?php			
 		}
@@ -121,7 +161,7 @@ class wpiAdmin
     public function themeOptions()
     {
     	if (is_req('saved')){
-				echo '<div id="message" class="updated fade"><p><strong>'.__('Options saved.',WPI_META).'</strong></p></div>';
+				echo '<div id="message" class="updated"><p><strong>'.__('Options saved.',WPI_META).'</strong></p></div>';
 		}    	
 ?>
 		<div id="wpi-theme-options" class="wrap cf">
@@ -146,6 +186,156 @@ class wpiAdmin
 <?php		
 	}	
 	
+	public function optionSEO()
+	{
+?>
+<ol class="r mtb options-item">
+	<li class="ss"><h4 class="title-">
+	<?php _e('Search Engine Optimization',WPI_META);?>
+	</h4>
+	<div class="dn">
+	<ul class="mtb">
+		<li>
+			<h4><?php _e('Robots Exclusion Standards',WPI_META);?></h4>
+			<small><?php _e('Method used to exclude robots (search engine indexes and services) from particular URLs or contents on server.',WPI_META);?></small>
+			<ul style="list-style:lower-roman outside;padding-left:28px">
+				<li>			
+				<label for="wpi_robots_txt"><?php _e('robots.txt',WPI_META);?>				
+				<small><?php _e('Enabled custom robots rules.',WPI_META);?>
+				<?php self::helpIcon('http://www.robotstxt.org/orig.html',__('About Robots Exlusion Standards',WPI_META) );?></small>			
+				</label>
+				<?php $prop = self::option('robots_txt');?>
+				<?php self::addSelect('robots_txt',$this->select_options,$prop);?>
+				<?php if($prop):
+				    $file = ABSPATH.'robots.txt';
+					$file_exists = file_exists($file);
+					$is_writable = is_writable($file);
+				?>
+					<dl>
+						<dd>	
+						<label for="wpi_robots_txt_rules" style="width:150px">
+							<?php _e('Robots rules',WPI_META);?>
+							<small><?php _e('<strong>Symbols:</strong><br />\'<strong>*</strong>\' - wildcard match a sequence of characters in URL</small><br /><small>\'<strong>$</strong>\' - anchors at the end of the URL string',WPI_META);?></small>	
+						</label>
+						<?php if(!$file_exists): // no robots.txt found ?>
+							<?php if( ($rules = wpi_get_robots_rules()) != false): ?>							
+								<?php 	if (has_count($rules)){
+										$rules = implode(PHP_EOL,$rules);
+										}
+								?>
+							<?php endif; ?>
+						<?php else: // file exists ?>
+								<?php if ( ($f = fopen($file, 'r')) != false){	
+										$rules = fread($f, filesize($file));
+										$rules = htmlspecialchars($rules);
+										fclose($f);		
+									  }
+										
+								?>						
+						<?php endif; ?>
+						<?php			t('textarea',trim($rules),array(
+											'style'=>'width:72%;height:200px;overflow:auto;margin-left:10px',
+											'id'=>'wph_robots_txt_rules','name'=>'wph_robots_txt_rules')); 
+						
+						?>
+						<?php if ($file_exists && $is_writable):?>
+						<button class="sbtn" type="submit" name="wpi_flush_update_robotstxt" id="wpi_flush_update_robotstxt" value="1">
+							<?php echo $this->lang['update_settings']; ?>
+						</button>
+						<?php elseif( !$file_exists):?>
+							<p class="notice">
+								<?php _e('<strong>Error</strong> <tt>robots.txt</tt> file not found.',WPI_META);?>
+							</p>
+							<button class="sbtn" style="width:190px" type="submit" name="wpi_flush_robotstxt" id="wpi_flush_robotstxt" value="1">
+							<?php _e('Create robots.txt',WPI_META); ?>
+							</button>
+						<?php endif;?>
+						</dd>
+					</dl>
+				<? endif;?>
+				</li>			
+				<li class="last"><?php $prop = self::option('meta_robots'); ?>
+					<label for="wpi_meta_robots"><?php _e('Robots Meta',WPI_META);?>
+					<small><?php _e('Auto append meta robot.',WPI_META);?></small></label>
+					<?php self::addSelect('meta_robots',$this->select_options,$prop);?>
+					<?php if($prop):?>
+						<ul>
+							<li>
+								<label for="wpi_meta_robots_author"><?php _e('Author page',WPI_META);?>
+									<small><?php _e('Add No-index rules on author page.',WPI_META);?></small></label>
+									<?php self::addSelect('meta_robots_author',$this->select_options);?>	
+							</li>						
+							<li class="last">
+								<label for="wpi_meta_robots_search"><?php _e('Search results',WPI_META);?>
+									<small><?php _e('Add No-index rules on search results pages.',WPI_META);?></small></label>
+									<?php self::addSelect('meta_robots_search',$this->select_options);?>	
+							</li>
+						</ul>
+					<?php endif;?>
+				</li>				
+			</ul>		
+		</li>	
+		<li>
+			<h4><?php _e('Feed Syndications Rules',WPI_META);?></h4>
+			<ul style="list-style:lower-roman outside;padding-left:28px">
+				<li>
+					<label for="wpi_exclude_feed"><?php _e('All RSS Feeds',WPI_META);?>
+					<small><?php _e('Add No-index rules to all RSS feeds.<br>Not recommended.',WPI_META);?></small></label>
+					<?php self::addSelect('exclude_feed',$this->select_options);?>
+				</li>
+				<li>
+					<label for="wpi_exclude_comments_feed"><?php _e('Comments RSS Feeds',WPI_META);?>
+					<small><?php _e('Add No-index rules to all Comment feeds.',WPI_META);?></small></label>
+					<?php self::addSelect('exclude_comments_feed',$this->select_options);?>
+				</li>					
+				<li class="last">
+					<label for="wpi_exclude_ypipe"><?php _e('Yahoo! Pipe',WPI_META);?>
+					<small><?php _e('Disabled Yahoo! Pipe from syndicating/manipulating your feeds.',WPI_META);?><?self::helpIcon('http://pipes.yahoo.com/pipes/','Yahoo! Pipe');?></small></label>
+					<?php self::addSelect('exclude_ypipe',$this->select_options);?>
+				</li>				
+			</ul>
+		</li>						
+		<li><?php $prop = self::option('meta_title');?>
+			<label><?php _e('Page title',WPI_META);?>
+			<small><?php _e('Enable custom page title.',WPI_META); ?></small></label>
+			<?php self::addSelect('meta_title',$this->select_options,$prop);?>
+		</li>		
+		<li><?php $prop = self::option('meta_description');?>
+			<label for="wpi_meta_description"><?php _e('Meta description',WPI_META);?><small><?php _e('custom meta description.',WPI_META); ?></small></label>
+			<?php self::addSelect('meta_description',$this->select_options,$prop);?> 	
+				<?php if ($prop): ?>
+				<ul>
+					<li class="last">
+						<label for="wpi_def_meta_description"><?php _e('Default description',WPI_META);?></label>						
+						<textarea id="wpi_def_meta_description" name="wpi_def_meta_description" style="width:50%"><?php echo wpi_safe_stripslash(self::option('def_meta_description'));?></textarea>				
+					</li>
+				</ul>		
+				<?php endif; ?>							
+		</li>
+		<li><?php $prop = self::option('meta_keywords');?>
+			<label for="wpi_meta_keywords"><?php _e('Meta keywords',WPI_META);?><small><?php _e('Custom meta keywords',WPI_META); ?></small></label>
+			<?php self::addSelect('meta_keywords',$this->select_options,$prop);?> 
+				<?php if ($prop): ?>
+				<ul>
+					<li class="last">
+						<label for="wpi_def_meta_keywords"><?php _e('Default keywords',WPI_META);?></label>						
+						<textarea id="wpi_def_meta_keywords" name="wpi_def_meta_keywords" style="width:50%"><?php echo wpi_safe_stripslash(self::option('def_meta_keywords'));?></textarea>				
+					</li>
+				</ul>		
+				<?php endif; ?>			
+		</li>
+		<li class="last">
+			<label for="wpi_relative_links"><?php _e('Make links relative',WPI_META);?><small><?php _e('Increase relative links.',WPI_META); ?></small></label>
+				<?php self::addSelect('relative_links',$this->select_options);?>  	
+		</li>		
+	</ul>
+		<?php self::saveButton();?>	
+	</div>
+	</li>
+</ol>		
+<?php		
+	}	
+		
 	
 	public function optionCache(){
 ?>
@@ -302,22 +492,63 @@ class wpiAdmin
 	<div class="dn">
 	<ul class="mtb">
 		<li>
-			<label for="wpi_widget_treeview"><?php _e('Category treeview:',WPI_META);?></label>
-				<select name="wpi_widget_treeview" id="wpi_widget_treeview" size="2" class="row-2">
-			<?php	$prop = self::option('widget_treeview'); 
-			self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop); ?>
-				</select>		
+			<label for="wpi_widget_treeview"><?php _e('Category treeview:',WPI_META);?>
+				<small><?php _e('Replace categories widgets with jQuery Treeview',WPI_META);?>
+				<?php self::helpIcon('http://bassistance.de/jquery-plugins/jquery-plugin-treeview/',__('jQuery plugin Treeview ',WPI_META) );?>
+				</small>
+			</label>
+			<?php self::addSelect('widget_treeview',$this->select_options);?>	
+		</li>
+		<li>
+			<label for="wpi_widget_dynacloud"><?php _e('Most used terms',WPI_META);?>
+				<small><?php _e('Display Dyna Cloud most used keywords (singular comment widget)',WPI_META);?>
+				<?php self::helpIcon('http://johannburkard.de/blog/programming/javascript/dynacloud-a-dynamic-javascript-tag-keyword-cloud-with-jquery.html',__('jQuery plugin DynaCloud ',WPI_META) );?>
+				</small>
+			</label>
+			<?php self::addSelect('widget_dynacloud',$this->select_options);?>	
+		</li>
+		<?php if(wpi_is_plugin_active('global-translator/translator.php')) :?>
+		<li>
+			<label for="wpi_widget_gtranslator"><?php _e('Global Translator',WPI_META);?>
+				<small><?php _e('Display NH2\'s Global translator (singular sub widget)',WPI_META);?>
+				<?php self::helpIcon('http://www.nothing2hide.net/wp-plugins/wordpress-global-translator-plugin/',__('Nothing2Hide\'s Global Translator',WPI_META) );?>
+				</small>
+			</label>
+			<?php self::addSelect('widget_gtranslator',$this->select_options);?>	
+			<ul>
+				<li class="last">
+					<label for="wpi_widget_gtranslator_meta"><?php _e('Language Metalink',WPI_META);?>
+						<small><?php _e('Append Global Translator language meta-link',WPI_META);?>						
+						</small>
+					</label>
+					<?php self::addSelect('widget_gtranslator_meta',$this->select_options);?>				
+				</li>
+			</ul>
 		</li>		
+		<?php endif; ?>
+		<?php if(wpi_is_plugin_active('wp-postviews/wp-postviews.php')) :?>
+		<li>
+			<label for="wpi_widget_wppostview"><?php _e('WP Post views',WPI_META);?>
+				<small><?php _e('Display Lester Chan\'s WP post view',WPI_META);?>
+				<?php self::helpIcon('http://lesterchan.net/wordpress/readme/wp-postviews.html',__('Lester Chan\'s WP post views',WPI_META) );?>
+				</small>
+			</label>
+			<?php self::addSelect('widget_wppostview',$this->select_options);?>	
+		</li>		
+		<?php endif; ?>		
+		<li>
+			<label for="wpi_widget_technorati_backlink"><?php _e('Technorati link count',WPI_META);?>
+				<small><?php _e('Display Technorati blog reaction (singular sub widget)',WPI_META);?>
+				<?php self::helpIcon('http://technorati.com/tools/linkcount/',__('Technorati Link Count Widget',WPI_META) );?>
+				</small>
+			</label>
+			<?php self::addSelect('widget_technorati_backlink',$this->select_options);?>	
+		</li>							
 		<li class="last">
-			<label><?php _e('Similar post:',WPI_META);?></label>
-				<select name="wpi_widget_related_post" id="wpi_widget_related_post" size="2" class="row-2">
-			<?php	$prop = self::option('widget_related_post'); 
-			self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop); ?>
-				</select>	
+			<label><?php _e('Similar post:',WPI_META);?>
+			<small><?php _e('Display similar post(s) base on tags (singular widget)',WPI_META);?></small>
+			</label>
+			<?php $prop = self::option('widget_related_post'); self::addSelect('widget_related_post',$this->select_options); ?>		
 			<?php if ($prop): ?>
 				<ul class="cb cf">
 					<li>
@@ -435,6 +666,15 @@ class wpiAdmin
 			$this->lang['disabled'] =>0 ),$prop);?>
 				</select>			
 		</li>
+		<li><?php $prop = self::option('post_excerpt'); ?>
+			<label><?php _e('Show excerpt',WPI_META);?>
+				<small>Show excerpt on post (frontpage &amp; articles page)</small></label>
+				<select name="wpi_post_excerpt" id="wpi_post_excerpt" size="2" class="row-2">
+			<?php self::htmlOption(array(
+			$this->lang['enabled'] =>1,
+			$this->lang['disabled'] =>0 ),$prop);?>
+				</select>			
+		</li>		
 		<li><?php $prop = self::option('relative_date'); ?>
 			<label><?php _e('Relative post date:',WPI_META);?>
 				<small>Time since date format</small></label>
@@ -515,7 +755,54 @@ class wpiAdmin
 			</label>
 			<textarea id="wpi_icra_label" name="wpi_icra_label" style="width:50%"><?php echo stripslashes_deep(self::option('icra_label'));?></textarea>		
 		</li>
-		<?php endif; ?>					
+		<?php endif; ?>	
+		<li>
+			<h4>Site verification</h4>
+			<small>Site verification using a meta tag</small>
+			<ul style="list-style:lower-roman outside;padding-left:28px">
+				<li>
+				<label for="wpi_verify_google_webmaster">
+					<?php _e('Google Webmaster',WPI_META);?>
+					<small>Google webmaster tool. <?php self::helpIcon('http://www.google.com/support/webmasters/bin/answer.py?answer=35181&cbid=-s56o30hh5mb7&src=cb&lev=answer','Google Webmaster help')?></small>
+				</label>
+				<?php t('input','', array('type' => 'text', 'name' => 'wpi_verify_google_webmaster','id' =>'wpi_verify_google_webmaster','value' => self::option('verify_google_webmaster'))); ?>			
+				</li>
+				<?php if(!file_exists(ABSPATH.'LiveSearchSiteAuth.xml')): ?>
+				<li>
+				<label for="wpi_verify_msn">
+					<?php _e('Live Webmaster ID',WPI_META);?>
+					<small>MS Live search. <?php self::helpIcon('http://help.live.com/help.aspx?mkt=en-us&project=wl_webmasters','Windows Live Webmaster help')?></small>
+				</label>
+				<?php t('input','', array('type' => 'text', 'name' => 'wpi_verify_msn','id' =>'wpi_verify_msn','value' => self::option('verify_msn'))); ?>			
+				</li>
+				<?php endif;?>					
+				<li class="last">
+				<label for="wpi_verify_yahoo_explorer">
+					<?php _e('Yahoo! Explorer ID',WPI_META);?>
+					<small>Yahoo! Site Explorer. <?php self::helpIcon('http://help.yahoo.com/l/us/yahoo/search/siteexplorer/register/','Yahoo! Site Explorer Registering and Authenticating Sites')?></small>
+				</label>
+				<?php t('input','', array('type' => 'text', 'name' => 'wpi_verify_yahoo_explorer','id' =>'wpi_verify_yahoo_explorer','value' => self::option('verify_yahoo_explorer'))); ?>			
+				</li>						
+			</ul>
+		</li>
+		<li>
+			<h4>Web services</h4>
+			<ul>
+				<li>
+					<label for="wpi_google_analytics_tracking_code"><?php _e('Google Analytics',WPI_META);?>
+					<small><?php _e('Web Property ID or Tracking Code (UA-XXXXXXX-X)',WPI_META);?>
+					<?php self::helpIcon('https://www.google.com/support/googleanalytics/bin/answer.py?answer=55603&cbid=caibe02nb1ja&src=cb&lev=answer',
+					__('Google Analytics  tracking code',WPI_META) )?></small>					
+					</label>
+					<?php t('input','', array('type' => 'text', 'name' => 'wpi_google_analytics_tracking_code','id' =>'wpi_google_analytics_tracking_code','value' => self::option('google_analytics_tracking_code'))); ?>				
+				</li>			
+				<li class="last">
+					<label for="wpi_meta_google_notranslate"><?php _e('Google translate',WPI_META);?>
+					<small><?php _e('Prevent google from translating the entire document.',WPI_META);?></small></label>
+					<?php self::addSelect('google_notranslate',$this->select_options);?>				
+				</li>
+			</ul>
+		</li>		
 		<li class="last">
 			<label>
 				<?php _e('Geo positioning',WPI_META);?>
@@ -576,87 +863,6 @@ class wpiAdmin
 						$this->lang['enabled'] => 1,
 						$this->lang['disabled'] => 0 ),$prop);?>
 				</select> 	
-			
-		</li>
-		<li><?php $prop = self::option('relative_links');?>
-			<label><?php _e('Make links relative',WPI_META);?>
-			<small>Increase relative links.</small></label>
-				<select name="wpi_relative_links" id="wpi_relative_links" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 	
-		</li>
-		<li><?php $prop = self::option('post_excerpt'); ?>
-			<label><?php _e('Show excerpt',WPI_META);?>
-				<small>Show excerpt on post</small></label>
-				<select name="wpi_post_excerpt" id="wpi_post_excerpt" size="2" class="row-2">
-			<?php self::htmlOption(array(
-			$this->lang['enabled'] =>1,
-			$this->lang['disabled'] =>0 ),$prop);?>
-				</select>			
-		</li>
-		<li><?php $prop = self::option('meta_robots');?>
-			<label><?php _e('Meta robots',WPI_META);?>
-			<small>Auto append meta robots.</small></label>
-				<select name="wpi_meta_robots" id="wpi_meta_robots" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 	
-		</li>				
-		<li><?php $prop = self::option('meta_title');?>
-			<label><?php _e('Page title',WPI_META);?>
-			<small>Enable custom page title.</small></label>
-				<select name="wpi_meta_title" id="wpi_meta_title" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 	
-		</li>		
-		<li><?php $prop = self::option('meta_description');?>
-			<label>
-				<?php _e('Meta description',WPI_META);?>
-				<small>custom meta description.</small>
-			</label>
-				<select name="wpi_meta_description" id="wpi_meta_description" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 	
-				<?php if ($prop): ?>
-				<ul>
-					<li class="last">
-						<label for="wpi_def_meta_description">
-						<?php _e('Default description',WPI_META);?>	
-						</label>
-						
-			<textarea id="wpi_def_meta_description" name="wpi_def_meta_description" style="width:50%"><?php echo wpi_safe_stripslash(self::option('def_meta_description'));?></textarea>				
-				</li>
-				</ul>		
-				<?php endif; ?>									
-		</li>
-		<li><?php $prop = self::option('meta_keywords');?>
-			<label>
-				<?php _e('Meta keywords',WPI_META);?>
-				<small>Custom meta keywords</small>
-			</label>
-				<select name="wpi_meta_keywords" id="wpi_meta_keywords" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select>
-				<?php if ($prop): ?>
-				<ul>
-					<li class="last">
-						<label for="wpi_def_meta_keywords">
-						<?php _e('Default keywords',WPI_META);?>	
-						</label>
-						
-			<textarea id="wpi_def_meta_keywords" name="wpi_def_meta_keywords" style="width:50%"><?php echo wpi_safe_stripslash(self::option('def_meta_keywords'));?></textarea>				
-				</li>
-				</ul>		
-				<?php endif; ?>					
 			
 		</li>	
 		<li><?php $prop = self::option('banner'); ?>
@@ -849,55 +1055,51 @@ class wpiAdmin
 	
 	public function optionPlugins()
 	{		
-		$nwp_caption = self::option('nwp_caption');
 ?>
 <ol class="r mtb options-item">
 	<li class="ss"><h4 class="title-" title="toggle view: Plugins">WordPress Hack</h4>
 	<div class="dn">
 	<ul class="romanNumerals mtb">
-		<li><?php $prop = self::option('meta_rsd');?>
-			<label>
-			<?php _e('RSD Services',WPI_META);?>
-			<small>WordPress <a href="http://tales.phrasewise.com/rfc/rsd.html">RSD</a> meta link</small>
+		<li>
+			<label for="wpi_meta_rsd"><?php _e('RSD Services',WPI_META);?>
+				<small>WordPress <a href="http://tales.phrasewise.com/rfc/rsd.html">RSD</a> meta link</small>
 			</label>
-				<select name="wpi_meta_rsd" id="wpi_meta_rsd" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select>			
-		</li>	
-		
-		<li><?php $prop = self::option('meta_livewriter');?>
-			<label><?php _e('Manifest link',WPI_META);?>
-			<small>Windows LiveWriter</small>
-			</label>
-				<select name="wpi_meta_livewriter" id="wpi_meta_livewriter" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select>			
+			<?php self::addSelect('meta_rsd',$this->select_options);?>			
+		</li>		
+		<li>
+			<label for="wpi_meta_livewriter"><?php _e('Manifest link',WPI_META);?><small>Windows LiveWriter</small></label>
+			<?php self::addSelect('meta_livewriter',$this->select_options);?>			
 		</li>
 		<?php if(is_wp_version(2.6, '>=') ):?>
 		<li>
-			<label><?php _e('Patch caption',WPI_META);?><small>unofficial patch for Wordpress caption shortcode</small></label>
-				<select name="wpi_nwp_caption" id="wpi_nwp_caption" size="2" class="row-2">
-			<?php self::htmlOption(array(
-			__('Enabled',WPI_META)=>1,
-			__('Disabled',WPI_META)=>0 ),$nwp_caption);?>
-				</select> 	
-			
+			<label for="wpi_nwp_caption"><?php _e('Patch caption',WPI_META);?>
+			<small><?php _e('unofficial patch for Wordpress caption shortcode.',WPI_META);?></small></label>
+			<?php self::addSelect('nwp_caption',$this->select_options);?>				
 		</li>
 		<?php endif;?>		
-		<li class="last"><?php $prop = self::option('meta_wp_generator');?>
-			<label>
-				<?php _e('Meta generator',WPI_META);?>
+		<li>
+			<h4>Feed syndication</h4>
+			<ul>
+				<li>			
+					<label for="wpi_rss_logo"><?php _e('Feed logo')?>
+						<small><?php _e('Add custom RSS feed logo.')?></small>
+					</label>
+					<?php $prop = self::option('rss_logo'); $url = (!empty($prop)) ? $prop : WPI_URL_SLASHIT.'wp-admin/images/logo.gif';?>
+					<?php t('input','', array('type'=>'text','name'=>'wpi_rss_logo','id'=>'wpi_rss_logo','value'=> $url )); ?>
+				</li>				
+				<li class="last">			
+					<label for="wpi_rss_delay"><?php _e('Delay RSS feed')?>
+						<small><?php _e('Minute to delay RSS feed publication')?></small>
+					</label>
+					<?php t('input','', array('type'=>'text','name'=>'wpi_rss_delay','id'=>'wpi_rss_delay','value'=> self::option('rss_delay') )); ?>
+				</li>				
+			</ul>			
+		</li>
+		<li class="last">
+			<label for="wpi_meta_wp_generator"><?php _e('Meta generator',WPI_META);?>
 				<small>WordPress version number</small>
 			</label>
-				<select name="wpi_meta_wp_generator" id="wpi_meta_wp_generator" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 
+			<?php self::addSelect('meta_wp_generator',$this->select_options);?>
 		</li>		
 	</ul>	
 	<?php self::saveButton();?>
@@ -945,6 +1147,26 @@ class wpiAdmin
 					
 			t('option',$text,$attrib);
 		}
+	}
+	
+	public static function helpIcon($url='#',$title='help'){
+		
+		$htm = _t('img','',array('src'=>wpi_img_url('icons/help.gif'),'width'=>11,'height'=>11,'alt'=>'help'));
+		$htm = _t('a',$htm,array('href'=>$url,'title'=>$title,'style'=>'cursor:help;text-decoration:none','target'=>'blank'));
+		
+		echo $htm;
+	}
+	
+	public static function addSelect($id,$options,$prop=false,$textasvalue = false,$class='row-2',$size=2)
+	{
+		if (!$prop){
+			$prop = self::option($id);
+		}
+?>		
+		<select name="wpi_<?php echo $id?>" id="wpi_<?php echo $id?>" size="<?php echo $size;?>" class="<?php echo $class;?>">
+			<?php self::htmlOption($options,$prop,$textasvalue);?>
+		</select>
+<?php				 			
 	}
 	
 	private function __clone(){}

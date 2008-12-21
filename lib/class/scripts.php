@@ -132,10 +132,22 @@ class wpiScripts{
 	public function setExtraJS()
 	{	global $wp_query;
 	
-		if ($wp_query->is_singular){
-		 // && $wp_query->post->comment_status  == 'open'
-		 $this->register('thickbox','head');
-		}		
+		$js = array();
+		
+		if ($wp_query->is_singular){			
+		 	$js['thickbox'] = 'head';
+		 	
+		 	if (wpi_option('widget_dynacloud')){
+				$js['dynacloud'] = 'head';				
+			}
+		}	
+		
+		
+		if (has_count($js)){
+			foreach($js as $tag => $section) $this->register($tag,$section);
+		}	
+		
+		unset($js);
 	}
 	
 	public function embedScript()
@@ -150,7 +162,8 @@ class wpiScripts{
 		$js .= ',id:'.json_encode(wpiTemplate::bodyID());
 		$js .= ',blogname:'.json_encode(WPI_BLOG_NAME);
 		$js .= ',theme_url:'.json_encode(WPI_THEME_URL);
-		$js .= ',section:'.json_encode(is_at());
+		$js .= ',section:'.json_encode(is_at());		
+		$js .= ',widget:{keywords:'.json_encode(wpi_option('widget_dynacloud') ? true : false).'}';
 		$js .= ',permalink:'.json_encode(trailingslashit(self_uri()));
 		
 		$jspath = json_encode(rel(WPI_THEME_URL.'public/scripts/') );

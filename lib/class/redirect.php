@@ -2,10 +2,6 @@
 
 /**
  * Simple Redirect
- *  
- * @author		Avice Devereux (chaoskaizer)
- * @copyright 	2006 - 2008
- * @links		http://blog.kaizeku.com 
  */
 
 class wpiRedirect

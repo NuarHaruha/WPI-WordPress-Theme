@@ -99,6 +99,8 @@ final class wpiFilter
 	
 	const ACTION_AFTER_CONTENT_PREFIX = 'wpi_after_content_';
 	
+	const ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX = 'wpi_content_bar_';
+	
 	const FILTER_META_DESCRIPTION = 42000;
 	
 	const FILTER_META_KEYWORDS = 42001;

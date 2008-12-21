@@ -177,11 +177,14 @@ class wpiRouter
 		$hex = array();
 		$hex['nt'] = '707071';
 		$hex['dy'] = '1787BF';
+		$hex['dw'] = 'D7D7B8';
 		
 		$client = (string) $_COOKIE['wpi-cl'];	
 	
 		
 		$background_color = '#'.( (!empty($client) && isset($hex[$client])) ? $hex[$client] : $default );
+		
+		if ( $client == 'dw' ) $font_color = '494738';
 			
 		$transparent_background  = true ;
 
@@ -212,7 +215,17 @@ class wpiRouter
 		
 		exit;					
 	}
-	
+
+	private function _curie()
+	{
+		$uri = self::strip(self::REQ_CURIE,$this->request);
+		
+		require WPI_LIB_CLASS.'redirect.php';
+		$redirect = new wpiRedirect($uri);
+		
+		exit;		
+	}
+		
 	public static function strip($string,$value)
 	{
 		return str_replace($string,'',$value);
