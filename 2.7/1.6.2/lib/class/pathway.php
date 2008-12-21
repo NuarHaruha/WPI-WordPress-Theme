@@ -161,7 +161,7 @@ class wpiPathway
 			$att = $pathway['home'][1];
 
 			$att['title'] = __(WPI_BLOG_NAME . '&#39;s Frontpage', WPI_META);
-			$att['href'] = WPI_URL;
+			$att['href'] = WPI_HOME_URL;
 
 			$pathway['home'][1] = $att;
 
@@ -348,10 +348,14 @@ class wpiPathway
 
 
 	public function getTag()
-	{
+	{	global $wp_query;
+	
+		$term = $wp_query->get_queried_object();
+		
 		$pathway = array();
 
-		$tid = (int)get_query_var('tag');
+		$tid = (int) $term->term_id;
+		
 		$tag = get_category($tid);
 
 		$title = single_cat_title('', false);
@@ -387,7 +391,7 @@ class wpiPathway
 			__('Skip to content | ' . $tag->name, WPI_META), 'class' => self::
 			CAT_LINK_CLASS . ' ' . self::DN_ARROW, 'rev' => 'site:archive'));
 
-		unset($tag);
+		unset($tag,$term);
 
 		return $pathway;
 
@@ -424,7 +428,7 @@ class wpiPathway
 		$att = $pathway[1];
 
 		$att['title'] = sprintf(__('%s | Return back to Frontpage', WPI_META),WPI_BLOG_NAME);
-		$att['href'] = WPI_URL;
+		$att['href'] = WPI_HOME_URL;
 		$att['rel'] = 'home previous';
 
 		$pathway[1] = $att;
