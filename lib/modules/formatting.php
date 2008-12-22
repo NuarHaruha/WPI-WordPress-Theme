@@ -23,13 +23,13 @@ function wpi_get_hatom_title()
 	$att['rev'] = 'vote-for';
 	$att['class'] = 'taggedlink url fn';
 
-	if ($sc == wpiSection::ATTACHMENT || $sc == wpiSection::SINGLE || $sc ==
-		wpiSection::PAGE)
+	if ($sc == wpiSection::ATTACHMENT || $sc == wpiSection::SINGLE || $sc == wpiSection::PAGE)
 	{
 		$att['class'] .= ' dn';
 	}
 
 	$att['hreflang'] = get_hreflang();
+	$att['lang'] = $att['hreflang'];
 	$att['xml:lang'] = $att['hreflang'];
 	$att['title'] = get_the_title();
 
@@ -61,7 +61,7 @@ function wpi_get_subtitle()
 	if (($subtitle = wpi_get_postmeta('subtitle')) != false)
 	{
 		return _t('cite', $subtitle, array('class' => 'literal-label subtitle'));
-	}
+	} 
 }
 
 function b64_safe_encode($string)
@@ -164,11 +164,16 @@ function _t($tag = 'a', $content = false, $htmlattributes = false)
 
 	$typesingle = array_flip(array('img', 'input', 'hr', 'link', 'meta', 'br'));
 
+	/**
+	 * HTML Compatibility Guideline 2
+	 * Include a space before the trailing /
+	 * {@link http://www.w3.org/TR/xhtml1/#C_2 Empty Elements}
+	 */
+	$htm .= (isset($typesingle[$tag])) ? ' />' : '>' . $content . '</' . $tag . '>';
 
-	$htm .= (isset($typesingle[$tag])) ? '/>' : '>' . $content . '</' . $tag . '>';
-
-	/** WCAG AAA
-	 *  newline for common BLOCK elements
+	/** 
+	 * WCAG AAA
+	 * newline for common BLOCK elements
 	 */
 	$newline_tag = array_flip(array('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul',
 		'ol', 'dl', 'li', 'script', 'pre', 'code', 'div', 'form', 'table', 'dt', 'dd',
@@ -476,23 +481,14 @@ function wpi_post_link()
 
 function wpi_get_range_increment($start, $increment)
 {
-	$end = (int)get_option('posts_per_page');
+	$end = ceil(intval(get_option('posts_per_page')));
 
 	$output = array();
-	if ($start > $end)
-	{
-		return false;
-	}
+	
+	if ($start > $end) return false; 
+	$end = (($start + 1) == $end) ? $end + 2 : $end + 3;	
 
-	if (($start + 1) == $end)
-	{
-		$end = $end + 2;
-	}
-
-	foreach (range($start, $end, $increment) as $i)
-	{
-		$output[$i] = $i;
-	}
+	foreach (range($start, $end, $increment) as $i) 	$output[$i] = $i;
 
 	return $output;
 }
