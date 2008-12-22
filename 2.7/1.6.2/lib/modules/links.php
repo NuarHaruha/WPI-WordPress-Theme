@@ -13,10 +13,10 @@ function wpi_get_stylesheets_url($css){
 		
 	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
 		$params = wpiTheme::PUB_QUERY_VAR_CSS.'/';	
-		$output = trailingslashit(rel(WPI_URL_SLASHIT.$params.$css));
+		$output = trailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$css));
 	} else {
 		$params = '?'.wpiTheme::PUB_QUERY_VAR_CSS.'=';
-		$output = untrailingslashit(rel(WPI_URL_SLASHIT.$params.$css));
+		$output = untrailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$css));
 	}
 		
 	if (get_query_var('preview') == 1){
@@ -61,11 +61,11 @@ function wpi_get_scripts_url($js){
 	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
 		// pretty permalinks structure
 		$params = wpiTheme::PUB_QUERY_VAR_JS.'/';
-		$output = trailingslashit(rel(WPI_URL_SLASHIT.$params.$js));	
+		$output = trailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$js));	
 	} else { 
 		// default permalinks structure		
 		$params = '?'.wpiTheme::PUB_QUERY_VAR_JS.'=';
-		$output = untrailingslashit(rel(WPI_URL_SLASHIT.$params.$js));	
+		$output = untrailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$js));	
 	}	
 
 	if (get_query_var('preview') == 1){
@@ -77,12 +77,12 @@ function wpi_get_scripts_url($js){
 
 
 /**
- * get favicon url
- * @param void
- * @return   
+ * void wpi_get_favicon_url()
+ * @return string raw favicon url
  */
 function wpi_get_favicon_url(){		
-	return ( (file_exists(WP_ROOT.'favicon.ico') ? WPI_URL.'/favicon.ico' : WPI_THEME_URL.'favicon.ico') );	
+	$icn = ( (file_exists(WP_ROOT.DIRSEP.'favicon.ico') ? WPI_URL.'/favicon.ico' : WPI_THEME_URL.'favicon.ico') );	
+	return ( '' == wpi_option('icn_favicon')) ? $icn : wpi_option('icn_favicon');
 }	
 
 
@@ -103,7 +103,7 @@ function wpi_comment_reply_uri($post,$comment){
 	$params[] = 'pcid-'.$comment->comment_parent;
 	
 	$uri = str_replace("%params%",'reply,'.join(",",$params),$query);
-	echo rel(WPI_URL_SLASHIT.$uri);	
+	echo rel(WPI_HOME_URL_SLASHIT.$uri);	
 }
 
 function wpi_webfont_uri($type,$args = false){
@@ -121,7 +121,7 @@ function wpi_webfont_uri($type,$args = false){
 	}
 		
 	$uri = str_replace("%params%",$params,$query);
-	echo rel(WPI_URL_SLASHIT.$uri);	
+	echo rel(WPI_HOME_URL_SLASHIT.$uri);	
 }
 
 function wpi_cat_links($echo= 1, $index = false, $separator = '&#184;'){
@@ -233,7 +233,7 @@ function wpi_acl_links()
 		{
 			$m['register'] = array(WPI_URL_SLASHIT.'wp-admin/','dashboard',WPI_BLOG_NAME.'&#39;s WP Admin Dashboard','Dashboard');
 			$req_uri = get_req_url();		
-			$uri = (is_wp_version('2.6')) ? wpi_logout_url() : WPI_URL_SLASHIT.'wp-login.php?action=logout&amp;redirect_to='.urlencode(rel(self_uri()));
+			$uri = (is_wp_version(2.6)) ? wpi_logout_url() : WPI_URL_SLASHIT.'wp-login.php?action=logout&amp;redirect_to='.urlencode(rel(self_uri()));
 						
 			$m['loginout'] = array($uri,'log-out','Log-out from '.WPI_BLOG_NAME,'Log-out');
 		}
