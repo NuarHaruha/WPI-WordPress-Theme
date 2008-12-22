@@ -195,7 +195,7 @@ class wpiAdmin
 	</h4>
 	<div class="dn">
 	<ul class="mtb">
-		<li>
+		<li class="last">
 			<label for="wpi_home_avatar"><?php _e('Avatar',WPI_META);?>				
 				<small><?php _e('Display Avatar.',WPI_META);?></small>			
 			</label>
@@ -825,7 +825,26 @@ class wpiAdmin
 					<?php self::addSelect('google_notranslate',$this->select_options);?>				
 				</li>
 			</ul>
-		</li>		
+		</li>
+		<li>
+			<h4>Web icons</h4>
+			<small>Browser and mobile web icon</small>
+			<ul>
+				<li>
+					<label for="wpi_icn_favicon"><?php _e('Favicon',WPI_META);?>
+						<small><?php _e('Favicon <tt>16x16</tt> pixels (ico, gif or png)',WPI_META);?>
+							<?php self::helpIcon('www.favicon.cc',__('Create custom favicon via favicon.cc',WPI_META) )?>
+						</small>					
+					</label> <?php $icn = (self::option('icn_favicon')) ? self::option('icn_favicon') : wpi_get_favicon_url(); ?>
+					<?php t('input','', array('type' =>'text', 'name' =>'wpi_icn_favicon', 'id'=>'wpi_icn_favicon', 'value'=> clean_url($icn) )); ?>				
+				</li>			
+				<li class="last">
+					<label for="wpi_icn_iphone"><?php _e('iPhone',WPI_META);?>
+					<small><?php _e('PNG file <tt>57x57</tt> pixels.',WPI_META);?></small></label>
+					<?php t('input','', array('type' =>'text', 'name' =>'wpi_icn_iphone', 'id'=>'wpi_icn_iphone', 'value'=>self::option('wpi_icn_iphone'))); ?>				
+				</li>
+			</ul>			
+		</li>
 		<li class="last">
 			<label>
 				<?php _e('Geo positioning',WPI_META);?>
