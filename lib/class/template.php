@@ -627,7 +627,7 @@ class wpiTemplate
 						 'href'	=> 'http://openid.claimid.com/'.$claimid);	
 		}
 		
-		if (file_exists(WP_ROOT.'my-pavatar.png')){
+		if (file_exists(WP_ROOT.DIRSEP.'my-pavatar.png')){
 			$m[] = array('rel'	=> 'pavatar',
 						 'href'	=> WPI_URL_SLASHIT.'my-pavatar.png',
 						 'title'=> WPI_BLOG_NAME);		
@@ -646,9 +646,14 @@ class wpiTemplate
 		// favicon
 		$favicon_url = wpi_get_favicon_url();
 		
+			$mime = explode(".",$favicon_url);
+			$mime = (string) $mime[count($mime) - 1];
+			$mime = ($mime == 'ico') ? 'image/x-ico' : 'image/'.$mime;
+		
 		$m[] = array('rel'	=> 'shortcut icon','href'=> $favicon_url,'type'=>'image/vnd.microsoft.icon');	
 	
-		$m[] = array('rel'	=> 'icon','href'=> $favicon_url,'type'=>'image/x-ico');	
+		$m[] = array('rel'	=> 'icon','href'=> $favicon_url,'type'=>$mime);	
+		
 	
 		// iphone
 		if ( ($prop = wpi_option('icn_iphone')) != '' ){
