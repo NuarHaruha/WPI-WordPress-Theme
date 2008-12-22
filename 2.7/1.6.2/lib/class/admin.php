@@ -30,7 +30,7 @@ class wpiAdmin
 	{
 		$this->registerDefaultScript();
 		
-		$options = array('optionPagesMenu','optionSEO','optionAdvance','optionPostLayout',
+		$options = array('optionPagesMenu','optionSEO','optionAdvance','optionFrontpageLayout','optionPostLayout',
 		'optionWidgets','optionPlugins','optionMisc','optionCache');
 		
 		foreach($options as $method){
@@ -184,7 +184,30 @@ class wpiAdmin
 		</div>
 		</div>
 <?php		
-	}	
+	}
+	
+	public function optionFrontpageLayout()
+	{
+?>		
+<ol class="r mtb options-item">
+	<li class="ss"><h4 class="title-">
+	<?php _e('Frontpage layout options',WPI_META);?>
+	</h4>
+	<div class="dn">
+	<ul class="mtb">
+		<li>
+			<label for="wpi_home_avatar"><?php _e('Avatar',WPI_META);?>				
+				<small><?php _e('Display Avatar.',WPI_META);?></small>			
+			</label>
+			<?php self::addSelect('home_avatar',$this->select_options);?>		
+		</li>		
+	</ul>
+		<?php self::saveButton();?>	
+	</div>
+	</li>
+</ol>		
+<?				
+	}
 	
 	public function optionSEO()
 	{
@@ -954,16 +977,25 @@ class wpiAdmin
 				</ul>
 				<?php endif;?>	
 		</li>						
-		<li><?php $prop = self::option('client_time_styles');?>
-			<label>
-				<?php _e('Client time CSS',WPI_META);?>
-				<small>Stylesheets switcher</small>
-			</label>
-				<select name="wpi_client_time_styles" id="wpi_client_time_styles" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 	
+		<li>
+			<h4>Client Side features</h4>
+				<small>Client side script enhancements</small>
+			<ul>
+				
+				<li>
+				<label for="client_time_styles"><?php _e('Client Time',WPI_META);?><small>Stylesheets switcher base on visitor time</small></label>
+				<?php self::addSelect('client_time_styles',$this->select_options);?>
+				</li>	
+				<li>
+				<label for="wpi_client_date_styles"><?php _e('Client Date',WPI_META);?><small>Client Date scripts</small></label>
+				<?php self::addSelect('client_date_styles',$this->select_options);?>
+				</li>	
+				<li class="last"><?php $prop = self::option('iframe_breaker');?>
+					<label for="wpi_iframe_breaker"><?php _e('Frame Breaker',WPI_META);?><small>Disabled client view inside frame or iframe</small>
+					</label>
+					<?php self::addSelect('iframe_breaker',$this->select_options);?>		
+				</li>							
+			</ul>
 		</li><?php if(function_exists('ImageCreate')): ?>
 		<li><?php $prop = self::option('gdfont_image');?>
 			<label>
@@ -1032,18 +1064,7 @@ class wpiAdmin
 					<p><?php _e('Please upload your font at  the following directory <tt>'. WPI_FONTS_DIR.'</tt>',WPI_META);?></p></li>					
 				</ul>
 				<?php endif;?>
-		</li><?php endif; ?>	
-		<li class="last"><?php $prop = self::option('iframe_breaker');?>
-			<label>
-				<?php _e('Frame Breaker',WPI_META);?>
-				<small>Disabled client view inside frame or iframe</small>
-			</label>
-				<select name="wpi_iframe_breaker" id="wpi_iframe_breaker" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 	
-		</li>																	
+		</li><?php endif; ?>																	
 	</ul>	
 	<?php self::saveButton();?>
 	</div>		
