@@ -127,7 +127,9 @@ function wpi_cat_image_filter($content){
 
 function wpi_cat_content_filter($content){
 	$content = apply_filters('the_excerpt',$content);
-	return string_len(wpi_cat_image_filter($content),500);
+	$content = string_len(wpi_cat_image_filter($content),500);
+	$content = force_balance_tags($content);
+	return $content;
 }
 
 function wpi_search_terms_filter($content){
@@ -279,7 +281,7 @@ function wpi_default_filters(){
 	
 	$f[wpiFilter::ACTION_FOOTER_SCRIPT] = 'wpi_google_analytics_tracking_script';
 	
-	$f['get_comment_text'] = 'wpautop';
+	$f['get_comment_text'] = 'wpi_comment_text_filter';
 			
 	wpi_foreach_hook_filter($f);	
 }
@@ -625,5 +627,16 @@ function wpi_google_analytics_tracking_script()
 	<script type="text/javascript" charset="utf-8">/*<![CDATA[*/ var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); /*]]>*/ </script>
 	<script type="text/javascript" charset="utf-8">/*<![CDATA[*/ try {var pageTracker = _gat._getTracker("<?php echo $id;?>"); pageTracker._trackPageview(); } catch(err) {}; /*]]>*/ </script>
 <?php endif;
+}
+
+function wpi_comment_text_filter($content)
+{
+	$content = wptexturize($content);
+	$content = convert_chars($content);
+	$content = make_clickable($content);
+	$content = force_balance_tags($content);
+	$content = convert_smilies($content);
+	$content = wpautop($content);
+	return $content;	
 }
 ?>
