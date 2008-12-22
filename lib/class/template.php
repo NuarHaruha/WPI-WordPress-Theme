@@ -646,14 +646,15 @@ class wpiTemplate
 		// favicon
 		$favicon_url = wpi_get_favicon_url();
 		
-		$m[] = array('rel'	=> 'shortcut icon',
-					 'href'	=> $favicon_url,
-					 'type'	=> 'image/vnd.microsoft.icon');	
+		$m[] = array('rel'	=> 'shortcut icon','href'=> $favicon_url,'type'=>'image/vnd.microsoft.icon');	
 	
-		$m[] = array('rel'	=> 'icon',
-					 'href'	=> $favicon_url,
-					 'type'	=> 'image/x-ico');	
+		$m[] = array('rel'	=> 'icon','href'=> $favicon_url,'type'=>'image/x-ico');	
 	
+		// iphone
+		if ( ($prop = wpi_option('icn_iphone')) != '' ){
+			$m[] = array('rel'=>'apple-touch-icon','href'=> $prop);				
+		}		
+			
 		$m[] = array('rel'	=> 'alternate',
 					 'href'	=> get_bloginfo('rss_url'),
 					 'type'	=> 'application/rss+xml',
