@@ -1,4 +1,3 @@
-
 /**
  * $Id$
  * WPI fancy class
@@ -47,7 +46,7 @@ img.fl,img.alignleft,.wp-caption {
 margin:0 5px 1px 0
 }
 
-.fn {
+.fn,.wp-smiley {
 float:none
 }
 
@@ -578,7 +577,7 @@ padding-right:10px
 padding-left:10px
 }
 
-.hilite,.hilite-1,.hilite-2,.hilite-3,.hilite-4,.hilite-5,.description blockquote {
+.hilite,.hilite-1,.hilite-2,.hilite-3,.hilite-4,.hilite-5,#comments .description blockquote {
 padding:3px 4px 3px 3px
 }
 
@@ -588,19 +587,17 @@ background-color:#FFF7C7;
 color:#333
 }
 
-.hilite-2,.description blockquote{
+.hilite-2, #comments .description blockquote{
 background-color:#3080CB;
 color:#fff
 }
-
-
 
 .hilite-3 {
 background-color:#c33;
 color:#fff
 }
 
-.hilite-4,.dw .description blockquote {
+.hilite-4,.dw #comments .description blockquote,.nt #comments .description blockquote {
 background-color:#990;
 color:#fff
 }
