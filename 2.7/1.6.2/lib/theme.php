@@ -134,7 +134,11 @@ class Wpi
 				$js['cookie'] = 'head';
 				$js['client-time'] = 'head';
 			}	
-						
+
+			if (wpi_option('client_date_styles')){
+				$js['client-date'] = 'footer';
+			}
+									
 			// default scripts library
 			$this->registerScript($js);
 					
@@ -143,6 +147,8 @@ class Wpi
 					'treeview'=>'head',
 					'f-treeview'=>'footer') );
 			}
+			
+	
 			
 			add_action('wp_head',array($this->Script,'printHead'),10);
 			add_action('wp_head',array($this->Script,'embedScript'),10);
@@ -175,8 +181,9 @@ class Wpi
 				unset($active,$widget_id);			
 			}
 			
-			if (wpi_is_plugin_active('global-translator/translator.php')){
-				$tag = 'translator-image';
+			if (wpi_is_plugin_active('global-translator/translator.php') 
+			&& wpi_option('widget_gtranslator')){
+				$tag = 'translator';
 				$this->Style->register($tag,wpiSection::SINGLE);				
 				$this->Style->register($tag,wpiSection::PAGE);
 				$this->Style->register($tag,wpiSection::ATTACHMENT);
@@ -203,11 +210,10 @@ class Wpi
 		// self::debugDefaultFilters()
 		if (defined('FIREBUG_CONSOLE')){
 			add_action('wp_head','wpi_firebug_console',wpiTheme::LAST_PRIORITY);
-		}			
+		}
 		
 	}
 	
-
 	private function _defaultSettings(){
 		
 		$meta = WPI_META_PREFIX.'flag';
@@ -224,7 +230,9 @@ class Wpi
 			'meta_description' => 1,
 			'def_meta_description' => apply_filters(wpiFilter::FILTER_META_DESCRIPTION,get_option('blogdescription')),
 			'text_dir'=>'ltr',
-			'post_bookmarks'=>1	
+			'post_bookmarks'=>1,
+			'home_avatar'=>1,
+			'home_sidebar_position'=> 'right'	
 			);
 		
 		foreach($options as $k=>$v){
@@ -397,7 +405,12 @@ class Wpi
 		unset($d);
 			
 	}
-		
+
+	public function debugOptions()
+	{
+		wpi_dump(get_option(WPI_META_PREFIX.'settings'));		
+	}
+				
 	/**
 	 * Wpi::debug()
 	 * 
