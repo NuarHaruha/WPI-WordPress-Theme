@@ -354,6 +354,10 @@ function wpi_update_post_form($id = false){
 	
 	if ( is_post('wpi_footer_content') ){
 		wpi_update_form_meta($id,'footer_content');
+	}
+	
+	if (is_post('wpi_post_thumb_url')){
+		wpi_update_form_meta($id,'post_thumb_url');
 	}		
 }
 
