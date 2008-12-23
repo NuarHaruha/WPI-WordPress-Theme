@@ -12,6 +12,7 @@ function wpi_plugin_init(){
 	$rm_plug = $call_plug = array();
 	$rm_plug[] = 'wp-pagenavi/wp-pagenavi.php,pagenavi_css,wp_head';	
 	$rm_plug[] = 'wp-downloadmanager/wp-downloadmanager.php,downloads_css,wp_head';
+	$rm_plug[] = 'subscribe-to-comments/subscribe-to-comments.php,show_subscription_checkbox,comment_form';
 	
 	$rm_plug = apply_filters(wpiFilter::REM_PLUGINS,$rm_plug);
 	
@@ -44,7 +45,13 @@ function wpi_plugin_init(){
 		$call_plug[] = 'wp-postviews/wp-postviews.php,wpi_the_views,wpi_content_bar_single';
 	}
 	
-	
+	/**
+	 * Mark Jaquith's Subscribe to comments
+	 * @link http://txfx.net/code/wordpress/subscribe-to-comments/
+	 */
+	$call_plug[] = 'subscribe-to-comments/subscribe-to-comments.php,wpi_show_subscription,'.wpiFilter::ACTION_LIST_COMMENT_FORM;
+
+		
 	if (has_count($call_plug)){
 		foreach($call_plug as $index){
 			list($plugin,$callback,$hook) = explode(',',$index);
@@ -326,61 +333,10 @@ function wpi_get_bookmarks()
 
 }
 
-function wpi_bookmarks()
-{
+function wpi_bookmarks(){
 	echo wpi_get_bookmarks();
 }
 
-function get_wpi_plugins()
-{
-	$plugin_files = Wpi::listDirectoryFile(WPI_LIB,"/\.plugin\.php/");
-	
-	$plugins = array();
-	foreach($plugin_files as $file){
-		$name 		= wpi_strip_ftype('.plugin.php',$file);
-		$callback	= str_replace('-','_',$name);
-		
-		$plugins[] = array('name'=>$name,'id'=>$callback);
-	}
-	
-	unset($plugin_files);
-	
-	return $plugins;
-}
-
-function wpi_register_plugins()
-{
-	$plugins = get_wpi_plugins();
-	
-	if (is_array($plugins) && has_count($plugins) )
-	{
-		foreach($plugins as $plugin)
-		{			
-			if ( Wpi::loadPlugin( $plugin['name']) )
-			{				
-				$callback = 'wpi_get_'.$plugin['id'].'_pluginname';
-				
-				if (wpi_is_user_func_exists($callback)){
-					
-					$plugin_filename = (string) call_user_func($callback);
-					
-					if (wpi_is_plugin_active($plugin_filename))
-					{
-						$init_callback = 'wpi_'.$plugin['id'].'_init';
-							
-						if (wpi_is_user_func_exists($init_callback)){
-							call_user_func($init_callback);
-						}	
-					}
-				}
-				
-			}
-		}
-		
-	} else {
-		return false;
-	}
-}
 
 /**
  * Header alternate link tag
@@ -459,4 +415,36 @@ function wpi_the_views(){
 	}
 }
 
+function wpi_show_subscription($id='0') {
+	global $sg_subscribe;
+	sg_subscribe_start();
+	
+	$classname = 'subscribe-to-comments';
+	$htm = PHP_EOL;
+	
+	if ( $sg_subscribe->checkbox_shown ) return $id;
+	if ( !$email = $sg_subscribe->current_viewer_subscription_status() ) :
+		$checked_status = ( !empty($_COOKIE['subscribe_checkbox_'.COOKIEHASH]) && 'checked' == $_COOKIE['subscribe_checkbox_'.COOKIEHASH] ) ? true : false;
+		
+		$label = _t('label',$sg_subscribe->not_subscribed_text,array('for'=>'subscribe'));
+		$attribs = array('type'=>'checkbox','name'=>'subscribe','id'=>'subscribe','value'=>'subscribe');
+		if ($checked_status) $attribs['checked'] = 'checked';
+		$htm .= _t('li',_t('input','',$attribs).$label,array('class'=>$classname));		
+	
+	elseif ( $email == 'admin' && current_user_can('manage_options') ) : 
+		$htm .= _t('p',str_replace('[manager_link]', 
+					$sg_subscribe->manage_link($email, true, false), $sg_subscribe->author_text), 
+					array('class'=>$classname));
+	else : 
+		$htm .= _t('p',str_replace('[manager_link]', 
+					$sg_subscribe->manage_link($email, true, false), $sg_subscribe->subscribed_text), 
+					array('class'=>$classname));	
+	endif;
+
+	echo $htm;
+	unset($htm);
+	
+	$sg_subscribe->checkbox_shown = true;
+	return $id;
+}
 ?>
