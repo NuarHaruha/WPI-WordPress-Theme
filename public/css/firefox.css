@@ -185,6 +185,8 @@ blockquote,q
 	-moz-opacity:0
 }
 
+/* border multi-colors*/
 #validation dl{border-width: 2px; -moz-border-right-colors: #4DA4CF #317B9F }
 .nt #validation dl{-moz-border-right-colors: #777 #666}
 .dw #validation dl{-moz-border-right-colors: #DFDFD1 #BFBF8F}
+.home #main-bottom .hentry{border-bottom-width: 3px;-moz-border-bottom-colors: #F8F8F8 #F8F8F8 #DDDDDD}

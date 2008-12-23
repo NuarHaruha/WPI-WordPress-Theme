@@ -1,1 +1,16 @@
-.hentry .postmeta-date{background-repeat: no-repeat;background-position: -22px 0px}
+.hentry .postmeta-head{
+	padding-left:10px
+}
+
+.hentry .postmeta-date{
+	background-repeat: no-repeat;
+	background-position: -22px 0px;
+	margin-left: -30px
+}
+
+#main-bottom .hentry{border-bottom: 2px solid #f8f8f8}
+#main-bottom .pagination{background-image:none;border:0pt}
+
+.entry-content{
+	padding: 0pt 10px 0pt !important
+}

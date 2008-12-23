@@ -494,14 +494,14 @@ blockquote.description p
 
 .hentry .entry-title
 {
-	border-bottom:1px dotted #ddd;
-	margin:0;
+	font-size: 2.4em;
+	margin:0pt;
 	padding-bottom:6px
 }
 
 .hentry .entry-title a,.postmeta-tags a,.comments-link a
 {
-	color:#666;
+	color:#333;
 	text-decoration:none
 }
 
@@ -519,9 +519,10 @@ blockquote.description p
 
 .hentry .entry-title .subtitle
 {
-	color:#878787;
+	color:#555;
 	display:block;
-	font-size:.6em;
+	font-size:0.4em;
+	font-style:normal;
 	letter-spacing:1px;
 	padding-left:2px
 }
