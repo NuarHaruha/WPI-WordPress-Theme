@@ -601,6 +601,7 @@ function wpi_rss_header(){
 /**
  * wpi_delay_feeds()
  * @link http://wpengineer.com/publish-the-feed-later/
+ * @since 1.6.2
  */
 function wpi_delay_feeds($clause) {
 	global $wpdb;
@@ -619,6 +620,7 @@ function wpi_delay_feeds($clause) {
 /**
  * void wpi_google_analytics_tracking_script()
  * Google Analytics Tracking script
+ * @since 1.6.2
  */
 function wpi_google_analytics_tracking_script()
 {
@@ -642,6 +644,7 @@ function wpi_comment_text_filter($content)
 
 /**
  * WPI intergalactic null function
+ * @since 1.6.2
  */
 function wpi_null(){ return null;}
 
@@ -652,7 +655,7 @@ function wpi_null(){ return null;}
  * load after init
  * filter: wpiFilter::ACTION_INTERNAL_CSS
  * @uses is_at() WP_query related
- * 
+ * @since 1.6.2
  */	
 function wpi_sidebar_dir_filter(){
 	
@@ -666,7 +669,7 @@ function wpi_sidebar_dir_filter(){
 		
 		if ($direction == 'left'){		
 			$css .= '.home #main,.home #main-bottom{float:right!important}'.$NL;
-			$css .= '.home .hentry .postmeta-date{float:right!important;background-position:-82px 0px;margin: 0pt -40px 0pt 0pt !important}'.$NL;
+			$css .= '.home .hentry .postmeta-date{float:right!important;background-position:-82px 0px;margin: 0pt -30px 0pt 0pt !important}'.$NL;
 			$css .= '.home .postmeta-date .date-month{padding:0pt}'.$NL; 
 			$css .= '.home .hentry{padding-left:0px}'.$NL;
 			$css .= '.home #sidebar{margin-left:10px}';
@@ -674,5 +677,34 @@ function wpi_sidebar_dir_filter(){
 	}
 	
 	if ($direction) echo $css;
+}
+
+/**
+ * void wpi_post_thumbnail_filter()
+ * 
+ * load after init
+ * filter: wpiFilter::ACTION_INTERNAL_CSS
+ * @since 1.6.2
+ */	
+function wpi_post_thumbnail_filter(){
+	global $wp_query;
+	
+	$tpl = '#wpi-thumb-%1d{background-image:url(%2s)}'.PHP_EOL.PHP_T;
+	
+	echo PHP_EOL.PHP_EOL.PHP_T.'/** WPI post thumb */'.PHP_EOL.PHP_T;
+	$margin = (wpi_option('home_sidebar_position') == 'left') ? ';margin:0pt' : ';margin: 0pt 0pt 0pt -30px';
+	echo PHP_EOL.PHP_T.'.wpi-post-thumb{width:540px;height:100px;border:5px solid #f2f2f2'.$margin.'}'.PHP_EOL.PHP_T;
+	
+	if ($wp_query->posts){
+		
+		foreach ($wp_query->posts as $p){
+			$pid = $p->ID;
+			if ( ($url = wpi_get_postmeta_key($pid,'post_thumb_url')) != ''){
+				printf($tpl,$pid,$url);
+			}
+		}
+		
+		unset($p);
+	}
 }
 ?>
