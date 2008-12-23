@@ -978,7 +978,7 @@ function wpi_template_attachment()
 				<div class="postmeta-info">				
 					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
 						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>
-						  <p class="di"><?php _e('Filed under',WPI_META);?><?php wpi_cat_links(1); ?>.</p>
+						  <p class="di"><?php _e('Filed under ',WPI_META);?><?php wpi_cat_links(1); ?>.</p>
 					<p><span class="ptime r"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span></p><?php wpi_text_size();?> 
 				</div>	
 			</dd>
