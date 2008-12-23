@@ -1,4 +1,5 @@
 <?php
+if (!defined('KAIZEKU')) die(42);
 /**
  * $Id$
  * WPI Template functions
@@ -41,7 +42,7 @@ function wpi_section_name(){
 function wpi_search_box(){
 
 	$att = array('type'=>'text','value'=>get_search_query(), 'name'=>'s','id'=>'s',
-	'title'=>'Search | Start typing. We&apos;ll figure it out','class'=>'ttip');
+	'title'=>'Search | Start typing. We&#39;ll figure it out','class'=>'ttip');
 
 	if (is_ua('Safari')){
 		$att['type'] = 'search';
@@ -66,6 +67,7 @@ function wpi_get_osd(){
 	}
 	
 	unset($osd);
+	exit;
 }
 
 
@@ -244,13 +246,12 @@ function wpi_get_public_content($content, $type = 'css'){
 		if ($type == 'js'){
 			$type = 'javascript';
 			$contents = str_replace("%theme_url%",json_encode(WPI_THEME_URL),$contents);
-		}
-		
-		$h[] = "Content-Type: text/" .$type;
-		$h[] = 'Content-Length: ' . strlen($contents);		
+		}		
+	
 	}	
 		
-
+		$h[] = "Content-Type: text/" .$type;
+		$h[] = 'Content-Length: ' . strlen($contents);	
 	
 	if (has_count($h)){
 		foreach($h as $v){ header($v);	}
@@ -266,7 +267,9 @@ function wpi_write_css($filename,$path){
 	$content .= file_get_contents($path);	
 	$content = str_replace('url(images/','url('.THEME_IMG_URL,$content);
 	
-	wpi_write_cache('css'.DIRSEP.$filename,$content);
+	if (wpi_option('cache_css')){
+		wpi_write_cache('css'.DIRSEP.$filename,$content);
+	}
 	
 	return $content;
 }
@@ -305,30 +308,38 @@ function wpi_get_body_class($browser_object = false){
 	
 	$output = false;
 	
-	if (! wpi_user_func_exists('sandbox_body_class')){ 
-		
+	if (! wpi_user_func_exists('sandbox_body_class')){ 		
 		Wpi::getFile('body_class',wpiTheme::LIB_TYPE_IMPORT);
 	}
 		
 	$output = sandbox_body_class(false);
 	
-	// append client useragent data  
-	$ua = array();
-	
-	// new browser might not get filtered
-	$ua[] = $browser_object->Browser;
-	$ua[] = (string) trim(trim($browser_object->Parent, '0'), '.');
-	$ua[] = $browser_object->Platform;
-	
-	$ua = array_map('sanitize_title_with_dashes',$ua);
-	$ua = strtolower(join(" ",$ua));
-	
-	if (wpi_option('client_time_styles') && is_cookie(wpiTheme::CL_COOKIE_TIME)){
-		$output .= ' '. (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME];
-		//$output .= ' nt';
+	if ($browser_object){
+		// append client useragent data  
+		$ua = array();
+		
+		$ua[] = $browser_object->Browser;
+		$ua[] = (string) trim(trim($browser_object->Parent, '0'), '.');
+		$ua[] = $browser_object->Platform;
+		
+		$ua = array_map('sanitize_title_with_dashes',$ua);
+		$ua = strtolower(join(" ",$ua));
+		
+		$output .= ' '. $ua;
+		
+		unset($ua);
 	}
 	
-	$output = $output.' '.$ua.' -foaf-Document';
+	if (isset($_COOKIE[wpiTheme::CL_COOKIE_TIME])){
+		$cl = $_COOKIE[wpiTheme::CL_COOKIE_TIME];
+	
+		if (wpi_option('client_time_styles') && $cl != ''){
+			$output .= ' '. (string) $cl;
+		}	
+	}
+	
+	
+	$output = $output.' -foaf-Document';
 	
 	return apply_filters(wpiFilter::FILTER_ROOT_CLASS_SELECTOR,$output);
 }	
@@ -483,23 +494,31 @@ function wpi_template_home()
 ?>	
 	<ul class="r cf">
 	<?php while (have_posts() && $cnt == 0) : the_post(); ?>	
-	<li class="xfolkentry hentry hreview vevent cf prepend-1 append-1">		
+	<li class="xfolkentry hentry hreview vevent cf prepend-1 append-1">	
+		<?php if(wpi_option('home_post_thumb') && wpi_get_postmeta('post_thumb_url') != '' ):?>
+		<samp id="wpi-thumb-<?php echo $post->ID;?>" class="rtxt wpi-post-thumb depiction">Thumb: <?php echo get_the_title($post->ID);?></samp>
+		<?php endif; ?>	
 		<dl class="r span-13">
 			<dd class="postmeta-date fl" title="<?php the_time('l M, jS Y')?>">
 				<ul class="span-1 pdate r">
-					<li class="date-month"><span><?php the_time('M');?></span></li>
-					<li class="date-day"><span><?php the_time('d');?></span></li>	
+					<li class="date-month"><span><?php the_time(__('M',WPI_META) );?></span></li>
+					<li class="date-day"><span><?php the_time(__('d',WPI_META) );?></span></li>					
 					<li class="Person ox">
+						<?php if (wpi_option('home_avatar')): ?>
 						<address class="rtxt ava <?php wpiGravatar::authorGID();?> depiction">
+						<?php else: ?>
+						<address class="depiction">
+						<?php endif;?>
 							<span class="photo rtxt microid-Sha1sum"><?php author_microid();?></span>
 						</address>
-					</li>					
+					</li>									
 				</ul>
 			</dd>			
 			<dd class="postmeta-head span-13 start fl">
 				<?php wpi_hatom_title(); ?>
 				<div class="postmeta-info">			
-					<span class="<?php echo $pby_class;?>">Posted by <cite class="vcard reviewer author"><?php wpi_post_author();?></cite>.</span> 
+					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
+						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>
 					<p class="di"><?php printf(__('Filed under %s',WPI_META),wpi_cat_links(2)); ?>.</p>
 					<p><span class="ptime r ttip" title="Published | <?php echo htmlentities2(wpi_get_postime())?>"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span></p>
 				</div>	
@@ -513,6 +532,7 @@ function wpi_template_home()
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
 			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+			<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'home'); ?>
 			<li class="comments-link">
 			<?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
 			</li>
@@ -543,14 +563,21 @@ function wpi_template_content_bottom()
 	<ul class="r cf">
 	<?php while (have_posts()) : the_post(); ?>
 	<?php if ($cnt >= 1 ): ?>
-	<li class="xfolkentry hentry hreview vevent cf prepend-1 append-1">		
+	<li class="xfolkentry hentry hreview vevent cf prepend-1 append-1">
+		<?php if(wpi_option('home_post_thumb') && wpi_get_postmeta('post_thumb_url') != '' ):?>
+		<samp id="wpi-thumb-<?php echo $post->ID;?>" class="rtxt wpi-post-thumb depiction">Thumb: <?php echo get_the_title($post->ID);?></samp>
+		<?php endif; ?>		
 		<dl class="r span-13">
 			<dd class="postmeta-date fl" title="<?php the_time('l M, jS Y')?>">
 				<ul class="span-1 pdate r">
-					<li class="date-month"><span><?php the_time('M');?></span></li>
-					<li class="date-day"><span><?php the_time('d');?></span></li>	
+					<li class="date-month"><span><?php the_time(__('M',WPI_META) );?></span></li>
+					<li class="date-day"><span><?php the_time(__('d',WPI_META) );?></span></li>		
 					<li class="Person ox">
+						<?php if (wpi_option('home_avatar')): ?>
 						<address class="rtxt ava <?php wpiGravatar::authorGID();?> depiction">
+						<?php else: ?>
+						<address class="depiction">
+						<?php endif;?>
 							<span class="photo rtxt microid-Sha1sum"><?php author_microid();?></span>
 						</address>
 					</li>					
@@ -559,7 +586,8 @@ function wpi_template_content_bottom()
 			<dd class="postmeta-head span-13 start fl">
 				<?php wpi_hatom_title(); ?>
 				<div class="postmeta-info">			
-					<span class="<?php echo $pby_class;?>">Posted by <cite class="vcard reviewer author"><?php wpi_post_author();?></cite>.</span> 
+					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
+						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>
 					<p class="di"><?php printf(__('Filed under %s',WPI_META),wpi_cat_links(2)); ?>.</p>
 					<p><span class="ptime r ttip" title="Published | <?php echo htmlentities2(wpi_get_postime())?>"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span></p>
 				</div>	
@@ -574,6 +602,7 @@ function wpi_template_content_bottom()
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
 			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+			<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'home'); ?>
 			<li class="comments-link">
 			<?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
 			</li>
@@ -625,14 +654,15 @@ function wpi_template_single()
 			<dd class="postmeta-head span-13 start fl">
 				<?php wpi_hatom_title(); ?>
 				<div class="postmeta-info">			
-					<span class="<?php echo $pby_class;?>">Posted by <cite class="vcard reviewer author"><?php wpi_post_author();?></cite>.</span> 
+					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
+						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>
 					<p class="di"><?php printf(__('Filed under %s',WPI_META),wpi_cat_links(2)); ?>.</p>
 					<p><span class="ptime r ttip" title="Published | <?php echo htmlentities2(wpi_get_postime())?>"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span></p><?php wpi_text_size();?> 
 				</div>	
 			</dd>
 			<dd class="<?php echo wpi_get_entry_content_class(has_excerpt($post->ID));?>">
 		<?php do_action(wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'single',$post); ?>
-				<div id="iscontent">					
+				<div id="iscontent" class="dynacloud">					
 				<?php the_content('Read the rest of this entry &raquo;'); ?>
 				</div>
 				<?php do_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.'single',$post); ?>
@@ -641,7 +671,8 @@ function wpi_template_single()
 			<?php the_tags('<dd class="postmeta-tags"><acronym  class="rtxt fl" title="Tags &#187; Taxonomy">Tags:</acronym> <ul class="tags r cfl cf"><li>', '<span class="sep">,</span>&nbsp;</li><li>', '</li></ul></dd>'); ?>
 			<dd class="postmeta-comments cf">
 				<ul class="xoxo cfl r cf">
-					<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+					<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'single'); ?>					
 				<?php if ( wpi_option('post_bookmarks') ): ?>
 					<li class="postmeta-response"><?php wpi_bookmarks();?></li>
 				<?endif;?>			
@@ -684,7 +715,7 @@ function wpi_template_page()
 			</dd>
 			<dd class="cb entry-content description entry entry-summary summary ox">
 		<?php do_action(wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'page',$post); ?>
-				<div id="iscontent" class="mgb">					
+				<div id="iscontent" class="dynacloud mgb">					
 				<?php the_content('Read the rest of this entry &raquo;'); ?>
 				</div>
 				<?php do_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.'page',$post); ?>
@@ -692,7 +723,8 @@ function wpi_template_page()
 			<?php wp_link_pages(array('before' => '<dd class="postmeta-pages"><strong>'.__('Pages',WPI_META).'</strong> ', 'after' => '</dd>', 'next_or_number' => 'number')); ?>
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
-				<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+				<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'page'); ?>
 				<?php if ( wpi_get_theme_option('post_bookmarks') ): ?>
 				<li class="postmeta-response"><?php wpi_bookmarks();?></li>
 				<?endif;?>			
@@ -736,7 +768,8 @@ function wpi_template_author(){
 			<dd class="postmeta-head span-13 start fl">
 				<?php wpi_hatom_title(); ?>
 				<div class="postmeta-info">			
-					<span class="<?php echo $pby_class;?>">Posted by <cite class="vcard reviewer author"><?php wpi_post_author();?></cite>.</span> 
+					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
+						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>
 					<p class="di"><?php printf(__('Filed under %s',WPI_META),wpi_cat_links(2)); ?>.</p>
 					<p><span class="ptime r ttip" title="Published | <?php echo htmlentities2(wpi_get_postime())?>"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span></p>
 				</div>	
@@ -749,7 +782,8 @@ function wpi_template_author(){
 			<?php the_tags('<dd class="postmeta-tags"><acronym  class="rtxt fl" title="Tags &#187; Taxonomy">Tags:</acronym> <ul class="tags r cfl cf"><li>', '<span class="sep">,</span>&nbsp;</li><li>', '</li></ul></dd>'); ?>
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
-			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'author'); ?>
 			<li class="comments-link">
 			<?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
 			</li>
@@ -811,7 +845,8 @@ function wpi_template_category()
 			<span class="ptime r" title="<?php echo get_the_time('Y-m-dTH:i:s:Z');?>"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span>
 				<?php wpi_hatom_title(); ?>
 			<div class="postmeta-info">	
-			<span class="<?php echo $pby_class;?> dn"><?php printf(__('Posted by <acronym class="reviewer author" title="%1$s">%2$s</acronym>',WPI_META),get_the_author_nickname(),wpi_get_post_author());?></span>				
+					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
+						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>				
 			</div>	
 			</dd>
 			<dd class="entry-content description entry ox">
@@ -821,7 +856,8 @@ function wpi_template_category()
 			</dd>
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
-				<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+				<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.is_at()); ?>
 				<li class="comments-link">
 				<?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
 				</li>
@@ -872,8 +908,10 @@ function wpi_template_search()
 			</dd>			
 			<dd class="postmeta-head span-13 start fl">
 				<?php wpi_hatom_title(); ?>
-			<div class="postmeta-info">				
-			<span class="<?php echo $pby_class;?>">Posted by <cite class="vcard reviewer author"><?php wpi_post_author();?></cite>.</span> <p class="di"><?php _e('Filed under',WPI_META);?><?php wpi_cat_links(1); ?>.</p>
+			<div class="postmeta-info">
+					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
+						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>							
+			<p class="di"><?php _e('Filed under ',WPI_META);?><?php wpi_cat_links(1); ?>.</p>
 			<p><span class="ptime r"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span></p> 
 			</div>	
 			</dd>	
@@ -893,7 +931,8 @@ function wpi_template_search()
 			<?php $rating_class = (wpi_option('post_hrating') ) ? 'rating-count' : 'rating-count dn'; ?>
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
-			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'search'); ?>
 			<li class="comments-link"><?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
 			</li>
 			</ul>
@@ -937,7 +976,9 @@ function wpi_template_attachment()
 			<dd class="postmeta-head span-13 start fl">
 				<?php wpi_hatom_title(); ?>
 				<div class="postmeta-info">				
-				<span class="<?php echo $pby_class;?>">Posted by <cite class="vcard reviewer author"><?php wpi_post_author();?></cite>.</span> <p class="di"><?php _e('Filed under',WPI_META);?><?php wpi_cat_links(1); ?>.</p>
+					<?php t('span',sprintf(__('Posted by %s.',WPI_META),
+						  _t('cite',wpi_get_post_author(),array('class'=>'vcard reviewer author'))), array('class'=>$pby_class));?>
+						  <p class="di"><?php _e('Filed under',WPI_META);?><?php wpi_cat_links(1); ?>.</p>
 					<p><span class="ptime r"><?php printf(__(' <cite>%s</cite>',WPI_META),wpi_get_postime() );?></span></p><?php wpi_text_size();?> 
 				</div>	
 			</dd>
@@ -962,7 +1003,8 @@ function wpi_template_attachment()
 			<?php $rating_class = (wpi_get_theme_option('post_hrating') ) ? 'rating-count' : 'rating-count dn'; ?>
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
-			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>
+			<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'attachment'); ?>
 			<?php if ( wpi_get_theme_option('post_bookmarks') ): ?>
 			<li class="postmeta-response"><?php wpi_bookmarks();?>			
 			<?endif;?>
@@ -997,28 +1039,31 @@ function wpi_template_404()
 {
 	wpi_template_nopost();
 }
+
 function wpi_template_nopost()
 {
 	if (is_search()){
 		$terms = get_search_query();
 		t('h5','Sorry, no matching articles for <strong>'.$terms.'</strong>.');
 		t('script','',array('id'=>'wpi-google-webmaster-widgets', 'type'=>'text/javascript', 'src'=>'http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js'));
-	$r = new WP_Query(array('showposts' => 15, 'what_to_show' => 'posts', 'nopaging' => 0, 'post_status' => 'publish'));
-	if ($r->have_posts()) :
-?>
-	<hr class="hr-line"/>
-	<h3>Recent posts</h3>
-			<ul class="xoxo">
-			<?php  while ($r->have_posts()) : $r->the_post(); ?>
-			<li><a href="<?php the_permalink() ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?> </a></li>
-			<?php endwhile; ?>
-			</ul>
-<?php
-		wp_reset_query();  
-	endif;
+		$r = new WP_Query(array('showposts' => 15, 'what_to_show' => 'posts', 'nopaging' => 0, 'post_status' => 'publish'));
+		if ($r->have_posts()){
+	?>
+		<hr class="hr-line"/>
+		<h3>Recent posts</h3>
+				<ul class="xoxo">
+				<?php  while ($r->have_posts()) : $r->the_post(); ?>
+				<li><a href="<?php the_permalink() ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?> </a></li>
+				<?php endwhile; ?>
+				</ul>
+	<?php
+			wp_reset_query();  
+		}
+	} elseif(is_home()){	
+		//t('h5',__('Sorry there is no post yet, please check us back later',WPI_META));
 	} else {
 	$c = _t('img','',array('src'=> wpi_img_url('err.jpg'),'class'=>'thumb fl') );
-	$f = _t('form',_t('div',_t('strong','Marvin&apos;s error log:',array('class'=>'pdl'))._t('textarea','',
+	$f = _t('form',_t('div',_t('strong','Marvin&#39;s error log:',array('class'=>'pdl'))._t('textarea','',
 	array('row'=>'8','cols'=>'60','wrap'=>'soft','class'=>'db mgt')),array('class'=>'fl')) );
 	t('div',$c.$f,array('class'=>'span-22 mgt pdt'));
 	t('script','',array('type'=>'text/javascript','src'=>wpi_get_scripts_url('404')));
@@ -1269,19 +1314,19 @@ function wpi_comment_guide($post,$comments,$cnt){
 ?>					
 						<li id="comment-00" class="hreview <?php echo $alt;?>">
 			<ul class="reviewier-column cf r">
-							<li class="span-3 fl rn hcard">
+							<li class="span-2 fl rn hcard">
 							<address class="vcard microid-mailto+http:sha1:<?php echo get_microid_hash(get_comment_author_email(),WPI_URL)?>">
 							<?php	$photo_url = THEME_IMG_URL.'default-avatar.png';?>
-							<img src="<?php echo wpi_img_url($ava);?>" width="80" height="80" alt="stalker&apos;s photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
+							<img src="<?php echo wpi_img_url($ava);?>" width="42" height="42" alt="stalker&#39;s photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
 								<a href="<?php echo WPI_URL; ?>" class="url fn db">
 								<?php echo WPI_BLOG_NAME ;?></a> 
 							</address>				
 							</li>
-							<li class="span-16 fl review-content">
+							<li class="span-9 fl review-content">
 							<dl class="review r cf">				
 							<dt class="item title summary">	
-								<a href="#comment-00" class="url fn" title="<?php the_title(); ?>">
-								<span>RE:</span> <?php the_title(); ?> - <?php _e('&apos;Commenting Guidlines&apos;',WPI_META);?> &darr;</a> 				
+								<a href="#comment-00" class="url fn scroll-to" title="<?php the_title(); ?>">
+								<?php the_title(); ?> - <?php _e('&#39;Comment Guidlines&#39;',WPI_META);?> &darr;</a> 				
 							</dt>	
 							<dd class="reviewer-meta">
 								<span class="date-since">				
@@ -1292,13 +1337,12 @@ function wpi_comment_guide($post,$comments,$cnt){
 								<span class="rating dn">5</span>
 								<span class="type dn">url</span>
 							</dd>
-							<dd class="reviewer-entry">		
-								<big class="comment-count fr">0%</big>
-								<p id="comment-guidline" class="description">
+							<dd class="reviewer-entry">
+								<p id="comment-guidline" class="description ox">
 								<?php _e('If you want to comment, please read the following guidelines. These are designed to protect you and other users of the site.',WPI_META);?></p>
 								<ol class="xoxo">
 									<li><?php _e('<strong>Be relevant:</strong> Your comment should be a thoughtful contribution to the subject of the entry. Keep your comments constructive and polite.',WPI_META);?></li>
-									<li><?php _e('<strong>No advertising or spamming:</strong> Do not use the comment feature to promote commercial entities/products, affiliates services or websites. You are allowed to post a link as long as it&apos;s relevant to the entry.',WPI_META);?></li>						
+									<li><?php _e('<strong>No advertising or spamming:</strong> Do not use the comment feature to promote commercial entities/products, affiliates services or websites. You are allowed to post a link as long as it&#39;s relevant to the entry.',WPI_META);?></li>						
 									<li><?php _e('<strong>Keep within the law:</strong> Do not link to offensive or illegal content websites. Do not make any defamatory or disparaging comments which might damage the reputation of a person or organisation.',WPI_META);?></li>
 									<li><?php _e('<strong>Privacy:</strong> Do not post any personal information relating to yourself or anyone else (i.e., address, place of employment, telephone or mobile number or email address).',WPI_META);?></li>
 								</ol>
@@ -1471,13 +1515,23 @@ function wpi_postform_metakeywords(){
 }
 
 /**
+ * Post thumbnail
+ */
+function wpi_postform_postthumb(){
+		echo '<p>'.PHP_EOL;
+		wpi_postmeta_label('post_thumb_url',__('Image URL',WPI_META));
+		wpi_postmeta_input('post_thumb_url');
+		echo '</p>'; 
+}
+
+/**
  * Banner singular post form
  */
 function wpi_postform_banner(){
 		echo '<p id="banner-enabled" style="padding-bottom:9px">';
 		wpi_postmeta_label('banner',__('Show banner',WPI_META));
 		echo '<select name="wpi_banner" id="wpi_banner" size="2" class="row-4" style="height:36px">';
-		$prop = wpi_get_postmeta('banner');  if (empty($prop))	$prop = 1;
+		$prop = wpi_get_postmeta('banner');  //if (empty($prop))	$prop = 1;
 		wpiAdmin::htmlOption(array('Enabled' => 1,'Disabled' => 0),$prop);?>		
 	</select></p>
 			<p id="banner-url" style="clear:both;border-top:1px solid #dfdfdf;padding-top:18px;padding-bottom:9px">
@@ -1566,6 +1620,11 @@ function wpi_register_metaform(){
 		$args[] = array('meta-keywords',__('Meta Keywords',WPI_META),'metakeywords');
 	}
 	
+	// post thumb
+	if (wpi_option('home_post_thumb')){
+		$args[] = array('wpipost-thumb',__('Post thumb',WPI_META),'postthumb');
+		
+	}
 	// banner
 	if(wpi_option('banner')){
 		$args[] = array('wpi-banner',__('Banner Settings',WPI_META),'banner');
