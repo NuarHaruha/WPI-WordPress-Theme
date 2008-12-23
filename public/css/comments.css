@@ -262,6 +262,8 @@
 
 .nt .commentlist .hreview .description{border-top-color:#555}
 .dw .commentlist .hreview .description{border-top-color:#CECF8E;color:#fff}
+.dw .commentlist .alt .description{border-top-color:#555}
+.dw .commentlist .alt .even .description{border-top-color:#CECF8E !important}
 
 .commentlist .hreview .dtreviewed
 {
@@ -302,7 +304,7 @@
 
 .dw .commentlist .hreview .reviewer-meta
 {
-	border-bottom-color:#9E9F4F
+	border-bottom-color:#8E8F3E
 }
 
 
@@ -367,6 +369,11 @@ p.comments-feed a:hover
 	background-color:#3e3e3e
 }
 
+.dw .comment-nav span.prev a, .dw .comment-nav span.next a, .dw .comment-nav a.prev, .dw .comment-nav a.next, .dw .comment-nav .page-numbers
+{
+	background-color:#70704C
+}
+
 .comment-nav span.prev a,.comment-nav span.next a,.comment-nav a.prev,.comment-nav a.next,.comment-nav .page-numbers
 {
 	background-color:#2D96CB;
@@ -378,6 +385,11 @@ p.comments-feed a:hover
 .nt .comment-nav span.prev a:hover,.nt .comment-nav span.next a:hover,.nt .comment-nav a.prev:hover,.nt .comment-nav a.next:hover,.nt .comment-nav a.page-numbers:hover
 {
 	background-color:#5E676B;
+}
+
+.dw .comment-nav span.prev a:hover,.dw .comment-nav span.next a:hover,.dw .comment-nav a.prev:hover,.dw .comment-nav a.next:hover,.dw .comment-nav a.page-numbers:hover
+{
+	background-color:#3F3F0C;
 }
 
 .comment-nav span.prev a:hover,.comment-nav span.next a:hover,.comment-nav a.prev:hover,.comment-nav a.next:hover,.comment-nav a.page-numbers:hover
@@ -405,6 +417,11 @@ p.comments-feed a:hover
 .comment-nav span.current
 {
 	color:#ccc!important
+}
+
+.dw .comment-nav span.current{
+	background-color:#9F9F77 !important;
+	color:#eee !important
 }
 
 /* comments form */
@@ -842,3 +859,9 @@ p.reply-links a
 .nt .comment-footer,.nt .comment-footer a{color:#666 !important}
 .dw #widget_tping li{border-bottom-color:#AEAF57}
 .comment-footer .scroll-to{color:#ddd !important}
+
+/* Mark Jaquith's Subscribe to comments plugin */
+#respond li.subscribe-to-comments{background-color:#efefef !important}
+#respond li.subscribe-to-comments:hover{background-color:#f9f9f9 !important}
+#respond .subscribe-to-comments #subscribe{width:auto !important}
+#respond .subscribe-to-comments label:hover{color:#888;text-decoration:underline}
