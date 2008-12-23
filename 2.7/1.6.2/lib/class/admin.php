@@ -41,6 +41,7 @@ class wpiAdmin
 		
 		$this->_lang();
 		$this->select_options = array($this->lang['enabled'] => 1,$this->lang['disabled'] => 0 );	
+		$this->select_hdirection = array($this->lang['left'] => 'left',$this->lang['right'] => 'right' );
 	}
 	
 	
@@ -50,6 +51,8 @@ class wpiAdmin
 		$this->lang['disabled'] = __('Disabled',WPI_META);
 		$this->lang['cache_dir_size'] = __('Cache directory size : %s',WPI_META);
 		$this->lang['update_settings'] = __('Update settings',WPI_META);
+		$this->lang['left'] = __('Left',WPI_META);
+		$this->lang['right'] = __('Right',WPI_META);
 	}
 	
 	
@@ -194,13 +197,19 @@ class wpiAdmin
 	<?php _e('Frontpage layout options',WPI_META);?>
 	</h4>
 	<div class="dn">
-	<ul class="mtb">
-		<li class="last">
+	<ul class="mtb">	
+		<li>
 			<label for="wpi_home_avatar"><?php _e('Avatar',WPI_META);?>				
 				<small><?php _e('Display Avatar.',WPI_META);?></small>			
 			</label>
 			<?php self::addSelect('home_avatar',$this->select_options);?>		
 		</li>		
+		<li class="last">
+			<label for="wpi_home_sidebar_position"><?php _e('Sidebar position',WPI_META);?>				
+				<small><?php _e('Vertical Sidebar position, default: Right',WPI_META);?></small>			
+			</label>
+			<?php self::addSelect('home_sidebar_position',$this->select_hdirection);?>		
+		</li>			
 	</ul>
 		<?php self::saveButton();?>	
 	</div>
