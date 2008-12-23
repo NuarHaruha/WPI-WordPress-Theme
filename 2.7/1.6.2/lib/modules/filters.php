@@ -639,4 +639,40 @@ function wpi_comment_text_filter($content)
 	$content = wpautop($content);
 	return $content;	
 }
+
+/**
+ * WPI intergalactic null function
+ */
+function wpi_null(){ return null;}
+
+	
+/**
+ * void wpi_sidebar_dir_filter()
+ * 
+ * load after init
+ * filter: wpiFilter::ACTION_INTERNAL_CSS
+ * @uses is_at() WP_query related
+ * 
+ */	
+function wpi_sidebar_dir_filter(){
+	
+	$sc = is_at();
+	$direction = false;
+	$css = PHP_EOL.PHP_T;
+	$NL = PHP_EOL.PHP_T;
+		
+	if (wpiSection::HOME == $sc){
+		$direction = wpi_option('home_sidebar_position');
+		
+		if ($direction == 'left'){		
+			$css .= '.home #main,.home #main-bottom{float:right!important}'.$NL;
+			$css .= '.home .hentry .postmeta-date{float:right!important;background-position:-82px 0px;margin: 0pt -40px 0pt 0pt !important}'.$NL;
+			$css .= '.home .postmeta-date .date-month{padding:0pt}'.$NL; 
+			$css .= '.home .hentry{padding-left:0px}'.$NL;
+			$css .= '.home #sidebar{margin-left:10px}';
+		}		
+	}
+	
+	if ($direction) echo $css;
+}
 ?>
