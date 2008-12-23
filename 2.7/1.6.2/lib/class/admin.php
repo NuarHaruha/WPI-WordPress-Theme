@@ -203,7 +203,13 @@ class wpiAdmin
 				<small><?php _e('Display Avatar.',WPI_META);?></small>			
 			</label>
 			<?php self::addSelect('home_avatar',$this->select_options);?>		
-		</li>		
+		</li>	
+		<li>
+			<label for="wpi_home_post_thumb"><?php _e('Post Thumbnail',WPI_META);?>				
+				<small><?php _e('Display post thumbnail.',WPI_META);?></small>			
+			</label>
+			<?php self::addSelect('home_post_thumb',$this->select_options);?>		
+		</li>			
 		<li class="last">
 			<label for="wpi_home_sidebar_position"><?php _e('Sidebar position',WPI_META);?>				
 				<small><?php _e('Vertical Sidebar position, default: Right',WPI_META);?></small>			
