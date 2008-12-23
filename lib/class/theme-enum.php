@@ -11,7 +11,7 @@ final class wpiTheme
 {
 	const UID = 'wp-istalker-chrome';
 	
-	const VERSION = '1.6.2 RC 2';
+	const VERSION = '1.6.2 RC 3';
 	
 	const AUTHOR = 'ChaosKaizer';
 	
