@@ -219,7 +219,7 @@ class Wpi
 		if (defined('FIREBUG_CONSOLE')){
 			add_action('wp_head','wpi_firebug_console',wpiTheme::LAST_PRIORITY);
 		}
-		
+				
 	}
 	
 	private function _defaultSettings(){

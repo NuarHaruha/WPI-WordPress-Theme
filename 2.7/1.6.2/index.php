@@ -5,7 +5,7 @@
 <?php wpi_section_end();?>
 <?php endif;?>
 <?php wpi_section_start('content-top');?>
-		<div id="main">
+		<div id="main">		
 <?php if ( have_posts() ): ?>
 <?php wpi_current_template(); ?>
 <?php wpi_pagination();?>		

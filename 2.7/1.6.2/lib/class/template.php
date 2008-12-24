@@ -633,14 +633,15 @@ class wpiTemplate
 						 'title'=> WPI_BLOG_NAME);		
 		}
 		
-		if (file_exists(WP_ROOT.DIRSEP.'labels.rdf')) {
+		// assume label.rdf are in root WP dir
+		if (file_exists(WP_ROOT.DIRSEP.'labels.rdf')) { 
 			$m[] = array('rel'	=> 'meta',
 						 'href'	=> WPI_URL_SLASHIT.'labels.rdf',
 						 'type'	=> 'application/rdf+xml');					 
 		}	
 	
 		$m[] = array('rel'	=> 'foaf-maker',
-					 'href'	=> WPI_URL.'/#'.self::bodyID(),
+					 'href'	=> WPI_HOME_URL.'/#'.self::bodyID(),
 					 'rev'	=> 'foaf-homepage foaf-made');
 		
 		// favicon
@@ -694,7 +695,7 @@ class wpiTemplate
 					 'href'	=> get_bloginfo('pingback_url'));
 
 		$m[] = array('rel'	=> 'start',
-					 'href'	=> rel(WPI_URL.'/#'.self::bodyID()) );
+					 'href'	=> rel(WPI_HOME_URL.'/#'.self::bodyID()) );
 					 
 		// prefetch 
 		if ($wp_query->is_singular){
