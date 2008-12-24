@@ -95,14 +95,14 @@ function wpi_comment_start($comment,$option,$depth){
 								<dl class="review r cf">
 									<dt class="item title summary"><?php wpi_comment_reply_title($comment,$page);?></dt>	
 									<dd class="reviewer-meta"><span class="date-since"><?php echo apply_filters(wpiFilter::FILTER_POST_DATE,wpi_get_comment_date('',$comment));?></span> on <abbr class="dtreviewed" title="<? echo wpi_get_comment_date('Y-m-dTH:i:s:Z'); ?>"><?php wpi_get_comment_date('F jS, Y'); ?> at <?php wpi_comment_time('',false,$comment); ?></abbr><?php if(function_exists('hreview_rating')): hreview_rating(); else: ?><span class="rating dn">3</span><span class="type dn">url</span><?php endif;?> &middot; <a href="#microid-<?php echo $cid;?>" class="hreviewer-microid ttip" title="Micro ID | <?php echo $author;?>&apos;s Hash">microId</a> <?php wpi_edit_comment_link('edit','<span class="edit-comment">','</span>',$comment,$post); ?></dd>
-									<dd id="microid-<?php echo $cid;?>" class="microid-embed" style="display:none"><input class="on-click-select claimid icn-l" type="text" value="mailto+http:sha1:<?php echo $microid;?>" /></dd>			
+									<dd id="microid-<?php echo $cid;?>" class="microid-embed ox" style="display:none"><input class="on-click-select claimid icn-l" type="text" value="mailto+http:sha1:<?php echo $microid;?>" /></dd>			
 									<dd class="reviewer-entry">
 									<div class="description dynacloud"><?php echo apply_filters('get_comment_text', $comment->comment_content);?>
 									<?php if ('open' == $post->comment_status && $depth <=2 && get_comment_type() == 'comment') : ?>	
 									<span class="cb reply-links"><small><a href="<?php wpi_comment_reply_uri($post,$comment);?>" title="Reply to <?php echo $author;?>&apos;s comment" class="thickbox" rel="nofollow noarchive">[Reply]</a></small></span><?php endif;?>
 									</div>
 									<address class="vcard comment-footer">
-										<small>(cc)</small> <span><?php echo wpi_get_blog_since_year(date('Y',strtotime($comment->comment_date) ));?></span> <a href="<?php echo $author_uri; ?>" class="url fn" rel="external me" title="<?php echo $author;?>"><?php echo $author; ?></a>. <a href="<?php echo get_permalink( $cid ) . '#comment-' . $cid;?>">#<?php echo $cid ?> permalinks</a>
+										<small>(cc)</small> <span><?php echo wpi_get_blog_since_year(date('Y',strtotime($comment->comment_date) ));?></span> <a href="<?php echo $author_uri; ?>" class="url fn" rel="external me" title="<?php echo $author;?>"><?php echo $author; ?></a> &middot; <a href="<?php echo self_uri() . '#comment-' . $cid;?>" class="scroll-to">permalink</a>
 									</address>
 									<?php if ($comment->comment_approved == '0') : ?><p class="notice rn">Your comment is awaiting moderation.</p><?php endif; ?></dd>	
 								</dl>		
@@ -143,7 +143,7 @@ function wpi_comment_reply_title($comment,$page){
 	$rep_id = $comment->comment_ID;
 	if ($comment->comment_parent > 0){
 		$pauthor = get_comment($comment->comment_parent);
-		$label = sprintf(__('Replying to <dfn>%s.</dfn> #%d; ',WPI_META),$pauthor->comment_author,$pauthor->comment_ID);
+		$label = sprintf(__('Replying to <dfn>%s</dfn> &middot; (#%d) ',WPI_META),$pauthor->comment_author,$pauthor->comment_ID);
 		$rep_id = $pauthor->comment_ID;
 	}
 	if ( ($comtype = get_comment_type() ) != 'comment'){
