@@ -189,6 +189,14 @@ class Wpi
 				$this->Style->register($tag,wpiSection::ATTACHMENT);
 			}
 			
+			if (wpi_option('home_sidebar_position') != 'right'){
+				add_action(wpiFilter::ACTION_INTERNAL_CSS,'wpi_sidebar_dir_filter',wpiTheme::LAST_PRIORITY);
+			}
+			
+			if (wpi_option('home_post_thumb')){
+				add_action(wpiFilter::ACTION_INTERNAL_CSS,'wpi_post_thumbnail_filter',wpiTheme::LAST_PRIORITY+2);
+			}			
+			
 			if (wpi_option('css_via_header')){
 				$this->Style->printStyles();
 			} else {
@@ -231,6 +239,7 @@ class Wpi
 			'def_meta_description' => apply_filters(wpiFilter::FILTER_META_DESCRIPTION,get_option('blogdescription')),
 			'text_dir'=>'ltr',
 			'post_bookmarks'=>1,
+			'icn_favicon'=> clean_url(wpi_get_favicon_url()),
 			'home_avatar'=>1,
 			'home_sidebar_position'=> 'right'	
 			);
@@ -325,7 +334,7 @@ class Wpi
 	public function setBrowscapPref()
 	{
 		//if( ! wpi_option('browscap_autoupdate') ){
-			$this->Browser->doAutoUpdate = false;
+			$this->Browser->doAutoUpdate = false; // autoupdate is too expensive
 		//}
 		
 		if (function_exists('curl_init')){
