@@ -1337,18 +1337,28 @@ function wpi_comment_guide($post,$comments,$cnt){
 								<span class="rating dn">5</span>
 								<span class="type dn">url</span>
 							</dd>
-							<dd class="reviewer-entry">
-								<p id="comment-guidline" class="description ox">
-								<?php _e('If you want to comment, please read the following guidelines. These are designed to protect you and other users of the site.',WPI_META);?></p>
-								<ol class="xoxo">
-									<li><?php _e('<strong>Be relevant:</strong> Your comment should be a thoughtful contribution to the subject of the entry. Keep your comments constructive and polite.',WPI_META);?></li>
-									<li><?php _e('<strong>No advertising or spamming:</strong> Do not use the comment feature to promote commercial entities/products, affiliates services or websites. You are allowed to post a link as long as it&#39;s relevant to the entry.',WPI_META);?></li>						
-									<li><?php _e('<strong>Keep within the law:</strong> Do not link to offensive or illegal content websites. Do not make any defamatory or disparaging comments which might damage the reputation of a person or organisation.',WPI_META);?></li>
-									<li><?php _e('<strong>Privacy:</strong> Do not post any personal information relating to yourself or anyone else (i.e., address, place of employment, telephone or mobile number or email address).',WPI_META);?></li>
-								</ol>
-								<p><?php _e('In order to keep these experiences enjoyable and interesting for all of our users, we ask that you follow the above guidlines. Feel free to engage, ask questions, and tell us what you are thinking! insightful comments are most welcomed.',WPI_META);?></p>
-								<?php if( (count($comments))  == false):?>
-								<p class="no-comments notice rn prepend-3"><?php _e('be the first to comment.',WPI_META);?></p><?php endif;?></dd>	
+								<dd class="reviewer-entry">								
+									<?php if('open' == $post->comment_status): ?>
+									<p id="comment-guidline" class="description ox">
+									<?php _e('If you want to comment, please read the following guidelines. These are designed to protect you and other users of the site.',WPI_META);?></p>
+									<ol class="xoxo">
+										<li><?php _e('<strong>Be relevant:</strong> Your comment should be a thoughtful contribution to the subject of the entry. Keep your comments constructive and polite.',WPI_META);?></li>
+										<li><?php _e('<strong>No advertising or spamming:</strong> Do not use the comment feature to promote commercial entities/products, affiliates services or websites. You are allowed to post a link as long as it&#39;s relevant to the entry.',WPI_META);?></li>						
+										<li><?php _e('<strong>Keep within the law:</strong> Do not link to offensive or illegal content websites. Do not make any defamatory or disparaging comments which might damage the reputation of a person or organisation.',WPI_META);?></li>
+										<li><?php _e('<strong>Privacy:</strong> Do not post any personal information relating to yourself or anyone else (i.e., address, place of employment, telephone or mobile number or email address).',WPI_META);?></li>
+									</ol>
+									<p><?php _e('In order to keep these experiences enjoyable and interesting for all of our users, we ask that you follow the above guidlines. Feel free to engage, ask questions, and tell us what you are thinking! insightful comments are most welcomed.',WPI_META);?></p>
+										<?php if( (count($comments))  == false):?>
+										<p class="no-comments notice rn prepend-3"><?php _e('be the first to comment.',WPI_META);?></p>
+										<?php endif;?>
+									<?php else:?>
+									<p id="comment-closed-notice" class="description ox">
+										<?php printf(__('<strong class="db">Comment are closed</strong>Return %1s &middot; %2s',WPI_META),
+												_t('a',__('Home',WPI_META),array('href'=>WPI_HOME_URL_SLASHIT,'class'=>'home')),
+												_t('a',__('Back to top',WPI_META),array('href'=>'#page','class'=>'scroll-to')) ); ?>
+									</p>
+									<?php endif;?>
+								</dd>	
 							</dl>		
 							</li>
 			</ul>					

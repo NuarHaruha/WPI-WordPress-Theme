@@ -72,10 +72,10 @@ class wpiGravatar
 			$selector = PHP_T.'.'.self::T_POST_AUTHOR.$hash;		
 			$output .= sprintf(self::TPL,$selector,$url).PHP_EOL;
 		}
-		// is comment or ping enabled ?				
-		if ( 'open' == wpi_get_post_single_field('comment_status',$pid) ) {
-		  	
-		  $comments = wpi_get_comments($pid);
+		
+		$comments = wpi_get_comments($pid);		
+						
+		if ( 'open' == wpi_get_post_single_field('comment_status',$pid) || has_count($comments) ) {		  	
 		  
 		  if ( $comments ){					
 				foreach($comments as $comment){

@@ -111,7 +111,6 @@
 	<?php endif; ?>
 	<?php do_action(wpiFilter::ACTION_LIST_COMMENT_FORM,$post->ID);?>
 	</ul><?php endif; ?>
-<!-- <p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
 <?php comment_id_fields(); ?>
 <?php do_action('comment_form', $post->ID); ?>
 </li>
@@ -125,9 +124,9 @@
 </span>
 </p>
 </div>
-	</div>
-	</div>
-</dd><!-- /wp-respond -->
 <?php endif; // If registration required and not logged in ?>
 <?php else:?>
 <?php endif; // if you delete this the sky will fall on your head ?>
+	</div>
+	</div>
+</dd><!-- /#wp-respond -->
