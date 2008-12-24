@@ -144,4 +144,11 @@
 .column-4{-webkit-column-count:4}
 .column-5{-webkit-column-count:5}
 
+.column-gap-1{ -webkit-column-gap:10px}
+.column-gap-2{ -webkit-column-gap:20px }
+.column-gap-3{ -webkit-column-gap:30px }
+.column-gap-4{ -webkit-column-gap:40px } 
+
 .entry-content ol li:before{counter-increment: kitty;content: counters(kitty, ".") ". ";}
+
+/* border multi-colors not-supported */
