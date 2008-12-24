@@ -90,8 +90,11 @@ function wpi_widget_end()
 {	global $Wpi;	
 	echo $Wpi->Sidebar->tpl['widget']['after_widget'].PHP_EOL;
 }
+
 /**
+ * void wpi_widget_post_summary()
  * Post summary, active at single & page
+ * @uses $post  - WP_query post object
  */
 function wpi_widget_post_summary()
 {	global $post, $commentdata;
@@ -102,26 +105,29 @@ function wpi_widget_post_summary()
 	$title 	= apply_filters('widget_title',$title);
 	
 	wpi_widget_start($title,$name);		
-	$title	= apply_filters( 'the_title', $post->post_title );
-	$link	= _t('a',WPI_BLOG_NAME,array(
-			'href'	=>	apply_filters(wpiFilter::FILTER_LINKS,WPI_URL_SLASHIT),
-			'title'	=>	WPI_BLOG_NAME,
-			'rel'	=> 'home'));
-									
-	$hdate 	= apply_filters('postdate',$post->post_date);								
-	$date	= _t('span',get_the_time(__('l M jS, Y',WPI_META)),array('class'=>'published-date','title'=>$hdate));
-	
-	$output = sprintf(
-	__('<big>Y</big>ou&rsquo;re currently reading &ldquo;
-	<strong class="fw-">%1s</strong>&rdquo;. 
-	This entry appeared in %2s on %3s.',WPI_META), $title, $link, $date);
-	
-	t('p',$output,array('class'=>'meta-title'));
-?>
-		<p class="meta-published-date">
-		It was last updated at <span class="date"><?php the_modified_time('H:i a');?></span> on <span class="date"><?php the_modified_time('M jS o');?></span> approximately <sup>&cong;</sup> <span class="last-updated hdate"><?php echo wpi_get_relative_date($post->post_modified);?></span>.</p>
-<?php	
-	do_action('widget_single_summary_after');
+		$title	= apply_filters( 'the_title', $post->post_title );
+		$link	= _t('a',WPI_BLOG_NAME,array(
+				'href'	=>	apply_filters(wpiFilter::FILTER_LINKS,WPI_URL_SLASHIT),
+				'title'	=>	WPI_BLOG_NAME,
+				'rel'	=> 'home'));
+										
+		$hdate 	= apply_filters('postdate',$post->post_date);								
+		$date	= _t('span',get_the_time(__('l M jS, Y',WPI_META)),array('class'=>'published-date','title'=>$hdate));
+		
+		$output = sprintf(__('<big>Y</big>ou&rsquo;re currently reading &ldquo; <strong class="fw-">%1s</strong>&rdquo;. 
+		This entry appeared in %2s on %3s.',WPI_META), $title, $link, $date);
+		
+		t('p',$output,array('class'=>'meta-title'));
+		
+		$output = sprintf(__('It was last updated at %1s on %2s approximately %3s %4s.',WPI_META),		
+				_t('span', get_the_modified_time(__('H:i a',WPI_META)),array('class'=>'date')),
+				_t('span', get_the_modified_time(__('M jS o',WPI_META)),array('class'=>'date')),
+				_t('sup','&#8773;'), // 'approximately equal to' symbol;
+				_t('span',wpi_get_relative_date($post->post_modified),array('class'=>'last-updated hdate')) );
+				
+		t('p',$output,array('class'=>'meta-published-date'));
+		
+		do_action('widget_single_summary_after');
 	wpi_widget_end();	
 }
 
@@ -192,8 +198,8 @@ function wpi_widget_subpages()
 	if ($children)
 	{
 		$name 	= 'subpages';
-		$title  = __('Similar page(s)',WPI_META);
-		$title 	= apply_filters('widget_title',$title);	
+		$title  = __ngettext('page','pages',count(explode('</li>',$children)),WPI_META);		
+		$title 	= apply_filters('widget_title',__('Similar ',WPI_META).$title);	
 			
 		wpi_widget_start($title,$name);
 		t('ul',$children,array( 'class'=>'xoxo r cf') );
