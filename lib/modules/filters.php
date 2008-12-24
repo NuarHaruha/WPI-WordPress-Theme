@@ -453,12 +453,13 @@ function wpi_get_robots_rules()
 	$user_agent = 'User-agent: ';
 	$disallow = 'Disallow: ';
 	$delay = 'Crawl-delay: ';
-	$uri = rel(WPI_URL_SLASHIT);
+	$uri = rel(WPI_HOME_URL);
+	$uri_wp = rel(WPI_URL);
 	
 	if (file_exists(ABSPATH.'sitemap.xml')){
 		
 		$rules[] = PHP_EOL.'# General sitemap';
-		$rules[] = 'Sitemap: '.WPI_URL_SLASHIT.'sitemap.xml';	
+		$rules[] = 'Sitemap: '.WPI_HOME_URL_SLASHIT.'sitemap.xml';	
 	}
 	$rules[] = '# Google bot';
 	if (is_wp_version(2.7)){
@@ -467,7 +468,7 @@ function wpi_get_robots_rules()
 		if (get_option('page_comments')){
 			if ($wp_rewrite && $wp_rewrite->using_permalinks() ){		
 				$sep = explode("/",get_option('permalink_structure'));
-				$rules[] = $disallow. rel(WPI_URL.str_repeat('/*',count($sep) - 2).'/comment-page-*');	
+				$rules[] = $disallow. rel(WPI_HOME_URL.str_repeat('/*',count($sep) - 2).'/comment-page-*');	
 				$compage = $disallow. '/*comment-page-*$';
 					
 			} else {
@@ -520,9 +521,9 @@ function wpi_get_robots_rules()
 		$rules[] = $disallow. $uri.'cgi-bin';
 	}
 	
-	$rules[] = $disallow. $uri.'wp-admin';
-	$rules[] = $disallow. $uri.'wp-content';
-	$rules[] = $disallow. $uri.'wp-includes';
+	$rules[] = $disallow. $uri_wp.'wp-admin';
+	$rules[] = $disallow. $uri_wp.'wp-content';
+	$rules[] = $disallow. $uri_wp.'wp-includes';
 		
 	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
 		if ( ( $tag = get_option('tag_base') ) != false ){
@@ -539,7 +540,6 @@ function wpi_get_robots_rules()
 	}	
 	
 	$rules[] = '# WP-iStalker Filetypes';
-	$turi = rel(WPI_THEME_URL);
 	$rules[] = $disallow. '/*.webfont$';
 	$rules[] = $disallow. '/*.ava$';
 	$rules[] = $disallow. '/*.e64$';
@@ -574,7 +574,7 @@ function wpi_ypipe_noindex_rss_meta(){
 
 function wpi_rss_logo(){
 	$htm = PHP_T.'<image>'.PHP_EOL;
-	$htm .= PHP_T.PHP_T.'<link>'.WPI_URL_SLASHIT.'</link>'.PHP_EOL;
+	$htm .= PHP_T.PHP_T.'<link>'.WPI_HOME_URL_SLASHIT.'</link>'.PHP_EOL;
 	$htm .= PHP_T.PHP_T.'<url>'.wpi_option('rss_logo').'</url>'.PHP_EOL;
 	$htm .= PHP_T.PHP_T.'<title>'.get_bloginfo_rss('name').'</title>'.PHP_EOL;
 	$htm .= PHP_T.'</image>'.PHP_EOL;

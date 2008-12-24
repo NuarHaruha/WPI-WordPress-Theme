@@ -47,7 +47,7 @@ function wpi_search_box(){
 	if (is_ua('Safari')){
 		$att['type'] = 'search';
 		$att['placeholder'] = 'Search';
-		$att['autosave'] = str_rem('http://',WPI_URL);
+		$att['autosave'] = str_rem('http://',WPI_HOME_URL);
 		$att['results'] = '5';	
 	} 
 	
@@ -1315,10 +1315,10 @@ function wpi_comment_guide($post,$comments,$cnt){
 						<li id="comment-00" class="hreview <?php echo $alt;?>">
 			<ul class="reviewier-column cf r">
 							<li class="span-2 fl rn hcard">
-							<address class="vcard microid-mailto+http:sha1:<?php echo get_microid_hash(get_comment_author_email(),WPI_URL)?>">
+							<address class="vcard microid-mailto+http:sha1:<?php echo get_microid_hash(get_comment_author_email(),WPI_HOME_URL)?>">
 							<?php	$photo_url = THEME_IMG_URL.'default-avatar.png';?>
 							<img src="<?php echo wpi_img_url($ava);?>" width="42" height="42" alt="stalker&#39;s photo" style="background-image:url('<?php echo wpi_get_random_avatar_uri();?>');background-position:42% 16%;background-color:#2482B0" class="url gravatar photo rn" longdesc="#comment-<?php comment_ID(); ?>" />				
-								<a href="<?php echo WPI_URL; ?>" class="url fn db">
+								<a href="<?php echo WPI_HOME_URL; ?>" class="url fn db">
 								<?php echo WPI_BLOG_NAME ;?></a> 
 							</address>				
 							</li>
