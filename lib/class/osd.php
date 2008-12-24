@@ -25,18 +25,6 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * You may contact the author of Wp-iStalker by e-mail at: developer@istalker.net
- *
- * Or, write to:
- * NH. Noah 
- * 36A (Lim Kung Hotel) 
- * Jalan Langgar
- * 05460 Alor Star
- * Malaysia
- *  
- * The latest version of WP-iStalker can be obtained from:
- * http://theme.istalker.net/
  * 
  * ---------------------------------------------------------------------------
  *      
@@ -46,8 +34,7 @@
  * @author		NH. Noah <noah@kakkoi.net> 
  * @copyright 	2006 - 2008 Kaizeku Ban, all rights reserved 
  * @license		http://www.gnu.org/licenses/lgpl.html GNU Lesser GPL  
- * @version		CVS: $Id: wpibrowser.php,v 1.57 5/28/2008 8:02:28 AM ck Exp $  
- * @links		http://blog.kaizeku.com/projects#wp-istalker 
+ * @version		$Id$ 
  */
 
 
@@ -67,7 +54,7 @@ class wpiOSD
 		// setup metadata
 		$osd = new stdClass();
 		
-		$osd->blog_url 		= get_option('siteurl');
+		$osd->blog_url 		= get_option('home');
 		$osd->search_param  = '?s='.self::OSD_SEARCHTERM_PARAMS;
 		$osd->blog_name		= get_option('blogname');
 		$osd->blog_desc		= get_option('blogdescription');

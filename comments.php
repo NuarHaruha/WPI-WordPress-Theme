@@ -133,7 +133,7 @@
 </ul>
 </form>
 <p class="notice cb comment-disclaimer cc-by-sa rn">
-<span class="disclaimer db"><?php printf(__('<span class="fw">Disclaimer:</span> For any content that you post, you hereby grant to <strong>%1$s</strong> the royalty-free, irrevocable, perpetual, exclusive and fully sublicensable license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display such content in whole or in part, world-wide and to incorporate it in other works, in any form, media or technology now known or later developed.</span>',WPI_META),_t('a',WPI_BLOG_NAME,array('href'=>WPI_URL_SLASHIT)) );?>
+<span class="disclaimer db"><?php printf(__('<span class="fw">Disclaimer:</span> For any content that you post, you hereby grant to <strong>%1$s</strong> the royalty-free, irrevocable, perpetual, exclusive and fully sublicensable license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display such content in whole or in part, world-wide and to incorporate it in other works, in any form, media or technology now known or later developed.</span>',WPI_META),_t('a',WPI_BLOG_NAME,array('href'=>WPI_HOME_URL_SLASHIT)) );?>
 <span class="license b1s b1t db">
 <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license"><?php _e('Some rights reserved.',WPI_META);?></a>
 </span>

@@ -21,9 +21,5 @@ if (!defined('DIRSEP')) define('DIRSEP',DIRECTORY_SEPARATOR);
 		load_theme_textdomain(WPI_META);		
 		$Wpi = new Wpi();
 		unset($wpi_constant);
-		
-		
-	}
-
-	
+	}	
 ?>

@@ -9,11 +9,9 @@
 <?php wpi_section_start('nav');?>
 <?php do_action(wpiFilter::ACTION_TPL_HEADER); ?>
 				<div id="search">
-					<form method="get" id="searchform" action="<?php echo WPI_URL_SLASHIT; ?>">		
-						<p> 
-							<?php wpi_search_box()?>
-							<button id="searchsubmit" type="submit" class="rtxt"><?php _e('Search',WPI_META);?>
-							</button>
+					<form method="get" id="searchform" action="<?php echo WPI_HOME_URL_SLASHIT; ?>">		
+						<p><?php wpi_search_box();?>
+							<button id="searchsubmit" type="submit" class="rtxt"><?php _e('Search',WPI_META);?></button>
 						</p>
 					</form>
 				</div>

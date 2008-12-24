@@ -24,27 +24,38 @@
 		<div class="inner c">	
 			<div id="comments" class="content cb cf append-1 prepend-1">			
 				<?php wpi_comments_title();?>
-				<?php if (have_comments()) : ?>				
-				<?if (get_query_var('cpage'))  wpi_comment_paging_heading(); ?>		
-				<ol id="comments-list" class="commentlist xoxo r cb cf">
-				<?php wp_list_comments(array('walker' => null, 'max_depth' => 3, 'style' => 'ol', 'callback' => 'wpi_comment_start', 'end-callback' => 'wpi_comment_end', 'type' => 'all',
-		'page' => '', 'per_page' => '', 'avatar_size' => 48, 'reverse_top_level' => null, 'reverse_children' => ''));?>
-					<?php wpi_comment_guide($post,$comments,0);?>
-				</ol>
-				<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative" class="rn cl"><?php _e('RSS feed for comments in this post',WPI_META);?></a></p>
-	<p class="comment-nav cb cf">
-	<?php paginate_comments_links();?>
-	</p>				
+				<div id="comment-column" class="cf">
+				<?if (get_query_var('cpage'))  wpi_comment_paging_heading(); ?>
+				<div id="comment-entry" class="fl">					
+				<?php if (have_comments()) : ?>	
+						<?php $page_links = paginate_comments_links(array('echo'=>false)); // @todo check for $comments scope  ?>			
+						<ol id="comments-list" class="commentlist xoxo r cb cf">
+						<?php wp_list_comments(array('walker' => null, 'max_depth' => 3, 'style' => 'ol', 'callback' => 'wpi_comment_start', 'end-callback' => 'wpi_comment_end', 'type' => 'all',
+				'page' => '', 'per_page' => '', 'avatar_size' => 48, 'reverse_top_level' => null, 'reverse_children' => '','type'=>'comment'));?>
+							<?php wpi_comment_guide($post,$comments,0);?>
+						</ol>
+			<p class="mgt cb comments-feed"><a type="application/rss+xml" title="RSS 2.0 Comment Feed" href="<?php echo rel(get_post_comments_feed_link());?>" rev="site:relative" class="rn cl"><?php _e('Subscribe to this discussion via RSS',WPI_META);?></a></p>
+			<p class="comment-nav cb cf"><?php echo $page_links;?></p>											
 			 <?php else: // displayed if there are no comments so far ?>	
 				<?php if ('open' == $post->comment_status) : ?>	
 				<ol id="comments-list" class="commentlist r cf">				
 				<?php wpi_comment_guide($post,$comments,1);?>
-				</ol>
+				</ol>				
 				 <?php else : // comments are closed ?>
 					<p class="comments-closed notice rn">
 					<?php _e('Comments are closed.',WPI_META);?></p>			
-				<?php endif; ?>
-			<?php endif; ?>	
+				<?php endif; ?>				
+			<?php endif; ?>
+				</div>
+					<div id="comment-sidebar" class="fl">
+							<dl class="xoxo cf">					
+								<dd id="comment-sidebar-1" class="cf">
+								<?php wpi_dynamic_sidebar(17);?>
+								</dd>										
+							</dl>
+					</div>
+				</div>
+						
 			</div>
 		</div>
 	</div>
@@ -85,7 +96,7 @@
 	</li>
 	<li>
 		<input type="text" class="gravatar rn" name="email" id="email" value="<?php echo $comment_author_email; ?>" tabindex="2" />
-		<?php printf(__('<label for="email">Email %1$s</label>',WPI_META),$is_reqs);?>
+		<?php printf(__('<label for="email" title="Email will not be published">Email %1$s</label>',WPI_META),$is_reqs);?>
 	</li>
 	<li>
 		<input type="text" class="favicon rn" name="url" id="url" value="<?php echo $comment_author_url; ?>" tabindex="3" />
@@ -97,8 +108,8 @@
 		<label for="openid_url">OpenID URL</label>
 	</li>
 	<?php else: ?>
-	<li><?php _e('Email will not be published.',WPI_META);?></li>
 	<?php endif; ?>
+	<?php do_action(wpiFilter::ACTION_LIST_COMMENT_FORM,$post->ID);?>
 	</ul><?php endif; ?>
 <!-- <p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
 <?php comment_id_fields(); ?>
@@ -107,7 +118,7 @@
 </ul>
 </form>
 <p id="disclaimer" class="notice cb comment-disclaimer cc-by-sa rn">
-<span class="disclaimer db"><?php printf(__('<span class="fw">Disclaimer:</span> For any content that you post, you hereby grant to <strong>%1$s</strong> the royalty-free, irrevocable, perpetual, exclusive and fully sublicensable license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display such content in whole or in part, world-wide and to incorporate it in other works, in any form, media or technology now known or later developed.</span>',WPI_META),_t('a',WPI_BLOG_NAME,array('href'=>WPI_URL_SLASHIT)) );?>
+<span class="disclaimer db"><?php printf(__('<span class="fw">Disclaimer:</span> For any content that you post, you hereby grant to <strong>%1$s</strong> the royalty-free, irrevocable, perpetual, exclusive and fully sublicensable license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display such content in whole or in part, world-wide and to incorporate it in other works, in any form, media or technology now known or later developed.</span>',WPI_META),_t('a',WPI_BLOG_NAME,array('href'=>WPI_HOME_URL_SLASHIT)) );?>
 <span class="license b1s b1t db">
 <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">
 <?php _e('Some rights reserved.',WPI_META);?></a>
