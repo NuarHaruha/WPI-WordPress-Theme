@@ -2,9 +2,9 @@
 /**
  * $Id: gravatar.php, rev 0004 10/4/2008 11:29:54 AM ChaosKaizer $
  * 
- * @author		Avice De'vereux (ChaosKaizer) <ck+nospam@animepaper.net>
- * @link		http://blog.kaizeku.com Kaizeku Ban
- * 
+ * WPI Avatar class
+ * @package WordPress
+ * @subpackage Template
  */
 class wpiGravatar
 {
@@ -31,7 +31,9 @@ class wpiGravatar
 			case wpiSection::HOME:
 			case wpiSection::FRONTPAGE:
 			case wpiSection::SEARCH:
-				$this->internalCSS('authorAvatar');			
+				if (wpi_option('home_avatar')){
+					$this->internalCSS('authorAvatar');
+				}			
 			break;
 			case wpiSection::PAGE:
 			case wpiSection::SINGLE:
@@ -71,8 +73,7 @@ class wpiGravatar
 			$output .= sprintf(self::TPL,$selector,$url).PHP_EOL;
 		}
 		// is comment or ping enabled ?				
-		if ( 'open' == wpi_get_post_single_field('comment_status',$pid) 
-		  || 'open' == wpi_get_post_single_field('ping_status',$pid)) {
+		if ( 'open' == wpi_get_post_single_field('comment_status',$pid) ) {
 		  	
 		  $comments = wpi_get_comments($pid);
 		  

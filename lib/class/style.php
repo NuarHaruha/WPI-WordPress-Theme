@@ -162,14 +162,14 @@ class wpiStyle
 	}
 	
 	public function internalStyles()
-	{ 			
+	{ global $wp_query;			
 	?>
 	<style id="wpi-css-embed" type="text/css" title="<?php echo wpiTheme::UID; ?>">
 	/*<![CDATA[*/<?php if ( ! self::getOption('css_via_header') ): ?>
 	
 	@import url('<?php echo wpi_get_stylesheets_url($this->css);?>');
 		<?php endif; ?>	<?php do_action( wpiFilter::ACTION_INTERNAL_CSS); ?>
-		<?php do_action( wpiFilter::ACTION_GRAVATAR_CSS ); ?>
+		<?php do_action( wpiFilter::ACTION_GRAVATAR_CSS ); ?>		
 	/*]]>*/
 	</style>	
 	<?php		
@@ -196,6 +196,6 @@ class wpiStyle
 		}
 		
 		wpi_fwrite(WPI_CSS_DIR.'translator.css',$contents);
-	}	
+	}
 } 
 ?>
