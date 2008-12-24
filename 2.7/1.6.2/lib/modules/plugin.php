@@ -369,7 +369,7 @@ function wpi_global_translator_metalinks()
 		$attribs['rel'] 	= 'alternate';
 		$attribs['type'] 	= get_bloginfo('html_type');
 		$attribs['charset'] = strtolower(get_bloginfo('charset'));		
-		$attribs['href'] 	= rel(WPI_URL_SLASHIT.$iso.'/');		
+		$attribs['href'] 	= rel(WPI_HOME_URL_SLASHIT.$iso.'/');		
 		$attribs['hreflang'] = $iso;
 		$attribs['lang'] = $iso;
 		$attribs['xml:lang'] = $iso;		

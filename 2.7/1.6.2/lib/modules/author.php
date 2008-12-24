@@ -16,7 +16,7 @@ global $authordata;
 	$name = $display_name = ent2ncr(htmlentities2($name));
 	
 	$author_url = $authordata->user_url;
-	$author_url = ( $author_url != 'http://') ? $author_url : WPI_URL;	
+	$author_url = ( $author_url != 'http://') ? $author_url : WPI_HOME_URL;	
 	
 	switch ($type):
 	

@@ -81,7 +81,7 @@ function wpi_get_scripts_url($js){
  * @return string raw favicon url
  */
 function wpi_get_favicon_url(){		
-	$icn = ( (file_exists(WP_ROOT.DIRSEP.'favicon.ico') ? WPI_URL.'/favicon.ico' : WPI_THEME_URL.'favicon.ico') );	
+	$icn = ( (file_exists(WP_ROOT.DIRSEP.'favicon.ico') ? WPI_HOME_URL.'/favicon.ico' : WPI_THEME_URL.'favicon.ico') );	
 	return ( '' == wpi_option('icn_favicon')) ? $icn : wpi_option('icn_favicon');
 }	
 

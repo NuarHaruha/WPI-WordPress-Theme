@@ -107,7 +107,7 @@ function wpi_widget_post_summary()
 	wpi_widget_start($title,$name);		
 		$title	= apply_filters( 'the_title', $post->post_title );
 		$link	= _t('a',WPI_BLOG_NAME,array(
-				'href'	=>	apply_filters(wpiFilter::FILTER_LINKS,WPI_URL_SLASHIT),
+				'href'	=>	apply_filters(wpiFilter::FILTER_LINKS,WPI_HOME_URL_SLASHIT),
 				'title'	=>	WPI_BLOG_NAME,
 				'rel'	=> 'home'));
 										
@@ -415,7 +415,7 @@ function wpi_widget_author_summary()
 	
 	wpi_widget_start($title,$name);
 	$name = convert_chars($authordata->display_name);
-	$url = ($authordata->user_url != 'http://') ? $authordata->user_url : WPI_URL_SLASHIT;
+	$url = ($authordata->user_url != 'http://') ? $authordata->user_url : WPI_HOME_URL_SLASHIT;
 	
 	$im = array();	
 	
