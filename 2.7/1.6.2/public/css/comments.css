@@ -865,3 +865,17 @@ p.reply-links a
 #respond li.subscribe-to-comments:hover{background-color:#f9f9f9 !important}
 #respond .subscribe-to-comments #subscribe{width:auto !important}
 #respond .subscribe-to-comments label:hover{color:#888;text-decoration:underline}
+
+/* comments closed */
+
+.nt #wp-comments.comments-closed #comments{
+	border-bottom-color: #b2b2b2
+}
+
+.dw #wp-comments.comments-closed #comments{
+	border-bottom-color: #444
+}
+
+#wp-comments.comments-closed #comments{
+	border-bottom-color: #2D96CB
+}

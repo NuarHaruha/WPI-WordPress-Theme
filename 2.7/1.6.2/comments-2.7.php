@@ -6,7 +6,7 @@
 	if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
 		die ('Please do not load this page directly. Thanks!');
 
-	if ( post_password_required() ) { wpi_section_class_filter('wpi_selector_protected')?>
+	if ( post_password_required() ) { wpi_section_class_filter('wpi_selector_protected');?>
 <?php wpi_section_start('comments');?>
 		<?php wpi_comments_title();?>
 			<p class="nocomments">
@@ -18,6 +18,9 @@
 	}
 	
 	$com_class = ($comments) ? 'comments': 'comments-';
+	if (( 'open' != $post->comment_status)){
+		$com_class .= ' comments-closed';
+	}
 ?>
 <dd id="wp-comments" class="<?php echo $com_class;?>">
 	<div class="outer cf">
