@@ -121,7 +121,7 @@ visibility:visible
 visibility:hidden
 }
 
-.ox,#search,.widget-title {
+.ox,#search,.widget-title,#sidebar .widget-content{
 overflow:hidden
 }
 
