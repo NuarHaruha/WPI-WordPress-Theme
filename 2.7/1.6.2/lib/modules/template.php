@@ -300,7 +300,8 @@ function wpi_body_class(){ echo wpi_get_body_class();}
 
 function wpi_get_body_class($browser_object = false){
 
-
+	$sc = is_at();
+	
 	if (!$browser_object && !is_object($browser_object)){
 		global $Wpi;
 		$browser_object = $Wpi->Browser;
@@ -338,6 +339,21 @@ function wpi_get_body_class($browser_object = false){
 		}	
 	}
 	
+	if ($sc == wpiSection::HOME){
+		// frontpage type		
+		$type = wpi_option('frontpage_style');
+		$style = strtr($type,array('frontpage-'=>'','.php'=>''));
+		$frontpage_type = sprintf('frontpage-type-%s', strtolower($style));
+		
+		$output .= ' '.$frontpage_type;
+		
+		if ('default' != $type){
+			// split sidebar 2 & 3 if both has widgets
+			if (sidebar_has_widgets_array(array(2,3))){
+				$output .= ' sidebar-break';
+			}
+		}
+	}
 	
 	$output = $output.' -foaf-Document';
 	
@@ -490,7 +506,11 @@ function wpi_template_home()
 	$pby_class = (wpi_option('post_by_enable')) ? 'pby' : 'pby dn';
 	$rating_class = (wpi_option('post_hrating') ) ? 'rating-count' : 'rating-count dn';	
 	$cnt = 0;
+	$normal_loop = false;
 	
+	if (wpi_option('frontpage_style') != 'default'){
+		$normal_loop = true;
+	}	
 ?>	
 	<ul class="r cf">
 	<?php while (have_posts() && $cnt == 0) : the_post(); ?>	
@@ -548,7 +568,9 @@ function wpi_template_home()
 <?php trackback_rdf(); ?>
 -->			
 	</li>	
-	<?php $cnt++;?>
+	<?php 
+		if (!$normal_loop) $cnt++; 
+	?>
 	<?php endwhile; ?>
 	</ul>
 <?php			

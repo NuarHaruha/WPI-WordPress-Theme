@@ -727,7 +727,7 @@ function wpi_home_template_filter($template){
 		}
 		
 	} else {
-		return '';
+		return $template;
 	}
 } 
 ?>
