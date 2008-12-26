@@ -198,6 +198,28 @@ class wpiAdmin
 	</h4>
 	<div class="dn">
 	<ul class="mtb">	
+		<?php if( ($tpl = wpi_get_frontpage_template()) != false): 
+				$cnt = count($tpl); $prop = self::option('frontpage_style'); ?>
+		<li>
+			<label for="wpi_frontpage_style"><?php _e('Template styles',WPI_META);?>				
+				<small><?php _e('Front page template styles.',WPI_META);?></small></label>		
+					<select id="wpi_frontpage_style" name="wpi_frontpage_style" size="2" class="row-4">		
+					<?php 
+						// default options
+						$attribs = array('value'=>'default');
+							if ($prop == 'default') $attribs['selected'] = 'selected';
+							t('option',__('Type-Default',WPI_META),$attribs);
+						// custom template	
+						foreach($tpl as $filename){
+							$style = strtr($filename,array('frontpage-'=>'','.php'=>''));
+							$attribs = array('value'=>$filename);
+							if ($prop == $filename) $attribs['selected'] = 'selected';
+							t('option',sprintf(__('Type-%s',WPI_META), ucfirst($style)),$attribs);
+						}
+					?>
+					</select>
+		</li>
+		<?php endif;?>	
 		<li>
 			<label for="wpi_home_avatar"><?php _e('Avatar',WPI_META);?>				
 				<small><?php _e('Display Avatar.',WPI_META);?></small>			

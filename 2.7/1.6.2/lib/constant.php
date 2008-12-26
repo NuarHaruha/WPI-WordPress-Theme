@@ -29,6 +29,12 @@ define('WPI_LIB_IMPORT',WPI_LIB.'import'.DIRSEP);
  */
 define('WPI_LIB_IMPORT_SHORTCODE',WPI_LIB_IMPORT.'shortcode'.DIRSEP);
 
+/**
+ * Import template dir
+ * @since 1.6.2
+ */
+define('WPI_LIB_IMPORT_TEMPLATE',WPI_LIB_IMPORT.'template'.DIRSEP);
+
 // public dir
 define('WPI_PUB',WPI_DIR.'public'.DIRSEP);
 

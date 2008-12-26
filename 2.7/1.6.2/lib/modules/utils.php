@@ -144,6 +144,15 @@ function wpi_get_fonts(){
 	return (has_count($fonts)) ? $fonts : false;
 }
 
+/**
+ * void wpi_get_frontpage_template()
+ * 
+ * @since 1.6.2
+ */
+function wpi_get_frontpage_template(){
+	$tpl = wpi_get_dir(WPI_LIB_IMPORT_TEMPLATE,wpiTheme::FRONTPAGE_TEMPLATE_TYPE);	
+	return (has_count($tpl)) ? $tpl : false;
+}
 
 /**
  * Determine the default background hex colors

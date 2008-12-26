@@ -101,6 +101,8 @@ final class wpiTheme
 	
 	const BANNER_IMAGE_TYPE = "(\.(jpg|JPG|jpeg|JPEG|jpe|JPE|png|PNG|gif|GIF))";
 	
+	const FRONTPAGE_TEMPLATE_TYPE = "/^frontpage\-/";
+	
 	private function __construct(){}		
 }
 
