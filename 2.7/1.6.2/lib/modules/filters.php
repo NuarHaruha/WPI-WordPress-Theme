@@ -247,6 +247,8 @@ function wpi_default_filters(){
 
 	$f = array();	
 	
+	$f['home_template'] = 'wpi_home_template_filter';
+	
 	$f['stylesheet_directory'] 		= 'wpi_get_stylesheet_directory_filter';
 	$f['stylesheet_directory_uri'] 	= 'wpi_stylesheet_directory_uri_filter';
 	$f['stylesheet_uri'] 			= 'wpi_get_stylesheet_uri_filter';	
@@ -707,4 +709,25 @@ function wpi_post_thumbnail_filter(){
 		unset($p);
 	}
 }
+
+/**
+ * void wpi_home_template_filter()
+ * filter: home_template
+ * @since 1.6.2
+ */
+function wpi_home_template_filter($template){
+	
+	if ( ($tpl = wpi_option('frontpage_style')) != 'default' ){
+		$file = WPI_LIB_IMPORT_TEMPLATE.$tpl;
+		
+		if (file_exists($file)){
+			return (string) str_rem(TEMPALTEPATH,$file);
+		} else {
+			return $template;
+		}
+		
+	} else {
+		return '';
+	}
+} 
 ?>
