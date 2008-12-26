@@ -1,0 +1,13 @@
+
+/**
+ * $Id$
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
+ *
+ * Frontpage Type A
+ * @author	Avice D <ck+filter@kaizeku.com>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA 
+ */
+
+.sidebar-break #sidebar-2-frontpage-a{width:170px}
+.sidebar-break #sidebar-3-frontpage-a{width:140px}
