@@ -107,7 +107,7 @@ class Wpi
 			// User profile form
 			wpi_foreach_hook(array(
 				'profile_personal_options'=>'wpi_profile_options',
-				'personal_options_update'=>'wpi_profile_options_update'));				
+				'personal_options_update'=>'wpi_profile_options_update'));							
 		else:
 		
 		wpi_plugin_init();
@@ -207,11 +207,7 @@ class Wpi
 				add_action(wpiFilter::ACTION_META_LINK,array($this->Style,'printStyles'));
 			}		
 		}
-		
-		// sidebar
-		$this->Sidebar = new wpiSidebar();
-		$this->Sidebar->setSidebar();
-		
+				
 		// custom header
 		$this->Template = new wpiTemplate();
 		
@@ -224,7 +220,11 @@ class Wpi
 			add_action('wp_head','wpi_firebug_console',wpiTheme::LAST_PRIORITY);
 		}
 		
-		endif;		
+		endif;	
+		
+			// sidebar
+			$this->Sidebar = new wpiSidebar();
+			$this->Sidebar->setSidebar();			
 	}
 	
 	private function _defaultSettings(){
