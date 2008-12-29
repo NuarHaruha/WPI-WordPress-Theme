@@ -674,6 +674,7 @@ function wpi_sidebar_dir_filter(){
 			$css .= '.home .hentry .postmeta-date{float:right!important;background-position:-82px 0px;margin: 0pt -30px 0pt 0pt !important}'.$NL;
 			$css .= '.home .postmeta-date .date-month{padding:0pt}'.$NL; 
 			$css .= '.home .hentry{padding-left:0px}'.$NL;
+			$css .= '.home .hentry .entry-title{padding:0px 10px 0px 0px}'.$NL;
 			$css .= '.home #sidebar{margin-left:10px}';
 		}		
 	}

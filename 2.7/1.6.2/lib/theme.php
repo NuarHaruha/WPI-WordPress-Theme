@@ -84,7 +84,7 @@ class Wpi
 		self::getFile(array('browscap','body_class'),'import');
 		self::getFile(array('utils','formatting','filters','query','links','template','plugin','widgets','comments','author') );
 		
-		if ( is_admin() ) {		
+		if ( is_admin() ):	
 						
 			$this->_defaultSettings();			
 			
@@ -108,7 +108,7 @@ class Wpi
 			wpi_foreach_hook(array(
 				'profile_personal_options'=>'wpi_profile_options',
 				'personal_options_update'=>'wpi_profile_options_update'));				
-		}
+		else:
 		
 		wpi_plugin_init();
 		wpi_default_filters();
@@ -219,7 +219,8 @@ class Wpi
 		if (defined('FIREBUG_CONSOLE')){
 			add_action('wp_head','wpi_firebug_console',wpiTheme::LAST_PRIORITY);
 		}
-				
+		
+		endif;		
 	}
 	
 	private function _defaultSettings(){
