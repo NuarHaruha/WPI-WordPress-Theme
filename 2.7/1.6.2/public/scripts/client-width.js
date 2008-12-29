@@ -1,1 +1,0 @@
-var cl_width = function(){if (window.innerWidth){ return window.innerWidth;}else if (document.documentElement && document.documentElement.clientWidth != 0){return document.documentElement.clientWidth;} else if (document.body){return document.body.clientWidth;} return 0;};

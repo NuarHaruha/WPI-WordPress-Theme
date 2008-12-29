@@ -337,7 +337,17 @@ function wpi_get_body_class($browser_object = false){
 		if (wpi_option('client_time_styles') && $cl != ''){
 			$output .= ' '. (string) $cl;
 		}	
+		
+		unset($cl);
 	}
+	
+	if (isset($_COOKIE[wpiTheme::CL_COOKIE_WIDTH])){
+		$cl = $_COOKIE[wpiTheme::CL_COOKIE_WIDTH];
+	
+		if (wpi_option('client_width') && $cl != ''){
+			$output .= ' '. (string) $cl;
+		}	
+	}	
 	
 	if ($sc == wpiSection::HOME){
 		// frontpage type		

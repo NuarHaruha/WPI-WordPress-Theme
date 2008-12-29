@@ -151,11 +151,19 @@ class wpiScripts{
 	}
 	
 	public function embedScript()
-	{	global $wp_query;
-	
+	{	global $wp_query;	
+		
+		$defer = false;
+		
+		// execute after page load
+		$domready = array();
+		
+		// default script prop attributes 		
 		$attribs = array('id'=>'wp-js-head-embed','type'=>'text/javascript','defer'=>'defer','charset'=>'utf-8');
 		
 		list($lang, $locale) = explode('-',get_bloginfo('language'));
+		
+		// post id (singular section only)
 		$pid = (isset($wp_query->post->ID)) ? $wp_query->post->ID : 0;
 				
 		$js = PHP_EOL.PHP_T;
@@ -174,15 +182,32 @@ class wpiScripts{
 			
 		$js .= ',script:{path:'.$jspath.',url:'.$jsurl.'}';
 		
+		if ( wpi_option('client_width')){
+			$js .= ',cl_width: function(){if (window.innerWidth){ return window.innerWidth;}else if (document.documentElement && document.documentElement.clientWidth != 0){return document.documentElement.clientWidth;} else if (document.body){return document.body.clientWidth;} return 0;}';
+			$domready[] = '/* client width */ wpi.clw = \'cl-width-\'+ wpi.cl_width(); if( jQuery(wpi.bid).hasClass(wpi.clw) == false){ jQuery(wpi.bid).addClass(wpi.clw);jQuery.cookie(\''.wpiTheme::CL_COOKIE_WIDTH.'\',wpi.clw,{duration: 1/24,path: "/"});};';
+			$defer = 1;	
+		}
+		
 		if (wpi_option('client_time_styles')){
-			$js .= ',pid:'.$pid.',cl_type:td};jQuery(document).ready(function(){if( jQuery(\'#\'+wpi.id).hasClass(wpi.cl_type) == false){ jQuery(\'#\'+wpi.id).addClass(wpi.cl_type);jQuery.cookie(\'wpi-cl\',wpi.cl_type,{duration: 1/24,path: "/"});};});'.PHP_EOL;
+			$js .= ',pid:'.$pid.',cl_type:td};'.PHP_EOL;
+			$domready[] = '/* client time */ if( jQuery(wpi.bid).hasClass(wpi.cl_type) == false){ jQuery(wpi.bid).addClass(wpi.cl_type);jQuery.cookie(\''.wpiTheme::CL_COOKIE_TIME.'\',wpi.cl_type,{duration: 1/24,path: "/"});};';
 		} else {
 			$js .= ',pid:'.$pid.'};'.PHP_EOL;
 		}
 		
 		if (wpi_option('iframe_breaker') && !$wp_query->is_preview){
 			$js .= PHP_T.PHP_T.'if(top.location!=location){top.location.href=document.location.href;};'.PHP_EOL;
-			unset($attribs['defer']);
+			$defer = 1;
+		}
+		
+		if ($defer) unset($attribs['defer']);
+		
+		if (has_count($domready)){
+			$domready = apply_filters(wpiFilter::FILTER_JS_DOM_READY,$domready);
+			
+			$js .= PHP_T.PHP_T.'jQuery(document).ready(function(){ '.PHP_EOL;
+			$js .= stab(1).'wpi.bid = document.body; '.PHP_EOL.stab(1).join(PHP_EOL.stab(1),$domready).PHP_EOL;
+			$js .= PHP_T.PHP_T.'});'.PHP_EOL;
 		}
 		
 		// google webmaster 404 widget		
@@ -196,5 +221,4 @@ class wpiScripts{
 		t('script',$js,$attribs);	
 
 	}
-
 }

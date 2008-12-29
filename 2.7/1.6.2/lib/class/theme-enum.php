@@ -95,6 +95,8 @@ final class wpiTheme
 	
 	const CL_COOKIE_TIME = 'wpi-cl';
 	
+	const CL_COOKIE_WIDTH = 'wpi-clw';
+	
 	const LAST_PRIORITY = 11;
 	
 	const GD_FONT_TYPE = "(\.(TTF|ttf|OTF|otf|FON|fon))";

@@ -1039,19 +1039,27 @@ class wpiAdmin
 			<ul>
 				
 				<li>
-				<label for="client_time_styles"><?php _e('Client Time',WPI_META);?><small>Stylesheets switcher base on visitor time</small></label>
+				<label for="client_time_styles"><?php _e('Client Time',WPI_META);?>
+				<small><?php _e('Stylesheets switcher base on visitor time.')?></small></label>
 				<?php self::addSelect('client_time_styles',$this->select_options);?>
 				</li>	
 				<li>
-				<label for="wpi_client_date_styles"><?php _e('Client Date',WPI_META);?><small>Client Date scripts</small></label>
+				<label for="wpi_client_date_styles"><?php _e('Client Date',WPI_META);?>
+				<small><?php _e('Client Date scripts.')?></small></label>
 				<?php self::addSelect('client_date_styles',$this->select_options);?>
 				</li>	
+				<li>
+				<label for="wpi_client_width"><?php _e('Client Width',WPI_META);?>
+				<small><?php _e('Stylesheets switcher base on visitor screen width.')?></small></label>
+				<?php self::addSelect('client_width',$this->select_options);?>
+				</li>				
 				<li class="last"><?php $prop = self::option('iframe_breaker');?>
 					<label for="wpi_iframe_breaker"><?php _e('Frame Breaker',WPI_META);?><small>Disabled client view inside frame or iframe</small>
 					</label>
 					<?php self::addSelect('iframe_breaker',$this->select_options);?>		
 				</li>							
 			</ul>
+			<?php self::updateBtn(); ?>
 		</li><?php if(function_exists('ImageCreate')): ?>
 		<li><?php $prop = self::option('gdfont_image');?>
 			<label>
@@ -1192,6 +1200,11 @@ class wpiAdmin
 		t('p',_t('button',__('Save',WPI_META),
 							array('type'=>'submit',
 							'name'=>'submitform') ),array('class'=>'cb savebtn'));
+	}
+	
+	public static function updateBtn()
+	{
+		t('button',__('Update Settings',WPI_META),array('type'=>'submit','name'=>'submitform','class'=>'sbtn') );
 	}
 	
 	public static function option($name)

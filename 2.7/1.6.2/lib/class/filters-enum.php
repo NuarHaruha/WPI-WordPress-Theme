@@ -113,6 +113,8 @@ final class wpiFilter
 	
 	const ACTION_LIST_COMMENT_FORM = 45004; 
 	
+	const FILTER_JS_DOM_READY = 'wpi_js_dom_ready';
+	
 	private function __construct(){}
 	
 	private function __clone(){}
