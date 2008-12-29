@@ -167,7 +167,7 @@ class Wpi
 			
 			if (strtolower($this->Browser->Browser) == 'ie'){
 				$this->Style->register('image-ie');
-			}
+			}		
 			
 			if (is_active_widget('widget_flickrRSS')){
 				// load at active section
@@ -196,7 +196,11 @@ class Wpi
 			if (wpi_option('home_post_thumb')){
 				add_action(wpiFilter::ACTION_INTERNAL_CSS,'wpi_post_thumbnail_filter',wpiTheme::LAST_PRIORITY+2);
 			}			
-			
+
+			if (wpi_option('client_width')){
+				$this->Style->register('cl-width');
+			}
+						
 			if (wpi_option('css_via_header')){
 				$this->Style->printStyles();
 			} else {

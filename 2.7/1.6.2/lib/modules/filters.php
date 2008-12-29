@@ -46,6 +46,22 @@ function is_cookie($cookie_name){
 	return isset($_COOKIE[$cookie_name]);
 }
 
+/**
+ * is_cl_width()
+ * @params int $width screen width
+ * @return bool return true if match found
+ */
+function is_cl_width($width = 1280){
+	
+	if (is_cookie(wpiTheme::CL_COOKIE_WIDTH) ){
+		$cl = (string) $_COOKIE[wpiTheme::CL_COOKIE_WIDTH];
+		$cl = intval(str_rem('cl-width-',$cl));
+		return  ( ($cl == $width) ? true : false );
+	}
+	
+	return false;	
+}
+
 function is_ua($name){		
 	
 	return ( strpos($_SERVER['HTTP_USER_AGENT'], $name) !== false );

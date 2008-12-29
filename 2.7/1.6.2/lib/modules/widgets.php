@@ -634,7 +634,7 @@ function wpi_overwrite_widget_cat(){
 			if ( preg_match("/categories/", $widgets) ) {
 				$GLOBALS['wp_registered_widgets'][$widgets]['callback'] = 'wpi_category_treeview_widget';
 			}
-			
+						
 		}
 	}
 }
