@@ -39,8 +39,7 @@ function wpi_get_active_widget_sidebar_id($widget_id = 'category'){
 	return (is_array($active)) ? $active : false;	
 }
 
-
-function wpi_widget_active_section($widget_id='category'){	
+function wpi_widget_active_section($widget_id=wpiSection::CATEGORY){	
 
 	$sidebar_id = wpi_get_active_widget_sidebar_id($widget_id);
 	
@@ -51,16 +50,27 @@ function wpi_widget_active_section($widget_id='category'){
 	$sidebar = array();
 	
 	foreach(range(1,3) as $index){
-		$sidebar[$index] = 'home';
+		$sidebar[$index] = wpiSection::HOME;
 	}
 	
 	foreach(range(4,6) as $index){
-		$sidebar[$index] = 'single';
+		$sidebar[$index] = wpiSection::SINGLE;
 	}	
 
 	foreach(range(7,9) as $index){
-		$sidebar[$index] = 'page';
-	}	
+		$sidebar[$index] = wpiSection::PAGE;
+	}		
+	
+	$sidebar[10] = wpiSection::CATEGORY;
+	$sidebar[11] = wpiSection::TAXONOMY;
+	$sidebar[12] = wpiSection::ARCHIVE;
+
+	foreach(range(13,15) as $index){
+		$sidebar[$index] = wpiSection::AUTHOR;
+	}
+	
+	// 16 - others - custom sidebar, can be place anywhere lol
+	// 17 - singular comments
 			
 	$active = array();
 	
