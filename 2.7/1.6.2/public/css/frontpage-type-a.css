@@ -9,5 +9,41 @@
  * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA 
  */
 
+/* post entries */
+.hentry{border-bottom: 2px solid #f8f8f8}
+
+/* Sidebars */
+
+/* (if) column break */
 .sidebar-break #sidebar-2-frontpage-a{width:170px}
 .sidebar-break #sidebar-3-frontpage-a{width:140px}
+
+/* cutout overflow text */
+.sidebar-break #sidebar-2-frontpage-a .widget-title dfn,
+.sidebar-break #sidebar-3-frontpage-a .widget-title dfn{width:128px;height:17px;overflow:hidden}
+.sidebar-break #sidebar-3-frontpage-a .widget-title dfn{width:92px}
+
+.sidebar-break #sidebar-2-frontpage-a .widget-title cite,
+.sidebar-break #sidebar-3-frontpage-a .widget-title cite{width:10px}
+
+
+#sidebar #recent-posts .widget-content ul,
+#sidebar #recent-comments .widget-content ul,
+#sidebar .widget_rss .widget-content ul{
+	list-style:none outside;
+	margin-left: 8px
+}
+
+#sidebar #recent-posts .widget-content li,
+#sidebar #recent-comments .widget-content li,
+#sidebar .widget_rss .widget-content li{
+	border-bottom: 1px solid #eee;
+	padding: 2px 6px 3px
+}
+
+/* pagination */
+.pagination{border:0pt}
+
+/* Client time styles */
+.nt #content-top{border-bottom-color:#b2b2b2 !important}
+.dw #content-top{border-bottom-color:#444 !important}

@@ -1,6 +1,12 @@
+
 /**
  * $Id$
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
+ * 
  * WPI fancy class
+ * @author	Avice D <ck+filter@kaizeku.com>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA  
  */
 .typo-mac,#comments .heading-title,.commentlist .hreview .item,#tooltip h5 {
 font-family:"Lucida Grande", Verdana, Arial, Helvetica, sans-serif
