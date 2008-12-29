@@ -731,4 +731,31 @@ function wpi_home_template_filter($template){
 		return $template;
 	}
 } 
+
+/**
+ * void wpi_grid_sidebar_filter()
+ * default frontpage ""sidebar 2"" grid filter
+ * @uses $wp_registered_widgets
+ */
+function wpi_grid_sidebar_filter(){ 	
+	
+	if ( ($tpl = wpi_option('frontpage_style')) != 'default' ) return;
+	
+	$index = 2;
+	$col = 3;
+	
+	if (sidebar_has_widgets($index))
+	{ global $wp_registered_widgets;	
+		
+		$widgets = wp_get_sidebars_widgets();
+		$widgets = $widgets['sidebar-'.$index];
+		
+		for($m = count($widgets),$i=0;$i<$m;$i+=$col){
+			$style = $wp_registered_widgets[$widgets[$i]]['classname'];
+			$wp_registered_widgets[$widgets[$i]]['classname'] = $style.' cl';
+		}
+		
+		unset($widgets,$style);			
+	}
+}
 ?>

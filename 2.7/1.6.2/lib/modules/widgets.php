@@ -250,26 +250,6 @@ function wpi_no_sidebar($id = 1)
 	
 }
 
-// this are for sidebar home 2
-function wpi_grid_sidebar_filter(){ 	
-	$index = 2;
-	$col = 3;
-	
-	if (wpiSidebar::hasWidget($index))
-	{ global $wp_registered_widgets;	
-		
-		$widgets = wp_get_sidebars_widgets();
-		$widgets = $widgets['sidebar-'.$index];
-		
-		for($m = count($widgets),$i=0;$i<$m;$i+=$col){
-			$style = $wp_registered_widgets[$widgets[$i]]['classname'];
-			$wp_registered_widgets[$widgets[$i]]['classname'] = $style.' cl';
-		}
-		
-		unset($widgets);			
-	}
-}
-
 // copies of wp_widget_categories with a little twist
 function wpi_category_treeview_widget($args, $widget_args = 1)
 {
@@ -648,7 +628,6 @@ function wpi_overwrite_widget_cat(){
 		}
 	}
 }
-
 
 function sidebar_has_widgets($id){
 	return wpiSidebar::hasWidget($id);
