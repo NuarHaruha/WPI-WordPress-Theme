@@ -246,7 +246,8 @@ class Wpi
 			'post_bookmarks'=>1,
 			'icn_favicon'=> clean_url(wpi_get_favicon_url()),
 			'home_avatar'=>1,
-			'home_sidebar_position'=> 'right'	
+			'home_sidebar_position'=> 'right',
+			'frontpage_style'=>'default' // frontpage template	
 			);
 		
 		foreach($options as $k=>$v){
