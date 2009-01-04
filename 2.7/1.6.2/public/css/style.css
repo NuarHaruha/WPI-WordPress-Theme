@@ -83,6 +83,7 @@ body
 	margin:0!important
 }
 
+.dw #header #blog-title a{color:#444}
 #header #blog-title a{color:#fff}
 
 #blog-title a:hover
@@ -95,6 +96,7 @@ body
 	padding-right:10px
 }
 
+
 #header blockquote.description{display:block;float:none;clear:left}
 
 blockquote.description
@@ -105,6 +107,8 @@ blockquote.description
 	width:300px
 }
 
+.dw blockquote.description p{color:#666 !important}
+
 blockquote.description p
 {
 	color:#ddd;
@@ -112,6 +116,8 @@ blockquote.description p
 	padding:3px 0 0;
 	width:748px
 }
+
+
 
 .nt blockquote.description p
 {
