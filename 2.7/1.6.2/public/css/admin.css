@@ -1,3 +1,16 @@
+
+/**
+ * $Id$
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
+ *
+ * admin stylesheet
+ *
+ * @author Avice D <ck+filter@animepaper.net>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA
+ */
+ 
+
 #wpi-theme-options h2{
   border-bottom:1px solid #ddd;
   color:#2583AD;
@@ -36,6 +49,14 @@
   float:left;
   font-weight:700;
   width:300px
+}
+
+.options-item ul.mtb ul label{width:278px}
+.options-item select option[selected='selected']{
+	background-color:#EDF3FE;
+	color:#111;
+	font-style: italic;
+	outline: none
 }
 
 .options-item label:hover{
