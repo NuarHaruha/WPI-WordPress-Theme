@@ -365,6 +365,16 @@ function wpi_get_body_class($browser_object = false){
 		}
 	}
 	
+	// has pages menu
+	if (wpi_option('menu_page_enable')){
+		$output .= ' has-nav';
+	}
+	
+	// gd blogname
+	if (wpi_option('gd_blogname')){
+		$output .= ' has-gdtitle';
+	}	
+	
 	$output = $output.' -foaf-Document';
 	
 	return apply_filters(wpiFilter::FILTER_ROOT_CLASS_SELECTOR,$output);

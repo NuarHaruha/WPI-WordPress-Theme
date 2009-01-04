@@ -189,21 +189,43 @@ function wpi_cat_links($echo= 1, $index = false, $separator = '&#184;'){
 		if ($echo == 1): echo $links; else:	return $links; endif;
 }
 
-
+/**
+ * void wpi_get_pages_link();
+ * Pages menu
+ * 
+ * @since 1.2
+ */
 function wpi_get_pages_link(){
 	
-	$options = 'sort_column=menu_order&title_li=&echo=';
-	
-	$exclude = wpi_get_theme_option('menu_page_exclude');
+	$options = 'link_before=<span>&link_after=</span>&sort_column=menu_order&title_li=&echo=';	
+	$exclude = wpi_option('menu_page_exclude');
+	$home = get_option('home');
+	$relative = rel($home);
 	
 	if ($exclude && !empty($exclude)){
 		$options .='&exclude='.$exclude;
 	}
 	
-	$output  = wp_list_pages($options);
-	$output = preg_replace('%<a ([^>]+)>%U','<a $1><span>', $output);
-	$output = str_replace('</a>','</span></a>', $output);
-	return $output;	
+	$output = wp_list_pages($options);
+	//$output = preg_replace('%<a ([^>]+)>%U','<a $1><span>', $output);	
+	$output = strtr($output,array($home=>$relative));	
+	
+	// show home?
+	
+	$home = _t('a',__('Home',WPI_META), array(
+		'href'=> rel(WPI_HOME_URL_SLASHIT),
+		'rel'=>'home',
+		'title' => WPI_BLOG_NAME));
+	
+	$attribs = array('class'=>'page_item page_home');
+	
+	if (is_home() || is_front_page() && !is_paged()){
+		$attribs['class'] = $attribs['class'].' current_page_item';
+	}
+	
+	$home = _t('li',$home,$attribs );
+	
+	return $home.$output;	
 }
 
 

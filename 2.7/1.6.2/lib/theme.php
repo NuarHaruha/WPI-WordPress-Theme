@@ -7,7 +7,7 @@ if ( !defined('KAIZEKU') ) {die( 42);}
  * @subpackage Template
  */
 require WPI_LIB_CLASS.'theme-enum.php';
-
+ 
 class Wpi
 {
 	
@@ -199,6 +199,10 @@ class Wpi
 
 			if (wpi_option('client_width')){
 				$this->Style->register('cl-width');
+			}
+			
+			if (wpi_option('menu_page_enable')){
+				$this->Style->register('nav');
 			}
 						
 			if (wpi_option('css_via_header')){

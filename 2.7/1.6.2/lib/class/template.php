@@ -91,12 +91,27 @@ class wpiTemplate
 		 * Content
 		 */		
 		// header
-		if (!wpi_option('gd_blogname')){
+		$gd_blogname = wpi_option('gd_blogname');
+		$pages_menu = wpi_option('menu_page_enable');
+		
+		if (! $gd_blogname && ! $pages_menu){
 			$this->action( wpiFilter::ACTION_TPL_HEADER, 'htmlBlogContentHeader');
-		} else {			
+			
+		} elseif( $gd_blogname && ! $pages_menu) {			
 			$this->action(wpiFilter::ACTION_INTERNAL_CSS, 'gdBlognameStyles',wpiTheme::LAST_PRIORITY+10);
 			$this->action(wpiFilter::ACTION_SECTION_PREFIX.'nav_before','htmlBlogHeader');
+			
+		} elseif( $pages_menu && ! $gd_blogname){
+			$this->action(wpiFilter::ACTION_SECTION_PREFIX.'nav_before','htmlBlogHeader');
+			$this->action( wpiFilter::ACTION_TPL_HEADER, 'htmlPagesMenu');
+			
+		} elseif( $pages_menu && $gd_blogname ){
+			$this->action(wpiFilter::ACTION_INTERNAL_CSS, 'gdBlognameStyles',wpiTheme::LAST_PRIORITY+10);
+			$this->action( wpiFilter::ACTION_TPL_HEADER, 'htmlPagesMenu');
+			$this->action(wpiFilter::ACTION_SECTION_PREFIX.'nav_before','htmlBlogHeader');
 		}
+		
+		unset($gd_blogname,$pages_menu);
 		
 		// content
 		if (wpi_option('relative_date')){
@@ -778,6 +793,16 @@ class wpiTemplate
 		
 		return $output;
 	}
+	
+	public function htmlPagesMenu()
+	{
+		
+		$output = _t('ul',wpi_get_pages_link(),array('id'=>'page-links'));
+		
+		$output = stab()._t('div',PHP_EOL.$output.stab(),array('id'=>'pages-menu','class'=>'dc-subject fl'));
+		
+		echo $output;
+	}	
 
 	public function htmlBlogContentHeader()
 	{

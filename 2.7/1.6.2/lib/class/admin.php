@@ -76,7 +76,8 @@ class wpiAdmin
         foreach ($request as $key => $val) {
         	
             if (preg_match(self::REQUEST_PREFIX, $key) ) {				                
-				$key = str_rem(self::OPTIONS_PREFIX,$key);				
+				$key = str_rem(self::OPTIONS_PREFIX,$key);	
+							
 				if (stristr($key,'flush_')){
 					$this->_flushType($key);
 				} else {
@@ -86,7 +87,13 @@ class wpiAdmin
 					|| $key == 'verify_msn'){
 					$val =  stripslashes_deep($val);
 				}
-									
+				
+				if ($key == 'menu_page_exclude'){
+					if (is_array($val)) {
+						$val = implode(',',$val);
+					}
+				}	
+							
 					self::save($key,$val);
 				}     
             }            
@@ -612,30 +619,20 @@ class wpiAdmin
 			<?php if ($prop): ?>
 				<ul class="cb cf">
 					<li>
-						<label><?php _e('Title:',WPI_META);?></label>
+						<label for="wpi_related_post_widget_title"><?php _e('Title:',WPI_META);?></label>
 							<?php t('input', '', array('type' => 'text', 'name' => 'wpi_related_post_widget_title','id' =>'wpi_related_post_widget_title','value' => self::option('related_post_widget_title'))); ?>	
 					</li>				
 					<li>
-						<label><?php _e('Max post:',WPI_META);?></label>
+						<label for="wpi_related_post_widget_max"><?php _e('Max post:',WPI_META);?></label>
 							<?php t('input', '', array('type' => 'text', 'name' => 'wpi_related_post_widget_max','id' =>'wpi_related_post_widget_max','value' => self::option('related_post_widget_max'))); ?>	
 					</li>
 					<li>
-						<label><?php _e('Show date:',WPI_META);?></label>
-							<select name="wpi_related_post_widget_date" id="wpi_related_post_widget_date" size="2" class="row-2">
-						<?php	$prop = self::option('related_post_widget_date'); 
-						self::htmlOption(array(
-									$this->lang['enabled'] => 1,
-									$this->lang['disabled'] => 0 ),$prop); ?>
-							</select>		
+						<label for="wpi_related_post_widget_date"><?php _e('Show date:',WPI_META);?></label>
+						<?php self::addSelect('related_post_widget_date',$this->select_options);?>			
 					</li>		
 					<li class="last">
-						<label><?php _e('Count comments:',WPI_META);?></label>
-							<select name="wpi_related_post_widget_comments_count" id="wpi_related_post_widget_comments_count" size="2" class="row-2">
-						<?php	$prop = self::option('related_post_widget_comments_count'); 
-						self::htmlOption(array(
-									$this->lang['enabled'] => 1,
-									$this->lang['disabled'] => 0 ),$prop); ?>
-							</select>		
+						<label for="wpi_related_post_widget_comments_count"><?php _e('Count comments:',WPI_META);?></label>
+						<?php self::addSelect('related_post_widget_comments_count',$this->select_options);?>	
 					</li>								
 				</ul>
 			<?php endif;?>		
@@ -663,22 +660,21 @@ class wpiAdmin
 	<div class="dn">
 	<ul class="mtb">
 		<li>
-			<label><?php _e('Enable pages menu:',WPI_META);?></label>
-				<select name="wpi_menu_page_enable" id="wpi_menu_page_enable" size="2" class="row-2" disabled="disabled">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$menu['pages']); ?>
-				</select> 	
-			
-		</li><?php if ($menu['pages']): ?>
-		<ul>
-			<li>
-			<label for="wpi_menu_page_exclude">
-				<?php _e('Exclude Page',WPI_META); ?>
-			</label><?php t('input', '', array('type' => 'text', 'name' => 'wpi_menu_page_exclude','id' =>'wpi_menu_page_exclude','value' => self::option('menu_page_exclude'))); ?>
-			<small>separate page id with comma (e.g., 42,101,31,337)</small>			
-			</li>
-		</ul>	
+			<label for="wpi_menu_page_enable"><?php _e('Pages menu',WPI_META);?></label>
+			<?php self::addSelect('menu_page_enable',$this->select_options);?>
+			<?php if ($menu['pages']): ?>
+			<ul>
+				<li class="last">
+				<label for="wpi_menu_page_exclude">
+					<?php _e('Exclude Pages',WPI_META); ?>
+				</label>				
+				<select name="wpi_menu_page_exclude[]" multiple="multiple" class="widefat" style="height:70px;width:auto;padding:8px 4px 8px 6px" title="<?php echo wpi_option('menu_page_exclude');?>">
+					<option value="0">-- None --</option>
+					<?php self::optPages(explode(',',wpi_option('menu_page_exclude')));?>						
+				</select>							
+				</li>
+			</ul>			
+		</li>	
 		<?php endif; ?>	
 		<li class="last">		
 			<label><?php _e('Pathway:',WPI_META);?></label>
@@ -817,8 +813,8 @@ class wpiAdmin
 		</li>
 		<?php endif; ?>	
 		<li>
-			<h4>Site verification</h4>
-			<small>Site verification using a meta tag</small>
+			<h4><?php _e('Site verification',WPI_META);?></h4>
+			<small><?php _e('Site verification using a meta tag',WPI_META);?></small>
 			<ul style="list-style:lower-roman outside;padding-left:28px">
 				<li>
 				<label for="wpi_verify_google_webmaster">
@@ -846,7 +842,7 @@ class wpiAdmin
 			</ul>
 		</li>
 		<li>
-			<h4>Web services</h4>
+			<h4><?php _e('Web services',WPI_META);?></h4>
 			<ul>
 				<li>
 					<label for="wpi_google_analytics_tracking_code"><?php _e('Google Analytics',WPI_META);?>
@@ -1034,10 +1030,9 @@ class wpiAdmin
 				<?php endif;?>	
 		</li>						
 		<li>
-			<h4>Client Side features</h4>
-				<small>Client side script enhancements</small>
-			<ul>
-				
+			<h4><?php _e('Client Side features',WPI_META);?></h4>
+				<small><?php _e('Client side script enhancements',WPI_META)?></small>
+			<ul>				
 				<li>
 				<label for="client_time_styles"><?php _e('Client Time',WPI_META);?>
 				<small><?php _e('Stylesheets switcher base on visitor time.')?></small></label>
@@ -1061,30 +1056,23 @@ class wpiAdmin
 			</ul>
 			<?php self::updateBtn(); ?>
 		</li><?php if(function_exists('ImageCreate')): ?>
-		<li><?php $prop = self::option('gdfont_image');?>
+		<li class="last"><?php $prop = self::option('gdfont_image');?>
 			<label>
 				<?php _e('GD font',WPI_META);?>
-				<small>Enable <a href="http://my.php.net/gd">PHP GD</a> text to image replacement</small>
+				<small><?php _e('Enable <a href="http://my.php.net/gd">PHP GD</a> text to image replacement feature.',WPI_META);?></small> 
 			</label>
-				<select name="wpi_gdfont_image" id="wpi_gdfont_image" size="2" class="row-2">
-			<?php self::htmlOption(array($this->lang['enabled'] => 1,$this->lang['disabled'] => 0 ),$prop);?>
-				</select> 	
+				<?php self::addSelect('gdfont_image',$this->select_options);?>
 				<?php if ($prop && ( ($fonts = wpi_get_fonts()) != false ) ): ?>
 					<ul>						
 						<li><?php $prop = self::option('gd_blogname'); ?>
 							<label for="wpi_gd_blogname"><?php _e('Blog name',WPI_META);?>
-							<small>Replace blog name heading with gdfont-image. <abbr title="Search Engine Friendly">SEF</abbr></small>
-							</label>
-								<select name="wpi_gd_blogname" id="wpi_gd_blogname" size="2" class="row-2">
-							<?php self::htmlOption(array(
-							$this->lang['enabled'] =>1,
-							$this->lang['disabled'] =>0 ),$prop);?>
-								</select>
+							<small><?php _e('Replace blog name heading with gdfont-image. <abbr title="Search Engine Friendly">SEF</abbr>.',WPI_META);?></small></label>
+							<?php self::addSelect('gd_blogname',$this->select_options);?>
 						</li>
 						<li>
 							<label for="wpi_gd_blogname_text">
 								<?php _e('Custom text',WPI_META);?>
-								<small>Default heading text: "<?php echo WPI_BLOG_NAME;?>"</small>
+								<small><?php printf(__('Default heading text: "%s"',WPI_META),WPI_BLOG_NAME); ?></small>
 							</label>
 							<?php $txt = self::option('gd_blogname_text');?>
 						<?php  if (''== $txt){
@@ -1103,7 +1091,7 @@ class wpiAdmin
 						<li>
 							<label for="wpi_gd_blogname_color">
 								<?php _e('Foreground color',WPI_META);?>
-								<small>Hex: #336699, 336699, #369, 369 </small>
+								<small><?php _e('Hex format: #336699, 336699, #369, 369.',WPI_META);?></small>
 							</label>
 							<?php $txt = self::option('gd_blogname_color');?>
 						<?php  if (!$txt || empty($txt)){
@@ -1113,7 +1101,7 @@ class wpiAdmin
 						<li class="last">
 							<label for="gd_blogname_text_size">
 								<?php _e('Pixel size',WPI_META);?>
-								<small>Default: 36<sub>px</sub></small>
+								<small><?php _e('Default: 36<sub>px</sub>',WPI_META); ?></small>
 							</label>
 							<?php $txt = self::option('gd_blogname_text_size');?>
 						<?php  if (!$txt || empty($txt)){
@@ -1132,8 +1120,7 @@ class wpiAdmin
 	</ul>	
 	<?php self::saveButton();?>
 	</div>		
-	</li>
-	
+	</li>	
 </ol>
 <?php		
 	}	
@@ -1163,7 +1150,7 @@ class wpiAdmin
 		</li>
 		<?php endif;?>		
 		<li>
-			<h4>Feed syndication</h4>
+			<h4><?php _e('Feed syndication',WPI_META);?></h4>
 			<ul>
 				<li>			
 					<label for="wpi_rss_logo"><?php _e('Feed logo')?>
@@ -1182,15 +1169,14 @@ class wpiAdmin
 		</li>
 		<li class="last">
 			<label for="wpi_meta_wp_generator"><?php _e('Meta generator',WPI_META);?>
-				<small>WordPress version number</small>
+				<small><?php _e('WordPress version number.',WPI_META);?></small>
 			</label>
 			<?php self::addSelect('meta_wp_generator',$this->select_options);?>
 		</li>		
 	</ul>	
 	<?php self::saveButton();?>
 	</div>		
-	</li>
-	
+	</li>	
 </ol>
 <?php		
 	}		
@@ -1257,6 +1243,42 @@ class wpiAdmin
 			<?php self::htmlOption($options,$prop,$textasvalue);?>
 		</select>
 <?php				 			
+	}
+	/**
+	 * 
+	 * @author Milan Petrovic
+	 * @link http://wp.gdragon.info/2008/07/06/create-multi-instances-widget/ Create multi instances widget
+	 * @uses $wpdb	WordPress DB Class object
+	 */
+	
+	public static function optPages($pages = array(), $parent = 0, $level = 0)
+	{	global $wpdb;
+	
+        $sql = "SELECT x.id as ID, x.post_parent as post_parent, x.post_title as post_title, count(y.id) as subpages FROM $wpdb->posts x LEFT JOIN $wpdb->posts y ON x.id = y.post_parent WHERE x.post_type = 'page' AND x.post_status = 'publish' AND x.post_parent = $parent GROUP BY x.id, x.post_parent, x.post_title";
+        $items = $wpdb->get_results($sql);
+		
+        if ($items) {
+            foreach ($items as $item) {
+                $id = $item->ID;
+    
+                $pad = str_repeat('&nbsp;', $level * 2).' ';
+                
+            	if (!$level == 0){
+                	$pad = '+ '.$pad;
+                }
+				                
+                $attribs = array('value'=>$id);
+                
+                if (in_array($id, $pages)){
+                	$attribs['selected'] = 'selected';
+                }
+
+    			t('option',$pad.$item->post_title,$attribs);
+    			
+                self::optPages($pages,$id, $level + 1);
+            }
+        } 
+    		
 	}
 	
 	private function __clone(){}
