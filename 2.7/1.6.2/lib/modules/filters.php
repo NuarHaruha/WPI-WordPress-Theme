@@ -692,6 +692,10 @@ function wpi_sidebar_dir_filter(){
 			$css .= '.home .hentry{padding-left:0px}'.$NL;
 			$css .= '.home .hentry .entry-title{padding:0px 10px 0px 0px}'.$NL;
 			$css .= '.home #sidebar{margin-left:10px}';
+			
+			if (wpi_option('frontpage_style') == 'frontpage-a.php'){
+				$css .= '.frontpage-type-a #main{padding-left:10px}'.$NL;
+			}
 		}		
 	}
 	
