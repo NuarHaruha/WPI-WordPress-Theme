@@ -581,7 +581,7 @@ class wpiAdmin
 				<?php self::helpIcon('http://www.nothing2hide.net/wp-plugins/wordpress-global-translator-plugin/',__('Nothing2Hide\'s Global Translator',WPI_META) );?>
 				</small>
 			</label>
-			<?php self::addSelect('widget_gtranslator',$this->select_options);?>	
+			<?php self::addSelect('widget_gtranslator',$this->select_options); ?>	
 			<ul>
 				<li class="last">
 					<label for="wpi_widget_gtranslator_meta"><?php _e('Language Metalink',WPI_META);?>
@@ -668,7 +668,7 @@ class wpiAdmin
 				<label for="wpi_menu_page_exclude">
 					<?php _e('Exclude Pages',WPI_META); ?>
 				</label>				
-				<select name="wpi_menu_page_exclude[]" multiple="multiple" class="widefat" style="height:70px;width:auto;padding:8px 4px 8px 6px" title="<?php echo wpi_option('menu_page_exclude');?>">
+				<select name="wpi_menu_page_exclude[]" multiple="multiple" class="widefat" style="height:70px;width:auto;padding:8px 4px 8px 6px">
 					<option value="0">-- None --</option>
 					<?php self::optPages(explode(',',wpi_option('menu_page_exclude')));?>						
 				</select>							
