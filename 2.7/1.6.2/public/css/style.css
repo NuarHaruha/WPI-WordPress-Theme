@@ -1133,6 +1133,9 @@ acronym.share:hover
 	content:"~"
 }
 
+
+#sidebar-2 .widget-content .preloading cite{color:#fff}
+
 #sidebar-2 .widget_rss li
 {
 	color:#D1DADF;

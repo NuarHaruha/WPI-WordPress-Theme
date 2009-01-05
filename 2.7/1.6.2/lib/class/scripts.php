@@ -2,10 +2,8 @@
 if ( !defined('KAIZEKU') ) { die( 42);}
 /** 
  * Wpi scripts class
- * 
  * $Id scripts.php, 0022 10/23/2008 12:24:28 PM ck $
- * 
- * @links		http://www.w3.org/TR/REC-html40/interact/scripts.html W3C/Scripts
+ * @links http://www.w3.org/TR/REC-html40/interact/scripts.html W3C/Scripts
  */
  	
 class wpiScripts{
@@ -173,32 +171,54 @@ class wpiScripts{
 		$js .= ',id:'.json_encode(wpiTemplate::bodyID());
 		$js .= ',blogname:'.json_encode(WPI_BLOG_NAME);
 		$js .= ',theme_url:'.json_encode(WPI_THEME_URL);
-		$js .= ',section:'.json_encode(is_at());		
-		$js .= ',widget:{keywords:'.json_encode(wpi_option('widget_dynacloud') ? true : false).'}';
+		$js .= ',section:'.json_encode(is_at());
+		$js .= ',widget:{uri:'.json_encode(WPI_HOME_URL_SLASHIT.wpiTheme::PUB_QUERY_VAR.wpiTheme::PUB_WIDGET_PARAMS);
+		$js .= ',request:[]';
+		$js .=',keywords:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
+		$js .= ',flickrrss:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
+		$js .= '}';
 		$js .= ',permalink:'.json_encode(trailingslashit(self_uri()));
 		
 		$jspath = json_encode(rel(WPI_THEME_URL.'public/scripts/') );
 		$jsurl  = json_encode(wpi_get_scripts_url('%s'));	
-			
+		
 		$js .= ',script:{path:'.$jspath.',url:'.$jsurl.'}';
 		
 		if ( wpi_option('client_width')){
 			$js .= ',cl_width: function(){if (window.innerWidth){ return window.innerWidth;}else if (document.documentElement && document.documentElement.clientWidth != 0){return document.documentElement.clientWidth;} else if (document.body){return document.body.clientWidth;} return 0;}';
-			$domready[] = '/* client width */ wpi.clw = \'cl-width-\'+ wpi.cl_width(); if( jQuery(wpi.bid).hasClass(wpi.clw) == false){ jQuery(wpi.bid).addClass(wpi.clw);jQuery.cookie(\''.wpiTheme::CL_COOKIE_WIDTH.'\',wpi.clw,{duration: 1/24,path: "/"});};';
+			$domready[] = '/* Client width	*/ wpi.clw = \'cl-width-\'+ wpi.cl_width(); if( jQuery(wpi.bid).hasClass(wpi.clw) == false){ jQuery(wpi.bid).addClass(wpi.clw);jQuery.cookie(\''.wpiTheme::CL_COOKIE_WIDTH.'\',wpi.clw,{duration: 1/24,path: "/"});};';
 			$defer = 1;	
 		}
 		
 		if (wpi_option('client_time_styles')){
 			$js .= ',pid:'.$pid.',cl_type:td};'.PHP_EOL;
-			$domready[] = '/* client time */ if( jQuery(wpi.bid).hasClass(wpi.cl_type) == false){ jQuery(wpi.bid).addClass(wpi.cl_type);jQuery.cookie(\''.wpiTheme::CL_COOKIE_TIME.'\',wpi.cl_type,{duration: 1/24,path: "/"});};';
+			$domready[] = '/* Client time	*/ if( jQuery(wpi.bid).hasClass(wpi.cl_type) == false){ jQuery(wpi.bid).addClass(wpi.cl_type);jQuery.cookie(\''.wpiTheme::CL_COOKIE_TIME.'\',wpi.cl_type,{duration: 1/24,path: "/"});};';
 		} else {
 			$js .= ',pid:'.$pid.'};'.PHP_EOL;
 		}
+		
+		// load custom widget (ajax response)
+		$js .= PHP_T.PHP_T.'wpi.getWidget = function(wid,elm){if (jQuery(elm).length >= 1){jQuery.get(wpi.widget.uri.replace(/%s/, wid),function(data){ jQuery(elm).replaceWith(data); wpi.rysncf(elm);});};};'.PHP_EOL;
+		
+		/**
+		 * Restore WPI's func
+		 */
+		$js .= PHP_T.PHP_T.'wpi.rysncf = function(elm){ jQuery(elm+\' .widget-title\').click(function(){wpi.toggle(jQuery(this).next());});};'.PHP_EOL;
 		
 		if (wpi_option('iframe_breaker') && !$wp_query->is_preview){
 			$js .= PHP_T.PHP_T.'if(top.location!=location){top.location.href=document.location.href;};'.PHP_EOL;
 			$defer = 1;
 		}
+		
+		if (wpi_option('overwrite_flickrrss')){	
+			$domready[] = '/* flickr RSS	*/ wpi.widget.request.push({"n":"#flickrrss","c":\'df695b32187596617d0beaa25760a8a0\'});';			
+			$defer = 1;
+		}
+		
+		if (wpi_option('overwrite_recent_comments')){	
+			$domready[] = '/* recent comments	*/ wpi.widget.request.push({"n":"#recent-comments","c":\'b47bdb6bde262b0537f6f2a7fbfe825f\'});';			
+			$defer = 1;
+		}		
 		
 		if ($defer) unset($attribs['defer']);
 		
@@ -207,6 +227,7 @@ class wpiScripts{
 			
 			$js .= PHP_T.PHP_T.'jQuery(document).ready(function(){ '.PHP_EOL;
 			$js .= stab(1).'wpi.bid = document.body; '.PHP_EOL.stab(1).join(PHP_EOL.stab(1),$domready).PHP_EOL;
+			$js .= stab(1).'if(wpi.widget.request.length >= 0){jQuery.each(wpi.widget.request, function(index, v){ wpi.getWidget(v.c,v.n);});}'.PHP_EOL;
 			$js .= PHP_T.PHP_T.'});'.PHP_EOL;
 		}
 		

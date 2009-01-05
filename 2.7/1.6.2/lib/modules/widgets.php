@@ -1,6 +1,11 @@
 <?php
 if ( !defined('KAIZEKU') ) {die( 42);}
-
+/**
+ *  WPI Widgets 
+ * 
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
+ */
 
 function wpi_get_sidebar(){
 	get_sidebar(is_at());
@@ -562,11 +567,26 @@ function wpi_technorati_backlink()
 
 function wpi_register_widgets()
 { global $wp_query;
+
+	$owidgets = array();
+	
+	
 	if (wpi_option('widget_treeview')){
-		wpi_overwrite_widget_cat();
+		$owidgets[] = array('key'=>'/categories/','callback'=>'wpi_category_treeview_widget');
 	}
 	
-	if ( is_active_widget('wp_widget_recent_comments') ){
+	if (wpi_option('overwrite_flickrrss')){
+		$owidgets[] = array('key'=>'/flickrrss/','callback'=>'wpi_flickrrss_widget_rep');
+	}
+	
+	if (wpi_option('overwrite_recent_comments')){
+		$owidgets[] = array('key'=>'/recent-comments/','callback'=>'wpi_widget_recent_comments_rep');	
+	}
+	
+	wpi_overwrite_widgets_callback($owidgets);
+	
+	if ( is_active_widget('wp_widget_recent_comments') 
+	|| is_active_widget('wpi_widget_recent_comments_rep') ){
 		remove_filter('wp_head', 'wp_widget_recent_comments_style');
 	}	
 	
@@ -625,20 +645,6 @@ function wpi_register_widgets()
 	
 }
 
-function wpi_overwrite_widget_cat(){
-	global $wp_registered_widgets;
-	
-	if(has_count($wp_registered_widgets)){
-		foreach($wp_registered_widgets as $widgets => $attribs){
-
-			if ( preg_match("/categories/", $widgets) ) {
-				$GLOBALS['wp_registered_widgets'][$widgets]['callback'] = 'wpi_category_treeview_widget';
-			}
-						
-		}
-	}
-}
-
 function sidebar_has_widgets($id){
 	return wpiSidebar::hasWidget($id);
 }
@@ -656,5 +662,177 @@ function sidebar_has_widgets_array(array $sidebar_id){
 	}
 	
 	return $bool;
+}
+
+/**
+ * void wpi_flickrrss_widget_rep()
+ * flickr rss widget replacement
+ * @since 1.6.2
+ */
+ 
+function wpi_flickrrss_widget_rep(){
+	$options = get_option('widget_flickrRSS');	
+	$title = apply_filters('widget_title', $options['title']);	
+	wpi_widget_start($title,'flickrrss');
+	
+	$spinner = _t('img','',array(
+		'src'=>wpi_img_url('icons/spinner.gif'),
+		'alt'=>'loading-content','width'=>'32','height'=>'32','class'=>'fl')
+	);
+	
+	t('div',$spinner. _t('cite',__('Fetching external contents &#8230;',WPI_META) ),array('class'=>'preloading') );
+	
+	wpi_widget_end();	
+}
+
+/**
+ * void wpi_flickrrss_widget()
+ * 
+ * @since 1.6.2
+ * @link http://eightface.com/wordpress/flickrrss/
+ */
+function wpi_flickrrss_widget(){
+	
+	if ( ! wpi_is_plugin_active('flickr-rss/flickrrss.php') ) return;
+	
+	$options = get_option('widget_flickrRSS');	
+	$title = apply_filters('widget_title', $options['title']);
+	
+	wpi_widget_start($title,'flickrrss');
+	echo $options['before_images'];
+	get_flickrRSS();
+	echo $options['after_images'];	
+	wpi_widget_end();
+	
+	unset($options,$title);
+}
+ 
+
+/**
+ * wpi_get_widget_content()
+ * 
+ * output static type widget
+ * $hash  = md5(callback);
+ * 
+ * @since 1.6.2
+ */
+
+function wpi_get_widget_content($args){
+	global $wp_query;
+	
+	$widgets = array();
+		
+	list(,$hash) = $args;
+		
+	// static widgets
+	$widgets['686a006014345b3a36aff17a668d6156'] = array('name'=>'pages','callback'=>'wpi_pages_widget');		
+	$widgets['2a22b5dd770eb3a9b53f91aa6ab36f73'] = array('name'=>'tags cloud','callback'=>'wpi_tags_widget');
+		
+	/**
+	 * noncache flickr rss content is expensive 
+	 * seo +1
+	 */	
+	$widgets['df695b32187596617d0beaa25760a8a0'] = array('name'=>'flickrrss','callback'=>'wpi_flickrrss_widget');
+	/**
+	 * Recent comments with external links! 
+	 * seo +1
+	 */
+	 $widgets['b47bdb6bde262b0537f6f2a7fbfe825f'] = array('name'=>'recent comments','callback'=>'wpi_widget_recent_comments');
+	
+	if (isset($widgets[$hash])){
+		$callback = (string) $widgets[$hash]['callback'];
+		
+		if (wpi_user_func_exists($callback) ){
+			call_user_func($callback);
+		}		
+	} else {
+		wpi_widget_start(apply_filters('widget_title', __('Widget aren\'t ready yet!',WPI_META) ),'widget-error-'.SV_CURRENT_TIMESTAMP);
+		t('h3',__('<strong>Error<strong>, request not found',WPI_META));
+		t('img','',array('src'=> wpi_get_random_avatar_uri()) );
+		wpi_widget_end();
+	}
+	//wpi_dump(md5('wpi_widget_recent_comments'));
+	exit();
+}
+
+/**
+ * void wpi_widget_recent_comments_rep()
+ * @since 1.6.2
+ */
+
+function wpi_widget_recent_comments_rep(){
+	
+	$options = get_option('widget_recent_comments');
+	$title = empty($options['title']) ? __('Recent Comments') : apply_filters('widget_title', $options['title']);
+		
+	wpi_widget_start($title,'recent-comments');
+	
+	$spinner = _t('img','',array(
+		'src'=>wpi_img_url('icons/help.gif'),
+		'alt'=>'loading-content','width'=>'11','height'=>'11','class'=>'fl')
+	);
+	
+	t('div',$spinner. _t('cite',__('Fetching external contents &#8230;',WPI_META) ),array('class'=>'preloading') );
+	
+	wpi_widget_end();	
+}
+ 
+
+/**
+ * void wpi_widget_recent_comments()
+ * @since 1.6.2
+ */
+function wpi_widget_recent_comments() {
+	global $wpdb, $comments, $comment;
+	
+	$options = get_option('widget_recent_comments');
+	$title = empty($options['title']) ? __('Recent Comments') : apply_filters('widget_title', $options['title']);
+	if ( !$number = (int) $options['number'] )
+		$number = 5;
+	else if ( $number < 1 )
+		$number = 1;
+	else if ( $number > 15 )
+		$number = 15;
+
+	if ( !$comments = wp_cache_get( 'recent_comments', 'widget' ) ) {
+		$comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_approved = '1' ORDER BY comment_date_gmt DESC LIMIT $number");
+		wp_cache_add( 'recent_comments', $comments, 'widget' );
+	}
+	
+	wpi_widget_start($title,'recent-comments'); ?>
+			<ul id="recentcomments" class="xoxo">
+			<?php 
+			if ( $comments ) : 
+			$cnt = 0;
+				foreach ( (array) $comments as $comment) :
+					$class = 'recentcomments';
+					$class .= ($cnt % 2) ? ' even' : ' odd';
+				echo  '<li class="'.$class.'">' . sprintf(__('%1$s on %2$s'), get_comment_author_link(), '<a href="'. get_comment_link($comment->comment_ID) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>';
+				$cnt++;
+				endforeach; 
+			endif;?>
+			</ul>
+	<?php wpi_widget_end();
+} 
+
+function wpi_overwrite_widgets_callback(array $owidgets){
+	
+	if (has_count($owidgets)){
+		global $wp_registered_widgets;
+		
+		if(has_count($wp_registered_widgets)){
+			
+			foreach($owidgets as $w){				
+			
+				foreach($wp_registered_widgets as $widgets => $attribs){
+		
+					if ( preg_match($w['key'], $widgets) ) {
+						$GLOBALS['wp_registered_widgets'][$widgets]['callback'] = $w['callback'];
+					}						
+				}
+				
+			}
+		}			
+	}
 }
 ?>

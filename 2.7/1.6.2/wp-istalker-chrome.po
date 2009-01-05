@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-istalker-chrome 1.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-04 16:52+0800\n"
+"POT-Creation-Date: 2008-12-25 19:49+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Avice D <avik.st@gmail.com>\n"
 "Language-Team: Avice D <ck@istalker.net>\n"
@@ -110,12 +110,12 @@ msgid "Search"
 msgstr ""
 
 # Theme settings page title
-#: lib/theme.php:401
+#: lib/theme.php:403
 msgid "WPI Theme Options"
 msgstr ""
 
 # Theme settings option tab caption
-#: lib/theme.php:402
+#: lib/theme.php:404
 msgid "Theme Options"
 msgstr ""
 
@@ -397,416 +397,436 @@ msgid "jQuery plugin Treeview "
 msgstr ""
 
 #: lib/class/admin.php:570
-msgid "Most used terms"
+msgid "Recent Comments"
 msgstr ""
 
 #: lib/class/admin.php:571
-msgid "Display Dyna Cloud most used keywords (singular comment widget)"
+msgid "Ajaxified recent comments widgets"
 msgstr ""
 
-#: lib/class/admin.php:572
-msgid "jQuery plugin DynaCloud "
+#: lib/class/admin.php:578
+msgid "Flickr RSS"
 msgstr ""
 
 #: lib/class/admin.php:579
-msgid "Global Translator"
+msgid "Ajaxified flickr RSS widget"
 msgstr ""
 
 #: lib/class/admin.php:580
-msgid "Display NH2's Global translator (singular sub widget)"
-msgstr ""
-
-#: lib/class/admin.php:581
-msgid "Nothing2Hide's Global Translator"
+msgid "Flickr RSS widget "
 msgstr ""
 
 #: lib/class/admin.php:587
-msgid "Language Metalink"
+msgid "Most used terms"
 msgstr ""
 
 #: lib/class/admin.php:588
-msgid "Append Global Translator language meta-link"
+msgid "Display Dyna Cloud most used keywords (singular comment widget)"
+msgstr ""
+
+#: lib/class/admin.php:589
+msgid "jQuery plugin DynaCloud "
+msgstr ""
+
+#: lib/class/admin.php:596
+msgid "Global Translator"
+msgstr ""
+
+#: lib/class/admin.php:597
+msgid "Display NH2's Global translator (singular sub widget)"
 msgstr ""
 
 #: lib/class/admin.php:598
-msgid "WP Post views"
+msgid "Nothing2Hide's Global Translator"
 msgstr ""
 
-#: lib/class/admin.php:599
-msgid "Display Lester Chan's WP post view"
+#: lib/class/admin.php:604
+msgid "Language Metalink"
 msgstr ""
 
-#: lib/class/admin.php:600
-msgid "Lester Chan's WP post views"
-msgstr ""
-
-#: lib/class/admin.php:607
-msgid "Technorati link count"
-msgstr ""
-
-#: lib/class/admin.php:608
-msgid "Display Technorati blog reaction (singular sub widget)"
-msgstr ""
-
-#: lib/class/admin.php:609
-msgid "Technorati Link Count Widget"
+#: lib/class/admin.php:605
+msgid "Append Global Translator language meta-link"
 msgstr ""
 
 #: lib/class/admin.php:615
-msgid "Similar post:"
+msgid "WP Post views"
 msgstr ""
 
 #: lib/class/admin.php:616
-msgid "Display similar post(s) base on tags (singular widget)"
+msgid "Display Lester Chan's WP post view"
 msgstr ""
 
-#: lib/class/admin.php:622
-msgid "Title:"
+#: lib/class/admin.php:617
+msgid "Lester Chan's WP post views"
+msgstr ""
+
+#: lib/class/admin.php:624
+msgid "Technorati link count"
+msgstr ""
+
+#: lib/class/admin.php:625
+msgid "Display Technorati blog reaction (singular sub widget)"
 msgstr ""
 
 #: lib/class/admin.php:626
+msgid "Technorati Link Count Widget"
+msgstr ""
+
+#: lib/class/admin.php:632
+msgid "Similar post:"
+msgstr ""
+
+#: lib/class/admin.php:633
+msgid "Display similar post(s) base on tags (singular widget)"
+msgstr ""
+
+#: lib/class/admin.php:639
+msgid "Title:"
+msgstr ""
+
+#: lib/class/admin.php:643
 msgid "Max post:"
 msgstr ""
 
-#: lib/class/admin.php:630
+#: lib/class/admin.php:647
 msgid "Show date:"
 msgstr ""
 
-#: lib/class/admin.php:634
+#: lib/class/admin.php:651
 msgid "Count comments:"
 msgstr ""
 
-#: lib/class/admin.php:658
+#: lib/class/admin.php:675
 msgid "Navigation"
 msgstr ""
 
-#: lib/class/admin.php:663
+#: lib/class/admin.php:680
 msgid "Pages menu"
 msgstr ""
 
-#: lib/class/admin.php:669
+#: lib/class/admin.php:686
 msgid "Exclude Pages"
 msgstr ""
 
-#: lib/class/admin.php:680
+#: lib/class/admin.php:697
 msgid "Pathway:"
 msgstr ""
 
-#: lib/class/admin.php:692
+#: lib/class/admin.php:709
 msgid "Frontpage label"
 msgstr ""
 
-#: lib/class/admin.php:693
+#: lib/class/admin.php:710
 msgid "Default: Frontpage"
 msgstr ""
 
-#: lib/class/admin.php:718
+#: lib/class/admin.php:735
 msgid "Author name:"
 msgstr ""
 
-#: lib/class/admin.php:726
+#: lib/class/admin.php:743
 msgid "Show excerpt"
 msgstr ""
 
-#: lib/class/admin.php:735
+#: lib/class/admin.php:752
 msgid "Relative post date:"
 msgstr ""
 
-#: lib/class/admin.php:745
+#: lib/class/admin.php:762
 msgid "hReview rating"
 msgstr ""
 
-#: lib/class/admin.php:754
+#: lib/class/admin.php:771
 msgid "Social Bookmarks"
 msgstr ""
 
-#: lib/class/admin.php:763
+#: lib/class/admin.php:780
 msgid "Author description"
 msgstr ""
 
-#: lib/class/admin.php:783
+#: lib/class/admin.php:800
 msgid "Extra metadata"
 msgstr ""
 
-#: lib/class/admin.php:788
+#: lib/class/admin.php:805
 msgid "ClaimID"
 msgstr ""
 
-#: lib/class/admin.php:795
+#: lib/class/admin.php:812
 msgid "MicroID"
 msgstr ""
 
-#: lib/class/admin.php:801
+#: lib/class/admin.php:818
 msgid "OpenID"
 msgstr ""
 
-#: lib/class/admin.php:809
+#: lib/class/admin.php:826
 msgid "PICS"
 msgstr ""
 
-#: lib/class/admin.php:816
+#: lib/class/admin.php:833
 msgid "Site verification"
 msgstr ""
 
-#: lib/class/admin.php:817
+#: lib/class/admin.php:834
 msgid "Site verification using a meta tag"
 msgstr ""
 
-#: lib/class/admin.php:821
+#: lib/class/admin.php:838
 msgid "Google Webmaster"
 msgstr ""
 
-#: lib/class/admin.php:829
+#: lib/class/admin.php:846
 msgid "Live Webmaster ID"
 msgstr ""
 
-#: lib/class/admin.php:837
+#: lib/class/admin.php:854
 msgid "Yahoo! Explorer ID"
 msgstr ""
 
-#: lib/class/admin.php:845
+#: lib/class/admin.php:862
 msgid "Web services"
 msgstr ""
 
-#: lib/class/admin.php:848
+#: lib/class/admin.php:865
 msgid "Google Analytics"
 msgstr ""
 
-#: lib/class/admin.php:849
+#: lib/class/admin.php:866
 msgid "Web Property ID or Tracking Code (UA-XXXXXXX-X)"
 msgstr ""
 
-#: lib/class/admin.php:851
+#: lib/class/admin.php:868
 msgid "Google Analytics  tracking code"
 msgstr ""
 
-#: lib/class/admin.php:856
+#: lib/class/admin.php:873
 msgid "Google translate"
 msgstr ""
 
-#: lib/class/admin.php:857
+#: lib/class/admin.php:874
 msgid "Prevent google from translating the entire document."
 msgstr ""
 
-#: lib/class/admin.php:867
+#: lib/class/admin.php:884
 msgid "Favicon"
 msgstr ""
 
-#: lib/class/admin.php:868
+#: lib/class/admin.php:885
 msgid "Favicon <tt>16x16</tt> pixels (ico, gif or png)"
 msgstr ""
 
-#: lib/class/admin.php:869
+#: lib/class/admin.php:886
 msgid "Create custom favicon via favicon.cc"
 msgstr ""
 
-#: lib/class/admin.php:875
+#: lib/class/admin.php:892
 msgid "iPhone"
 msgstr ""
 
-#: lib/class/admin.php:876
+#: lib/class/admin.php:893
 msgid "PNG file <tt>57x57</tt> pixels."
 msgstr ""
 
-#: lib/class/admin.php:883
+#: lib/class/admin.php:900
 msgid "Geo positioning"
 msgstr ""
 
-#: lib/class/admin.php:905
+#: lib/class/admin.php:922
 msgid "True xhtml+xml"
 msgstr ""
 
-#: lib/class/admin.php:914
+#: lib/class/admin.php:931
 msgid "Cloak CSS"
 msgstr ""
 
-#: lib/class/admin.php:923
+#: lib/class/admin.php:940
 msgid "Text direction"
 msgstr ""
 
-#: lib/class/admin.php:927
+#: lib/class/admin.php:944
 msgid "Left to Right"
 msgstr ""
 
-#: lib/class/admin.php:928
+#: lib/class/admin.php:945
 msgid "Right to Left"
 msgstr ""
 
-#: lib/class/admin.php:933
+#: lib/class/admin.php:950
 msgid "Auto-update Browser Library"
 msgstr ""
 
-#: lib/class/admin.php:944
+#: lib/class/admin.php:961
 msgid "Show banner:"
 msgstr ""
 
-#: lib/class/admin.php:954
+#: lib/class/admin.php:971
 msgid "Image URL"
 msgstr ""
 
-#: lib/class/admin.php:961
+#: lib/class/admin.php:978
 #, php-format
 msgid "<strong>Note:</strong> You have %d custom banner(s)."
 msgstr ""
 
-#: lib/class/admin.php:968
+#: lib/class/admin.php:985
 msgid "<strong>Allowed Variables:</strong>"
 msgstr ""
 
-#: lib/class/admin.php:976
+#: lib/class/admin.php:993
 msgid "Background repeat"
 msgstr ""
 
-#: lib/class/admin.php:993
+#: lib/class/admin.php:1010
 msgid "Banner height"
 msgstr ""
 
-#: lib/class/admin.php:1004
+#: lib/class/admin.php:1021
 msgid "Background position"
 msgstr ""
 
-#: lib/class/admin.php:1014
+#: lib/class/admin.php:1031
 msgid "Exclude banner"
 msgstr ""
 
-#: lib/class/admin.php:1033
+#: lib/class/admin.php:1050
 msgid "Client Side features"
 msgstr ""
 
-#: lib/class/admin.php:1034
+#: lib/class/admin.php:1051
 msgid "Client side script enhancements"
 msgstr ""
 
-#: lib/class/admin.php:1037
+#: lib/class/admin.php:1054
 msgid "Client Time"
 msgstr ""
 
-#: lib/class/admin.php:1038
+#: lib/class/admin.php:1055
 msgid "Stylesheets switcher base on visitor time."
 msgstr ""
 
-#: lib/class/admin.php:1042
+#: lib/class/admin.php:1059
 msgid "Client Date"
 msgstr ""
 
-#: lib/class/admin.php:1043
+#: lib/class/admin.php:1060
 msgid "Client Date scripts."
 msgstr ""
 
-#: lib/class/admin.php:1047
+#: lib/class/admin.php:1064
 msgid "Client Width"
 msgstr ""
 
-#: lib/class/admin.php:1048
+#: lib/class/admin.php:1065
 msgid "Stylesheets switcher base on visitor screen width."
 msgstr ""
 
-#: lib/class/admin.php:1052
+#: lib/class/admin.php:1069
 msgid "Frame Breaker"
 msgstr ""
 
-#: lib/class/admin.php:1061
+#: lib/class/admin.php:1078
 msgid "GD font"
 msgstr ""
 
-#: lib/class/admin.php:1062
+#: lib/class/admin.php:1079
 msgid "Enable <a href=\"http://my.php.net/gd\">PHP GD</a> text to image replacement feature."
 msgstr ""
 
-#: lib/class/admin.php:1068
+#: lib/class/admin.php:1085
 msgid "Blog name"
 msgstr ""
 
-#: lib/class/admin.php:1069
+#: lib/class/admin.php:1086
 msgid "Replace blog name heading with gdfont-image. <abbr title=\"Search Engine Friendly\">SEF</abbr>."
 msgstr ""
 
-#: lib/class/admin.php:1074
+#: lib/class/admin.php:1091
 msgid "Custom text"
 msgstr ""
 
-#: lib/class/admin.php:1075
+#: lib/class/admin.php:1092
 #, php-format
 msgid "Default heading text: \"%s\""
 msgstr ""
 
-#: lib/class/admin.php:1083
+#: lib/class/admin.php:1100
 msgid "Font face"
 msgstr ""
 
-#: lib/class/admin.php:1093
+#: lib/class/admin.php:1110
 msgid "Foreground color"
 msgstr ""
 
-#: lib/class/admin.php:1094
+#: lib/class/admin.php:1111
 msgid "Hex format: #336699, 336699, #369, 369."
 msgstr ""
 
-#: lib/class/admin.php:1103
+#: lib/class/admin.php:1120
 msgid "Pixel size"
 msgstr ""
 
-#: lib/class/admin.php:1104
+#: lib/class/admin.php:1121
 msgid "Default: 36<sub>px</sub>"
 msgstr ""
 
-#: lib/class/admin.php:1115
+#: lib/class/admin.php:1132
 msgid "<strong>Whoops</strong> No fonts found"
 msgstr ""
 
-#: lib/class/admin.php:1116
+#: lib/class/admin.php:1133
 msgid "Please upload your font at  the following directory <tt>"
 msgstr ""
 
-#: lib/class/admin.php:1136
+#: lib/class/admin.php:1153
 msgid "RSD Services"
 msgstr ""
 
-#: lib/class/admin.php:1142
+#: lib/class/admin.php:1159
 msgid "Manifest link"
 msgstr ""
 
-#: lib/class/admin.php:1147
+#: lib/class/admin.php:1164
 msgid "Patch caption"
 msgstr ""
 
-#: lib/class/admin.php:1148
+#: lib/class/admin.php:1165
 msgid "unofficial patch for Wordpress caption shortcode."
 msgstr ""
 
-#: lib/class/admin.php:1153
+#: lib/class/admin.php:1170
 msgid "Feed syndication"
 msgstr ""
 
-#: lib/class/admin.php:1156
+#: lib/class/admin.php:1173
 msgid "Feed logo"
 msgstr ""
 
-#: lib/class/admin.php:1157
+#: lib/class/admin.php:1174
 msgid "Add custom RSS feed logo."
 msgstr ""
 
-#: lib/class/admin.php:1163
+#: lib/class/admin.php:1180
 msgid "Delay RSS feed"
 msgstr ""
 
-#: lib/class/admin.php:1164
+#: lib/class/admin.php:1181
 msgid "Minute to delay RSS feed publication"
 msgstr ""
 
-#: lib/class/admin.php:1171
+#: lib/class/admin.php:1188
 msgid "Meta generator"
 msgstr ""
 
-#: lib/class/admin.php:1172
+#: lib/class/admin.php:1189
 msgid "WordPress version number."
 msgstr ""
 
-#: lib/class/admin.php:1186
+#: lib/class/admin.php:1203
 msgid "Save"
 msgstr ""
 
-#: lib/class/admin.php:1193
+#: lib/class/admin.php:1210
 msgid "Update Settings"
 msgstr ""
 
@@ -1147,7 +1167,7 @@ msgstr ""
 
 #: lib/modules/template.php:712
 #: lib/modules/template.php:765
-#: lib/modules/widgets.php:526
+#: lib/modules/widgets.php:531
 msgid "Pages"
 msgstr ""
 
@@ -1456,96 +1476,114 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: lib/modules/widgets.php:125
+#: lib/modules/widgets.php:130
 msgid "l M jS, Y"
 msgstr ""
 
-#: lib/modules/widgets.php:127
+#: lib/modules/widgets.php:132
 #, php-format
 msgid ""
 "<big>Y</big>ou&rsquo;re currently reading &ldquo; <strong class=\"fw-\">%1s</strong>&rdquo;. \n"
 "\t\tThis entry appeared in %2s on %3s."
 msgstr ""
 
-#: lib/modules/widgets.php:132
+#: lib/modules/widgets.php:137
 #, php-format
 msgid "It was last updated at %1s on %2s approximately %3s %4s."
 msgstr ""
 
-#: lib/modules/widgets.php:133
+#: lib/modules/widgets.php:138
 msgid "H:i a"
 msgstr ""
 
-#: lib/modules/widgets.php:134
+#: lib/modules/widgets.php:139
 msgid "M jS o"
 msgstr ""
 
-#: lib/modules/widgets.php:150
+#: lib/modules/widgets.php:155
 msgid "Keep looking"
 msgstr ""
 
-#: lib/modules/widgets.php:173
+#: lib/modules/widgets.php:178
 msgid "Related articles"
 msgstr ""
 
-#: lib/modules/widgets.php:211
+#: lib/modules/widgets.php:216
 msgid "page"
 msgid_plural "pages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/modules/widgets.php:212
+#: lib/modules/widgets.php:217
 msgid "Similar "
 msgstr ""
 
-#: lib/modules/widgets.php:280
+#: lib/modules/widgets.php:285
 msgid "Categories"
 msgstr ""
 
-#: lib/modules/widgets.php:288
+#: lib/modules/widgets.php:293
 msgid "Select Category"
 msgstr ""
 
-#: lib/modules/widgets.php:323
+#: lib/modules/widgets.php:328
 #, php-format
 msgid "%s&apos;s press badge"
 msgstr ""
 
-#: lib/modules/widgets.php:388
+#: lib/modules/widgets.php:393
 msgid "Most downloads"
 msgstr ""
 
-#: lib/modules/widgets.php:404
+#: lib/modules/widgets.php:409
 msgid "Author details"
 msgstr ""
 
-#: lib/modules/widgets.php:415
+#: lib/modules/widgets.php:420
 msgid "AOL Instant Messenger"
 msgstr ""
 
-#: lib/modules/widgets.php:424
+#: lib/modules/widgets.php:429
 msgid "eXtensible Messaging Jabber Client"
 msgstr ""
 
-#: lib/modules/widgets.php:431
+#: lib/modules/widgets.php:436
 msgid "Yahoo Instant Messenger"
 msgstr ""
 
-#: lib/modules/widgets.php:461
+#: lib/modules/widgets.php:466
 msgid "Tags"
 msgstr ""
 
-#: lib/modules/widgets.php:509
+#: lib/modules/widgets.php:514
 #, php-format
 msgid "%1$s %2$s from %3$s"
 msgstr ""
 
-#: lib/modules/widgets.php:511
+#: lib/modules/widgets.php:516
 #, php-format
 msgid "%1$s from %2$s | %3$s"
 msgstr ""
 
-#: lib/modules/widgets.php:558
+#: lib/modules/widgets.php:563
 msgid "View blog reactions"
+msgstr ""
+
+#: lib/modules/widgets.php:683
+#: lib/modules/widgets.php:775
+msgid "Fetching external contents &#8230;"
+msgstr ""
+
+#: lib/modules/widgets.php:749
+msgid "Widget aren't ready yet!"
+msgstr ""
+
+#: lib/modules/widgets.php:750
+msgid "<strong>Error<strong>, request not found"
+msgstr ""
+
+#: lib/modules/widgets.php:810
+#, php-format
+msgid "%1$s on %2$s"
 msgstr ""
 

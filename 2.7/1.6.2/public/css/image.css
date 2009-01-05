@@ -253,9 +253,6 @@ background-image:url(images/sprites/expand.gif)
 background-image: url(images/nt-htop.gif)
 }
 
-.trackback-icn{
-	background-image: url(images/icons/trackback.png)
-}
-li.icn-trackback, #widget_tping .widget-title dfn{
-	list-style-image: url(images/icons/trackback.png)
+.spinner{
+	background-image: url(images/icons/spinner.gif)
 }

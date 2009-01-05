@@ -292,7 +292,7 @@ function wpi_http_error_cat()
 	header ("HTTP/1.1 404 Not Found");
 	header("Status: 404 Not Found");
 	t('img','',array('src'=> wpi_img_url('err.jpg')) );
-	exit;	
+	exit();	
 }
 
 function wpi_body_class(){ echo wpi_get_body_class();}

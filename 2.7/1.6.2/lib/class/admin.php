@@ -567,6 +567,23 @@ class wpiAdmin
 			<?php self::addSelect('widget_treeview',$this->select_options);?>	
 		</li>
 		<li>
+			<label for="wpi_overwrite_recent_comments"><?php _e('Recent Comments',WPI_META);?>
+				<small><?php _e('Ajaxified recent comments widgets',WPI_META);?>				
+				</small>
+			</label>
+			<?php self::addSelect('overwrite_recent_comments',$this->select_options);?>	
+		</li>		
+		<?php if(wpi_is_plugin_active('flickr-rss/flickrrss.php')): ?>
+		<li>
+			<label for="wpi_overwrite_flickrrss"><?php _e('Flickr RSS',WPI_META);?>
+				<small><?php _e('Ajaxified flickr RSS widget',WPI_META);?>
+				<?php self::helpIcon('http://eightface.com/wordpress/flickrrss/',__('Flickr RSS widget ',WPI_META) );?>
+				</small>
+			</label>
+			<?php self::addSelect('overwrite_flickrrss',$this->select_options);?>	
+		</li>
+		<?php endif; ?>		
+		<li>
 			<label for="wpi_widget_dynacloud"><?php _e('Most used terms',WPI_META);?>
 				<small><?php _e('Display Dyna Cloud most used keywords (singular comment widget)',WPI_META);?>
 				<?php self::helpIcon('http://johannburkard.de/blog/programming/javascript/dynacloud-a-dynamic-javascript-tag-keyword-cloud-with-jquery.html',__('jQuery plugin DynaCloud ',WPI_META) );?>

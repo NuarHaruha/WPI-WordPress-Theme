@@ -33,8 +33,8 @@ ul#page-links li ul li a{background-position:0 50% !important;color:#666;cursor:
 ul#page-links li:hover a,ul#page-links li a:hover,ul#page-links li a:focus{background:#ccc;color:#000}
 ul#page-links li:hover ul{left:0;z-index:10}
 ul#page-links li:hover ul li a{color:#444}
-.dw ul#page-links li.current_page_item a{background-color:#9EB847}
-.nt ul#page-links li.current_page_item a{background-color:#4f4f4f}
+.dw ul#page-links li.current_page_item a{background-color:#9EB847;color:#fff}
+.nt ul#page-links li.current_page_item a{background-color:#4f4f4f;color:#fff}
 ul#page-links li.current_page_item a{background:#eee;color:#777;cursor:default;font-weight:700}
 ul#page-links li{left:0;position:relative;top:0}
 ul#page-links li ul{border-top:0}

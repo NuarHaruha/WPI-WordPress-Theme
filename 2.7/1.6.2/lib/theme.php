@@ -169,7 +169,8 @@ class Wpi
 				$this->Style->register('image-ie');
 			}		
 			
-			if (is_active_widget('widget_flickrRSS')){
+			if (is_active_widget('widget_flickrRSS')
+			|| is_active_widget('wpi_flickrrss_widget_rep')){
 				// load at active section
 				
 				$widget_id = 'flickrrss';
@@ -262,6 +263,7 @@ class Wpi
 		$this->_setCachePerm();
 				
 			update_option($meta, 1);
+			update_option(WPI_META_PREFIX.'version', wpiTheme::VERSION);
 		}
 	}
 	

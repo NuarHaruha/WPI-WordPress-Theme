@@ -236,7 +236,7 @@ class wpiTemplate
 	
 	public static function bodyID()
 	{		
-		return strtr(WPI_HOME_URL_SLASHIT,array('http://'=>'','.'=>'-','/'=>'-') );
+		return strtr(WPI_HOME_URL,array('http://'=>'','.'=>'-','/'=>'-') );
 	}
 	
 			
@@ -1084,6 +1084,11 @@ class wpiTemplate
 				$args = explode(wpiTheme::PARAMS_SEP,$option);
 				wpi_get_reply_form($args);
 			}
+			
+			if ( stristr($option,'widget') ){
+				$args = explode(wpiTheme::PARAMS_SEP,$option);
+				wpi_get_widget_content($args);
+			}			
 			/*
 			if ( stristr($option,'webfont') ){
 				wpi_get_webfont(explode(wpiTheme::PARAMS_SEP,$option));
