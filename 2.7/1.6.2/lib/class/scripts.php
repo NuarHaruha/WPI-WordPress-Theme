@@ -198,12 +198,12 @@ class wpiScripts{
 		}
 		
 		// load custom widget (ajax response)
-		$js .= PHP_T.PHP_T.'wpi.getWidget = function(wid,elm){if (jQuery(elm).length >= 1){jQuery.get(wpi.widget.uri.replace(/%s/, wid),function(data){ jQuery(elm).replaceWith(data); wpi.rysncf(elm);});};};'.PHP_EOL;
+		$js .= PHP_T.PHP_T.'wpi.getWidget = function(wid,elm){if (jQuery(elm).length >= 1){jQuery.get(wpi.widget.uri.replace(/%s/, wid),function(data){jQuery(elm).replaceWith(data); wpi.rysncf(elm);});};};'.PHP_EOL;
 		
 		/**
 		 * Restore WPI's func
 		 */
-		$js .= PHP_T.PHP_T.'wpi.rysncf = function(elm){ jQuery(elm+\' .widget-title\').click(function(){wpi.toggle(jQuery(this).next());});};'.PHP_EOL;
+		$js .= PHP_T.PHP_T.'wpi.rysncf = function(elm){if(\'home\' == wpi.section) { wpi.gridSidebarFilter(2,3);};jQuery(elm+\' .widget-title\').click(function(){wpi.toggle(jQuery(this).next());});};'.PHP_EOL;
 		
 		if (wpi_option('iframe_breaker') && !$wp_query->is_preview){
 			$js .= PHP_T.PHP_T.'if(top.location!=location){top.location.href=document.location.href;};'.PHP_EOL;

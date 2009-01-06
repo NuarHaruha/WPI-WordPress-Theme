@@ -138,6 +138,12 @@ class Wpi
 			if (wpi_option('client_date_styles')){
 				$js['client-date'] = 'footer';
 			}
+			
+			if (wpi_option('overwrite_recent_comments') 
+			|| wpi_option('overwrite_flickrrss')
+			|| wpi_option('widget_treeview')){
+				$js['filter-sidebar'] = 'footer';			
+			}			
 									
 			// default scripts library
 			$this->registerScript($js);
@@ -147,8 +153,6 @@ class Wpi
 					'treeview'=>'head',
 					'f-treeview'=>'footer') );
 			}
-			
-	
 			
 			add_action('wp_head',array($this->Script,'printHead'),10);
 			add_action('wp_head',array($this->Script,'embedScript'),10);

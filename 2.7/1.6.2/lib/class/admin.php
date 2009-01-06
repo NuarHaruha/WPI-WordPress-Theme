@@ -681,7 +681,7 @@ class wpiAdmin
 			<?php self::addSelect('menu_page_enable',$this->select_options);?>
 			<?php if ($menu['pages']): ?>
 			<ul>
-				<li class="last">
+				<li>
 				<label for="wpi_menu_page_exclude">
 					<?php _e('Exclude Pages',WPI_META); ?>
 				</label>				
@@ -690,6 +690,16 @@ class wpiAdmin
 					<?php self::optPages(explode(',',wpi_option('menu_page_exclude')));?>						
 				</select>							
 				</li>
+				<li>
+				<label for="wpi_menu_page_show_home"><?php _e('Show Home',WPI_META);?></label>
+					<?php self::addSelect('menu_page_show_home',$this->select_options);?>
+				</li>
+				<li class="last">
+				<label for="wpi_menu_page_home_label"><?php _e('Home label',WPI_META);?></label>
+					<?php $prop = self::option('menu_page_home_label');?>
+					<?php $prop = (!empty($prop)) ? $prop : 'Home'; ?>				
+					<?php t('input', '', array('type' => 'text', 'name' => 'wpi_menu_page_home_label','id' =>'wpi_menu_page_home_label','value' => $prop)); ?>
+				</li>									
 			</ul>			
 		</li>	
 		<?php endif; ?>	

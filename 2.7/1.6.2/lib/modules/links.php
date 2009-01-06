@@ -207,25 +207,48 @@ function wpi_get_pages_link(){
 	}
 	
 	$output = wp_list_pages($options);
-	//$output = preg_replace('%<a ([^>]+)>%U','<a $1><span>', $output);	
 	$output = strtr($output,array($home=>$relative));	
 	
+	$extra_pages = '';
+	
 	// show home?
+	if (wpi_option('menu_page_show_home')){
+		
+		$label = wpi_option('menu_page_home_label');
+		$label = ('' != $label) ? $label : __('Home',WPI_META) ;
+		
+		$htm = _t('a',$label, array(
+			'href'=> rel(WPI_HOME_URL_SLASHIT),
+			'rel'=>'home',
+			'title' => WPI_BLOG_NAME));
+		
+		$attribs = array('class'=>'page_item page_home');
+		
+		if (is_home() || is_front_page() && !is_paged()){
+			$attribs['class'] = $attribs['class'].' current_page_item';
+		}
+		
+		$htm = _t('li',$htm,$attribs );
 	
-	$home = _t('a',__('Home',WPI_META), array(
-		'href'=> rel(WPI_HOME_URL_SLASHIT),
-		'rel'=>'home',
-		'title' => WPI_BLOG_NAME));
-	
-	$attribs = array('class'=>'page_item page_home');
-	
-	if (is_home() || is_front_page() && !is_paged()){
-		$attribs['class'] = $attribs['class'].' current_page_item';
+		$extra_pages .= $htm;	
 	}
 	
-	$home = _t('li',$home,$attribs );
+	if (is_single()){
+		
+		$label = __('Article',WPI_META);
+		
+		$htm = _t('a',$label, array(
+			'href'=> '#iscontent',
+			'class'=>'scroll-to',
+			'title' => __('Skip to content',WPI_META)));
+		$htm = 	_t('li',$htm,array('class'=>'page_item page_single current_page_item') );
+		
+		$extra_pages .= $htm;				
+	}	
 	
-	return $home.$output;	
+	$output = $extra_pages. $output;
+	
+	return $output;	
 }
 
 
@@ -265,8 +288,7 @@ function wpi_acl_links()
 			$attribs = array();
 
 			$attribs['id']		= $v[1];
-			$attribs['href']	= rel($v[0]);
-			
+			$attribs['href']	= rel($v[0]);			
 			
 				if ($k == 'log-in'){
 					$attribs['href'] = apply_filters($k,$attribs['href']);
