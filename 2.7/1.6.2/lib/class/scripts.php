@@ -1,9 +1,10 @@
 <?php
 if ( !defined('KAIZEKU') ) { die( 42);}
 /** 
+ * $Id$
  * Wpi scripts class
- * $Id scripts.php, 0022 10/23/2008 12:24:28 PM ck $
- * @links http://www.w3.org/TR/REC-html40/interact/scripts.html W3C/Scripts
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
  */
  	
 class wpiScripts{

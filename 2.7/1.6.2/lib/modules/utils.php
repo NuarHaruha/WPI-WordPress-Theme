@@ -1,11 +1,20 @@
 <?php
 if ( !defined('KAIZEKU') ) {die( 42);}
 /**
- * $Id$
- * WPI Template functions
- * @package WordPress
- * @subpackage Template
+ * WP-iStalker Chrome 
+ * Mashup Utilities
+ * 
+ * @package		WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	ToolsAndUtilities
+ * @author		Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2007 - 2009 Avice De'vereux, NH. Noah
+ * @license 	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License v2 
+ * @version 	CVS: $Id$
+ * @since 		1.6.2
  */
+ 
 function wpi_dump($var){
 	$style = 'overflow:auto;width:500px;height:250px';
 	
@@ -52,7 +61,9 @@ function string_len($string, $len){
 
 function wpi_get_dir($path, $regex = false){
 
-	if ( class_exists('DirectoryIterator') ){
+	if ( ! class_exists('DirectoryIterator') ){
+		Wpi::getFile('back-compat','import');
+	}
 		
 	try{
 		$dir  = new DirectoryIterator($path);
@@ -76,11 +87,8 @@ function wpi_get_dir($path, $regex = false){
 
 	} catch (Exception $ex)	{
 			return false;
-			}
-	} else{
-		// @todo fallback 
-		return;
 	}
+	 
 }  
 
 if(!wpi_user_func_exists('format_filesize')) {
