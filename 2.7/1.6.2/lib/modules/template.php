@@ -215,6 +215,12 @@ function wpi_get_public_content($content, $type = 'css'){
 
 	$hash = $lastmodified . '-' . md5($content);
 	$h[] = "Etag: \"" . $hash . "\"";
+
+	/**
+	 * Prevent MIME-sniffing
+	 */
+ 	$h[] = 'X-Content-Type-Options: nosniff';
+	 	
 	// returned visit
 	if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && 
 		stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) == '"' . $hash . '"') {
