@@ -173,7 +173,7 @@ class wpiScripts{
 		$js .= ',blogname:'.json_encode(WPI_BLOG_NAME);
 		$js .= ',theme_url:'.json_encode(WPI_THEME_URL);
 		$js .= ',section:'.json_encode(is_at());
-		$js .= ',widget:{uri:'.json_encode(WPI_HOME_URL_SLASHIT.wpiTheme::PUB_QUERY_VAR.wpiTheme::PUB_WIDGET_PARAMS);
+		$js .= ',widget:{uri:'.json_encode(wpi_get_public_widget_url());
 		$js .= ',request:[]';
 		$js .=',keywords:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
 		$js .= ',flickrrss:'.json_encode(wpi_option('widget_dynacloud') ? true : false);

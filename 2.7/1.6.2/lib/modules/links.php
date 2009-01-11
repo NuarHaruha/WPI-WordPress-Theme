@@ -397,3 +397,26 @@ function wpi_webfont_url($hash = false, $font_size = 36, $font_face_name = 'danu
 function wpi_get_curie_url($url){
 	return rel(WPI_THEME_URL.b64_safe_encode(str_rem('http://',$url)).'.curie');
 }
+
+
+/**
+ * wpi_get_public_widget_url()
+ * get wpi-public widgets url
+ * @uses $wp_rewrite WP_Rewrite object
+ * @params string $content parameter for the url 
+ * @since 1.6.2
+ */
+function wpi_get_public_widget_url($content=false){
+	global $wp_rewrite;
+		
+	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
+		$params = wpiTheme::PUB_QUERY_VAR.wpiTheme::PUB_WIDGET_PARAMS;	
+		$output = trailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$content));
+	} else {
+		$params = '?'.wpiTheme::PUB_QUERY_VAR.'='.wpiTheme::PUB_WIDGET_PARAMS;
+		$output = untrailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$content));
+	}	
+					
+	return $output;		
+}
+?>
