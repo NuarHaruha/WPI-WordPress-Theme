@@ -59,7 +59,7 @@
 	else:
 		if (isset($_SERVER['HTTP_USER_AGENT']) 
 			&& '' != trim($_SERVER['HTTP_USER_AGENT'])
-			&& $type = 'css'){	
+			&& $type == 'css'){	
 	
 				if (isset($_GET['files'])){
 					$request = explode(',',$_GET['files']);
