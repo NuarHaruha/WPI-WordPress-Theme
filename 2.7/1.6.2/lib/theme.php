@@ -1,27 +1,49 @@
 <?php
-if ( !defined('KAIZEKU') ) {die( 42);}
+if ( !defined('KAIZEKU') ) { exit();}
 /**
- * $Id$
- * WPI Template functions
- * @package WordPress
- * @subpackage Template
+ * WP-iStalker Chrome Milk 
+ * Template functions
+ * 
+ * @package	WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	Template
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2006 - 2009 Avice De'vereux
+ * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version 	CVS: $Id$
+ * @since 	1.2
  */
-require WPI_LIB_CLASS.'theme-enum.php';
  
+// Theme main configurations 
+require WPI_LIB_CLASS.'enum.php';
+
+/**
+ * Wpi
+ * Class loader
+ * 
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @author	NH. Noah <noah+wp-istalker-chrome@kakkoi.net>
+ * @copyright	2007 - 2009 Avice De'vereux, NH. Noah
+ * @license	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @since	1.2
+ * @access	public
+ */ 
 class Wpi
 {
 	
 	/**
-	 * WP $wp_filter id
+	 * WP filter id
 	 * @var int 
 	 */   	
 	public $wp_filter_id;
 	
-	public $errors = array();	
+	
+	public $errors = array();
+		
 	
 	/**
-	 * 
-	 * wpi stylesheet class
+	 * wpiStyle Object
 	 * 
 	 * @see 	wpiStyle
 	 * @since 	1.6
@@ -29,9 +51,9 @@ class Wpi
 	 * @var 	mixed|object
 	 */
 	public $Style;
+	
 
 	/**
-	 * 
 	 * Browscap object
 	 * 
 	 * @see 	Browscap
@@ -40,6 +62,7 @@ class Wpi
 	 * @var 	mixed|object
 	 */	
 	public $Browser;
+	
 
 	/**
 	 * 
@@ -50,7 +73,8 @@ class Wpi
 	 * @access	public
 	 * @var 	mixed|object
 	 */		
-	public $Script;	
+	public $Script;
+	
 
 	/**
 	 * 
@@ -62,6 +86,7 @@ class Wpi
 	 * @var 	mixed|object
 	 */		
 	public $Sidebar;
+	
 
 	/**
 	 * 
@@ -74,13 +99,12 @@ class Wpi
 	 */		
 	public $Template;
 	
+	
 	/**
 	 * Wpi::__construct()
-	 * 
-	 * @return
 	 */
 	public function __construct(){
-		self::getFile(array('filters-enum','client','style','template','gravatar','sidebar'),'class');
+		self::getFile(array('client','style','template','gravatar','sidebar'),'class');
 		self::getFile(array('browscap','body_class'),'import');
 		self::getFile(array('utils','formatting','filters','query','links','template','plugin','widgets','comments','author') );
 		
@@ -283,10 +307,9 @@ class Wpi
 		}
 	}
 	
+	
 	/**
 	 * Wpi::getFile()
-	 * 
-	 * @return
 	 */
 	public static function getFile($filename,$type = 'modules')
 	{
@@ -334,18 +357,16 @@ class Wpi
 		
 		unset($file,$lib,$filename);
 	}
-	
+
+
 	public static function debugDefaultFilters()
 	{
 		add_action(wpiFilter::ACTION_FLUSH,'wpi_filter_debug');
 	}	
-	
 
-	
+
 	/**
 	 * Wpi::setBrowscapPref()
-	 * 
-	 * @return
 	 */
 	public function setBrowscapPref()
 	{
@@ -363,8 +384,6 @@ class Wpi
 	
 	/**
 	 * Wpi::setThemeOptions()
-	 * 
-	 * @return
 	 */
 	public function setThemeOptions()
 	{
@@ -410,6 +429,7 @@ class Wpi
 							array($this->AdminUI, 'themeOptions') );
     	}		
 	}
+	
 
 	private function _setCachePerm(){
 		$d = array(
@@ -430,6 +450,7 @@ class Wpi
 		unset($d);
 			
 	}
+	
 
 	public function debugOptions()
 	{
@@ -438,8 +459,6 @@ class Wpi
 				
 	/**
 	 * Wpi::debug()
-	 * 
-	 * @return
 	 */
 	public function debug()
 	{
