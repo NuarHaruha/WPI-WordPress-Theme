@@ -25,4 +25,4 @@ wpi.gridSidebarFilter = function(index,col)
 			}
 		}
 	}
-}
+};
