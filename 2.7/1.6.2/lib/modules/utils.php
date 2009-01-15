@@ -175,6 +175,7 @@ function wpi_get_bg_hex_color(){
 	$hex = array();
 	$hex['nt'] = '707071';
 	$hex['dy'] = '1787BF';
+	$hex['dw'] = 'D7D7B8';
 	
 	$client = (string) $_COOKIE[wpiTheme::CL_COOKIE_TIME];
 	

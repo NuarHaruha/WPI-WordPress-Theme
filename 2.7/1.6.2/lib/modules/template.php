@@ -87,6 +87,8 @@ function wpi_get_webfont($args){
 	
 	$cache_folder   = WPI_CACHE_FONTS_DIR;
 	$background_color = wpi_get_bg_hex_color();
+	
+	
 	$transparent_background  = true ;
 	$cache_images = true ;
 
@@ -97,7 +99,8 @@ function wpi_get_webfont($args){
 			if (!wpi_option('gd_blogname')) wpi_http_error_cat();
 				$text = wpi_option('gd_blogname_text');
 				$font_size = (float) wpi_option('gd_blogname_text_size');
-				$font_color = wpi_option('gd_blogname_color');
+				$font_color = wpi_option('gd_blogname_color');		
+				if (isset($_COOKIE['wpi-cl']) && $_COOKIE['wpi-cl'] == 'dw' ) $font_color = '494738';		
 				$font_file = WPI_FONTS_DIR.wpi_option('gd_blogname_font');
 				require $gdtxt;		
 			break;
