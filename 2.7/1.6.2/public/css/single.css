@@ -57,7 +57,7 @@
 .odd{background-color:#f2f2f2}
 #related-article,#related-article .widget-title cite{background-color:#fff !important}
 #related-article ul{list-style:none; margin:0pt 1px !important}
-#related-article ul li{padding:5px 4px 5px  12px !important;clear:left}
+#related-article ul li{padding:5px 4px 5px 12px !important;clear:left}
 #related-article small{color:#999}
 #related-article ul li a{color:#666}
 #related-article ul li a:hover{color:#369;text-decoration:underline}

@@ -4,15 +4,15 @@ if ( !defined('KAIZEKU') ) {die( 42);}
  * WP-iStalker Chrome 
  * Mashup Utilities
  * 
- * @package		WordPress
+ * @package	WordPress
  * @subpackage	wp-istalker-chrome
  * 
  * @category	ToolsAndUtilities
- * @author		Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
  * @copyright 	2007 - 2009 Avice De'vereux, NH. Noah
  * @license 	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License v2 
  * @version 	CVS: $Id$
- * @since 		1.6.2
+ * @since 	1.6.2
  */
  
 function wpi_dump($var){

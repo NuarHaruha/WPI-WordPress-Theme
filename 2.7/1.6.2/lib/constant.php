@@ -1,9 +1,21 @@
 <?php
 define('KAIZEKU',1);
 /**
- * $Id$
- * WP-iStalker Constant
+ * WP-iStalker Chrome Milk 
+ * Constants
+ * 
+ * @package	WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	Configurations
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2006 - 2009 Avice De'vereux
+ * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version 	CVS: $Id$
+ * @since 	1.2
  */
+
+
 // wordpress root dir
 if ( !defined('WP_ROOT') ) {
     define( 'WP_ROOT', (strtr(realpath(ABSPATH), array("\\", DIRSEP))) );

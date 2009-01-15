@@ -1,19 +1,28 @@
 <?php
-if (!defined('KAIZEKU')) { die(42); }
+if (!defined('KAIZEKU')) exit(42); 
 /**
- * $Id$
- * Wp-Istalker Theme options
+ * WP-iStalker Chrome Milk 
+ * Admin Template
  * 
- * @package WordPress
- * @subpackage Administration
+ * @package	WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	Administration
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2006 - 2009 Avice De'vereux
+ * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version 	CVS: $Id$
+ * @since 	1.2
  */
- 
- 
+
 /**
- * wpiAdmin
+ * wpiAdmin 
+ * WPI Chrome Milk Admin Theme options
  * 
  * @access public
- * @since 1.4 
+ * @since 1.2
+ * @todo	restrict settings base on user level permission.
+ *			safe register save/update options (wpmu styles)
  */
 class wpiAdmin
 {
@@ -107,14 +116,17 @@ class wpiAdmin
     	
     	switch ($type){
     		case 'flush_css': $path = WPI_CACHE_CSS_DIR;break;
+    		case 'flush_js': $path = WPI_CACHE_JS_DIR;break;
     		case 'flush_webfont': $path = WPI_CACHE_FONTS_DIR.DIRSEP;break;
     		case 'flush_avatar': $path = WPI_CACHE_AVATAR_DIR.DIRSEP;break;
+    		// dummy flush
     		case 'flush_robotstxt': 
 				$file = ABSPATH.'robots.txt';
 				$content = htmlspecialchars( (string) $_REQUEST['wph_robots_txt_rules']);					
 					wpi_fwrite($file,$content);
 				return;
 			break;
+			// dummy flush
     		case 'flush_update_robotstxt': 
 				$file = ABSPATH.'robots.txt';
 				$content = htmlspecialchars( (string) $_REQUEST['wph_robots_txt_rules']);	
@@ -122,11 +134,8 @@ class wpiAdmin
 						wpi_fwrite($file,$content,'w+');
 					}
 				return;
-			break;			
-			
+			break;
     	}
-    	
-    	
     	
     	if ( ($files = wpi_get_dir($path)) != false ){
 	    	foreach($files as $filename){
@@ -417,44 +426,79 @@ class wpiAdmin
 			<p>
 			<?php $disabled = is_writable(WPI_CACHE_CSS_DIR) ? '' : 'disabled="disabled"'?>
 			<label for="wpi_cache_css"><?php _e('Cache CSS:',WPI_META);?>
-			<?php if ($disabled != ''):?>
+			<?php if ($disabled != ''): ?>
 			<small><?php _e('Notice: Public CSS cache dir is not writable');?></small>
 			<?php endif;?>
 			</label>
-				<select name="wpi_cache_css" id="wpi_cache_css" size="2" <?php echo $disabled;?> class="row-2">
+				<select name="wpi_cache_css" id="wpi_cache_css" size="2" disabled="disabled" class="row-2">
 			<?php	$prop = self::option('cache_css'); 
 			self::htmlOption(array(
 						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop); ?>
+						$this->lang['disabled'] => 0 ),'1'); ?>
 				</select>
-			</p>
-			<?php if($prop): ?>					
-			<?php $css = wpi_get_dir(WPI_CACHE_CSS_DIR);?>
-			<?php if (has_count($css) && !empty($css)):?>
+			</p>				
+			<?php $css = wpi_get_dir(WPI_CACHE_CSS_DIR,'/cache\-/');?>
 			<dl>
-			<?php 
-			$size = 0;
-			$n = 1;
+			<?php $size = 0;
 				foreach($css as $tag){
 					$s = filesize(WPI_CACHE_CSS_DIR.$tag);
 					$size += $s;
-					$s = format_filesize($s);
-					$s = _t('small',' - '.$s);
-					$t = str_rem('.css',$tag);
-					$a = _t('a',$tag,array('href'=>wpi_get_stylesheets_url($t),'target'=>'_blank' ));
-					$c = _t('small',$n.'. ');
-					t('dd',$c.$a.$s,array('style'=>'display:block;clear:both'));
-					$n++;
 				}
-				unset($css);
+				
+			if (has_count($css)):	
 			?>
-			<small><?php sprintf($this->lang['cache_dir_size'], format_filesize($size)) ;?></small>			
+			<dt><strong>Combine Stylesheet files <small>(gzip/deflate)</small></strong> </dt>
+			<dd>
+				<ol>
+				<li style="min-height:20px">Cached files: <strong><?php echo count($css);?></strong></li>
+				<li style="min-height:20px"><?php printf($this->lang['cache_dir_size'], format_filesize($size)) ;?></li> 
+				</ol>
+				
+			</dd>			
 			</dl>
+			<?php if($size>=1): ?>
 			<button class="sbtn" type="submit" name="wpi_flush_css" id="wpi_flush_css" value="1">Erase Cache</button>
-			<?php else:?>
-			<p><?php _e('No cached files.',WPI_META);?></p>
-			<?php endif; ?>		
-			<?php endif; ?>	
+			<?php endif; endif;unset($css); ?>
+
+		</li>
+		<li>
+			<h4><?php _e('Javascript',WPI_META);?></h4>
+			<p>
+			<?php $disabled = is_writable(WPI_CACHE_JS_DIR) ? '' : 'disabled="disabled"'?>
+			<label for="wpi_cache_css"><?php _e('Cache javascript:',WPI_META);?>
+			<?php if ($disabled != ''): ?>
+			<small><?php _e('Notice: Public scripts cache dir is not writable');?></small>
+			<?php endif;?>
+			</label>
+				<select name="wpi_cache_js" id="wpi_cache_js" size="2" disabled="disabled" class="row-2">
+			<?php	$prop = self::option('cache_js'); 
+			self::htmlOption(array(
+						$this->lang['enabled'] => 1,
+						$this->lang['disabled'] => 0 ),'1'); ?>
+				</select>
+			</p>				
+			<?php $js = wpi_get_dir(WPI_CACHE_JS_DIR,'/cache\-/');?>
+			<dl>
+			<?php $size = 0;
+				foreach($js as $tag){
+					$s = filesize(WPI_CACHE_JS_DIR.$tag);
+					$size += $s;
+				}
+				
+			if (has_count($js) && count($js) >= 1):	
+			?>
+			<dt><strong>Combine javascripts files <small>(gzip/deflate)</small></strong> </dt>
+			<dd>
+				<ol>
+				<li style="min-height:20px">Cached files: <strong><?php echo count($js);?></strong></li>
+				<li style="min-height:20px"><?php printf($this->lang['cache_dir_size'], format_filesize($size)) ;?></li> 
+				</ol>
+				
+			</dd>			
+			</dl>
+			<?php if($size>=1): ?>
+			<button class="sbtn" type="submit" name="wpi_flush_js" id="wpi_flush_js" value="1">Erase Cache</button>
+			<?php endif; endif;unset($js); ?>			
 		</li>
 		<li>
 			<h4><?php _e('GD webfont image',WPI_META);?></h4>

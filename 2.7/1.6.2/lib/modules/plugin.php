@@ -27,7 +27,16 @@ function wpi_plugin_init(){
 	
 	/**
 	 * N2H's Global Translator
+	 * @links http://www.nothing2hide.net/wp-plugins/wordpress-global-translator-plugin/
 	 */
+
+		// custom css
+	if (wpi_is_plugin_active('global-translator/global-translator.php') 
+		|| wpi_is_plugin_active('global-translator/translator.php') 
+		&& !file_exists(WPI_CSS_DIR.'translator.css') ){
+		wpiStyle::buildFlagFile();
+	}
+			 
 	if (wpi_option('widget_gtranslator')){
 		$call_plug[] = 'global-translator/translator.php,wpi_get_gt_translate_links,widget_single_summary_after';
 		
@@ -35,6 +44,8 @@ function wpi_plugin_init(){
 		if (wpi_option('widget_gtranslator_meta')){
 			$call_plug[] = 'global-translator/translator.php,wpi_global_translator_metalinks,wpi_meta_link';
 		}
+		
+		
 	}
 	
 	/**

@@ -1,10 +1,24 @@
 <?php
-if ( !defined('KAIZEKU') ) { die( 42);}
-/** 
- * $Id$
- * Wpi scripts class
- * @package WordPress
- * @subpackage wp-istalker-chrome
+if ( !defined('KAIZEKU') ) exit(42);
+/**
+ * WP-iStalker Chrome Milk 
+ * Client scripts
+ * 
+ * @package	WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	Template
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2006 - 2009 Avice De'vereux
+ * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version 	CVS:$
+ * @since 	1.2
+ */
+
+/**
+ * wpiScripts
+ * @uses $wp_scripts WP_scripts object (BackPress Scripts enqueue)
+ * @since 1.2
  */
  	
 class wpiScripts{
@@ -49,9 +63,7 @@ class wpiScripts{
 				default:
 					$this->tag[] = $tag;
 				break;
-			}
-								
-			wp_register_script($tag.'-js', $this->theme_url.$tag.'.js');
+			}				
 			
 		} else {
 			return false;
@@ -119,7 +131,7 @@ class wpiScripts{
 		t('script','',array(
 					'id'=>'wpi-js-'.$this->type,
 					'type'=>'text/javascript',					
-					'src'=> wpi_get_scripts_url($this->js),
+					'src'=> wpi_theme_content_url($this->js,'.js'),
 					'charset'=>'utf-8') );
 	}
 	
@@ -133,8 +145,8 @@ class wpiScripts{
 	
 		$js = array();
 		
-		if ($wp_query->is_singular){			
-		 	$js['thickbox'] = 'head';
+		if ($wp_query->is_singular){	
+		 	//$js['thickbox'] = 'head';
 		 	
 		 	if (wpi_option('widget_dynacloud')){
 				$js['dynacloud'] = 'head';				
@@ -240,7 +252,7 @@ class wpiScripts{
 		$js .= PHP_T.'/*]]>*/'.PHP_EOL.PHP_T;
 				
 		echo PHP_T;		
-		t('script',$js,$attribs);	
-
+		
+		t('script',$js,$attribs);
 	}
 }

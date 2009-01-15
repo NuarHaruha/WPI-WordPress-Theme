@@ -1,11 +1,24 @@
 <?php
-if (!defined('KAIZEKU')) { die(42); }
+if (!defined('KAIZEKU')) exit(42);
 /**
- * $Id$
- * Wp-iStalker dynamic sidebar widgets
- * @package WordPress
+ * WP-iStalker Chrome Milk 
+ * Dynamic Sidebar class 
+ * 
+ * @package	WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	Template
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2006 - 2009 Avice De'vereux
+ * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version 	CVS: $Id$
+ * @since 	1.4
  */
 
+/**
+ * wpiSidebar
+ * @since 1.4
+ */
 class wpiSidebar
 {
 	
@@ -87,8 +100,6 @@ class wpiSidebar
 	
 		return (isset($widgets[$key]));	
 		
-	}
-	
-	
+	}	
 }
 ?>

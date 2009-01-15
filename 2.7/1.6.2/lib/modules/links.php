@@ -7,7 +7,12 @@ if ( !defined('KAIZEKU') ) { die( 42); }
  * @subpackage Template
  */
  
-
+/**
+ * wpi_get_stylesheets_url()
+ * 
+ * @deprecated wpi_theme_content_url()
+ * @since 1.6 
+ */
 function wpi_get_stylesheets_url($css){
 	global $wp_rewrite;
 		

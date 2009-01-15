@@ -304,11 +304,11 @@ function wpi_http_error_cat()
 function wpi_body_class(){ echo wpi_get_body_class();}
 
 
-function wpi_get_body_class($browser_object = false){
+function wpi_get_body_class($browser_object = false, $load_style = false){
 
 	$sc = is_at();
 	
-	if (!$browser_object && !is_object($browser_object)){
+	if (!$load_style && !$browser_object && !is_object($browser_object)){
 		global $Wpi;
 		$browser_object = $Wpi->Browser;
 	}
@@ -321,7 +321,7 @@ function wpi_get_body_class($browser_object = false){
 		
 	$output = sandbox_body_class(false);
 	
-	if ($browser_object){
+	if ($browser_object && !$load_style){
 		// append client useragent data  
 		$ua = array();
 		
@@ -383,7 +383,7 @@ function wpi_get_body_class($browser_object = false){
 	
 	$output = $output.' -foaf-Document';
 	
-	return apply_filters(wpiFilter::FILTER_ROOT_CLASS_SELECTOR,$output);
+	return apply_filters(wpiFilter::FILTER_ROOT_CLASS_SELECTOR, $output);
 }	
 
 

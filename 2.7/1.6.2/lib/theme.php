@@ -184,7 +184,7 @@ class Wpi
 		}
 				
 		// stylesheets
-		if ($this->Browser->supportsCSS && ! is_admin() && ! is_feed()){			
+		if ( /*$this->Browser->supportsCSS && */ ! is_admin() && ! is_feed()){			
 			
 			$this->Style = new wpiStyle();			
 			$this->Style->client_css_version = $this->Browser->CssVersion;
@@ -245,7 +245,7 @@ class Wpi
 		$this->Template = new wpiTemplate();
 		
 		if (defined('WPI_DEBUG')) {
-			add_action('wp_footer',array($this,'debug'));
+			add_action(wpiFilter::ACTION_FLUSH,array($this,'debug'));
 		}
 		
 		// self::debugDefaultFilters()
@@ -370,6 +370,13 @@ class Wpi
 	 */
 	public function setBrowscapPref()
 	{
+		/**
+		 * Gary Keith {@link http://browsers.garykeith.com/ Browser capabilities project} 
+		 * blocked all default Browscap php class useragent
+		 * issues related to {@link http://code.google.com/p/phpbrowscap/issues/detail?id=3 issue 3}
+		 */
+		$this->Browser->userAgent = wpiTheme::BROWSCAP_UA;
+		
 		//if( ! wpi_option('browscap_autoupdate') ){
 			$this->Browser->doAutoUpdate = false; // autoupdate is too expensive
 		//}

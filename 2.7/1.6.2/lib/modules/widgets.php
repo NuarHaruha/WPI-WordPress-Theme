@@ -676,8 +676,8 @@ function wpi_flickrrss_widget_rep(){
 	wpi_widget_start($title,'flickrrss');
 	
 	$spinner = _t('img','',array(
-		'src'=>wpi_img_url('icons/spinner.gif'),
-		'alt'=>'loading-content','width'=>'32','height'=>'32','class'=>'fl')
+		'src'=>wpi_img_url('loadingAnimation.gif'),
+		'alt'=>'loading-content','width'=>'208','height'=>'13','class'=>'db')
 	);
 	
 	t('div',$spinner. _t('cite',__('Fetching external contents &#8230;',WPI_META) ),array('class'=>'preloading') );
@@ -768,8 +768,8 @@ function wpi_widget_recent_comments_rep(){
 	wpi_widget_start($title,'recent-comments');
 	
 	$spinner = _t('img','',array(
-		'src'=>wpi_img_url('icons/help.gif'),
-		'alt'=>'loading-content','width'=>'11','height'=>'11','class'=>'fl')
+		'src'=>wpi_img_url('loadingAnimation.gif'),
+		'alt'=>'loading-content','width'=>'208','height'=>'13','class'=>'db')
 	);
 	
 	t('div',$spinner. _t('cite',__('Fetching external contents &#8230;',WPI_META) ),array('class'=>'preloading') );

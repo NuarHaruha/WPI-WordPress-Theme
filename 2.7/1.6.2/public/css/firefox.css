@@ -3,10 +3,7 @@ blockquote:before,blockquote:after,q:before,q:after
 	content:""
 }
 
-blockquote,q
-{
-	quotes:
-}
+
 
 .clip-p,#comments .heading-title strong,
 #comments .heading-title span,#comments li.normal,

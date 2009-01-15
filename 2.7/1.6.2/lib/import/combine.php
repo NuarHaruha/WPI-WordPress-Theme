@@ -66,6 +66,11 @@
 	$hash = $lastmodified . '-' . md5($_GET['files']);
 	header ("Etag: \"" . $hash . "\"");
 	
+	/**
+	 * Prevent MIME-sniffing
+	 */
+ 	header('X-Content-Type-Options: nosniff');
+	 	
 	if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && 
 		stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) == '"' . $hash . '"') 
 	{
@@ -129,7 +134,11 @@
 		}
 	
 		// Send Content-Type
-		header ("Content-Type: text/" . $type);		
+		header ("Content-Type: text/" . $type.'; charset: UTF-8');
+
+		if ($compress && $type == 'css'){ // cant compressed js yet
+			$contents = compress($contents);		
+		}
 		
 		if (isset($encoding) && $encoding != 'none') 
 		{
@@ -153,5 +162,11 @@
 				fclose($fp);
 			}
 		}
-	}			
+	}
+	
+	function compress($contents) {
+	    $contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
+	    $contents = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $contents);
+	    return $contents;
+	}				
 ?>

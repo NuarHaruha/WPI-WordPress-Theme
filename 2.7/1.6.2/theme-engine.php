@@ -38,9 +38,9 @@
 	
 	define('WPI_CACHE_AVATAR_DIR',WPI_CACHE.DIRSEP.'avatar'.DIRSEP); 
 	
-	$compress = false;
+	$compress = true;
 		
-	$cache 	  = false;
+	$cache 	  = true;
 		
 	$cachedir 	= WPI_CACHE;
 		

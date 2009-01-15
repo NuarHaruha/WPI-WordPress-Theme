@@ -52,7 +52,7 @@ final class wpiTheme
 	 * @access public
 	 * @since 1.2
 	 */		
-	const VERSION = '1.6.2 RC 3';
+	const VERSION = '1.6.2 RC 4';
 	
 	
 	/**
@@ -569,7 +569,50 @@ final class wpiTheme
 	 */		
 	const FRONTPAGE_TEMPLATE_TYPE = "/^frontpage\-/";
 	
+
+	/**
+	 * wpiTheme::CSS_FILE_REGEX	 
+	 * simple regex for filtering css files 
+	 * 
+	 * @var string 
+	 * @access public
+	 * @since 1.6.2
+	 */		
+	const CSS_FILE_REGEX = '/\.css/';
 	
+
+	/**
+	 * wpiTheme::JS_FILE_REGEX	 
+	 * simple regex for filtering javascripts files 
+	 * 
+	 * @var string 
+	 * @access public
+	 * @since 1.6.2
+	 */		
+	const JS_FILE_REGEX = '/\.js/';	
+
+
+	/**
+	 * CSS & Scripts handler prefix
+	 * 
+	 * @var string	 
+	 * @access public
+	 * @since 1.6.2
+	 */
+	const H_PREFIX = 'wpi-cm-';
+	
+	
+	/**
+	 * Browscap User Agent
+	 * 
+	 * @see Browscap::$userAgent
+	 * @var string
+	 * @access public
+	 * @since 1.6.2 
+	 */
+	const BROWSCAP_UA = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5';
+	
+			
 	/**
 	 * wpiTheme::__construct()
 	 * @access private 
@@ -692,7 +735,17 @@ final class wpiSection
 final class wpiFilter
 {
 	
-	
+	/**
+	 * Default Stylesheets filters
+	 * accept arguments 1, array list of stylesheet handle
+	 * 
+	 * @category filter
+	 * @see wpiStyle
+	 * @since 1.6.2
+	 */
+	const DEFAULT_STYLESHEETS = 1000;
+		
+		
 	const ACTION_FLUSH = 40000;
 	
 	const ACTION_SEND_HEADER = 'wpi_send_http_header';
