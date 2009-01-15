@@ -184,7 +184,7 @@ class wpiTemplate
 		$htm = _t('a',wpiTheme::THEME_NAME.$str,array('href'=>wpiTheme::THEME_URL,'class'=>'rn rtxt','id'=>'designer','title'=> wpiTheme::THEME_NAME.' WordPress Theme') );
 		
 		$htm .= _t('a','top',array('href'=>'#'.self::bodyID(),'title'=>'back to top','class'=>'rn rtxt top'));
-				$htm .= _t('span','Copyright &#169; '.wpi_get_blog_since_year().' '.$url.'.',array('id'=>'copyright'));
+		$htm .= _t('span','Copyright &#169; '.wpi_get_blog_since_year().' '.$url.'.',array('id'=>'copyright'));
 		$htm = _t('p',$htm,array('class'=>'nav-links r'));
 		
 		echo $htm;
@@ -216,7 +216,14 @@ class wpiTemplate
 					<dd> 
 						<a href="http://tools.microformatic.com/transcode/rss/hatom/<?php echo WPI_HOME_URL_SLASHIT;?>" title="Raw hAtom feeds" rel="atom" type="application/rss+xml">Atom</a>
 					</dd>
-				</dl>				
+				</dl>	
+				
+<?php if (defined('WPI_ONE_LINER')):?>
+				<dl class="random-quote xoxo fl cf">
+					<dt><?php _e('Blurp!');?></dt>
+					<dd> &nbsp;<?php wpi_get_one_liner(1) ?>&nbsp;</dd>
+				</dl>
+<?php endif; ?>							
 			</div>
 			
 <?php		
@@ -857,7 +864,7 @@ class wpiTemplate
 		$css .= 'height:'.(ceil($base_height+$height)) .'px !important';
 		$css .= '}'.PHP_EOL;		
 		$css .= PHP_T.'#blog-title a{';
-		$css .= 'background-image:url(\''.$uri.'\') !important;height:'. ceil($height + $inc) .'px';
+		$css .= 'background-image:url(\''.$uri.'\');height:'. ceil($height + $inc) .'px';
 		$css .= ';width:700px;display:block}'.PHP_EOL;
 		echo $css;
 	}
@@ -1089,10 +1096,10 @@ class wpiTemplate
 				$args = explode(wpiTheme::PARAMS_SEP,$option);
 				wpi_get_widget_content($args);
 			}			
-			/*
+			
 			if ( stristr($option,'webfont') ){
 				wpi_get_webfont(explode(wpiTheme::PARAMS_SEP,$option));
-			}*/			
+			}		
 
 		}
 		
@@ -1110,8 +1117,8 @@ class wpiTemplate
 	{
 	  $new_rules = array( 
 	    wpiTheme::PUB_QUERY_VAR.'/(.+)' =>'index.php?'.wpiTheme::PUB_QUERY_VAR.'='.$wp_rewrite->preg_index(1),
-		wpiTheme::PUB_QUERY_VAR.'/reply/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR.'=reply/'.$wp_rewrite->preg_index(1),/*
-		wpiTheme::PUB_QUERY_VAR.'/webfont/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR.'=webfont/'.$wp_rewrite->preg_index(1),	*/
+		wpiTheme::PUB_QUERY_VAR.'/reply/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR.'=reply/'.$wp_rewrite->preg_index(1),
+		wpiTheme::PUB_QUERY_VAR.'/webfont/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR.'=webfont/'.$wp_rewrite->preg_index(1),	
 		wpiTheme::PUB_QUERY_VAR_CSS.'/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR_CSS.'='.$wp_rewrite->preg_index(1),
 		wpiTheme::PUB_QUERY_VAR_JS.'/(.+)' => 'index.php?'.wpiTheme::PUB_QUERY_VAR_JS.'='.$wp_rewrite->preg_index(1));
 	

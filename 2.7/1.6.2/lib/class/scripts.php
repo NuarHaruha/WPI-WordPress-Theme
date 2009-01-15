@@ -231,7 +231,13 @@ class wpiScripts{
 		if (wpi_option('overwrite_recent_comments')){	
 			$domready[] = '/* recent comments	*/ wpi.widget.request.push({"n":"#recent-comments","c":\'b47bdb6bde262b0537f6f2a7fbfe825f\'});';			
 			$defer = 1;
-		}		
+		}
+		
+		// gd blogname
+		if (wpi_option('gd_blogname')){
+			$domready[] = '/* GD Blog Title		*/ jQuery(\'#blog-title a\').css(\'backgroundImage\', \'url(\'+wpi.home_url + \'wpi-public/webfont,blog-name/)\');';	
+			$defer = 1;	
+		}								
 		
 		if ($defer) unset($attribs['defer']);
 		

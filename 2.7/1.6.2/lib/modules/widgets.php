@@ -680,7 +680,9 @@ function wpi_flickrrss_widget_rep(){
 		'alt'=>'loading-content','width'=>'208','height'=>'13','class'=>'db')
 	);
 	
-	t('div',$spinner. _t('cite',__('Fetching external contents &#8230;',WPI_META) ),array('class'=>'preloading') );
+	$label = __('Loading &#8230;',WPI_META);
+	
+	t('div',$spinner. _t('cite', $label ),array('class'=>'preloading') );
 	
 	wpi_widget_end();	
 }
@@ -772,7 +774,9 @@ function wpi_widget_recent_comments_rep(){
 		'alt'=>'loading-content','width'=>'208','height'=>'13','class'=>'db')
 	);
 	
-	t('div',$spinner. _t('cite',__('Fetching external contents &#8230;',WPI_META) ),array('class'=>'preloading') );
+	$label = __('Loading &#8230;',WPI_META);
+	
+	t('div',$spinner. _t('cite', $label ),array('class'=>'preloading') );
 	
 	wpi_widget_end();	
 }
@@ -834,5 +838,75 @@ function wpi_overwrite_widgets_callback(array $owidgets){
 			}
 		}			
 	}
+}
+
+
+function wpi_get_one_liner($display = false){
+	
+	$q = array();
+	
+	$q[] = "It is bad luck to be superstitious.";
+	$q[] = "No one is listening until you make a mistake";
+	$q[] = "As long as there are tests, there will be prayer in public school";
+	$q[] = "Things are more like they used to be than they are now.";
+	$q[] = "Always be sincere, even if you don't mean it";
+	$q[] = "A clear conscience is ussualy the sign of bad memory";
+	$q[] = "If at first you DO succeed, try not to look astonished!";	
+	$q[] = "You can't have everything. Where will you put it.";
+	$q[] = " Ambition is a poor excuse for not having enough sense to be lazy.";
+	$q[] = "If you can do something later why do it now.";
+	$q[] = "I wish they all would stop trying.";
+	$q[] = "Procrastination is the art of keeping up with yesterday.";
+	$q[] = "If you try to fail, and succeed, which have you done?";
+	$q[] = "Always be sincere, even if you don't mean it";		
+	$q[] = "Lust, not Love.";
+	$q[] = "Time is what keeps thing from happening all at once.";
+	$q[] = "If practice makes perfect, and nobody's perfect, why practice?";
+	$q[] = "MY inspiration is me, me, me, ALL ME.";
+	$q[] = "I intend to live forever - so far, so good.";
+	$q[] = "According to my best recollection... I dont remembers.";
+	$q[] = " When I'm not in my right mind, my left mind gets pretty crowded.";
+	$q[] = "Nothing is <strong>Fool</strong> Proof.";
+	$q[] = "<strong>On the other hand</strong>. you have different fingers";
+	$q[] = "Too many freaks, not enough circuses.";
+	$q[] = "If you can't be kind, at least have the decency to be vague.";
+	$q[] = "I smile because I don't know what the hell is going on.";
+	$q[] = " Sarcasm is just one more service we offer.";
+	$q[] = "Errors have been made. Others will be blamed.";
+	$q[] = "See no evil, hear no evil, date no evil.";
+	$q[] = "Stress is when you wake up screaming & you realize you haven't fallen asleep yet.";
+	$q[] = "If you're too open minded, your brains will fall out.";
+	$q[] = "Artificial intelligence is no match for natural stupidity.";
+	$q[] = "If you must choose between two evils, pick the one you\'ve never tried before.";
+	$q[] = "It is easier to get forgiveness than permission";
+	$q[] = "If you look like your passport picture, you probably need the trip.";
+	$q[] = "A conscience is what hurts when all your other parts feel so good.";
+	$q[] = "When everything's coming your way, you're in the wrong lane";
+	$q[] = "Thou shalt not weigh more than thy refrigerator.";
+	$q[] = "Someone who thinks logically provides a nice contrast to the real world.";
+	$q[] = "Blessed are they who can laugh at themselves for they shall never cease to be amused.";
+	$q[] = "If everything seems to be going well, you have obviously overlooked something";
+	$q[] = "Everyone has a photographic memory. Some don't have film.";
+	$q[] = "OK, so what's the speed of dark?";
+	$q[] = "Mental Floss prevents Moral Decay.";
+	$q[] = "Proofread carefully to see if you any words out.";
+	$q[] = "Ever stop to think, and forget to start again? ";
+	$q[] = "Our forum never has a bugs. It just develops random features.";
+	$q[] = "Access denied--nah nani na nah nah! ";
+	$q[] = "All computers wait at the same speed.";
+	$q[] = "Don't sweat the petty things, and don't pet the sweaty things.";
+	$q[] = "One nice thing about egotists: They don't talk about other people.";
+	$q[] = "To be intoxicated is to feel sophisticated but not be able to say it.";
+	$q[] = "Never underestimate the power of stupid people in <strong>large</strong> groups.";
+	$q[] = "The older you get, the better you realize you were.";
+	$q[] = "I doubt, therefore I might be.";
+	$q[] = "Age is a very high price to pay for maturity.";	
+	$q[] = "A fool and his money are soon partying.";
+	$q[] = "44444 is the new 31337";
+	
+	
+	$r = rand_array($q);
+	
+	if ($display): echo $q[$r]; else : return $q[$r]; endif;
 }
 ?>

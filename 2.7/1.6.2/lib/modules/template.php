@@ -95,7 +95,7 @@ function wpi_get_webfont($args){
 	switch ($type){
 		case 'blog-name':
 			if (!wpi_option('gd_blogname')) wpi_http_error_cat();
-				$the_text = wpi_option('gd_blogname_text');
+				$text = wpi_option('gd_blogname_text');
 				$font_size = (float) wpi_option('gd_blogname_text_size');
 				$font_color = wpi_option('gd_blogname_color');
 				$font_file = WPI_FONTS_DIR.wpi_option('gd_blogname_font');
