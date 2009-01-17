@@ -612,6 +612,21 @@ final class wpiTheme
 	 */
 	const BROWSCAP_UA = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5';
 	
+	
+	/**
+	 * wpiTheme::GT_NO_TRANSLATE
+	 * 
+	 * Preserved default translation
+	 * Google Translate services 
+	 * a HTML class selector
+	 * 
+	 * @see wpiTemplate
+	 * @link http://www.google.com/intl/en/help/faq_translation.html#donttranstext
+	 * @access public
+	 * @since 1.6.2	 
+	 */
+	 const GT_NO_TRANSLATE = 'notranslate';
+	 
 			
 	/**
 	 * wpiTheme::__construct()

@@ -53,12 +53,13 @@ function wpi_get_comment_text_filter($content){
 }
 
 /**
- * @since 1.6.2
+ * wpi_comments_title()
  * 
+ * @since 1.6.2
  */
 function wpi_comments_title($len=80){
 ?>	
-<h2 class="heading-title cf"><span class="fl"><?php comments_number('No Responses', 'One Response', '% Responses' );?></span><strong class="fl">to &#8220;<?php echo string_len(get_the_title(),$len); ?>&#8221;</strong></h2>
+<h2 class="heading-title cf <?php echo wpiTheme::GT_NO_TRANSLATE;?>"><span class="fl"><?php comments_number('No Responses', 'One Response', '% Responses' );?></span><strong class="fl">to &#8220;<?php echo string_len(get_the_title(),$len); ?>&#8221;</strong></h2>
 <?php	
 }
 

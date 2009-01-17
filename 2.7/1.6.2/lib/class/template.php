@@ -158,6 +158,9 @@ class wpiTemplate
 		add_action('wp_footer','wpi_register_widgets');	
 	}
 
+	/**
+	 * wpiTemplate::htmlBlogHeader();
+	 */
 	public function htmlBlogHeader(){
 		
 		$outer_class = apply_filters(wpiFilter::FILTER_SECTION_OUTER_CLASS,'outer cf');
@@ -185,7 +188,7 @@ class wpiTemplate
 		
 		$htm .= _t('a','top',array('href'=>'#'.self::bodyID(),'title'=>'back to top','class'=>'rn rtxt top'));
 		$htm .= _t('span','Copyright &#169; '.wpi_get_blog_since_year().' '.$url.'.',array('id'=>'copyright'));
-		$htm = _t('p',$htm,array('class'=>'nav-links r'));
+		$htm = _t('p',$htm,array('class'=>'nav-links r '.wpiTheme::GT_NO_TRANSLATE));
 		
 		echo $htm;
 	}
