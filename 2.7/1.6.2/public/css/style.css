@@ -1962,3 +1962,8 @@ pre.fff
 #validation dt{font-size:0.9em;padding-left:4px;color:#cfcfcf}
 .dw #validation dt{color:#7E7F37}
 #validation dd{float:left}
+
+/* fixes for google translate */
+#cl-options li{height:25px;overflow:hidden}
+#cl-options li#acl-1{width:27px}
+#cl-options li#acl-2{width:25px}
