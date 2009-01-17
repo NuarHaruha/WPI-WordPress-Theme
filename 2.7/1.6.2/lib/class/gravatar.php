@@ -142,8 +142,7 @@ class wpiGravatar
 	 */	
 	public function internalCSS($methods){
 		add_action(wpiFilter::ACTION_GRAVATAR_CSS, array($this, $methods), 1);			
-	}
-	
+	}	
 
 
 	/**
@@ -168,7 +167,7 @@ class wpiGravatar
 			$hash = md5($author->user_email);
 			$url = self::getURL($hash, 50, $rating);
 			
-				if (wpi_option('cache_css')){
+				if (wpi_option('cache_avatar')){
 					$url = rel($url).'.ava';
 				}
 			
@@ -195,7 +194,7 @@ class wpiGravatar
 					foreach($gravatars as $hash){			
 						$url 	  	= self::getURL($hash,$size,$rating);
 						
-							if (wpi_option('cache_css')){
+							if (wpi_option('cache_avatar')){
 								$url = rel($url).'.ava';
 							}
 										
@@ -253,7 +252,7 @@ class wpiGravatar
 			{			
 				$url 	  	= self::getURL($hash,$size,$rating);
 				
-				if (wpi_option('cache_css')){
+				if (wpi_option('cache_avatar')){
 					$url = rel($url).'.ava';
 				}
 				
@@ -318,7 +317,7 @@ class wpiGravatar
 	{	
 		$d = get_option('avatar_default');
 		
-		if (wpi_option('cache_css')){
+		if (wpi_option('cache_avatar')){
 		
 			wpiGravatar::is_cached($h,$s,$r,$d);
 			$output = WPI_THEME_URL.join('-',array($h,$s,$r,$d));

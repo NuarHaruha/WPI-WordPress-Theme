@@ -340,8 +340,8 @@ class wpiStyle
 	/*<![CDATA[*/<?php if ( ! self::getOption('css_via_header') ): ?>
 	
 	@import url('<?php echo wpi_theme_content_url('user-agent'); ?>');	
-	
-		<?php endif; ?>	<?php do_action( wpiFilter::ACTION_INTERNAL_CSS); ?>
+	<?php endif; ?>	
+		<?php do_action( wpiFilter::ACTION_INTERNAL_CSS); ?>
 		<?php do_action( wpiFilter::ACTION_GRAVATAR_CSS ); ?>		
 	/*]]>*/
 	</style>	
