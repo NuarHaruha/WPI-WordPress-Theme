@@ -329,7 +329,7 @@ class wpiAdmin
 						</dd>
 					</dl>
 				<? endif;?>
-				</li>			
+				</li>
 				<li class="last"><?php $prop = self::option('meta_robots'); ?>
 					<label for="wpi_meta_robots"><?php _e('Robots Meta',WPI_META);?>
 					<small><?php _e('Auto append meta robot.',WPI_META);?></small></label>
@@ -351,6 +351,17 @@ class wpiAdmin
 				</li>				
 			</ul>		
 		</li>	
+		<li>
+			<h4><?php _e('Discussions',WPI_META);?></h4>
+			<ul>
+				<li class="last">
+					<label for="wpi_comments_redirect"><?php _e('Redirect all links',WPI_META);?>				
+						<small><?php _e('Redirect all comment\'s author links', WPI_META);?></small>										
+					</label>
+					<?php self::addSelect('comments_redirect',$this->select_options);?>						
+				</li>
+			</ul>
+		</li>		
 		<li>
 			<h4><?php _e('Feed Syndications Rules',WPI_META);?></h4>
 			<ul style="list-style:lower-roman outside;padding-left:28px">

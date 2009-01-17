@@ -305,7 +305,7 @@ function wpi_acl_links()
 					$attribs['rel']	= 'noindex noarchive';
 				}
 
-			$attribs['rev']		= 'site:relative';
+			$attribs['rev']		= 'relative';
 			$attribs['class']   = 'ttip';
 			$acl_links[]		= _t('a',$v[3],$attribs);
 		}
@@ -321,7 +321,7 @@ function wpi_acl_links()
 			unset($acl_links);
 		}
 		
-		t('ul',$output.stab(2).PHP_T,array('id'=>'cl-options','class'=>'xoxo r cfl cf'));
+		t('ul',$output.stab(2).PHP_T,array('id'=>'cl-options','class'=>'xoxo r cfl cf '.wpiTheme::GT_NO_TRANSLATE));
 }
 
 
@@ -423,5 +423,9 @@ function wpi_get_public_widget_url($content=false){
 	}	
 					
 	return $output;		
+}
+
+function _wpi_make_curie_link($matches){
+	return 'href="'.wpi_get_curie_url($matches[1]).'"';
 }
 ?>

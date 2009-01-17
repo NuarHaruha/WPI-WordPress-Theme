@@ -299,7 +299,7 @@ function wpi_default_filters(){
 	
 	$f[wpiFilter::ACTION_FOOTER_SCRIPT] = 'wpi_google_analytics_tracking_script';
 	
-	$f['get_comment_text'] = 'wpi_comment_text_filter';
+	$f['get_comment_text'] = 'wpi_comment_text_filters';
 			
 	wpi_foreach_hook_filter($f);	
 }
@@ -649,7 +649,7 @@ function wpi_google_analytics_tracking_script()
 <?php endif;
 }
 
-function wpi_comment_text_filter($content)
+function wpi_comment_text_filters($content)
 {
 	$content = wptexturize($content);
 	$content = convert_chars($content);
@@ -657,6 +657,11 @@ function wpi_comment_text_filter($content)
 	$content = force_balance_tags($content);
 	$content = convert_smilies($content);
 	$content = wpautop($content);
+	
+	if (wpi_option('comments_redirect')){
+		$content = wpi_make_curie_link_filter($content);
+	}
+	
 	return $content;	
 }
 
@@ -777,5 +782,19 @@ function wpi_grid_sidebar_filter(){
 		
 		unset($widgets,$style);			
 	}
+}
+
+/**
+ * wpi_make_curie_link_filter()
+ * convert url to curie links
+ * 
+ * @see wpi_comment_text_filters();
+ * @since r239
+ */
+function wpi_make_curie_link_filter($content){	
+	
+	$content = preg_replace_callback('/href="([^"]+)"/','_wpi_make_curie_link', $content);
+	
+	return $content;
 }
 ?>
