@@ -37,10 +37,6 @@
 	define('WPI_CACHE_FONTS_DIR',WPI_CACHE.DIRSEP.'webfonts'); 
 	
 	define('WPI_CACHE_AVATAR_DIR',WPI_CACHE.DIRSEP.'avatar'.DIRSEP); 
-	
-	$compress = true;
-		
-	$cache 	  = true;
 		
 	$cachedir 	= WPI_CACHE;
 		
@@ -57,6 +53,11 @@
 		$fc = new wpiRouter($_GET);
 				
 	else:
+	
+	$compress = true;
+		
+	$cache 	  = true;
+		
 		if (isset($_SERVER['HTTP_USER_AGENT']) 
 			&& '' != trim($_SERVER['HTTP_USER_AGENT'])
 			&& $type == 'css'){	

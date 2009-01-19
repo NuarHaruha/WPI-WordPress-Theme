@@ -443,9 +443,7 @@ class wpiAdmin
 			</label>
 				<select name="wpi_cache_css" id="wpi_cache_css" size="2" disabled="disabled" class="row-2">
 			<?php	$prop = self::option('cache_css'); 
-			self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),'1'); ?>
+			self::htmlOption(array($this->lang['enabled'] => 1, $this->lang['disabled'] => 0 ),'1'); ?>
 				</select>
 			</p>				
 			<?php $css = wpi_get_dir(WPI_CACHE_CSS_DIR,'/cache\-/');?>
@@ -456,10 +454,10 @@ class wpiAdmin
 					$size += $s;
 				}
 				
-			if (has_count($css)):	
+			if (has_count($css) && count($css) >= 1):		
 			?>
-			<dt><strong>Combine Stylesheet files <small>(gzip/deflate)</small></strong> </dt>
-			<dd>
+			<dt><?php _e('<strong>Combine CSS files <small>(gzip/deflate)</small></strong>',WPI_META); ?>
+			</dt>
 				<ol>
 				<li style="min-height:20px">Cached files: <strong><?php echo count($css);?></strong></li>
 				<li style="min-height:20px"><?php printf($this->lang['cache_dir_size'], format_filesize($size)) ;?></li> 
@@ -498,7 +496,8 @@ class wpiAdmin
 				
 			if (has_count($js) && count($js) >= 1):	
 			?>
-			<dt><strong>Combine javascripts files <small>(gzip/deflate)</small></strong> </dt>
+			<dt><?php _e('<strong>Combine javascripts files <small>(gzip/deflate)</small></strong>',WPI_META); ?>
+			</dt>
 			<dd>
 				<ol>
 				<li style="min-height:20px">Cached files: <strong><?php echo count($js);?></strong></li>
@@ -557,44 +556,32 @@ class wpiAdmin
 		<li class="last">
 			<h4><?php _e('Avatar image',WPI_META);?></h4>
 			<p>
-			<?php $disabled = is_writable(WPI_CACHE_AVATAR_DIR) ? '' : 'disabled="disabled"'?>
-			<label for="wpi_cache_avatar"><?php _e('Cache Avatar images',WPI_META);?>
-			<?php if ($disabled != ''):?>
-			<small><?php _e('Notice: Public avatar cache dir is not writable');?></small>
-			<?php endif;?>
+			<label for="wpi_cache_avatar"><?php _e('Cache Avatar images', WPI_META);?>			
 			</label>
-				<select name="wpi_cache_avatar" id="wpi_cache_avatar" size="2" <?php echo $disabled;?> class="row-2">
-			<?php	$prop = self::option('cache_avatar'); 
-			self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$prop); ?>
-				</select>				
-			</p>
-			<?php if($prop): ?>	
-			<?php $ava = wpi_get_dir(WPI_CACHE_AVATAR_DIR);?>
-			<?php if (has_count($ava) && !empty($ava)):?>
+			<?php self::addSelect('cache_avatar',$this->select_options);?>  				
+			</p>			
+			<?php $ava = wpi_get_dir(WPI_CACHE_AVATAR_DIR);?>			
 			<dl>
 			<?php 
 			$size = 0;
-			$n = 1;
 				foreach($ava as $tag){
 					$s = filesize(WPI_CACHE_AVATAR_DIR.DIRSEP.$tag);
 					$size += $s;
-					$s = format_filesize($s);
-					$s = _t('small',' - '.$s);
-					$a = _t('a',str_rem('.png',$tag),array('href'=>WPI_THEME_URL.'public/cache/avatar/'.$tag,'target'=>'_blank' ));
-					$c = _t('small',$n.'. ');
-					t('dd',$c.$a.$s,array('style'=>'display:block;clear:both'));
-					$n++;
 				}
+		if (has_count($ava) && count($ava) >= 1):	
 			?>
-			<small><?php sprintf($this->lang['cache_dir_size'], format_filesize($size)) ;?></small>
+			<dt><strong>Gravatar</strong> </dt>
+			<dd>
+				<ol>
+				<li style="min-height:20px">Cached files: <strong><?php echo count($ava);?></strong></li>
+				<li style="min-height:20px"><?php printf($this->lang['cache_dir_size'], format_filesize($size)) ;?></li> 
+				</ol>
+				
+			</dd>			
 			</dl>
+			<?php if($size>=1): ?>
 			<button class="sbtn" type="submit" name="wpi_flush_avatar" id="wpi_flush_avatar" value="1">Erase Cache</button>
-			<?php else:?>
-			<p><?php _e('No cached files.',WPI_META);?></p>
-			<?php endif; ?>
-			<?php endif; ?>			
+			<?php endif; endif;unset($ava); ?>	
 		</li>		
 	</ul>
 		<?php self::saveButton();?>	

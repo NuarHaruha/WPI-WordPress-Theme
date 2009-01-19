@@ -89,7 +89,7 @@ class wpiRouter
 	 * @tutorial http://blog.gravatar.com/2008/03/14/big-changes-afoot/
 	 */
 	private function _ava()
-	{
+	{		
 
 		header("Cache-Control: private, max-age=10800, pre-check=10800");
 		header("Pragma: private");
@@ -105,6 +105,8 @@ class wpiRouter
 		
 		$file = WPI_CACHE_AVATAR_DIR.md5($url).'.png';
 		
+		//var_dump($file);exit;
+		
 		if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])){
 		  header('Last-Modified: '.$_SERVER['HTTP_IF_MODIFIED_SINCE'],true,304);
 		  exit;
@@ -117,8 +119,7 @@ class wpiRouter
 		}		
 
 		if (!file_exists($file)){
-			die(42);
-			exit;
+			cURLdownload($url, $file);
 		}
 		
 		header("Content-type: image/png");
