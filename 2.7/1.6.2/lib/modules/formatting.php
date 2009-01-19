@@ -410,26 +410,24 @@ function wpi_single_type_title()
 	echo $output;
 }
 
-function wpi_hatom_date($timestamp = false, $class = false)
-{
+function wpi_hatom_date($timestamp = false, $class = false){
 	echo wpi_get_hatom_date($timestamp, $class);
 }
 
-function wpi_get_relative_date($timestamp)
-{
+function wpi_get_relative_date($timestamp){
 
-	if (wpi_user_func_exists('time_since'))
-	{
+	if (wpi_user_func_exists('time_since'))	{
 		$date = abs(strtotime($timestamp) - (60 * 120));
-		return (time_since($date) . ' ' . __('ago', WPI_META));
+		$output = sprintf(__('%s ago',WPI_META),time_since($date));
+		return  $output;
+		
 	} else
 	{
 		return $timestamp;
 	}
 }
 
-function wpi_relative_date($timestamp)
-{
+function wpi_relative_date($timestamp){
 	echo wpi_get_relative_date($timestamp);
 }
 
@@ -472,15 +470,19 @@ function wpi_pagination()
 }
 
 
-function wpi_post_link()
-{
+function wpi_post_link(){
 	next_posts_link(__('&laquo; Older Entries', WPI_META));
 	echo '&nbsp;';
 	previous_posts_link(__('Newer Entries &raquo;', WPI_META));
 }
 
-function wpi_get_range_increment($start, $increment)
-{
+/**
+ * wpi_get_range_increment()
+ * 
+ * @param mixed|int $start column count start
+ * @param mixed|int $incremeant column span by
+ */
+function wpi_get_range_increment($start, $increment){
 	$end = ceil(intval(get_option('posts_per_page')));
 
 	$output = array();
@@ -488,7 +490,7 @@ function wpi_get_range_increment($start, $increment)
 	if ($start > $end) return false; 
 	$end = (($start + 1) == $end) ? $end + 2 : $end + 3;	
 
-	foreach (range($start, $end, $increment) as $i) 	$output[$i] = $i;
+	foreach (range($start, $end, $increment) as $i) $output[$i] = $i;
 
 	return $output;
 }

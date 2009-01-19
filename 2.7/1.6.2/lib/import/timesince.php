@@ -7,17 +7,17 @@ function time_since($older_date, $newer_date = false)
 	{
 	// array of time period chunks
 	$chunks = array(
-	array(60 * 60 * 24 * 365 , 'year'),
-	array(60 * 60 * 24 * 30 , 'month'),
-	array(60 * 60 * 24 * 7, 'week'),
-	array(60 * 60 * 24 , 'day'),
-	array(60 * 60 , 'hour'),
-	array(60 , 'minute'),
+	array(60 * 60 * 24 * 365 , __('year', WPI_META) ),
+	array(60 * 60 * 24 * 30 , __('month', WPI_META) ),
+	array(60 * 60 * 24 * 7, __('week', WPI_META) ),
+	array(60 * 60 * 24 , __('day', WPI_META) ),
+	array(60 * 60 , __('hour', WPI_META) ),
+	array(60 , __('minute', WPI_META) ),
 	);
 
 	// $newer_date will equal false if we want to know the time elapsed between a date and the current time
 	// $newer_date will have a value if we want to work out time elapsed between two known dates
-	$newer_date = ($newer_date == false) ? ($_SERVER['REQUEST_TIME']+(60*60*get_settings("gmt_offset"))) : $newer_date;
+	$newer_date = ($newer_date == false) ? ($_SERVER['REQUEST_TIME']+(60*60*get_option("gmt_offset"))) : $newer_date;
 
 	// difference in seconds
 	$since = $newer_date - $older_date;
