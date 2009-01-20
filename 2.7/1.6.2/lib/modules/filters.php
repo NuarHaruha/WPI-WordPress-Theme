@@ -767,7 +767,7 @@ function wpi_home_template_filter($template){
 		$file = WPI_LIB_IMPORT_TEMPLATE.$tpl;
 		
 		if (file_exists($file)){
-			return (string) str_rem(TEMPLATEPATH,$file);
+			return $file;
 		} 
 	}
 		
