@@ -294,6 +294,27 @@ final class wpiTheme
 	
 	
 	/**
+	 * wpiTheme::DOC_PUB_IMAGE_URL
+	 * Project images archive url
+	 * 
+	 * @var string
+	 * @access public
+	 * @since 1.6.2
+	 */
+	 const DOC_PUB_IMAGE_URL = 'http://wp-istalker.googlecode.com/svn/archives/resources/wpi-istalker-chrome-images.zip';
+
+	/**
+	 * wpiTheme::DOC_PUB_IMAGE_HASH
+	 * Project images archive SHA1 hash
+	 * 
+	 * @var string
+	 * @access public
+	 * @since 1.6.2
+	 */	 
+	 const DOC_PUB_IMAGE_HASH = '3f338d4430b0e232e8cfc8672c98873eff7fb5c5';
+	 
+	 
+	/**
 	 * wpiTheme::THEME_URL
 	 * WP-Istalker development and demo blogs
 	 * 

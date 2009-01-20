@@ -1,11 +1,18 @@
 <?php
-if ( !defined('KAIZEKU') ) {   die( 42);}
+if ( !defined('KAIZEKU') ) { exit();}
 /**
- * $Id$
- * WPI default actions and filters functions
+ * WP-iStalker Chrome Milk 
+ * Template custom filters functions
  * 
- * @package WordPress
- * @subpackage Template 
+ * @package	WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	Template
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2006 - 2009 Avice De'vereux
+ * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version 	CVS: $Id$
+ * @since 	1.2
  */
  
 function wpi_register_actions(array $hook_array, $is_callback = false) {
@@ -27,7 +34,7 @@ function wpi_register_actions(array $hook_array, $is_callback = false) {
 }
 
 
-function is_post($get_variables){	
+function is_post($get_variables){
 	
     return isset($_POST[$get_variables]);
 } 
@@ -48,6 +55,8 @@ function is_cookie($cookie_name){
 
 /**
  * is_cl_width()
+ * Check for client width cookie
+ * 
  * @params int $width screen width
  * @return bool return true if match found
  */
@@ -67,8 +76,7 @@ function is_ua($name){
 	return ( strpos($_SERVER['HTTP_USER_AGENT'], $name) !== false );
 }
 
-function has_count($arr){
-	
+function has_count($arr){	
 	 return ( (is_array($arr) && count($arr) >= 0) );
 	
 }
@@ -258,12 +266,19 @@ function wpi_google_ads_targeting_filter($content){
 	return PHP_EOL.'<!-- google_ad_section_start -->'.PHP_EOL . $content . '<!-- google_ad_section_end -->'.PHP_EOL;
 }
 
-
+/**
+ * void wpi_default_filters()
+ * register WPI custom default filters
+ * 
+ * @uses wpi_foreach_hook_filter()
+ * @access public
+ * @since 1.2
+ */
 function wpi_default_filters(){
 
 	$f = array();	
 	
-	$f['home_template'] = 'wpi_home_template_filter';
+	$f['home_template'] = 'wpi_home_template_filter';	
 	
 	$f['stylesheet_directory'] 		= 'wpi_get_stylesheet_directory_filter';
 	$f['stylesheet_directory_uri'] 	= 'wpi_stylesheet_directory_uri_filter';
@@ -739,22 +754,24 @@ function wpi_post_thumbnail_filter(){
 /**
  * void wpi_home_template_filter()
  * filter: home_template
+ * 
+ * @see get_home_template()
+ * @uses locate_template()
  * @since 1.6.2
  */
 function wpi_home_template_filter($template){
 	
-	if ( ($tpl = wpi_option('frontpage_style')) != 'default' ){
+	$tpl = wpi_option('frontpage_style');
+	
+	if ( '' != $tpl && 'default' != $tpl){
 		$file = WPI_LIB_IMPORT_TEMPLATE.$tpl;
 		
 		if (file_exists($file)){
-			return (string) str_rem(TEMPALTEPATH,$file);
-		} else {
-			return $template;
-		}
-		
-	} else {
-		return $template;
+			return (string) str_rem(TEMPLATEPATH,$file);
+		} 
 	}
+		
+	return TEMPLATEPATH.DIRSEP.'home.php';	
 } 
 
 /**

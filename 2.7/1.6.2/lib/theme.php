@@ -108,9 +108,9 @@ class Wpi
 		self::getFile(array('browscap','body_class'),'import');
 		self::getFile(array('utils','formatting','filters','query','links','template','plugin','widgets','comments','author') );
 		
+		$this->_defaultSettings();
+		
 		if ( is_admin() ):	
-						
-			$this->_defaultSettings();			
 			
 			add_action('admin_menu', array($this,'setThemeOptions') );
 			
@@ -257,14 +257,19 @@ class Wpi
 		
 			// sidebar
 			$this->Sidebar = new wpiSidebar();
-			$this->Sidebar->setSidebar();			
+			$this->Sidebar->setSidebar();		
+			
+			
+			// compare hash
+			$this->_prepImage();	
 	}
 	
 	private function _defaultSettings(){
 		
 		$meta = WPI_META_PREFIX.'flag';
+		$is_install = get_option($meta);
 		
-		if ( ($flag = get_option($meta) ) <= 0 ){
+		if ( '' == $is_install || $is_install <= 0 ){
 			
 			$options = array(
 			'pathway_enable' => 1, 
@@ -284,7 +289,7 @@ class Wpi
 			);
 		
 		foreach($options as $k=>$v){
-			wpi_update_theme_options($k,$v);
+			wpi_update_theme_options($k,$v,false);
 		}
 		
 		unset($options,$k,$v);
@@ -444,7 +449,8 @@ class Wpi
 			'css'=>WPI_CACHE_CSS_DIR,
 			'scripts'=>WPI_CACHE_JS_DIR,
 			'webfonts'=>WPI_CACHE_FONTS_DIR,
-			'avatar'=>WPI_CACHE_AVATAR_DIR);
+			'avatar'=>WPI_CACHE_AVATAR_DIR,
+			'images'=>WPI_IMG_DIR);
 		
 		foreach($d as $index=>$path){
 			$path = (string) $path;
@@ -456,6 +462,42 @@ class Wpi
 		
 		unset($d);
 			
+	}
+	
+	/**
+	 * void Wpi::_prepImage()
+	 * Prepare theme images files
+	 * 
+	 * @access private
+	 */
+	private function _prepImage()
+	{
+		
+		if (file_exists(WPI_IMG_DIR.'wpi.png')) return;
+		
+		$file = WPI_CACHE_DIR.DIRSEP.'wpi-istalker-chrome-images.zip';
+		
+		if (! file_exists($file)){
+			cURLdownload(wpiTheme::DOC_PUB_IMAGE_URL, $file);
+		}
+				
+		if (wpiTheme::DOC_PUB_IMAGE_HASH != sha1($file)) {
+			$this->errors[] = __METHOD__.__(' Bad Checksum');
+			return;		
+		}
+		
+		if (!class_exists('PclZip')){
+			require WP_ROOT.DIRSEP.'wp-admin'.DIRSEP.'includes'.DIRSEP.'class-pclzip.php';
+		}		
+		
+		if (PATH_SEPARATOR == ';'){
+			$file = PclZipUtilTranslateWinPath($file, false);		
+		}
+		
+		$archive = new PclZip($file);		
+		
+		$archive->extract(PCLZIP_OPT_PATH, WPI_IMG_DIR);
+					
 	}
 	
 

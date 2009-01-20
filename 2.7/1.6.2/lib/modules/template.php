@@ -535,10 +535,12 @@ function wpi_template_home()
 	$pby_class = (wpi_option('post_by_enable')) ? 'pby' : 'pby dn';
 	$rating_class = (wpi_option('post_hrating') ) ? 'rating-count' : 'rating-count dn';	
 	$cnt = 0;
-	$normal_loop = false;
+	$normal_loop = true;
 	
-	if (wpi_option('frontpage_style') != 'default'){
-		$normal_loop = true;
+	$layout_type = wpi_option('frontpage_style');
+	
+	if ('' == $layout_type || $layout_type == 'default'){
+		$normal_loop = false;		
 	}	
 ?>	
 	<ul class="r cf">

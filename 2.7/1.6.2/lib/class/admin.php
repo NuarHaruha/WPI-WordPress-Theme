@@ -746,12 +746,8 @@ class wpiAdmin
 		</li>	
 		<?php endif; ?>	
 		<li class="last">		
-			<label><?php _e('Pathway:',WPI_META);?></label>
-				<select name="wpi_pathway_enable" id="wpi_pathway_enable" size="2" class="row-2">
-			<?php self::htmlOption(array(
-						$this->lang['enabled'] => 1,
-						$this->lang['disabled'] => 0 ),$menu['pathway']); ?>
-				</select> 
+			<label><?php _e('Pathway:',WPI_META);?></label>							
+				<?php self::addSelect('pathway_enable',$this->select_options);?>
 				<?php if($menu['pathway']): ?>
 				<?php $prop = self::option('pathway_frontpage_text');?>
 				<?php $prop = (!empty($prop)) ? $prop : 'Frontpage'; ?>

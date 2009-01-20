@@ -162,5 +162,5 @@ define('SV_CURRENT_TIMESTAMP',$_SERVER['REQUEST_TIME']);
  */
 define('SV_UA_STRING',$_SERVER['HTTP_USER_AGENT']); 
 
-//define('WPI_ONE_LINER',1)
+define('WPI_ONE_LINER',1)
 ?>
