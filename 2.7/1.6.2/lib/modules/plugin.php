@@ -27,7 +27,7 @@ function wpi_plugin_init(){
 	
 	/**
 	 * N2H's Global Translator
-	 * @links http://www.nothing2hide.net/wp-plugins/wordpress-global-translator-plugin/
+	 * {@links http://www.nothing2hide.net/wp-plugins/wordpress-global-translator-plugin/ Global Translator}
 	 */
 
 		// custom css
@@ -50,10 +50,44 @@ function wpi_plugin_init(){
 	
 	/**
 	 * Lester Chan's WP-Postviews
+	 * {@link http://lesterchan.net/wordpress/category/plugins/wp-postviews/ WP-Postviews}
 	 */
 	if (wpi_option('widget_wppostview')){
-		$call_plug[] = 'wp-postviews/wp-postviews.php,wpi_the_views,wpi_content_bar_home';
-		$call_plug[] = 'wp-postviews/wp-postviews.php,wpi_the_views,wpi_content_bar_single';
+		$meta = 'wp-postviews/wp-postviews.php,wpi_the_views,wpi_content_bar_';	
+			
+		// WP-Postviews version 1.40
+		$pv =  get_option('views_options');
+						
+			if (isset($pv['display_home'])){				
+				$call_plug[] = $meta.'home';
+			}
+			
+			if (isset($pv['display_single'])){				
+				$call_plug[] = $meta.'single';
+			}
+			
+			if (isset($pv['display_page'])){				
+				$call_plug[] = $meta.'page';
+			}						
+			
+			if (isset($pv['display_archive']) ){				
+				$call_plug[] = $meta.'archive';
+			}						
+
+			if (isset($pv['display_search']) ){				
+				$call_plug[] = $meta.'search';
+			}						
+			
+			if (isset($pv['display_other']) ){				
+				$call_plug[] = $meta.'category';
+				$call_plug[] = $meta.'tag';
+				$call_plug[] = $meta.'author';
+				$call_plug[] = $meta.'year';
+				$call_plug[] = $meta.'month';
+				$call_plug[] = $meta.'day';
+			}						
+												
+		unset($pv,$meta);
 	}
 	
 	/**

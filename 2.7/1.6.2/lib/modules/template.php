@@ -725,7 +725,7 @@ function wpi_template_single()
 			<dd class="postmeta-comments cf">
 				<ul class="xoxo cfl r cf">
 					<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
-					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'single'); ?>					
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.is_at()); //it could be at attachments, paged or comments page ?>					
 				<?php if ( wpi_option('post_bookmarks') ): ?>
 					<li class="postmeta-response"><?php wpi_bookmarks();?></li>
 				<?endif;?>			
@@ -777,7 +777,7 @@ function wpi_template_page()
 			<dd class="postmeta-comments cf">
 			<ul class="xoxo cfl r cf">
 				<li class="<?php echo $rating_class;?>"><?php wpi_hrating();?>&nbsp;</li>					
-					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.'page'); ?>
+					<?php do_action(wpiFilter::ACTION_INSIDE_CONTENT_BOTTOM_BAR_PREFIX.is_at()); ?>
 				<?php if ( wpi_get_theme_option('post_bookmarks') ): ?>
 				<li class="postmeta-response"><?php wpi_bookmarks();?></li>
 				<?endif;?>			
