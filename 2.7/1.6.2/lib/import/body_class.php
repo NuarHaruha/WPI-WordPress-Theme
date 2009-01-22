@@ -37,9 +37,15 @@ function sandbox_body_class( $print = true ) {
 			sandbox_date_classes( mysql2date( 'U', $wp_query->post->post_date ), $c, 's-' );
 
 		// Adds category classes for each category on single posts
+		/**
+		 * Cat slug return invalid CSS reference (urlencode) for non ascii (chinese/japs/crylic) text
+		 * {@link http://www.w3.org/TR/CSS21/grammar.html}
+		 * 
+		 * @author Avice D <ck+filter@istalker.net> 
+		 */
 		if ( $cats = get_the_category() )
 			foreach ( $cats as $cat )
-				$c[] = 's-category-' . $cat->slug;
+				$c[] = 's-category-' . attribute_escape(urldecode($cat->slug));
 
 		// Adds tag classes for each tags on single posts
 		/** to much selectoor bad for SEO ck $
@@ -70,7 +76,7 @@ function sandbox_body_class( $print = true ) {
 	elseif ( is_category() ) {
 		$cat = $wp_query->get_queried_object();
 		$c[] = 'category';
-		$c[] = 'category-' . $cat->slug;
+		$c[] = 'category-' . attribute_escape(urldecode($cat->slug));
 	}
 
 	// Tag name classes for BODY on tag archives
