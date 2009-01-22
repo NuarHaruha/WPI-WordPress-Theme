@@ -136,7 +136,6 @@ class Wpi
 		
 		wpi_plugin_init();
 		wpi_default_filters();
-		
 		// client browser
 		$this->Browser = new Browscap(WPI_CACHE_DIR);
 		
@@ -360,7 +359,7 @@ class Wpi
 		
 		}
 		
-		unset($file,$lib,$filename);
+		unset($file,$lib, $filename);
 	}
 
 
@@ -481,11 +480,6 @@ class Wpi
 			cURLdownload(wpiTheme::DOC_PUB_IMAGE_URL, $file);
 		}
 				
-		if (wpiTheme::DOC_PUB_IMAGE_HASH != sha1($file)) {
-			$this->errors[] = __METHOD__.__(' Bad Checksum');
-			return;		
-		}
-		
 		if (!class_exists('PclZip')){
 			require WP_ROOT.DIRSEP.'wp-admin'.DIRSEP.'includes'.DIRSEP.'class-pclzip.php';
 		}		
@@ -497,6 +491,9 @@ class Wpi
 		$archive = new PclZip($file);		
 		
 		$archive->extract(PCLZIP_OPT_PATH, WPI_IMG_DIR);
+		
+		unset($archive);
+		@unlink($file);
 					
 	}
 	
