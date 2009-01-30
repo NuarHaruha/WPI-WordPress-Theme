@@ -1,10 +1,25 @@
 <?php
-if (!defined('KAIZEKU')) die(42);
+if ( !defined('KAIZEKU') ) exit(42);
 /**
- * $Id$
- * Wp-iStalker custom pathway class
+ * WP-iStalker Chrome Milk 
+ * Template Pathway
  * 
+ * @package	WordPress
+ * @subpackage	wp-istalker-chrome
+ * 
+ * @category	Template
+ * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
+ * @copyright 	2006 - 2009 Avice De'vereux
+ * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version 	CVS:$Id$
+ * @since 	1.2
  */
+
+/**
+ * wpiPathway
+ * @since 1.2
+ */
+ 	
 
 class wpiPathway
 {
@@ -17,12 +32,7 @@ class wpiPathway
 
 	const DN_ARROW = 'rn icn-rs darr-';
 
-	public function __construct()
-	{
-
-		// add_action('wp_footer',array($this,'dump'));
-
-	}
+	public function __construct(){}
 
 
 	public function build()
@@ -234,7 +244,7 @@ class wpiPathway
 
 			$title = sprintf(__('Page %d', WPI_META), $page_no);
 
-			$pathway['last'] = array($title, array('href' => Wpi::selfURL() . '#iscontent',
+			$pathway['last'] = array($title, array('href' => self_uri() . '#iscontent',
 				'title' => __('Skip to Content | ' . $title, WPI_META)));
 
 		} else
@@ -657,14 +667,6 @@ class wpiPathway
 
 		$pathway['last'] = array($title, $att);
 		return $pathway;
-	}
-
-
-	public function dump()
-	{
-		global $wp_query;
-		wpi_dump($wp_query);
-		die();
 	}
 }
 ?>
