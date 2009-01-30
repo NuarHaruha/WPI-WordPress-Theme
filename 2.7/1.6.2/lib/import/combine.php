@@ -103,7 +103,7 @@
 			}
 			
 			// Try the cache first to see if the combined files were already generated
-			$cachefile = 'cache-' . $hash . '.' . $type . ($encoding != 'none' ? '.' . $encoding : '');
+			$cachefile = 'cache-' . md5($_GET['files']) . '.' . $type . ($encoding != 'none' ? '.' . $encoding : '');
 			
 			if (file_exists($cachedir . '/' . $cachefile)) {
 				if ($fp = fopen($cachedir . '/' . $cachefile, 'rb')) {
