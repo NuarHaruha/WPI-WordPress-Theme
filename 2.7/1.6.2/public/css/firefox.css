@@ -9,7 +9,7 @@ blockquote:before,blockquote:after,q:before,q:after
 #comments .heading-title span,#comments li.normal,
 #comments .commentlist,#comments #trackback-meta dl,
 .commentlist .vcard .photo,
-#comment-sidebar
+#comment-sidebar, .dk #content-end
 {
 	-moz-background-clip:padding
 }
@@ -65,7 +65,7 @@ blockquote:before,blockquote:after,q:before,q:after
 	-moz-border-radius-topright:.3em
 }
 
-#content-end
+#content-end, .dk #content-end
 {
 	-moz-border-radius-bottomleft:.3em;
 	-moz-border-radius-bottomright:.3em
@@ -189,7 +189,8 @@ blockquote:before,blockquote:after,q:before,q:after
 }
 
 /* border multi-colors*/
-#validation dl{border-width: 2px; -moz-border-right-colors: #4DA4CF #317B9F }
+#validation dl{border-width: 2px; -moz-border-right-colors: #4DA4CF #317B9F}
+.dk #validation dl{-moz-border-right-colors: #9F3143 #6F222E}
 .nt #validation dl{-moz-border-right-colors: #777 #666}
 .dw #validation dl{-moz-border-right-colors: #DFDFD1 #BFBF8F}
 .home #main-bottom .hentry{border-bottom-width: 3px;-moz-border-bottom-colors: #F8F8F8 #F8F8F8 #DDDDDD}

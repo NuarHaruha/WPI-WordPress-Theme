@@ -433,6 +433,11 @@ p.comments-feed a:hover
 	padding:18px 40px 0
 }
 
+.dk #wp-respond #respond
+{
+	border-bottom-color:#aaa
+}
+
 .nt #wp-respond #respond
 {
 	border-bottom-color:#b2b2b2

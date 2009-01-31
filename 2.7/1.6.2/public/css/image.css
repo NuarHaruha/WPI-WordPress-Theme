@@ -256,3 +256,8 @@ background-image: url(images/nt-htop.gif)
 .spinner{
 	background-image: url(images/icons/spinner.gif)
 }
+
+/* birdy "dusk" */
+.dk #header #blog-meta{
+	background-image:url(images/import/dusk-birdy.gif)
+}

@@ -1,3 +1,9 @@
+/* dusk */
+body.dk{
+	background-color:#8F1A2A
+}
+
+/* night */
 body.nt
 {
 	background-color:#707071 !important
@@ -20,6 +26,11 @@ body
 #wp-content-top .outer,#wp-content-bottom .outer,#wp-meta-title .outer,#wp-respond .outer,#wp-banner .outer
 {
 	background-color:#bfbfbf
+}
+
+.dk #wp-content-top .outer,.dk #wp-content-bottom .outer,.dk #wp-meta-title .outer,.dk #wp-respond .outer,.dk #wp-banner .outer
+{
+	background-color:#323232
 }
 
 .nt #wp-content-top .outer,.nt #wp-content-bottom .outer,.nt #wp-meta-title .outer,.nt #wp-respond .outer,.nt #wp-banner .outer
@@ -74,7 +85,10 @@ body
 	height:72px
 }
 
-
+.dk #header #blog-meta{
+	background-repeat: no-repeat;
+	background-position: 0px -10px	
+}
 #blog-title
 {
 	float:left;
@@ -140,6 +154,13 @@ blockquote.description p
 	overflow:hidden;
 	width:916px
 }
+
+.dk #wp-nav #nav
+{
+	background-color:#ccc;
+	border-color:#eee #ccc #ccc
+}
+
 
 .nt #wp-nav #nav
 {
@@ -399,11 +420,13 @@ blockquote.description p
 	width:918px
 }
 
+
+.dk.home #content-top{border-bottom-color:#ddd}
 .nt.home #content-top{border-bottom-color:#333}
 .dw.home #content-top{border-bottom-color:#F3F3CC}
 .home #content-top{border-bottom:10px solid #2D96CB}
 
-
+.dk #content-bottom{border-bottom-color:#aaa}
 .nt #content-bottom{border-bottom-color:#B2B2B2}
 .dw #content-bottom{border-bottom-color:#494738}
 #content-bottom{border-bottom:4px solid #2D96CB}
@@ -935,6 +958,11 @@ acronym.share:hover
 	color:#DFF4FF
 }
 
+.dk #sidebar-mid a
+{
+	color:#666
+}
+
 .nt #sidebar-mid a
 {
 	color:#7d7d7d
@@ -979,6 +1007,11 @@ acronym.share:hover
 	margin:0
 }
 
+.dk #sidebar-2 .widget-title
+{
+	border-bottom-color:#aaa
+}
+
 .nt #sidebar-2 .widget-title
 {
 	border-bottom-color:#222
@@ -993,6 +1026,11 @@ acronym.share:hover
 {
 	border-top:1px solid #53B1DF;
 	padding-top:7px
+}
+
+.dk #sidebar-2 .widget-content
+{
+	border-top-color:#eee
 }
 
 .nt #sidebar-2 .widget-content
@@ -1019,6 +1057,13 @@ acronym.share:hover
 	color:#D1DADF;
 	padding:1px 3px
 }
+
+.dk #sidebar-2 .widget-content li
+{
+	border-color:#ddd #ddd #cdcdcd;
+	color:#555
+}
+
 
 .nt #sidebar-2 .widget-content li
 {
@@ -1049,6 +1094,11 @@ acronym.share:hover
 	line-height:1.8em;
 	padding:0 12px;
 	text-align:justify
+}
+
+.dk #sidebar-2 .textwidget
+{
+	color:#777
 }
 
 .nt #sidebar-2 .textwidget
@@ -1088,6 +1138,11 @@ acronym.share:hover
 	color:#DFF4FF;
 	font-size:.7em;
 	font-weight:700
+}
+
+.dk #sidebar-2 .widget-title dfn,.dk #sidebar-2 .widget-title dfn a,.dk #sidebar-2 .widget_rss a.rsswidget
+{
+	color:#555
 }
 
 .nt #sidebar-2 .widget-title dfn,.nt #sidebar-2 .widget-title dfn a
@@ -1423,6 +1478,10 @@ acronym.share:hover
 	background-color:#0A78AF
 }
 
+.dk #wp-content-mid .outer{
+	background-color:#7F272B
+}
+
 .nt #wp-content-mid .outer
 {
 	background-color:#4F4F4F
@@ -1436,6 +1495,18 @@ acronym.share:hover
 #wp-content-mid #content-mid
 {
 	background-color:#2D96CB
+}
+
+.dk #wp-content-mid #content-mid,.dk #sidebar-mid dl.w 
+{
+	background-repeat: repeat-x;
+	background-position: 0% 0%;
+	background-color:#ddd
+}
+
+.dk #sidebar-mid dl.w{ 
+	border:1px solid #ddd;
+	
 }
 
 .nt #wp-content-mid #content-mid,.nt #sidebar-mid dl.w 
@@ -1466,6 +1537,11 @@ acronym.share:hover
 	height:32px;
 	padding: 1px; /* smooth clipping border*/
 	width: 916px /* minus 2px padding */
+}
+
+.dk #content-end
+{
+	background-color:#aaa!important
 }
 
 .nt #content-end
@@ -1502,6 +1578,12 @@ acronym.share:hover
 #blog-title a,#sidebar-2 .widget-content li:hover a,#sidebar-2 .widget-content a:hover
 {
 	color:#fff
+}
+
+.dk #sidebar-2 .widget-content li:hover
+{
+	background-color:#ccc;
+	border-color:#999 !important
 }
 
 .nt #sidebar-2 .widget-content li:hover
@@ -1685,6 +1767,7 @@ acronym.share:hover
 	padding-bottom:18px
 }
 
+.dk #validation a{background-color:#8F0834}
 .nt #validation a{background-color:#707071}
 
 
@@ -1698,6 +1781,8 @@ acronym.share:hover
 	text-decoration:none!important
 }
 .dw #validation a{background-color:#D7D7B8;color:#494738}
+
+.dk #validation a:hover{background-color:#CF0C4F}
 .nt #validation a:hover{background-color:#5f5f5f}
 .dw #validation a:hover{background-color:#9F9F81}
 #validation a:hover
@@ -1962,6 +2047,8 @@ pre.fff
 #validation dt{font-size:0.9em;padding-left:4px;color:#cfcfcf}
 .dw #validation dt{color:#7E7F37}
 #validation dd{float:left}
+
+.dw .random-quote dd{color:#494738}
 
 /* fixes for google translate */
 #cl-options li{height:25px;overflow:hidden}
