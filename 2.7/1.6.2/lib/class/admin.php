@@ -736,12 +736,19 @@ class wpiAdmin
 				<label for="wpi_menu_page_show_home"><?php _e('Show Home',WPI_META);?></label>
 					<?php self::addSelect('menu_page_show_home',$this->select_options);?>
 				</li>
-				<li class="last">
+				<li>
 				<label for="wpi_menu_page_home_label"><?php _e('Home label',WPI_META);?></label>
 					<?php $prop = self::option('menu_page_home_label');?>
 					<?php $prop = (!empty($prop)) ? $prop : 'Home'; ?>				
 					<?php t('input', '', array('type' => 'text', 'name' => 'wpi_menu_page_home_label','id' =>'wpi_menu_page_home_label','value' => $prop)); ?>
-				</li>									
+				</li>
+				<li class="last">
+				<label for="wpi_menu_page_single_label"><?php _e('Single page label',WPI_META);?>
+					<small><?php _e('Active on Single page, leave it blank to disabled.',WPI_META)?></small>
+				</label>
+					<?php $prop = self::option('menu_page_single_label');?>				
+					<?php t('input', '', array('type' => 'text', 'name' => 'wpi_menu_page_single_label','id' =>'wpi_menu_page_single_label','value' => $prop)); ?>
+				</li>													
 			</ul>			
 		</li>	
 		<?php endif; ?>	

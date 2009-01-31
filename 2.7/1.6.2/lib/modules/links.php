@@ -220,7 +220,7 @@ function wpi_get_pages_link(){
 	if (wpi_option('menu_page_show_home')){
 		
 		$label = wpi_option('menu_page_home_label');
-		$label = ('' != $label) ? $label : __('Home',WPI_META) ;
+		$label = ('' != $label) ? $label : __('Home',WPI_META);
 		
 		$htm = _t('a',$label, array(
 			'href'=> rel(WPI_HOME_URL_SLASHIT),
@@ -238,9 +238,10 @@ function wpi_get_pages_link(){
 		$extra_pages .= $htm;	
 	}
 	
-	if (is_single()){
+	if (is_single() && wpi_option('menu_page_single_label')){
 		
-		$label = __('Article',WPI_META);
+		$label = wpi_option('menu_page_single_label');
+		$label = ('' != $label) ? $label : __('Article',WPI_META);
 		
 		$htm = _t('a',$label, array(
 			'href'=> '#iscontent',
