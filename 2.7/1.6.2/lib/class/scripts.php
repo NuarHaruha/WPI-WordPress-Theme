@@ -11,7 +11,7 @@ if ( !defined('KAIZEKU') ) exit(42);
  * @author	Avice (ChaosKaizer) De'vereux <ck+wp-istalker-chrome@istalker.net>
  * @copyright 	2006 - 2009 Avice De'vereux
  * @license 	http://www.opensource.org/licenses/mit-license.php MIT License
- * @version 	CVS:$
+ * @version 	CVS:$Id$
  * @since 	1.2
  */
 
@@ -205,7 +205,7 @@ class wpiScripts{
 		
 		if (wpi_option('client_time_styles')){
 			$js .= ',pid:'.$pid.',cl_type:td};'.PHP_EOL;
-			$domready[] = '/* Client time	*/ if( jQuery(wpi.bid).hasClass(wpi.cl_type) == false){ jQuery(wpi.bid).addClass(wpi.cl_type);jQuery.cookie(\''.wpiTheme::CL_COOKIE_TIME.'\',wpi.cl_type,{duration: 1/24,path: "/"});};';
+			$domready[] = '/* Client time	*/ if( jQuery(wpi.bid).hasClass(wpi.cl_type) == false){ jQuery(wpi.bid).removeClass(\'dw dy dk nt\');jQuery(wpi.bid).addClass(wpi.cl_type);jQuery.cookie(\''.wpiTheme::CL_COOKIE_TIME.'\',wpi.cl_type,{duration: 1/24,path: "/"});};';
 		} else {
 			$js .= ',pid:'.$pid.'};'.PHP_EOL;
 		}
