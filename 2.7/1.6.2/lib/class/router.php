@@ -179,6 +179,7 @@ class wpiRouter
 		$hex['nt'] = '707071';
 		$hex['dy'] = '1787BF';
 		$hex['dw'] = 'D7D7B8';
+		$hex['dk'] = '8F1A2A';
 		
 		$client = (string) $_COOKIE['wpi-cl'];	
 	
