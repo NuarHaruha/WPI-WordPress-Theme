@@ -199,16 +199,22 @@ class wpiScripts{
 		
 		if ( wpi_option('client_width')){
 			$js .= ',cl_width: function(){if (window.innerWidth){ return window.innerWidth;}else if (document.documentElement && document.documentElement.clientWidth != 0){return document.documentElement.clientWidth;} else if (document.body){return document.body.clientWidth;} return 0;}';
-			$domready[] = '/* Client width	*/ wpi.clw = \'cl-width-\'+ wpi.cl_width(); if( jQuery(wpi.bid).hasClass(wpi.clw) == false){ jQuery(wpi.bid).addClass(wpi.clw);jQuery.cookie(\''.wpiTheme::CL_COOKIE_WIDTH.'\',wpi.clw,{duration: 1/24,path: "/"});};';
+			
+			$domready[] = '/* Client width */ if( jQuery(wpi.bid).hasClass(wpi.clw) == false){ jQuery(wpi.bid).addClass(wpi.clw);};';
 			$defer = 1;	
 		}
 		
 		if (wpi_option('client_time_styles')){
 			$js .= ',pid:'.$pid.',cl_type:td};'.PHP_EOL;
-			$domready[] = '/* Client time	*/ if( jQuery(wpi.bid).hasClass(wpi.cl_type) == false){ jQuery(wpi.bid).removeClass(\'dw dy dk nt\');jQuery(wpi.bid).addClass(wpi.cl_type);jQuery.cookie(\''.wpiTheme::CL_COOKIE_TIME.'\',wpi.cl_type,{duration: 1/24,path: "/"});};';
+			$js .= PHP_T.PHP_T.'jQuery.cookie(\''.wpiTheme::CL_COOKIE_TIME.'\',wpi.cl_type,{duration: 1/24,path: "/"});'.PHP_EOL;
+			$domready[] = '/* Client time	*/ if( jQuery(wpi.bid).hasClass(wpi.cl_type) == false){ jQuery(wpi.bid).removeClass(\'dw dy dk nt\');jQuery(wpi.bid).addClass(wpi.cl_type);};';
 		} else {
 			$js .= ',pid:'.$pid.'};'.PHP_EOL;
 		}
+		
+		if ( wpi_option('client_width')){
+			$js .= PHP_T.PHP_T.'wpi.clw = \'cl-width-\'+ wpi.cl_width();jQuery.cookie(\''.wpiTheme::CL_COOKIE_WIDTH.'\',wpi.clw,{duration: 1/24,path: "/"});'.PHP_EOL;
+		}	
 		
 		// load custom widget (ajax response)
 		$js .= PHP_T.PHP_T.'wpi.getWidget = function(wid,elm){if (jQuery(elm).length >= 1){jQuery.get(wpi.widget.uri.replace(/%s/, wid),function(data){jQuery(elm).replaceWith(data); wpi.rysncf(elm);});};};'.PHP_EOL;
