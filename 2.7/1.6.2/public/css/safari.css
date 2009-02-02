@@ -1,8 +1,16 @@
 /**
- * Safari Stylesheet (WPI Chrome Milk)
- * WebKit Engine
- * $Id safari.css rev 0.1, 10/1/2008 9:52:33 AM $ck
+ * $Id$
+ * Stylesheet for all webkit type engine Safari browser 
+ *
+ * @author	Avice D <ck+wp-istalker-chrome@istalker.net>
+ * @author	NH.Noah <noah+wp-istalker-chrome@istalker.net>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA
+ *
+ * hash: 7b313c822e364ec6df250db0082cf771
  */
+
+#blog-meta{height: auto !important;overflow:hidden} 
+
 #search{width:146px}
 #search input:focus{outline:0pt}
 #search input#s{width:144px;position:static;margin-top:-12px;height:18px}
@@ -14,7 +22,10 @@
 
 /* comments form */ 
 #respond-meta input:focus,#comment{outline:0pt}
- 
+
+/** 
+ * Background Clipping
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
 .clip-p,
 #comments .heading-title strong,
 #comments .heading-title span,
@@ -39,15 +50,13 @@
 	-webkit-background-clip:border
 }
 
-.br-1px
-{
-	-webkit-border-radius:1px
-}
+/** 
+ * Border Radius (CSS3) 
+ * Smooth border radius
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.br-1px{-webkit-border-radius:1px}
 
-#comments .commentlist
-{
-	-webkit-border-radius:0.2em
-}
+#comments .commentlist{	-webkit-border-radius:0.2em}
 
 .br-3px,
 #sidebar-1,
@@ -61,7 +70,8 @@
 
 .br-3m,
 #respond .notice,
-#comments #trackback-meta dl
+#comments #trackback-meta dl,
+#commentform textarea
 {
 	-webkit-border-radius:0.3em
 }
@@ -126,6 +136,10 @@
 	-webkit-border-bottom-left-radius:0.8em
 }
 
+#commentform textarea{
+	resize: none
+}
+
 .post-author .vcard .photo
 {
 	-webkit-border-radius:0.3em
@@ -152,3 +166,11 @@
 .entry-content ol li:before{counter-increment: kitty;content: counters(kitty, ".") ". ";}
 
 /* border multi-colors not-supported */
+
+/** 
+ * WP Image Caption
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.entry .wp-caption{
+	border: 1px solid #d2d2d2;
+	-webkit-box-shadow: 0px 0px 5px #bbb; /* safari 3.1+ */
+}
