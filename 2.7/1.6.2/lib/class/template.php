@@ -197,19 +197,22 @@ class wpiTemplate
 ?>
 			<div id="validation" class="pa">
 				<dl class="validation xoxo fl">
-					<dt><?php _e('Validation');?></dt>
+					<dt><?php _e('Site validation');?></dt>
 					<dd>
 						<a href="http://qa-dev.w3.org/unicorn/observe?ucn_task=conformance&amp;ucn_uri=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>&amp;ucn_lang=en" title="W3C Unicorn Universal Conformance Checker">W3C Unicorn</a>
-					</dd>
+					</dd>					
 					<dd>
 						<a href="http://www.validome.org/xml/validate/?lang=en&amp;onlyWellFormed=1&amp;url=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Valid XHTML+XML Documents (structured well-formed)">XML</a>
-					</dd>
+					</dd>					
+					<dd>
+						<a href="http://safebrowsing.clients.google.com/safebrowsing/diagnostic?hl=en-US&amp;site=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Safe Browsing advisory provided by Google" rel="nofollow noarchive"><?php _e('Advisory',WPI_META);?></a>
+					</dd>					
 					<dd> 
 						<a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Web Content Accessibility Valid Section 508 Standards" rel="nofollow noarchive">508</a>
 					</dd>
 				</dl>
 				<dl class="syndication xoxo fl cf">
-					<dt><?php _e('Syndication');?></dt>
+					<dt><?php _e('Feed syndication');?></dt>
 					<dd> 
 						<a href="<?php bloginfo('comments_rss2_url'); ?>" title="Comments RSS feed" rel="rss2" type="application/rss+xml">Comments</a>
 					</dd>
