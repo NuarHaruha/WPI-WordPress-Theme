@@ -41,7 +41,8 @@ function wpi_section_name(){
 
 function wpi_search_box(){
 
-	$att = array('type'=>'text','value'=>get_search_query(), 'name'=>'s','id'=>'s',
+	$terms = ('' != get_search_query()) ? get_search_query() : __('search',WPI_META);
+	$att = array('type'=>'text','value'=> $terms, 'name'=>'s','id'=>'s',
 	'title'=>'Search | Start typing. We&#39;ll figure it out','class'=>'ttip');
 
 	if (is_ua('Safari')){

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-istalker-chrome 1.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-19 11:35+0800\n"
+"POT-Creation-Date: 2009-02-03 15:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Avice D <avik.st@gmail.com>\n"
 "Language-Team: Avice D <ck@istalker.net>\n"
@@ -110,12 +110,12 @@ msgid "Search"
 msgstr ""
 
 # Theme settings page title
-#: lib/theme.php:433
+#: lib/theme.php:437
 msgid "WPI Theme Options"
 msgstr ""
 
 # Theme settings option tab caption
-#: lib/theme.php:434
+#: lib/theme.php:438
 msgid "Theme Options"
 msgstr ""
 
@@ -360,6 +360,10 @@ msgstr ""
 msgid "Notice: Public CSS cache dir is not writable"
 msgstr ""
 
+#: lib/class/admin.php:459
+msgid "<strong>Combine CSS files <small>(gzip/deflate)</small></strong>"
+msgstr ""
+
 #: lib/class/admin.php:474
 msgid "Javascript"
 msgstr ""
@@ -372,487 +376,499 @@ msgstr ""
 msgid "Notice: Public scripts cache dir is not writable"
 msgstr ""
 
+#: lib/class/admin.php:499
+msgid "<strong>Combine javascripts files <small>(gzip/deflate)</small></strong>"
+msgstr ""
+
 # Theme options
-#: lib/class/admin.php:513
+#: lib/class/admin.php:514
 msgid "GD webfont image"
 msgstr ""
 
-#: lib/class/admin.php:516
+#: lib/class/admin.php:517
 msgid "Cache GD font images"
 msgstr ""
 
-#: lib/class/admin.php:518
+#: lib/class/admin.php:519
 msgid "Notice: Public webfont cache dir is not writable"
 msgstr ""
 
 # Manage cache files theme options, when no cache file is found.
-#: lib/class/admin.php:551
+#: lib/class/admin.php:552
 msgid "No cached files."
 msgstr ""
 
-#: lib/class/admin.php:556
+#: lib/class/admin.php:557
 msgid "Avatar image"
 msgstr ""
 
-#: lib/class/admin.php:558
+#: lib/class/admin.php:559
 msgid "Cache Avatar images"
 msgstr ""
 
-#: lib/class/admin.php:598
+#: lib/class/admin.php:599
 msgid "Sidebar widgets"
 msgstr ""
 
-#: lib/class/admin.php:603
+#: lib/class/admin.php:604
 msgid "Category treeview:"
 msgstr ""
 
-#: lib/class/admin.php:604
+#: lib/class/admin.php:605
 msgid "Replace categories widgets with jQuery Treeview"
 msgstr ""
 
-#: lib/class/admin.php:605
+#: lib/class/admin.php:606
 msgid "jQuery plugin Treeview "
 msgstr ""
 
-#: lib/class/admin.php:611
+#: lib/class/admin.php:612
 msgid "Recent Comments"
 msgstr ""
 
-#: lib/class/admin.php:612
+#: lib/class/admin.php:613
 msgid "Ajaxified recent comments widgets"
 msgstr ""
 
-#: lib/class/admin.php:619
+#: lib/class/admin.php:620
 msgid "Flickr RSS"
 msgstr ""
 
-#: lib/class/admin.php:620
+#: lib/class/admin.php:621
 msgid "Ajaxified flickr RSS widget"
 msgstr ""
 
-#: lib/class/admin.php:621
+#: lib/class/admin.php:622
 msgid "Flickr RSS widget "
 msgstr ""
 
-#: lib/class/admin.php:628
+#: lib/class/admin.php:629
 msgid "Most used terms"
 msgstr ""
 
-#: lib/class/admin.php:629
+#: lib/class/admin.php:630
 msgid "Display Dyna Cloud most used keywords (singular comment widget)"
 msgstr ""
 
-#: lib/class/admin.php:630
+#: lib/class/admin.php:631
 msgid "jQuery plugin DynaCloud "
 msgstr ""
 
-#: lib/class/admin.php:637
+#: lib/class/admin.php:638
 msgid "Global Translator"
 msgstr ""
 
-#: lib/class/admin.php:638
+#: lib/class/admin.php:639
 msgid "Display NH2's Global translator (singular sub widget)"
 msgstr ""
 
-#: lib/class/admin.php:639
+#: lib/class/admin.php:640
 msgid "Nothing2Hide's Global Translator"
 msgstr ""
 
-#: lib/class/admin.php:645
+#: lib/class/admin.php:646
 msgid "Language Metalink"
 msgstr ""
 
-#: lib/class/admin.php:646
+#: lib/class/admin.php:647
 msgid "Append Global Translator language meta-link"
 msgstr ""
 
-#: lib/class/admin.php:656
+#: lib/class/admin.php:657
 msgid "WP Post views"
 msgstr ""
 
-#: lib/class/admin.php:657
+#: lib/class/admin.php:658
 msgid "Display Lester Chan's WP post view"
 msgstr ""
 
-#: lib/class/admin.php:658
+#: lib/class/admin.php:659
 msgid "Lester Chan's WP post views"
 msgstr ""
 
-#: lib/class/admin.php:665
+#: lib/class/admin.php:666
 msgid "Technorati link count"
 msgstr ""
 
-#: lib/class/admin.php:666
+#: lib/class/admin.php:667
 msgid "Display Technorati blog reaction (singular sub widget)"
 msgstr ""
 
-#: lib/class/admin.php:667
+#: lib/class/admin.php:668
 msgid "Technorati Link Count Widget"
 msgstr ""
 
-#: lib/class/admin.php:673
+#: lib/class/admin.php:674
 msgid "Similar post:"
 msgstr ""
 
-#: lib/class/admin.php:674
+#: lib/class/admin.php:675
 msgid "Display similar post(s) base on tags (singular widget)"
 msgstr ""
 
-#: lib/class/admin.php:680
+#: lib/class/admin.php:681
 msgid "Title:"
 msgstr ""
 
-#: lib/class/admin.php:684
+#: lib/class/admin.php:685
 msgid "Max post:"
 msgstr ""
 
-#: lib/class/admin.php:688
+#: lib/class/admin.php:689
 msgid "Show date:"
 msgstr ""
 
-#: lib/class/admin.php:692
+#: lib/class/admin.php:693
 msgid "Count comments:"
 msgstr ""
 
-#: lib/class/admin.php:716
+#: lib/class/admin.php:717
 msgid "Navigation"
 msgstr ""
 
-#: lib/class/admin.php:721
+#: lib/class/admin.php:722
 msgid "Pages menu"
 msgstr ""
 
-#: lib/class/admin.php:727
+#: lib/class/admin.php:728
 msgid "Exclude Pages"
 msgstr ""
 
-#: lib/class/admin.php:735
+#: lib/class/admin.php:736
 msgid "Show Home"
 msgstr ""
 
-#: lib/class/admin.php:739
+#: lib/class/admin.php:740
 msgid "Home label"
 msgstr ""
 
-#: lib/class/admin.php:748
+#: lib/class/admin.php:746
+msgid "Single page label"
+msgstr ""
+
+#: lib/class/admin.php:747
+msgid "Active on Single page, leave it blank to disabled."
+msgstr ""
+
+#: lib/class/admin.php:756
 msgid "Pathway:"
 msgstr ""
 
-#: lib/class/admin.php:760
+#: lib/class/admin.php:764
 msgid "Frontpage label"
 msgstr ""
 
-#: lib/class/admin.php:761
+#: lib/class/admin.php:765
 msgid "Default: Frontpage"
 msgstr ""
 
-#: lib/class/admin.php:786
+#: lib/class/admin.php:790
 msgid "Author name:"
 msgstr ""
 
-#: lib/class/admin.php:794
+#: lib/class/admin.php:798
 msgid "Show excerpt"
 msgstr ""
 
-#: lib/class/admin.php:803
+#: lib/class/admin.php:807
 msgid "Relative post date:"
 msgstr ""
 
-#: lib/class/admin.php:813
+#: lib/class/admin.php:817
 msgid "hReview rating"
 msgstr ""
 
-#: lib/class/admin.php:822
+#: lib/class/admin.php:826
 msgid "Social Bookmarks"
 msgstr ""
 
-#: lib/class/admin.php:831
+#: lib/class/admin.php:835
 msgid "Author description"
 msgstr ""
 
-#: lib/class/admin.php:851
+#: lib/class/admin.php:855
 msgid "Extra metadata"
 msgstr ""
 
-#: lib/class/admin.php:856
+#: lib/class/admin.php:860
 msgid "ClaimID"
 msgstr ""
 
-#: lib/class/admin.php:863
+#: lib/class/admin.php:867
 msgid "MicroID"
 msgstr ""
 
-#: lib/class/admin.php:869
+#: lib/class/admin.php:873
 msgid "OpenID"
 msgstr ""
 
-#: lib/class/admin.php:877
+#: lib/class/admin.php:881
 msgid "PICS"
 msgstr ""
 
-#: lib/class/admin.php:884
+#: lib/class/admin.php:888
 msgid "Site verification"
 msgstr ""
 
-#: lib/class/admin.php:885
+#: lib/class/admin.php:889
 msgid "Site verification using a meta tag"
 msgstr ""
 
-#: lib/class/admin.php:889
+#: lib/class/admin.php:893
 msgid "Google Webmaster"
 msgstr ""
 
-#: lib/class/admin.php:897
+#: lib/class/admin.php:901
 msgid "Live Webmaster ID"
 msgstr ""
 
-#: lib/class/admin.php:905
+#: lib/class/admin.php:909
 msgid "Yahoo! Explorer ID"
 msgstr ""
 
-#: lib/class/admin.php:913
+#: lib/class/admin.php:917
 msgid "Web services"
 msgstr ""
 
-#: lib/class/admin.php:916
+#: lib/class/admin.php:920
 msgid "Google Analytics"
 msgstr ""
 
-#: lib/class/admin.php:917
+#: lib/class/admin.php:921
 msgid "Web Property ID or Tracking Code (UA-XXXXXXX-X)"
 msgstr ""
 
-#: lib/class/admin.php:919
+#: lib/class/admin.php:923
 msgid "Google Analytics  tracking code"
 msgstr ""
 
-#: lib/class/admin.php:924
+#: lib/class/admin.php:928
 msgid "Google translate"
 msgstr ""
 
-#: lib/class/admin.php:925
+#: lib/class/admin.php:929
 msgid "Prevent google from translating the entire document."
 msgstr ""
 
-#: lib/class/admin.php:935
+#: lib/class/admin.php:939
 msgid "Favicon"
 msgstr ""
 
-#: lib/class/admin.php:936
+#: lib/class/admin.php:940
 msgid "Favicon <tt>16x16</tt> pixels (ico, gif or png)"
 msgstr ""
 
-#: lib/class/admin.php:937
+#: lib/class/admin.php:941
 msgid "Create custom favicon via favicon.cc"
 msgstr ""
 
-#: lib/class/admin.php:943
+#: lib/class/admin.php:947
 msgid "iPhone"
 msgstr ""
 
-#: lib/class/admin.php:944
+#: lib/class/admin.php:948
 msgid "PNG file <tt>57x57</tt> pixels."
 msgstr ""
 
-#: lib/class/admin.php:951
+#: lib/class/admin.php:955
 msgid "Geo positioning"
 msgstr ""
 
-#: lib/class/admin.php:973
+#: lib/class/admin.php:977
 msgid "True xhtml+xml"
 msgstr ""
 
-#: lib/class/admin.php:982
+#: lib/class/admin.php:986
 msgid "Cloak CSS"
 msgstr ""
 
-#: lib/class/admin.php:991
+#: lib/class/admin.php:995
 msgid "Text direction"
 msgstr ""
 
-#: lib/class/admin.php:995
+#: lib/class/admin.php:999
 msgid "Left to Right"
 msgstr ""
 
-#: lib/class/admin.php:996
+#: lib/class/admin.php:1000
 msgid "Right to Left"
 msgstr ""
 
-#: lib/class/admin.php:1001
+#: lib/class/admin.php:1005
 msgid "Auto-update Browser Library"
 msgstr ""
 
-#: lib/class/admin.php:1012
+#: lib/class/admin.php:1016
 msgid "Show banner:"
 msgstr ""
 
-#: lib/class/admin.php:1022
+#: lib/class/admin.php:1026
 msgid "Image URL"
 msgstr ""
 
-#: lib/class/admin.php:1029
+#: lib/class/admin.php:1033
 #, php-format
 msgid "<strong>Note:</strong> You have %d custom banner(s)."
 msgstr ""
 
-#: lib/class/admin.php:1036
+#: lib/class/admin.php:1040
 msgid "<strong>Allowed Variables:</strong>"
 msgstr ""
 
-#: lib/class/admin.php:1044
+#: lib/class/admin.php:1048
 msgid "Background repeat"
 msgstr ""
 
-#: lib/class/admin.php:1061
+#: lib/class/admin.php:1065
 msgid "Banner height"
 msgstr ""
 
-#: lib/class/admin.php:1072
+#: lib/class/admin.php:1076
 msgid "Background position"
 msgstr ""
 
-#: lib/class/admin.php:1082
+#: lib/class/admin.php:1086
 msgid "Exclude banner"
 msgstr ""
 
-#: lib/class/admin.php:1101
+#: lib/class/admin.php:1105
 msgid "Client Side features"
 msgstr ""
 
-#: lib/class/admin.php:1102
+#: lib/class/admin.php:1106
 msgid "Client side script enhancements"
 msgstr ""
 
-#: lib/class/admin.php:1105
+#: lib/class/admin.php:1109
 msgid "Client Time"
 msgstr ""
 
-#: lib/class/admin.php:1106
+#: lib/class/admin.php:1110
 msgid "Stylesheets switcher base on visitor time."
 msgstr ""
 
-#: lib/class/admin.php:1110
+#: lib/class/admin.php:1114
 msgid "Client Date"
 msgstr ""
 
-#: lib/class/admin.php:1111
+#: lib/class/admin.php:1115
 msgid "Client Date scripts."
 msgstr ""
 
-#: lib/class/admin.php:1115
+#: lib/class/admin.php:1119
 msgid "Client Width"
 msgstr ""
 
-#: lib/class/admin.php:1116
+#: lib/class/admin.php:1120
 msgid "Stylesheets switcher base on visitor screen width."
 msgstr ""
 
-#: lib/class/admin.php:1120
+#: lib/class/admin.php:1124
 msgid "Frame Breaker"
 msgstr ""
 
-#: lib/class/admin.php:1129
+#: lib/class/admin.php:1133
 msgid "GD font"
 msgstr ""
 
-#: lib/class/admin.php:1130
+#: lib/class/admin.php:1134
 msgid "Enable <a href=\"http://my.php.net/gd\">PHP GD</a> text to image replacement feature."
 msgstr ""
 
-#: lib/class/admin.php:1136
+#: lib/class/admin.php:1140
 msgid "Blog name"
 msgstr ""
 
-#: lib/class/admin.php:1137
+#: lib/class/admin.php:1141
 msgid "Replace blog name heading with gdfont-image. <abbr title=\"Search Engine Friendly\">SEF</abbr>."
 msgstr ""
 
-#: lib/class/admin.php:1142
+#: lib/class/admin.php:1146
 msgid "Custom text"
 msgstr ""
 
-#: lib/class/admin.php:1143
+#: lib/class/admin.php:1147
 #, php-format
 msgid "Default heading text: \"%s\""
 msgstr ""
 
-#: lib/class/admin.php:1151
+#: lib/class/admin.php:1155
 msgid "Font face"
 msgstr ""
 
-#: lib/class/admin.php:1161
+#: lib/class/admin.php:1165
 msgid "Foreground color"
 msgstr ""
 
-#: lib/class/admin.php:1162
+#: lib/class/admin.php:1166
 msgid "Hex format: #336699, 336699, #369, 369."
 msgstr ""
 
-#: lib/class/admin.php:1171
+#: lib/class/admin.php:1175
 msgid "Pixel size"
 msgstr ""
 
-#: lib/class/admin.php:1172
+#: lib/class/admin.php:1176
 msgid "Default: 36<sub>px</sub>"
 msgstr ""
 
-#: lib/class/admin.php:1183
+#: lib/class/admin.php:1187
 msgid "<strong>Whoops</strong> No fonts found"
 msgstr ""
 
-#: lib/class/admin.php:1184
+#: lib/class/admin.php:1188
 msgid "Please upload your font at  the following directory <tt>"
 msgstr ""
 
-#: lib/class/admin.php:1204
+#: lib/class/admin.php:1208
 msgid "RSD Services"
 msgstr ""
 
-#: lib/class/admin.php:1210
+#: lib/class/admin.php:1214
 msgid "Manifest link"
 msgstr ""
 
-#: lib/class/admin.php:1215
+#: lib/class/admin.php:1219
 msgid "Patch caption"
 msgstr ""
 
-#: lib/class/admin.php:1216
+#: lib/class/admin.php:1220
 msgid "unofficial patch for Wordpress caption shortcode."
 msgstr ""
 
-#: lib/class/admin.php:1221
+#: lib/class/admin.php:1225
 msgid "Feed syndication"
 msgstr ""
 
-#: lib/class/admin.php:1224
+#: lib/class/admin.php:1228
 msgid "Feed logo"
 msgstr ""
 
-#: lib/class/admin.php:1225
+#: lib/class/admin.php:1229
 msgid "Add custom RSS feed logo."
 msgstr ""
 
-#: lib/class/admin.php:1231
+#: lib/class/admin.php:1235
 msgid "Delay RSS feed"
 msgstr ""
 
-#: lib/class/admin.php:1232
+#: lib/class/admin.php:1236
 msgid "Minute to delay RSS feed publication"
 msgstr ""
 
-#: lib/class/admin.php:1239
+#: lib/class/admin.php:1243
 msgid "Meta generator"
 msgstr ""
 
-#: lib/class/admin.php:1240
+#: lib/class/admin.php:1244
 msgid "WordPress version number."
 msgstr ""
 
-#: lib/class/admin.php:1254
+#: lib/class/admin.php:1258
 msgid "Save"
 msgstr ""
 
-#: lib/class/admin.php:1261
+#: lib/class/admin.php:1265
 msgid "Update Settings"
 msgstr ""
 
@@ -861,152 +877,156 @@ msgstr ""
 msgid "%s Search"
 msgstr ""
 
-#: lib/class/pathway.php:131
+#: lib/class/pathway.php:141
 msgid "Frontpage"
 msgstr ""
 
 # pathway links title caption
-#: lib/class/pathway.php:134
+#: lib/class/pathway.php:144
 msgid "You are here | "
 msgstr ""
 
 # pathway links title caption
-#: lib/class/pathway.php:151
+#: lib/class/pathway.php:161
 msgid " | RSS 2 Syndication"
 msgstr ""
 
-#: lib/class/pathway.php:163
+#: lib/class/pathway.php:173
 msgid "&#39;s Frontpage"
 msgstr ""
 
 # pathway paging
-#: lib/class/pathway.php:173
+#: lib/class/pathway.php:183
 #, php-format
 msgid "Page %1$d of %2$d"
 msgstr ""
 
 # pathway links title caption
-#: lib/class/pathway.php:176
+#: lib/class/pathway.php:186
 msgid " | Skip to Content"
 msgstr ""
 
 # pathway links title caption
-#: lib/class/pathway.php:201
+#: lib/class/pathway.php:211
 msgid " | Comments Feed"
 msgstr ""
 
 # pathway links title caption
-#: lib/class/pathway.php:214
+#: lib/class/pathway.php:224
 msgid "Topic | Archive for "
 msgstr ""
 
 # pathway links title caption
-#: lib/class/pathway.php:224
-#: lib/class/pathway.php:284
-#: lib/class/pathway.php:391
-#: lib/class/pathway.php:416
+#: lib/class/pathway.php:234
+#: lib/class/pathway.php:294
+#: lib/class/pathway.php:401
+#: lib/class/pathway.php:426
 msgid "Skip to content | "
 msgstr ""
 
-#: lib/class/pathway.php:235
+#: lib/class/pathway.php:245
 #, php-format
 msgid "Page %d"
 msgstr ""
 
-#: lib/class/pathway.php:238
+#: lib/class/pathway.php:248
 msgid "Skip to Content | "
 msgstr ""
 
-#: lib/class/pathway.php:264
+#: lib/class/pathway.php:274
 msgid " | Comments RSS 2 Syndication"
 msgstr ""
 
-#: lib/class/pathway.php:275
+#: lib/class/pathway.php:285
 msgid " Index page"
 msgstr ""
 
-#: lib/class/pathway.php:304
-#: lib/class/pathway.php:366
+#: lib/class/pathway.php:314
+#: lib/class/pathway.php:376
 msgid " | Subscribe to this feed"
 msgstr ""
 
-#: lib/class/pathway.php:319
+#: lib/class/pathway.php:329
 msgid "Topics"
 msgstr ""
 
-#: lib/class/pathway.php:380
+#: lib/class/pathway.php:390
 msgid "Taxonomy"
 msgstr ""
 
-#: lib/class/pathway.php:384
+#: lib/class/pathway.php:394
 msgid " | Skip to content"
 msgstr ""
 
-#: lib/class/pathway.php:407
+#: lib/class/pathway.php:417
 msgid " | Subscribe to this search feed"
 msgstr ""
 
-#: lib/class/pathway.php:414
+#: lib/class/pathway.php:424
 msgid "Search | Skip to content"
 msgstr ""
 
-#: lib/class/pathway.php:430
+#: lib/class/pathway.php:440
 #, php-format
 msgid "%s | Return back to Frontpage"
-msgstr ""
-
-#: lib/class/pathway.php:454
-#: lib/class/pathway.php:482
-#: lib/class/pathway.php:515
-msgid " archive  | Subscribe to this feed"
 msgstr ""
 
 #: lib/class/pathway.php:464
 #: lib/class/pathway.php:492
 #: lib/class/pathway.php:525
+msgid " archive  | Subscribe to this feed"
+msgstr ""
+
+#: lib/class/pathway.php:474
+#: lib/class/pathway.php:502
+#: lib/class/pathway.php:535
 msgid "Archive"
 msgstr ""
 
-#: lib/class/pathway.php:563
+#: lib/class/pathway.php:573
 msgid " | Subscribe to this author feed"
 msgstr ""
 
-#: lib/class/pathway.php:570
+#: lib/class/pathway.php:580
 msgid "Author"
 msgstr ""
 
-#: lib/class/pathway.php:571
-#: lib/class/pathway.php:574
+#: lib/class/pathway.php:581
+#: lib/class/pathway.php:584
 msgid "Author | Skip to content"
 msgstr ""
 
-#: lib/class/pathway.php:585
+#: lib/class/pathway.php:595
 #, php-format
 msgid "%s&#39;s Feeds"
 msgstr ""
 
-#: lib/class/pathway.php:588
+#: lib/class/pathway.php:598
 #, php-format
 msgid "%s | Subscribe to this feed"
 msgstr ""
 
-#: lib/class/pathway.php:614
+#: lib/class/pathway.php:624
 #, php-format
 msgid "%s comments feeds"
 msgstr ""
 
-#: lib/class/pathway.php:617
+#: lib/class/pathway.php:627
 #, php-format
 msgid "%s | Subscribe to this comments feed"
 msgstr ""
 
-#: lib/class/pathway.php:637
+#: lib/class/pathway.php:647
 msgid "Attachment | permalink"
 msgstr ""
 
-#: lib/class/pathway.php:644
+#: lib/class/pathway.php:654
 #, php-format
 msgid "%s | Skip to content"
+msgstr ""
+
+#: lib/class/scripts.php:187
+msgid "search"
 msgstr ""
 
 #: lib/class/style.php:182
@@ -1087,21 +1107,21 @@ msgstr ""
 msgid "%1$s trackback(s) &#254; %2$s using %3$s"
 msgstr ""
 
-#: lib/modules/filters.php:203
+#: lib/modules/filters.php:211
 msgid "Search results for: "
 msgstr ""
 
-#: lib/modules/filters.php:211
-#: lib/modules/filters.php:218
-#: lib/modules/filters.php:225
+#: lib/modules/filters.php:219
+#: lib/modules/filters.php:226
+#: lib/modules/filters.php:233
 msgid "Archive for"
 msgstr ""
 
-#: lib/modules/filters.php:242
+#: lib/modules/filters.php:250
 msgid "404 Not Found"
 msgstr ""
 
-#: lib/modules/filters.php:340
+#: lib/modules/filters.php:355
 msgid "This post is password protected. To view it please enter your password below:"
 msgstr ""
 
@@ -1114,407 +1134,408 @@ msgstr ""
 msgid "Archive for %s"
 msgstr ""
 
-#: lib/modules/formatting.php:424
-msgid "ago"
+#: lib/modules/formatting.php:421
+#, php-format
+msgid "%s ago"
 msgstr ""
 
-#: lib/modules/formatting.php:458
+#: lib/modules/formatting.php:456
 msgid "Rated "
 msgstr ""
 
-#: lib/modules/formatting.php:477
+#: lib/modules/formatting.php:474
 msgid "&laquo; Older Entries"
 msgstr ""
 
-#: lib/modules/formatting.php:479
+#: lib/modules/formatting.php:476
 msgid "Newer Entries &raquo;"
 msgstr ""
 
 #: lib/modules/links.php:223
-#: lib/modules/template.php:1408
+#: lib/modules/template.php:1411
 msgid "Home"
 msgstr ""
 
-#: lib/modules/links.php:243
+#: lib/modules/links.php:244
 msgid "Article"
 msgstr ""
 
-#: lib/modules/links.php:248
+#: lib/modules/links.php:249
 msgid "Skip to content"
 msgstr ""
 
-#: lib/modules/links.php:373
+#: lib/modules/links.php:374
 msgid "Previous Post"
 msgstr ""
 
-#: lib/modules/links.php:373
+#: lib/modules/links.php:374
 msgid "Next Post"
 msgstr ""
 
-#: lib/modules/plugin.php:187
+#: lib/modules/plugin.php:221
 msgid "Translate"
 msgstr ""
 
-#: lib/modules/plugin.php:207
+#: lib/modules/plugin.php:241
 msgid " | Translation "
 msgstr ""
 
-#: lib/modules/plugin.php:214
+#: lib/modules/plugin.php:248
 #, php-format
 msgid "Translate &#39;%1$s&#39; in %2$s"
 msgstr ""
 
 # title caption
-#: lib/modules/plugin.php:236
+#: lib/modules/plugin.php:270
 msgid "Increase text size"
 msgstr ""
 
 # title caption
-#: lib/modules/plugin.php:236
+#: lib/modules/plugin.php:270
 msgid "Decrease text size"
 msgstr ""
 
 # post bookmark title caption
-#: lib/modules/plugin.php:317
+#: lib/modules/plugin.php:351
 msgid "Social bookmark | Add to "
 msgstr ""
 
 # bookmark links on post
-#: lib/modules/plugin.php:342
+#: lib/modules/plugin.php:376
 msgid "Share this"
 msgstr ""
 
-#: lib/modules/template.php:509
-#: lib/modules/template.php:1042
+#: lib/modules/template.php:510
+#: lib/modules/template.php:1045
 msgid "About the Author"
 msgstr ""
 
-#: lib/modules/template.php:553
-#: lib/modules/template.php:624
+#: lib/modules/template.php:556
+#: lib/modules/template.php:627
 msgid "M"
 msgstr ""
 
-#: lib/modules/template.php:554
-#: lib/modules/template.php:625
+#: lib/modules/template.php:557
+#: lib/modules/template.php:628
 msgid "d"
 msgstr ""
 
-#: lib/modules/template.php:569
-#: lib/modules/template.php:640
-#: lib/modules/template.php:708
-#: lib/modules/template.php:822
-#: lib/modules/template.php:899
-#: lib/modules/template.php:963
-#: lib/modules/template.php:1030
+#: lib/modules/template.php:572
+#: lib/modules/template.php:643
+#: lib/modules/template.php:711
+#: lib/modules/template.php:825
+#: lib/modules/template.php:902
+#: lib/modules/template.php:966
+#: lib/modules/template.php:1033
 #, php-format
 msgid "Posted by %s."
 msgstr ""
 
-#: lib/modules/template.php:571
-#: lib/modules/template.php:642
-#: lib/modules/template.php:710
-#: lib/modules/template.php:824
+#: lib/modules/template.php:574
+#: lib/modules/template.php:645
+#: lib/modules/template.php:713
+#: lib/modules/template.php:827
 #, php-format
 msgid "Filed under %s"
 msgstr ""
 
 # Meta subtitle
-#: lib/modules/template.php:572
-#: lib/modules/template.php:643
-#: lib/modules/template.php:711
-#: lib/modules/template.php:764
-#: lib/modules/template.php:825
-#: lib/modules/template.php:896
-#: lib/modules/template.php:966
-#: lib/modules/template.php:1033
+#: lib/modules/template.php:575
+#: lib/modules/template.php:646
+#: lib/modules/template.php:714
+#: lib/modules/template.php:767
+#: lib/modules/template.php:828
+#: lib/modules/template.php:899
+#: lib/modules/template.php:969
+#: lib/modules/template.php:1036
 #, php-format
 msgid " <cite>%s</cite>"
 msgstr ""
 
-#: lib/modules/template.php:721
-#: lib/modules/template.php:774
+#: lib/modules/template.php:724
+#: lib/modules/template.php:777
 #: lib/modules/widgets.php:531
 msgid "Pages"
 msgstr ""
 
-#: lib/modules/template.php:731
-#: lib/modules/template.php:783
-#: lib/modules/template.php:1065
+#: lib/modules/template.php:734
+#: lib/modules/template.php:786
+#: lib/modules/template.php:1068
 msgid "Edit this entry."
 msgstr ""
 
-#: lib/modules/template.php:763
+#: lib/modules/template.php:766
 #, php-format
 msgid "Posted by <acronym class=\"reviewer author\" title=\"%1$s\">%2$s</acronym>"
 msgstr ""
 
-#: lib/modules/template.php:965
-#: lib/modules/template.php:1032
+#: lib/modules/template.php:968
+#: lib/modules/template.php:1035
 msgid "Filed under "
 msgstr ""
 
-#: lib/modules/template.php:1127
+#: lib/modules/template.php:1130
 msgid "Nothing Found"
 msgstr ""
 
-#: lib/modules/template.php:1128
+#: lib/modules/template.php:1131
 msgid "Its not your fault, but nothing matched your search criteria. Please try again with some different keywords."
 msgstr ""
 
-#: lib/modules/template.php:1227
-#: lib/modules/template.php:1324
-#: lib/modules/template.php:1468
+#: lib/modules/template.php:1230
+#: lib/modules/template.php:1327
+#: lib/modules/template.php:1471
 msgid "edit"
 msgstr ""
 
-#: lib/modules/template.php:1380
+#: lib/modules/template.php:1383
 msgid "&#39;Comment Guidlines&#39;"
 msgstr ""
 
-#: lib/modules/template.php:1394
+#: lib/modules/template.php:1397
 msgid "If you want to comment, please read the following guidelines. These are designed to protect you and other users of the site."
 msgstr ""
 
-#: lib/modules/template.php:1396
+#: lib/modules/template.php:1399
 msgid "<strong>Be relevant:</strong> Your comment should be a thoughtful contribution to the subject of the entry. Keep your comments constructive and polite."
 msgstr ""
 
-#: lib/modules/template.php:1397
+#: lib/modules/template.php:1400
 msgid "<strong>No advertising or spamming:</strong> Do not use the comment feature to promote commercial entities/products, affiliates services or websites. You are allowed to post a link as long as it&#39;s relevant to the entry."
 msgstr ""
 
-#: lib/modules/template.php:1398
+#: lib/modules/template.php:1401
 msgid "<strong>Keep within the law:</strong> Do not link to offensive or illegal content websites. Do not make any defamatory or disparaging comments which might damage the reputation of a person or organisation."
 msgstr ""
 
-#: lib/modules/template.php:1399
+#: lib/modules/template.php:1402
 msgid "<strong>Privacy:</strong> Do not post any personal information relating to yourself or anyone else (i.e., address, place of employment, telephone or mobile number or email address)."
 msgstr ""
 
-#: lib/modules/template.php:1401
+#: lib/modules/template.php:1404
 msgid "In order to keep these experiences enjoyable and interesting for all of our users, we ask that you follow the above guidlines. Feel free to engage, ask questions, and tell us what you are thinking! insightful comments are most welcomed."
 msgstr ""
 
-#: lib/modules/template.php:1403
+#: lib/modules/template.php:1406
 msgid "be the first to comment."
 msgstr ""
 
-#: lib/modules/template.php:1407
+#: lib/modules/template.php:1410
 #, php-format
 msgid "<strong class=\"db\">Comment are closed</strong>Return %1s &middot; %2s"
 msgstr ""
 
-#: lib/modules/template.php:1409
+#: lib/modules/template.php:1412
 msgid "Back to top"
 msgstr ""
 
-#: lib/modules/template.php:1535
-#: lib/modules/template.php:1724
+#: lib/modules/template.php:1538
+#: lib/modules/template.php:1727
 msgid "Title: "
 msgstr ""
 
-#: lib/modules/template.php:1538
+#: lib/modules/template.php:1541
 msgid "<strong>Tips: </strong> Try keep the title tag as unique as possible and make sure the title is relevant to the content on the page. Avoid repeated keywords phrases in title tag."
 msgstr ""
 
-#: lib/modules/template.php:1547
+#: lib/modules/template.php:1550
 msgid "Sub title"
 msgstr ""
 
-#: lib/modules/template.php:1550
+#: lib/modules/template.php:1553
 msgid "<strong>Note: </strong> Entry sub title will be added as meta-abstract."
 msgstr ""
 
-#: lib/modules/template.php:1559
+#: lib/modules/template.php:1562
 msgid "Descriptions"
 msgstr ""
 
-#: lib/modules/template.php:1562
+#: lib/modules/template.php:1565
 msgid "<strong>Tips: </strong> Make it descriptive and include relevant keywords or keyphrases, 25-30 words, no more than two sentences."
 msgstr ""
 
-#: lib/modules/template.php:1571
+#: lib/modules/template.php:1574
 msgid "Keywords"
 msgstr ""
 
-#: lib/modules/template.php:1574
+#: lib/modules/template.php:1577
 msgid "<strong>Tips: </strong> Pick the 10 or 15 terms that most accurately describe the content of the page. Use comma to separate the keywords."
 msgstr ""
 
-#: lib/modules/template.php:1593
+#: lib/modules/template.php:1596
 msgid "Show banner"
 msgstr ""
 
-#: lib/modules/template.php:1599
+#: lib/modules/template.php:1602
 msgid "Image URL "
 msgstr ""
 
-#: lib/modules/template.php:1604
+#: lib/modules/template.php:1607
 msgid "Banner height "
 msgstr ""
 
-#: lib/modules/template.php:1609
-#: lib/modules/template.php:1772
+#: lib/modules/template.php:1612
+#: lib/modules/template.php:1775
 msgid "Background repeat:"
 msgstr ""
 
-#: lib/modules/template.php:1619
+#: lib/modules/template.php:1622
 msgid "Background position "
 msgstr ""
 
-#: lib/modules/template.php:1632
-#: lib/modules/template.php:1644
+#: lib/modules/template.php:1635
+#: lib/modules/template.php:1647
 msgid "Content"
 msgstr ""
 
-#: lib/modules/template.php:1634
-#: lib/modules/template.php:1807
+#: lib/modules/template.php:1637
+#: lib/modules/template.php:1810
 msgid "Content will be added before the &#60;&#47;head&#62; tag."
 msgstr ""
 
-#: lib/modules/template.php:1646
-#: lib/modules/template.php:1816
+#: lib/modules/template.php:1649
+#: lib/modules/template.php:1819
 msgid "Content will be added before the &#60;&#47;body&#62; tag."
 msgstr ""
 
-#: lib/modules/template.php:1656
+#: lib/modules/template.php:1659
 msgid "Content rating"
 msgstr ""
 
-#: lib/modules/template.php:1659
+#: lib/modules/template.php:1662
 msgid "<strong>Note: </strong> content rating for this entry. Max is 5"
 msgstr ""
 
-#: lib/modules/template.php:1668
+#: lib/modules/template.php:1671
 msgid "Title"
 msgstr ""
 
-#: lib/modules/template.php:1672
-#: lib/modules/template.php:1783
+#: lib/modules/template.php:1675
+#: lib/modules/template.php:1786
 msgid "Entry sub title"
 msgstr ""
 
-#: lib/modules/template.php:1676
+#: lib/modules/template.php:1679
 msgid "Meta descriptions"
 msgstr ""
 
-#: lib/modules/template.php:1681
-#: lib/modules/template.php:1743
+#: lib/modules/template.php:1684
+#: lib/modules/template.php:1746
 msgid "Meta Keywords"
 msgstr ""
 
-#: lib/modules/template.php:1686
+#: lib/modules/template.php:1689
 msgid "Post thumb"
 msgstr ""
 
-#: lib/modules/template.php:1691
-#: lib/modules/template.php:1752
+#: lib/modules/template.php:1694
+#: lib/modules/template.php:1755
 msgid "Banner Settings"
 msgstr ""
 
-#: lib/modules/template.php:1695
+#: lib/modules/template.php:1698
 msgid "Head content"
 msgstr ""
 
-#: lib/modules/template.php:1698
+#: lib/modules/template.php:1701
 msgid "Footer content"
 msgstr ""
 
-#: lib/modules/template.php:1701
-#: lib/modules/template.php:1792
+#: lib/modules/template.php:1704
+#: lib/modules/template.php:1795
 msgid "hReview"
 msgstr ""
 
-#: lib/modules/template.php:1724
+#: lib/modules/template.php:1727
 msgid "Page Title"
 msgstr ""
 
-#: lib/modules/template.php:1733
+#: lib/modules/template.php:1736
 msgid "Meta Description"
 msgstr ""
 
-#: lib/modules/template.php:1733
+#: lib/modules/template.php:1736
 msgid "Descriptions: "
 msgstr ""
 
-#: lib/modules/template.php:1743
+#: lib/modules/template.php:1746
 msgid "Keywords: "
 msgstr ""
 
-#: lib/modules/template.php:1754
+#: lib/modules/template.php:1757
 msgid "Show banner: "
 msgstr ""
 
-#: lib/modules/template.php:1762
+#: lib/modules/template.php:1765
 msgid "Image URL: "
 msgstr ""
 
-#: lib/modules/template.php:1767
+#: lib/modules/template.php:1770
 msgid "Banner height: "
 msgstr ""
 
-#: lib/modules/template.php:1785
+#: lib/modules/template.php:1788
 msgid "Sub title:"
 msgstr ""
 
-#: lib/modules/template.php:1789
+#: lib/modules/template.php:1792
 msgid "will also be added to header as Meta Abstract"
 msgstr ""
 
-#: lib/modules/template.php:1794
+#: lib/modules/template.php:1797
 msgid "Rating"
 msgstr ""
 
-#: lib/modules/template.php:1798
+#: lib/modules/template.php:1801
 msgid "hReview rating for this entry. Max is 5"
 msgstr ""
 
-#: lib/modules/template.php:1801
+#: lib/modules/template.php:1804
 msgid "Header Content"
 msgstr ""
 
-#: lib/modules/template.php:1803
-#: lib/modules/template.php:1812
+#: lib/modules/template.php:1806
+#: lib/modules/template.php:1815
 msgid "Content: "
 msgstr ""
 
-#: lib/modules/template.php:1810
+#: lib/modules/template.php:1813
 msgid "Footer Content"
 msgstr ""
 
-#: lib/modules/template.php:1850
+#: lib/modules/template.php:1853
 msgid "WPI Profile badge settings"
 msgstr ""
 
-#: lib/modules/template.php:1853
+#: lib/modules/template.php:1856
 msgid "Profession"
 msgstr ""
 
-#: lib/modules/template.php:1854
+#: lib/modules/template.php:1857
 msgid "default is 'Professional Scoundrel'"
 msgstr ""
 
-#: lib/modules/template.php:1857
+#: lib/modules/template.php:1860
 msgid "Job title"
 msgstr ""
 
-#: lib/modules/template.php:1858
+#: lib/modules/template.php:1861
 msgid "i.e., Web developer, Front-end Developer,Part time Ninja"
 msgstr ""
 
-#: lib/modules/template.php:1861
+#: lib/modules/template.php:1864
 msgid "Birthdate"
 msgstr ""
 
-#: lib/modules/template.php:1865
+#: lib/modules/template.php:1868
 msgid "WPI Profile banner settings"
 msgstr ""
 
-#: lib/modules/template.php:1868
+#: lib/modules/template.php:1871
 msgid "Show Banner"
 msgstr ""
 
-#: lib/modules/template.php:1889
+#: lib/modules/template.php:1892
 msgid "Banner Height"
 msgstr ""
 

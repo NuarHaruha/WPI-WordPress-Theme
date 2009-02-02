@@ -1,4 +1,4 @@
-jQuery(document).ready( function(){
+jQuery(document).ready(function(){
 	wpi.toggle = function(elm){jQuery(elm).animate({"height":"toggle","opacity":"toggle"},{duration:550});};
 	
 	wpi.htoggle = function(elm){jQuery(elm).animate({"width":"toggle","opacity":"toggle"},{duration:550});};
@@ -22,6 +22,7 @@ jQuery(document).ready( function(){
 	jQuery('.show-slow').click(function(){jQuery(this).next().show("slow");jQuery(this).hide("fast")});
 	
 	wpi.ftsize=function(e,s){jQuery(e).click(function(){jQuery(this.hash).css({fontSize:s});return false;})};
+	
 	wpi.ftsize('#font',"1.4em");wpi.ftsize('#font-',"1em");
 	
 	jQuery('.entry-content .toggle-content').each(function(){if (!jQuery(this).hasClass("expand")){ jQuery(jQuery(this).next()).css({paddingLeft:"13px"}).hide();} else { jQuery(jQuery(this).next()).css({paddingLeft:"13px"});}});
@@ -30,9 +31,15 @@ jQuery(document).ready( function(){
 	
 	jQuery('a.scroll-to').click(function(){ jQuery(this.hash).ScrollTo(800);return false;});
 	
+	// load thickbox file if require
 	if (jQuery('.thickbox').length > 0){			
-		jQuery.getScript(wpi.theme_url + "thickbox.js", function(){
-			
-		});
+		jQuery.getScript(wpi.theme_url + "thickbox.js", function(){});
 	}
+	
+	// Search forms
+	jQuery('#s').blur(function(){		
+		if(this.value=='')	this.value= wpi.lang.search;				
+	}).focus(function(){
+		if(this.value==wpi.lang.search) this.value='';		
+	});
 });

@@ -184,9 +184,10 @@ class wpiScripts{
 		$js .= ',id:'.json_encode(wpiTemplate::bodyID());
 		$js .= ',blogname:'.json_encode(WPI_BLOG_NAME);
 		$js .= ',theme_url:'.json_encode(WPI_THEME_URL);
+		$js .= ',lang:{ search:'.json_encode(__('search',WPI_META)).'}';
 		$js .= ',section:'.json_encode(is_at());
 		$js .= ',widget:{uri:'.json_encode(wpi_get_public_widget_url());
-		$js .= ',request:[]';
+		$js .= ',request:[]';		
 		$js .=',keywords:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
 		$js .= ',flickrrss:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
 		$js .= '}';
