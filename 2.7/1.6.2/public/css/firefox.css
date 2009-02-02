@@ -1,10 +1,20 @@
+/**
+ * $Id$
+ * Stylesheet for all gecko type Mozilla Firefox browser 
+ *
+ * @author	Avice D <ck+wp-istalker-chrome@istalker.net>
+ * @author	NH.Noah <noah+wp-istalker-chrome@istalker.net>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA
+ */
+ 
 blockquote:before,blockquote:after,q:before,q:after
 {
 	content:""
 }
 
-
-
+/** 
+ * Background Clipping
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .clip-p,#comments .heading-title strong,
 #comments .heading-title span,#comments li.normal,
 #comments .commentlist,#comments #trackback-meta dl,
@@ -21,10 +31,11 @@ blockquote:before,blockquote:after,q:before,q:after
 	-moz-background-clip:border
 }
 
-.br-1px
-{
-	-moz-border-radius:1px
-}
+/** 
+ * Border Radius (CSS3) 
+ * Smooth border radius
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.br-1px{-moz-border-radius:1px}
 
 #comments .commentlist,
 #comment-sidebar
@@ -48,10 +59,7 @@ blockquote:before,blockquote:after,q:before,q:after
 	-moz-border-radius-topright:.3em
 }
 
-.br-bot-left-3m
-{
-	-moz-border-radius-bottomleft:.3em
-}
+.br-bot-left-3m{-moz-border-radius-bottomleft:.3em}
 
 .br-top-
 {
@@ -71,10 +79,7 @@ blockquote:before,blockquote:after,q:before,q:after
 	-moz-border-radius-bottomright:.3em
 }
 
-#subpages,#pages
-{
-	-moz-border-radius:0!important
-}
+#subpages,#pages{-moz-border-radius:0!important}
 
 #comments .heading-title span
 {
@@ -94,103 +99,78 @@ blockquote:before,blockquote:after,q:before,q:after
 	-moz-border-radius-bottomright:.2em
 }
 
-.commentlist .vcard .photo
-{
-	-moz-border-radius-bottomleft:.8em
-}
+.commentlist .vcard .photo{-moz-border-radius-bottomleft:.8em}
 
-.post-author .vcard .photo
-{
-	-moz-border-radius:.3em
-}
+.post-author .vcard .photo{-moz-border-radius:.3em}
 
-#tooltip
-{
-	opacity:0.9
-}
+#tooltip{opacity:0.9}
 
-#translate a
-{
-	opacity:0.3
-}
+#translate a{opacity:0.3}
 
-#translate a:hover
-{
-	opacity:1
-}
+#translate a:hover{opacity:1}
 
-/* border multi colors highlight */
-#sidebar-1
-{
-	border-bottom-width:3px;
-	-moz-border-bottom-colors:#bbb #ddd #fff;
-	-moz-background-clip:padding
-}
+/** 
+ * Column Count (CSS3) 
+ * Split block elements to column
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.column-2{-moz-column-count:2}
+.column-3{-moz-column-count:3}
+.column-4{-moz-column-count:4}
+.column-5{-moz-column-count:5}
 
-/* spec 3 draft */
-.column-2
-{
-	-moz-column-count:2
-}
-
-.column-3
-{
-	-moz-column-count:3
-}
-
-.column-4
-{
-	-moz-column-count:4
-}
-
-.column-5
-{
-	-moz-column-count:5
-}
-
-
+/** 
+ * Column Gap (CSS3) 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .column-gap-1{ -moz-column-gap:10px}
 .column-gap-2{ -moz-column-gap:20px }
 .column-gap-3{ -moz-column-gap:30px }
 .column-gap-4{ -moz-column-gap:40px } 
 
-/* counter-strike */
-.cnt
-{
-	counter-increment:cnt
-}
+/** 
+ * Counter (CSS 2.1)
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.cnt{counter-increment:cnt}
+.cnt-reset{counter-reset:cnt}
+.cnt-start:before{content:counter(cnt)}
 
-.cnt-reset
-{
-	counter-reset:cnt
-}
-
-.cnt-start:before
-{
-	content:counter(cnt)
-}
-
-.entry-content ol li:before
-{
+.entry-content ol li:before{
 	counter-increment:kitty;
 	content:counters(kitty,".") ". "
 }
 
-/* thickbox */
-.TB_overlayBG
-{
+/** 
+ * jQuery thickbox 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.TB_overlayBG{
 	background-color:#000;
 	-moz-opacity:0.75
 }
 
-#TB_HideSelect
-{
-	-moz-opacity:0
-}
+#TB_HideSelect{	-moz-opacity:0}
 
-/* border multi-colors*/
+/** 
+ * Border Multicolors (CSS3) 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+ 
+#sidebar-1{
+	border-bottom-width:3px;
+	-moz-border-bottom-colors:#bbb #ddd #fff;
+	-moz-background-clip:padding
+}
+ 
 #validation dl{border-width: 2px; -moz-border-right-colors: #4DA4CF #317B9F}
 .dk #validation dl{-moz-border-right-colors: #9F3143 #6F222E}
 .nt #validation dl{-moz-border-right-colors: #777 #666}
 .dw #validation dl{-moz-border-right-colors: #DFDFD1 #BFBF8F}
 .home #main-bottom .hentry{border-bottom-width: 3px;-moz-border-bottom-colors: #F8F8F8 #F8F8F8 #DDDDDD}
+
+/** 
+ * WP Image Caption
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.entry .wp-caption{
+	border:3px solid #eee;
+	-moz-border-top-colors: #eee #eee #ccc;
+	-moz-border-left-colors: #eee #eee #ccc;
+	-moz-border-right-colors: #eee #eee #ccc;
+	-moz-border-bottom-colors: #eee #eee #ccc
+}
