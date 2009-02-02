@@ -2,6 +2,11 @@
  * $Id$
  * background image lib
  */
+
+body.dy, body.dy #wp-footer .outer{
+	background-image:url(images/pattern/dy-hilite.jpg)
+}
+ 
 #calendar_wrap th {
 background-image:url(images/pathway.png)
 }

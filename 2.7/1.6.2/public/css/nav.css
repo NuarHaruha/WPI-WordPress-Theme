@@ -37,6 +37,8 @@ ul#page-links li:hover ul li a{color:#444}
 .dw ul#page-links li.current_page_item a{background-color:#9EB847;color:#fff}
 .nt ul#page-links li.current_page_item a{background-color:#4f4f4f;color:#fff}
 ul#page-links li.current_page_item a{background:#eee;color:#777;cursor:default;font-weight:700}
+ul#page-links li.current_page_item a{border: 1px solid #168ECB;border-bottom-width:0pt}
+
 ul#page-links li{left:0;position:relative;top:0}
 ul#page-links li ul{border-top:0}
 ul#page-links li ul li{float:left}

@@ -16,16 +16,20 @@ body.dw
 	color:#330
 }
 
+/* day */
+body.dy{
+	background-position: 50% 0%;
+	background-repeat: no-repeat !important	
+}
+
 body
 {
 	background-color:#1787BF;
-	background-position:-3px 0;
-	background-repeat:repeat
 }
 
 #wp-content-top .outer,#wp-content-bottom .outer,#wp-meta-title .outer,#wp-respond .outer,#wp-banner .outer
 {
-	background-color:#bfbfbf
+	background-color:#666
 }
 
 .dk #wp-content-top .outer,.dk #wp-content-bottom .outer,.dk #wp-meta-title .outer,.dk #wp-respond .outer,.dk #wp-banner .outer
@@ -736,11 +740,18 @@ acronym.share:hover
 	text-align:center
 }
 
+.wp-caption img
+{	
+	border:1px solid #eee;
+}
+
 .wp-caption-text
 {
-	color:#444;
+	color:#888;
 	margin:0;
-	padding:0
+	padding:3px 6px 6px;
+	text-align: left;
+	font-size: 0.9em
 }
 
 .entry-content p img
@@ -1763,8 +1774,7 @@ acronym.share:hover
 {
 	color:#C2CBCF;
 	font-size:.8em;
-	margin:9px 0 0 18px;
-	padding-bottom:18px
+	margin:9px 0pt 0pt 18px
 }
 
 .dk #validation a{background-color:#8F0834}
@@ -1773,7 +1783,7 @@ acronym.share:hover
 
 #validation a
 {
-	background-color:#1787BF;
+	background-color:transparent;
 	color:#C2CBCF;
 	font-size:.9em;
 	letter-spacing:1px;
@@ -2040,7 +2050,7 @@ pre.fff
 #technorati_til.hr-line{margin-top:6px}
 
 /* validation link */
-#validation dl{border-right:1px solid #317B9F;padding: 0pt 4px 6px 0pt;height:27px}
+#validation dl{border-right:1px solid #317B9F;padding: 0pt 4px 0pt 0pt;height:27px}
 .nt #validation dl{border-right-color:#666}
 .dw #validation dl{border-right-color:#eee}
 #validation dl.syndication{padding-left:4px}
@@ -2048,9 +2058,18 @@ pre.fff
 .dw #validation dt{color:#7E7F37}
 #validation dd{float:left}
 
+.random-quote{border-width:0pt !important}
 .dw .random-quote dd{color:#494738}
 
 /* fixes for google translate */
 #cl-options li{height:25px;overflow:hidden}
 #cl-options li#acl-1{width:27px}
 #cl-options li#acl-2{width:25px}
+
+/* footer */
+#wp-footer .outer{
+	background-repeat: no-repeat;
+	background-position: 50% 98%;
+	padding-bottom: 18px
+	
+}
