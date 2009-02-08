@@ -1033,7 +1033,7 @@ function wpi_widget_recent_entries() {
 function wpi_get_most_viewed($mode,$limit,$chars,$display=false){
 	
 	if(function_exists('get_most_viewed')){
-		get_most_viewed($mode,$limit,$chars,$display);	
+		return get_most_viewed($mode,$limit,$chars,$display);	
 	} else {
 		return false;	
 	}
