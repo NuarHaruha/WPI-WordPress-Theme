@@ -81,7 +81,7 @@ line-height:0;
 visibility:hidden
 }
 
-.dn,#wpstats,.safari #searchsubmit,.home #sidebar-3 .widget-title dfn img{
+.dn,#wpstats,.safari #searchsubmit,.home #sidebar-3 .widget-title dfn img,.ui-tabs .ui-tabs-hide{
 display:none
 }
 

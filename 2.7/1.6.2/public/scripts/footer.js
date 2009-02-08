@@ -1,4 +1,7 @@
 jQuery(document).ready(function(){
+	
+	wpi.hasSelector = function(elm){ return (jQuery(elm).length > 0); }
+	
 	wpi.toggle = function(elm){jQuery(elm).animate({"height":"toggle","opacity":"toggle"},{duration:550});};
 	
 	wpi.htoggle = function(elm){jQuery(elm).animate({"width":"toggle","opacity":"toggle"},{duration:550});};
@@ -42,4 +45,21 @@ jQuery(document).ready(function(){
 	}).focus(function(){
 		if(this.value==wpi.lang.search) this.value='';		
 	});
+	
+	switch (wpi.section){
+		
+		case 'single':			
+			if (wpi.hasSelector('#singular-relmeta')){
+				jQuery('#singular-relmeta ul.ui-tabs-nav').tabs();				
+				jQuery('.ui-tabs-nav').bind('tabsselect', function(event, ui){	
+				    jQuery(ui.panel).fadeIn('slow');
+				});						
+			}
+			
+			// recent post (singular tab content)
+			if (wpi.hasSelector('#mrecentpost')){
+				jQuery("#mrecentpost").load( wpi.widget.uri.replace(/%s/,"ef2bee7f7667c7fb6894ea9769a410b9") );
+			}
+		break;	
+	}	
 });

@@ -6,6 +6,10 @@
 body.dy, body.dy #wp-footer .outer{
 	background-image:url(images/pattern/dy-hilite.jpg)
 }
+
+body.nt, body.nt #wp-footer .outer{
+	background-image:url(images/pattern/nt-hilite.jpg)
+}
  
 #calendar_wrap th {
 background-image:url(images/pathway.png)
@@ -265,4 +269,21 @@ background-image: url(images/nt-htop.gif)
 /* birdy "dusk" */
 .dk #header #blog-meta{
 	background-image:url(images/import/dusk-birdy.gif)
+}
+
+/** 
+ * jQuery UI Tabs
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/**
+ * #related-meta{
+ *  	 background-image: url(images/pattern/pin.gif)
+ * }
+ */
+ 
+.ui-tabs-nav{
+	background-image: url(images/tab-botline.png)	
+}
+
+.tabs-panel{
+	background-image: url(images/tri-top-light-wide.png)	
 }

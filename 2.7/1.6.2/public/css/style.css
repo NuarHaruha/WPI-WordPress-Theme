@@ -10,26 +10,26 @@ body.nt
 }
 
 /* dawn */
-body.dw 
-{
+body.dw{
 	background-color:#D7D7B8 !important;
 	color:#330
 }
 
 /* day */
 body.dy{
-	background-position: 50% 0%;
-	background-repeat: no-repeat !important	
+	background-color:#1787BF !important
 }
 
-body
-{
+body{	
 	background-color:#1787BF;
+	background-position: 50% 0%;
+	background-repeat: no-repeat !important;
+	padding-top:18px		
 }
 
 #wp-content-top .outer,#wp-content-bottom .outer,#wp-meta-title .outer,#wp-respond .outer,#wp-banner .outer
 {
-	background-color:#666
+	background-color:#66686F
 }
 
 .dk #wp-content-top .outer,.dk #wp-content-bottom .outer,.dk #wp-meta-title .outer,.dk #wp-respond .outer,.dk #wp-banner .outer
@@ -72,6 +72,7 @@ body
 	padding-top:2px
 }
 
+#wp-content-end{margin-top:-1px}
 #wp-content-end .outer
 {
 	background-repeat:no-repeat;
@@ -150,10 +151,10 @@ blockquote.description p
 
 #wp-nav #nav
 {
-	background-color:#45ACDF;
-	border:1px solid #45ACDF;
+	background-color: #139adc /*#45ACDF*/;
+	border:1px solid #139adc;
 	border-top-color:#6FCFFF;
-	border-width:1px 1px 0;
+	border-width:1px 1px 0pt;
 	height:38px;
 	overflow:hidden;
 	width:916px
@@ -2073,3 +2074,81 @@ pre.fff
 	padding-bottom: 18px
 	
 }
+
+/** 
+ * jQuery UI tabs
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#related-meta .widget-title{display:none}
+#related-meta .append-1{
+	padding: 0pt !important
+}
+#related-meta .widget-content{
+	padding-bottom: 0pt !important
+}
+
+.ui-tabs {padding: .2em;}
+.ui-tabs-nav {
+	background-color:#eee;
+	background-repeat: repeat-x;
+	background-position: 0% 100%;
+	padding: 2px 10px 0pt;  
+	position: relative; 
+	width: 100%;
+	margin: 0pt;
+}
+.ui-tabs-nav li { float: left; border-bottom: 0 !important; margin: 0 .2em -1px 0; padding: 0; list-style: none; }
+.ui-tabs-nav li a { 
+	background-color:#f4f7f8;
+	display:block; 
+	border: 1px solid #bbb;
+	border-color:#cecece #ccc #bbb;
+	color:#777
+}
+
+.ui-tabs-nav li a:hover{background-color:#e7f2f8;color:#555;text-decoration:underline} 
+.ui-tabs-nav li.ui-tabs-selected a:hover{background-color:#fff;text-decoration:none}
+
+.ui-tabs-nav li a span{
+	border: 1px solid #fff;
+	border-bottom: 0pt;
+	display:block;
+	padding: 0.4em 0.7em; 
+}
+.ui-tabs-nav li.ui-tabs-selected {	
+	padding-bottom: .1em; 
+	border-bottom: 0pt; 
+}
+
+.ui-tabs-nav li.ui-tabs-selected a{
+	background-color:#fff;
+	border-bottom-color:#fff;
+	color:#444;
+}   
+
+.ui-tabs-panel{ 
+	clear:both; 
+	display: block;
+	width:94%
+}
+
+.tabs-panel ul{
+	list-style: none;
+	margin: 0pt;
+	padding:0pt
+}
+
+.tabs-panel ul li{
+	padding: 3px
+}
+
+.tabs-panel{	
+	background-repeat: no-repeat;
+	border: 0pt; 
+	clear:both;
+	height:auto;
+	width: 100%; 
+	margin: 6px 0pt;
+	padding: 14px 10px 18px; 	
+}
+	
+.ui-tabs-hide { display: none !important}

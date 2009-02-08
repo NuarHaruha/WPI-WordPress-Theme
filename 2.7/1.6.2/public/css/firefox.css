@@ -5,6 +5,8 @@
  * @author	Avice D <ck+wp-istalker-chrome@istalker.net>
  * @author	NH.Noah <noah+wp-istalker-chrome@istalker.net>
  * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA
+ *
+ * hash: 7bb49e7f754133d983bc0748516a7e47
  */
  
 blockquote:before,blockquote:after,q:before,q:after
@@ -19,7 +21,8 @@ blockquote:before,blockquote:after,q:before,q:after
 #comments .heading-title span,#comments li.normal,
 #comments .commentlist,#comments #trackback-meta dl,
 .commentlist .vcard .photo,
-#comment-sidebar, .dk #content-end
+#comment-sidebar, .dk #content-end,
+.ui-tabs-nav li a
 {
 	-moz-background-clip:padding
 }
@@ -71,6 +74,12 @@ blockquote:before,blockquote:after,q:before,q:after
 {
 	-moz-border-radius-topleft:.3em;
 	-moz-border-radius-topright:.3em
+}
+
+.ui-tabs-nav li a,.ui-tabs-nav li a span
+{
+	-moz-border-radius-topleft:0.2em;
+	-moz-border-radius-topright:0.3em
 }
 
 #content-end, .dk #content-end
@@ -172,5 +181,5 @@ blockquote:before,blockquote:after,q:before,q:after
 	-moz-border-top-colors: #eee #eee #ccc;
 	-moz-border-left-colors: #eee #eee #ccc;
 	-moz-border-right-colors: #eee #eee #ccc;
-	-moz-border-bottom-colors: #eee #eee #ccc
+	-moz-border-bottom-colors: #eee #eee #ccc;
 }

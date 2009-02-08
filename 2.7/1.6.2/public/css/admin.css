@@ -320,6 +320,7 @@ button.sbtn{
   background:#fff url(images/import/notice/warning.png) no-repeat 5px 50%
 }
 
+/*
 #message.updated{
   background: #fff url(images/import/notice/accepted.png) no-repeat 5px 50% !important;
   border-color:#fff
@@ -329,6 +330,7 @@ button.sbtn{
   -moz-border-radius:6px;
   padding:40px 10px 40px 90px
 }
+*/
 
 .mtb .notice strong{
   color:#993;
