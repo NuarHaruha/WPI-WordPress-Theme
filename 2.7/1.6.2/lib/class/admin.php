@@ -198,7 +198,15 @@ class wpiAdmin
 		  <li><a href="http://wp.istalker.net/chrome-milk/quick-start/" title="Quick start guide">Quick start</a></li>
 		  <li><a href="http://wp.istalker.net/chrome-milk/features/" title="Features">Features</a></li>
 		  <li><a href="http://wp.istalker.net/" title="Project Home">Project Home</a></li>
-		  <li><a href="http://blog.kaizeku.com" title="Author Blog">Kaizeku Ban</a></li>		  
+		  <li><a href="http://blog.kaizeku.com" title="Author Blog">Kaizeku Ban</a></li>
+		  <li>
+		  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="3042041">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" border="0" name="submit" alt="">
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+		  </li>		  
 		</ul>
 		</div>
 		</div>
