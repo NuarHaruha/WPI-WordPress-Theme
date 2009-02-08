@@ -45,7 +45,10 @@ class wpiScripts{
 	
 	public function setScripts()
 	{
-		$this->register('jquery','head');	
+		//$this->register('jquery','head');
+		
+		wp_deregister_script('jquery');
+		wp_deregister_script('jquery-ui');		
 	}
 	
 	public function register($tag = 'jquery', $type = 'head')
@@ -88,7 +91,8 @@ class wpiScripts{
 	}
 	
 	public function printHead()
-	{
+	{	global $wp_query;
+		
 		$this->type = 'head';
 		
 		$this->flushJs();
@@ -103,8 +107,30 @@ class wpiScripts{
 						
 		}
 		
-		$this->printScripts();		
+		/**
+		 * http://ajax.googleapis.com
+		 * @link http://code.google.com/apis/ajaxlibs/documentation/index.html#jquery AJAX Libraries API 
+		 * takes load of server and increases the chance that a client already has these files cached
+		 */
+		echo PHP_T;		
+		t('script','',array(
+					'id'=>'googleapis-jquery',
+					'type'=>'text/javascript',					
+					'src'=> 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js',
+					'charset'=>'utf-8') );					
+		if ($wp_query->is_singular){
+		echo PHP_T;
+		t('script','',array(
+					'id'=>'googleapis-jquery-ui',
+					'type'=>'text/javascript',					
+					'src'=> 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js',
+					'charset'=>'utf-8') );
+		}
 		
+		/**
+	 	 * combine scripts 
+		 */		
+		$this->printScripts();			
 	}
 	
 	
@@ -123,11 +149,12 @@ class wpiScripts{
 		}
 		
 		$this->printScripts();	
-	}	
+	}
+	
 	
 	public function printScripts()
 	{
-		echo PHP_EOL.PHP_T;	
+		echo PHP_EOL.PHP_T;								
 		t('script','',array(
 					'id'=>'wpi-js-'.$this->type,
 					'type'=>'text/javascript',					
@@ -135,22 +162,28 @@ class wpiScripts{
 					'charset'=>'utf-8') );
 	}
 	
-	public function getHeaderScripts(){			
-		$this->getScripts('head');
+	public function getHeaderScripts(){
+		global $wp_query;
+		
+		$this->getScripts('head');			
 		$this->printScripts();
 	}
+	
 	
 	public function setExtraJS()
 	{	global $wp_query;
 	
 		$js = array();
 		
-		if ($wp_query->is_singular){	
-		 	//$js['thickbox'] = 'head';
+		if ($wp_query->is_singular){
+			
+		 	//$js['jquery-ui'] = 'head';
 		 	
 		 	if (wpi_option('widget_dynacloud')){
 				$js['dynacloud'] = 'head';				
 			}
+			
+			
 		}	
 		
 		
@@ -176,6 +209,8 @@ class wpiScripts{
 		
 		// post id (singular section only)
 		$pid = (isset($wp_query->post->ID)) ? $wp_query->post->ID : 0;
+		$section = is_at();
+		
 				
 		$js = PHP_EOL.PHP_T;
 		$js .= '/*<![CDATA[*/'.PHP_EOL.PHP_T.PHP_T;	
@@ -185,7 +220,7 @@ class wpiScripts{
 		$js .= ',blogname:'.json_encode(WPI_BLOG_NAME);
 		$js .= ',theme_url:'.json_encode(WPI_THEME_URL);
 		$js .= ',lang:{ search:'.json_encode(__('search',WPI_META)).'}';
-		$js .= ',section:'.json_encode(is_at());
+		$js .= ',section:'.json_encode($section);
 		$js .= ',widget:{uri:'.json_encode(wpi_get_public_widget_url());
 		$js .= ',request:[]';		
 		$js .=',keywords:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
@@ -230,12 +265,12 @@ class wpiScripts{
 			$defer = 1;
 		}
 		
-		if (wpi_option('overwrite_flickrrss')){	
+		if (wpi_option('overwrite_flickrrss') && $section == 'home'){	
 			$domready[] = '/* flickr RSS	*/ wpi.widget.request.push({"n":"#flickrrss","c":\'df695b32187596617d0beaa25760a8a0\'});';			
 			$defer = 1;
 		}
 		
-		if (wpi_option('overwrite_recent_comments')){	
+		if (wpi_option('overwrite_recent_comments') & $section == 'home'){	
 			$domready[] = '/* recent comments	*/ wpi.widget.request.push({"n":"#recent-comments","c":\'b47bdb6bde262b0537f6f2a7fbfe825f\'});';			
 			$defer = 1;
 		}

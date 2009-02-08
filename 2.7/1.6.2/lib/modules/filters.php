@@ -315,7 +315,11 @@ function wpi_default_filters(){
 	$f[wpiFilter::ACTION_FOOTER_SCRIPT] = 'wpi_google_analytics_tracking_script';
 	
 	$f['get_comment_text'] = 'wpi_comment_text_filters';
-			
+	
+	foreach(array('save_post','deleted_post','switch_theme') as $action){
+		$f[$action] = 'wpi_flush_widget_recent_entries';	
+	}
+						
 	wpi_foreach_hook_filter($f);	
 }
 
@@ -813,5 +817,9 @@ function wpi_make_curie_link_filter($content){
 	$content = preg_replace_callback('/href="([^"]+)"/','_wpi_make_curie_link', $content);
 	
 	return $content;
+}
+
+function wpi_flush_widget_recent_entries() {
+	wp_cache_delete('wpi_widget_recent_entries', 'widget');
 }
 ?>
