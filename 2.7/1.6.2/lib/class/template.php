@@ -205,7 +205,7 @@ class wpiTemplate
 						<a href="http://www.validome.org/xml/validate/?lang=en&amp;onlyWellFormed=1&amp;url=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Valid XHTML+XML Documents (structured well-formed)">XML</a>
 					</dd>					
 					<dd>
-						<a href="http://safebrowsing.clients.google.com/safebrowsing/diagnostic?hl=en-US&amp;site=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Safe Browsing advisory provided by Google" rel="nofollow noarchive"><?php _e('Advisory',WPI_META);?></a>
+						<a href="http://safebrowsing.clients.google.com/safebrowsing/diagnostic?hl=en-US&amp;site=<?php echo urlencode(WPI_HOME_URL);?>" title="Safe Browsing advisory provided by Google" rel="nofollow noarchive"><?php _e('Advisory',WPI_META);?></a>
 					</dd>					
 					<dd> 
 						<a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=<?php echo urlencode(WPI_HOME_URL_SLASHIT);?>" title="Web Content Accessibility Valid Section 508 Standards" rel="nofollow noarchive">508</a>
@@ -866,9 +866,14 @@ class wpiTemplate
 		
 		$uri = wpi_get_webfont_url(wpi_option('gd_blogname_text'),$height,wpi_option('gd_blogname_font'),wpi_option('gd_blogname_color'),$cache);
 		
-		$css = PHP_T.'#blog-meta{';
-		$css .= 'height:'.(ceil($base_height+$height)) .'px !important';
-		$css .= '}'.PHP_EOL;		
+		$css = PHP_EOL.PHP_T;
+		
+		if (!is_ua('Safari')){
+			$css .= '#blog-meta{';
+			$css .= 'height:'.(ceil($base_height+$height)) .'px !important';
+			$css .= '}'.PHP_EOL;
+		}				
+						
 		$css .= PHP_T.'#blog-title a{';
 		$css .= 'background-image:url(\''.$uri.'\');height:'. ceil($height + $inc) .'px';
 		$css .= ';width:700px;display:block}'.PHP_EOL;
