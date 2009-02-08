@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-istalker-chrome 1.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 19:43+0800\n"
+"POT-Creation-Date: 2009-02-10 00:35+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Avice D <avik.st@gmail.com>\n"
 "Language-Team: Avice D <ck@istalker.net>\n"
@@ -1025,7 +1025,7 @@ msgstr ""
 msgid "%s | Skip to content"
 msgstr ""
 
-#: lib/class/scripts.php:193
+#: lib/class/scripts.php:222
 msgid "search"
 msgstr ""
 
