@@ -417,13 +417,17 @@ function wpi_get_public_widget_url($content=false){
 		
 	if ($wp_rewrite && $wp_rewrite->using_permalinks() ){
 		$params = wpiTheme::PUB_QUERY_VAR.wpiTheme::PUB_WIDGET_PARAMS;	
-		$output = trailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$content));
+		$output = trailingslashit(rel(WPI_HOME_URL_SLASHIT.$params));
 	} else {
 		$params = '?'.wpiTheme::PUB_QUERY_VAR.'='.wpiTheme::PUB_WIDGET_PARAMS;
-		$output = untrailingslashit(rel(WPI_HOME_URL_SLASHIT.$params.$content));
+		$output = untrailingslashit(rel(WPI_HOME_URL_SLASHIT.$params));
 	}	
-					
-	return $output;		
+		
+	if ($content){		
+		return sprintf($output,$content);
+	} else {
+		return $output;	
+	}								
 }
 
 function _wpi_make_curie_link($matches){
