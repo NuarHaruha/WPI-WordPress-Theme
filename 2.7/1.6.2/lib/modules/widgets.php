@@ -930,7 +930,7 @@ function wpi_single_tab(){
 	
 	$view_options = get_option('widget_views_most_viewed');
 	
-	if ($most_view = get_most_viewed('post',6,0,false)){
+	if ($most_view = wpi_get_most_viewed('post',6,0,false)){
 		
 		$title[3] = htmlspecialchars(stripslashes($view_options['title']));			
 		$title[3]	= ( ($title[3]) ? $title[3] : __('Most views',WPI_META)  );
@@ -1028,5 +1028,14 @@ function wpi_widget_recent_entries() {
 
 	echo $output;
 	unset($output);
+}
+
+function wpi_get_most_viewed($mode,$limit,$chars,$display=false){
+	
+	if(function_exists('get_most_viewed')){
+		get_most_viewed($mode,$limit,$chars,$display);	
+	} else {
+		return false;	
+	}
 }
 ?>
