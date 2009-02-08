@@ -598,12 +598,14 @@ function wpi_register_widgets()
 			'wpi_sidebar_4_nowidget',
 			'wpi_before_sidebar_7',
 			'wpi_sidebar_7_nowidget'),'wpi_widget_post_summary');
+		
+		wpi_foreach_hook(array('wpi_before_sidebar_4','wpi_sidebar_4_nowidget'),'wpi_single_tab');	
 			
-		if (wpi_option('widget_related_post')){
+		/*if (wpi_option('widget_related_post')){
 			wpi_foreach_hook(array(
 				'wpi_before_sidebar_4',
 				'wpi_sidebar_4_nowidget'),'wpi_widget_related_post');			
-		}
+		}*/
 		
 		wpi_foreach_hook(array(
 			'wpi_after_sidebar_4',
@@ -729,12 +731,14 @@ function wpi_get_widget_content($args){
 	// static widgets
 	$widgets['686a006014345b3a36aff17a668d6156'] = array('name'=>'pages','callback'=>'wpi_pages_widget');		
 	$widgets['2a22b5dd770eb3a9b53f91aa6ab36f73'] = array('name'=>'tags cloud','callback'=>'wpi_tags_widget');
+	$widgets['ef2bee7f7667c7fb6894ea9769a410b9'] = array('name'=>'recent entries','callback'=>'wpi_widget_recent_entries');
 		
 	/**
 	 * noncache flickr rss content is expensive 
 	 * seo +1
 	 */	
 	$widgets['df695b32187596617d0beaa25760a8a0'] = array('name'=>'flickrrss','callback'=>'wpi_flickrrss_widget');
+	
 	/**
 	 * Recent comments with external links! 
 	 * seo +1
@@ -753,7 +757,8 @@ function wpi_get_widget_content($args){
 		t('img','',array('src'=> wpi_get_random_avatar_uri()) );
 		wpi_widget_end();
 	}
-	//wpi_dump(md5('wpi_widget_recent_comments'));
+	
+	//wpi_dump(md5('wpi_widget_recent_entries'));
 	exit();
 }
 
@@ -908,5 +913,120 @@ function wpi_get_one_liner($display = false){
 	$r = rand_array($q);
 	
 	if ($display): echo $q[$r]; else : return $q[$r]; endif;
+}
+
+function wpi_single_tab(){
+	global $wp_query;
+	
+	$title = $content = array();
+	
+	wpi_widget_start('Related meta','related-meta');
+	if ( ($rel_post = wpi_get_related_post_tag()) != false)
+	{
+		$title[1]  = wpi_option('related_post_widget_title');
+		$title[1]	= ( ($title[1]) ? $title[1] : __('Related entries',WPI_META)  );
+		$content[1] = $rel_post;
+	} 
+	
+	$view_options = get_option('widget_views_most_viewed');
+	
+	if ($most_view = get_most_viewed('post',6,0,false)){
+		
+		$title[3] = htmlspecialchars(stripslashes($view_options['title']));			
+		$title[3]	= ( ($title[3]) ? $title[3] : __('Most views',WPI_META)  );
+		$content[3] = _t('ul',$most_view,array('class'=>'select-odd') );			
+	} else {		
+		$cat_options = get_option('widget_categories');
+		if ( !isset($cat_options[$number]) ){
+			$cat_options[$number] = 0;		
+		}		
+	
+		$c = $cat_options[$number]['count'] ? '1' : '0';
+	
+		$title[3] = empty($cat_options[$number]['title']) ? __('Categories') :  $cat_options[$number]['title'];
+	
+		$cat_args = array('orderby' => 'name', 'show_count' => $c, 'hierarchical' => 1 , 'title_li'=>'','echo'=>0);
+		
+		
+		$output = '<ul id="categories-treeview" class="xoxo cf treeview">';
+		$output .= wp_list_categories($cat_args); 
+		$output .= '</ul>';
+		
+		$content[3] = $output;	
+	}
+?>
+        <div id="singular-relmeta">
+            <ul class="ui-tabs-nav cf">
+            	<?php if(isset($title[1])): ?>
+                <li><a href="#relmeta-1"><span><?php echo $title[1];?></span></a></li>
+                <?php endif; ?>
+                <li><a href="#relmeta-2"><span>Recent entries</span></a></li>
+                <li><a href="#relmeta-3"><span><?php echo $title[3]; ?></span></a></li>
+            </ul>
+            <div class="tabs-panel">
+            
+           	<?php if(isset($content[1])): ?>
+            <div id="relmeta-1">
+                <?php echo $content[1];?>
+            </div>
+            <?php endif;?>
+            <div id="relmeta-2" class="ui-tabs-hide">
+            <?php
+				$spinner = _t('img','',array(
+					'src'=>wpi_img_url('loadingAnimation.gif'),
+					'alt'=>'loading-content','width'=>'208','height'=>'13','class'=>'db')
+				);
+				
+				$label = __('Loading &#8230;',WPI_META);
+				
+				t('div',$spinner. _t('cite', $label ),array('class'=>'preloading','id'=>'mrecentpost') );
+			?>
+			</div>
+            <div id="relmeta-3" class="ui-tabs-hide">
+            	<?php echo $content[3]; ?>
+            </div>
+            </div>
+        </div>
+<?php	
+	wpi_widget_end();
+}
+
+function wpi_widget_recent_entries() {
+	$meta = 'wpi_widget_recent_entries';
+	$output = wp_cache_get($meta, 'widget');
+	if ( !$output || '' == $output){
+	$options = get_option('widget_recent_entries');
+	$title = empty($options['title']) ? __('Recent Posts') : apply_filters('widget_title', $options['title']);
+	if ( !$number = (int) $options['number'] )
+		$number = 10;
+	else if ( $number < 1 )
+		$number = 1;
+	else if ( $number > 15 )
+		$number = 15;
+
+	$r = new WP_Query(array('showposts' => $number, 'what_to_show' => 'posts', 'nopaging' => 0, 'post_status' => 'publish', 'caller_get_posts' => 1));
+	if ($r->have_posts()) :
+		$cnt = 0;
+		$output = '<ul class="xoxo">'.PHP_EOL;
+		while ($r->have_posts()) : $r->the_post(); 
+			$rg = ($cnt % 2) ? 'even' : 'odd'; 
+			$output .= PHP_T.'<li class="'.$rg.'"><a href="'.rel(get_permalink()).'">';
+			if ( get_the_title() ){ 
+				$output .= get_the_title(); 
+			} else {
+				$output = get_the_ID();
+			}
+			$output .='</a></li>'.PHP_EOL;
+		$cnt++; 
+		endwhile; 
+		$output .='</ul>'.PHP_EOL;
+
+		wp_reset_query();  // Restore global post data stomped by the_post().
+	endif;	
+		wp_cache_add($meta, $output, 'widget');
+	}
+
+	echo $output;
+	unset($output);
 }
 ?>
