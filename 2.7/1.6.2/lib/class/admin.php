@@ -862,26 +862,38 @@ class wpiAdmin
 <ol class="r mtb options-item">
 	<li class="ss"><h4 class="title-"><?php _e('Extra metadata',WPI_META);?></h4>
 	<div class="dn">
-	<ul class="mtb">
+	<ul class="mtb">	
 		<li>
-			<label>
-				<?php _e('ClaimID',WPI_META);?>
-				<small>OpenID Server and Delegation</small>
-			</label>
-			<?php t('input', '', array('type' => 'text', 'name' => 'wpi_claimid','id' =>'wpi_claimid','value' => self::option('claimid'))); ?>
-		</li>		
+			<h4><?php _e('OpenID Delegation',WPI_META);?></h4>
+			<small><?php _e('<a href="http://openid.net">OpenID</a> Delegation allows you to use your current website as your OpenID.  <a href="http://openid.net/where/">OpenID-enabled sites</a>',WPI_META);?></small>
+			<ul>
+				<li>
+					<label><?php _e('ClaimID',WPI_META);?>
+						<small><?php _e('ClaimID Username',WPI_META);?></small>
+					</label>
+					<?php t('input', '', array('type' => 'text', 'name' => 'wpi_claimid','id' =>'wpi_claimid','value' => self::option('claimid'))); ?>
+				</li>
+				<li>
+					<label>
+						<?php _e('myvidoop',WPI_META);?>
+						<small><?php _e('MyVidoop Username',WPI_META);?></small>
+					</label>
+					<?php t('input', '', array('type' => 'text', 'name' => 'wpi_myvidoop','id' =>'wpi_myvidoop','value' => self::option('myvidoop'))); ?>
+				</li>	
+				<li class="last">
+					<label>
+						<?php _e('X-XRDS IdP Forwarding',WPI_META);?>
+						<small>X-XRDS-Location</small>
+					</label>
+					<?php t('input','', array('type' => 'text', 'name' => 'wpi_xxrds','id' =>'wpi_xxrds','value' => self::option('xxrds'))); ?>
+				</li>				
+			</ul>			
 		<li>
 			<label>
 				<?php _e('MicroID',WPI_META);?>
 				<small>Small Decentralized Verifiable Identity</small>
 			</label>
-			<?php t('input', '', array('type' => 'text', 'name' => 'wpi_microid_hash','id' =>'wpi_microid_hash','value' => self::option('microid_hash'))); ?></li>
-		<li>
-			<label>
-				<?php _e('OpenID',WPI_META);?>
-				<small>X-XRDS-Location</small>
-			</label>
-			<?php t('input','', array('type' => 'text', 'name' => 'wpi_xxrds','id' =>'wpi_xxrds','value' => self::option('xxrds'))); ?>
+			<?php t('input', '', array('type' => 'text', 'name' => 'wpi_microid_hash','id' =>'wpi_microid_hash','value' => self::option('microid_hash'))); ?>
 		</li>
 		<?php if (file_exists(WP_ROOT.DIRSEP.'labels.rdf')) : ?>
 		<li>
