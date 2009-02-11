@@ -399,7 +399,12 @@ blockquote.description p
 #meta-title h1
 {
 	color:#555;
-	font-size:2.3em;
+	font-family:"Myriad Pro",Tahoma,Sans-Serif;
+	font-size: 2.8em;
+	font-weight:700;
+	
+	letter-spacing:-3px;
+	
 	margin-bottom:9px
 }
 
@@ -411,9 +416,11 @@ blockquote.description p
 
 #meta-title h1 cite
 {
-	color:#777;
+	color:#369;
 	letter-spacing:-1px;
-	padding-left:4px
+	text-transform: lowercase;
+	font-style: normal
+	
 }
 
 #content-top,#content-bottom
@@ -487,7 +494,7 @@ blockquote.description p
 
 .entry-content
 {
-	color:#505050;
+	color:#333;
 	font-size:1em;
 	padding-left:20px;
 	text-align: justify
@@ -528,37 +535,48 @@ blockquote.description p
 
 .hentry .entry-title
 {
-	font-size: 2.4em;
+	font-family:"Myriad Pro",Tahoma,Sans-Serif;
+	font-weight:700;
+	letter-spacing: -3px;	
+	font-size:2.8em;
 	margin:0pt;
-	padding-bottom:6px
+	padding-bottom:6px;
+	line-height:0.9em;
 }
 
-.hentry .entry-title a,.postmeta-tags a,.comments-link a
+.postmeta-tags a,.comments-link a
 {
 	color:#333;
 	text-decoration:none
 }
 
+.hentry .entry-title a{
+	color:#000;
+	text-decoration:none	
+}
+
 .hentry .entry-title a:hover
 {
-	color:#2583AD
+	color:#06c
 }
 
 .hentry .entry-title a:focus
 {
 	background-color:#DFEAF8;
-	color:#555;
+	color:#000;
 	outline:0
 }
 
 .hentry .entry-title .subtitle
 {
-	color:#555;
+	font-family:"Myriad Pro",Tahoma,Sans-Serif;
+	color:#369;
 	display:block;
-	font-size:0.4em;
+	font-size:0.8em;
 	font-style:normal;
-	letter-spacing:1px;
-	padding-left:2px
+	letter-spacing:-2px;
+	text-transform:lowercase;
+	
 }
 
 .hentry .postmeta-info
@@ -1637,7 +1655,7 @@ acronym.share:hover
 	color:#444
 }
 
-.hentry .entry-title a,.widget-content .cat-item:hover,#archives .widget-content li:hover
+.widget-content .cat-item:hover,#archives .widget-content li:hover
 {
 	color:#555
 }

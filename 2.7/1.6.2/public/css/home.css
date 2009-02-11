@@ -14,3 +14,8 @@
 .entry-content{
 	padding: 0pt 10px 0pt !important
 }
+
+/* avatar disabled */
+.avatar-disabled .postmeta-date{ display:none}
+.avatar-disabled .hentry{padding-left:0pt}
+.avatar-disabled .wpi-post-thumb{margin:0pt}
