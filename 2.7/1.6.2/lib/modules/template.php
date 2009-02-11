@@ -385,6 +385,10 @@ function wpi_get_body_class($browser_object = false, $load_style = false){
 		$output .= ' has-gdtitle';
 	}	
 	
+	if (!wpi_option('home_avatar')){
+		$output .= ' avatar-disabled';	
+	}
+	
 	$output = $output.' -foaf-Document';
 	
 	return apply_filters(wpiFilter::FILTER_ROOT_CLASS_SELECTOR, $output);
