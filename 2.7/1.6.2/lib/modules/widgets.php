@@ -816,7 +816,9 @@ function wpi_widget_recent_comments() {
 				foreach ( (array) $comments as $comment) :
 					$class = 'recentcomments';
 					$class .= ($cnt % 2) ? ' even' : ' odd';
-				echo  '<li class="'.$class.'">' . sprintf(__('%1$s on %2$s'), get_comment_author_link(), '<a href="'. get_comment_link($comment->comment_ID) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>';
+					$gravatar_uri = 'http://www.gravatar.com/avatar/'.md5($comment->comment_author_email).'?s=25';
+					echo  '<li class="'.$class.'" style="list-style-image:url('.$gravatar_uri.')">';					
+					echo sprintf(__('%1$s on %2$s'), get_comment_author_link(), '<a href="'. get_comment_link($comment->comment_ID) . '" class="db">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>';
 				$cnt++;
 				endforeach; 
 			endif;?>
