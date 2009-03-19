@@ -8,7 +8,7 @@
 /* browser specific (temporary) */
 .safari #meta-title,.chrome #meta-title{top:0px}
 #meta-title h1{color:#111}
-#meta-title h1 cite{display:block;padding: 0pt;font-size:0.7em;color:#369}
+#meta-title h1 cite{display:block;padding: 0pt;font-size:0.7em}
 
 .nt #content-top{border-bottom-color:#333}
 .dw #content-top{border-bottom-color:#F3F3CC}

@@ -148,6 +148,13 @@ blockquote.description p
 	color:#ddd
 }
 
+.entry-content blockquote p.cite{
+	background-color:#f3f3f3;
+	color:#333;
+	padding:10px
+}
+
+.entry-content blockquote p cite{color:#444}
 
 #wp-nav #nav
 {
@@ -398,13 +405,9 @@ blockquote.description p
 
 #meta-title h1
 {
-	color:#555;
-	font-family:"Myriad Pro",Tahoma,Sans-Serif;
-	font-size: 2.8em;
-	font-weight:700;
-	
-	letter-spacing:-3px;
-	
+
+	font-size: 2em;
+	font-weight:700;		
 	margin-bottom:9px
 }
 
@@ -416,9 +419,6 @@ blockquote.description p
 
 #meta-title h1 cite
 {
-	color:#369;
-	letter-spacing:-1px;
-	text-transform: lowercase;
 	font-style: normal
 	
 }
@@ -500,11 +500,6 @@ blockquote.description p
 	text-align: justify
 }
 
-.home .entry-content
-{
-	width:484px
-}
-
 .hentry .postmeta-date
 {
 	line-height:1em;
@@ -535,10 +530,7 @@ blockquote.description p
 
 .hentry .entry-title
 {
-	font-family:"Myriad Pro",Tahoma,Sans-Serif;
-	font-weight:700;
-	letter-spacing: -3px;	
-	font-size:2.8em;
+	font-weight:600;	
 	margin:0pt;
 	padding-bottom:6px;
 	line-height:0.9em;
@@ -551,7 +543,7 @@ blockquote.description p
 }
 
 .hentry .entry-title a{
-	color:#000;
+	color:#222;
 	text-decoration:none	
 }
 
@@ -569,13 +561,11 @@ blockquote.description p
 
 .hentry .entry-title .subtitle
 {
-	font-family:"Myriad Pro",Tahoma,Sans-Serif;
-	color:#369;
+	color:#555;
 	display:block;
 	font-size:0.8em;
 	font-style:normal;
-	letter-spacing:-2px;
-	text-transform:lowercase;
+	
 	
 }
 

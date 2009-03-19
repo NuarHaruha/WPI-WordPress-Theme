@@ -1,12 +1,17 @@
 /**
- * For all MSIE
- * Trident Engine
+ * $Id$
+ * @package Paperengine
+ * @subpackage stylesheet
+ * 
+ * MSIE browser stylesheet 
+ *
+ * @author	chaoskaizer <ck+filter@animepaper.net>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA  
  */
  
-/**
- * clearfix
- */ 
+.ie .box-reset,.cf,.c{height:1%}
 
+/* jQuery thickbox */
 .TB_overlayBG {
 	background-color:#000;
 	filter:alpha(opacity=75);

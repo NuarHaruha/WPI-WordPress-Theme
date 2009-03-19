@@ -12,7 +12,7 @@
 font-family:"Lucida Grande", Verdana, Arial, Helvetica, sans-serif
 }
 
-.typo-old,.hentry .postmeta-date,.hentry .entry-title,.drop-cap,#about-articles p big {
+.typo-old,.hentry .postmeta-date,.hentry .entry-title,.drop-cap,#about-articles p big,blockquote p.cite {
 font-family:Georgia,"Times New Roman",Times,serif
 }
 
