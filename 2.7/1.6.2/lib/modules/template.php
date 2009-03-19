@@ -722,6 +722,9 @@ function wpi_template_single()
 		<?php do_action(wpiFilter::ACTION_BEFORE_CONTENT_PREFIX.'single',$post); ?>
 				<div id="iscontent" class="dynacloud">					
 				<?php the_content('Read the rest of this entry &raquo;'); ?>
+				<p class="content-nav ta-r">
+					<?php t('a',__('Back to top').' &#8593;',array('href'=>"#iscontent",'class'=>'scroll-to','rel'=>'noarchive robots-achor','title'=>__('Back to top')) );?>
+				</p>
 				</div>
 				<?php do_action(wpiFilter::ACTION_AFTER_CONTENT_PREFIX.'single',$post); ?>
 			</dd>
