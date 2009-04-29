@@ -35,8 +35,7 @@ class wpiScripts{
 	
 	public $path;
 	
-	public $js;
-	
+	public $js;	
 	
 	public function __construct()
 	{
@@ -116,14 +115,14 @@ class wpiScripts{
 		t('script','',array(
 					'id'=>'googleapis-jquery',
 					'type'=>'text/javascript',					
-					'src'=> 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js',
+					'src'=> 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
 					'charset'=>'utf-8') );					
 		if ($wp_query->is_singular){
 		echo PHP_T;
 		t('script','',array(
 					'id'=>'googleapis-jquery-ui',
 					'type'=>'text/javascript',					
-					'src'=> 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js',
+					'src'=> 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js',
 					'charset'=>'utf-8') );
 		}
 		
@@ -226,8 +225,7 @@ class wpiScripts{
 		$js .=',keywords:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
 		$js .= ',flickrrss:'.json_encode(wpi_option('widget_dynacloud') ? true : false);
 		$js .= '}';
-		$js .= ',permalink:'.json_encode(trailingslashit(self_uri()));
-		
+		$js .= ',permalink:'.json_encode(trailingslashit(self_uri()));		
 		$jspath = json_encode(rel(WPI_THEME_URL.'public/scripts/') );
 		$jsurl  = json_encode(wpi_get_scripts_url('%s'));	
 		
@@ -279,7 +277,7 @@ class wpiScripts{
 		if (wpi_option('gd_blogname')){
 			$domready[] = '/* GD Blog Title		*/ jQuery(\'#blog-title a\').css(\'backgroundImage\', \'url(\'+wpi.home_url + \'wpi-public/webfont,blog-name/)\');';	
 			$defer = 1;	
-		}								
+		}				
 		
 		if ($defer) unset($attribs['defer']);
 		
