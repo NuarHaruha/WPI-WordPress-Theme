@@ -71,14 +71,14 @@ function is_cl_width($width = 1280){
 	return false;	
 }
 
-function is_ua($name){		
+function is_ua($name){
 	
-	return ( strpos($_SERVER['HTTP_USER_AGENT'], $name) !== false );
+	return ( strpos($_SERVER['HTTP_USER_AGENT'], $name) !== false );	
 }
 
 function has_count($arr){	
 	 return ( (is_array($arr) && count($arr) >= 0) );
-	
+	 	
 }
 
 function self_uri(){		
@@ -416,6 +416,7 @@ function wpi_meta_keywords_filter($content){
 }
 
 function wpi_custom_content_filter($content){
+	$content = strtr($content, array('%theme-url%'=> rel(WPI_THEME_URL)) ); 
 	return str_replace("\n",PHP_EOL.PHP_T,$content);
 }
 
