@@ -40,14 +40,14 @@ jQuery(document).ready(function(){
 	}
 	
 	// Search forms
-	jQuery('#s').blur(function(){		
-		if(this.value=='')	this.value= wpi.lang.search;				
+	jQuery('#s').blur(function(){	
+    if(this.value=='')	this.value= wpi.lang.search;				
 	}).focus(function(){
 		if(this.value==wpi.lang.search) this.value='';		
 	});
 	
 	switch (wpi.section){
-		
+			
 		case 'single':			
 			if (wpi.hasSelector('#singular-relmeta')){
 				jQuery('#singular-relmeta ul.ui-tabs-nav').tabs();				
