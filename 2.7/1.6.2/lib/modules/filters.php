@@ -301,6 +301,11 @@ function wpi_default_filters(){
 		$f['http_headers_useragent'] = 'wpi_append_http_ua_string_filter';
 	}	
 	
+	// patch for non-mod-rewrite server
+	if (wpi_option('gd_blogname')){
+		$f['wpi_webfont_uri'] = 'wpi_rewrite_webfont_uri';
+	}
+	
 	// robots
 	$f['do_robotstxt'] = 'wpi_robots_rules_filter';
 
@@ -823,4 +828,19 @@ function wpi_make_curie_link_filter($content){
 function wpi_flush_widget_recent_entries() {
 	wp_cache_delete('wpi_widget_recent_entries', 'widget');
 }
-?>
+
+/**
+ * rewrite custom webfont uri for non-modrewrite server
+ * filter: wpi_webfont_uri
+ * @see wpi_get_webfont_url()
+ */
+function wpi_rewrite_webfont_uri($uri){
+	
+	if (!wpi_has_module('mod_rewrite') ){
+		$pat = wpiTheme::UID.'/';
+		$request = 'theme-engine.php?type=webfont&files=';
+		$uri = str_replace($pat,$pat.$request,$uri);		
+	}
+	
+	return $uri;
+}
