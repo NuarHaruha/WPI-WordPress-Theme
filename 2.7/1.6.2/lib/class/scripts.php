@@ -194,7 +194,7 @@ class wpiScripts{
 	}
 	
 	public function embedScript()
-	{	global $wp_query;	
+	{	global $wp_query, $wp_rewrite;	
 		
 		$defer = false;
 		
@@ -275,7 +275,14 @@ class wpiScripts{
 		
 		// gd blogname
 		if (wpi_option('gd_blogname')){
-			$domready[] = '/* GD Blog Title		*/ jQuery(\'#blog-title a\').css(\'backgroundImage\', \'url(\'+wpi.home_url + \'wpi-public/webfont,blog-name/)\');';	
+			
+			$params = 'wpi-public/webfont,blog-name/';
+			
+			if ($wp_rewrite && !$wp_rewrite->using_permalinks() ){
+				$params = '?'.wpiTheme::PUB_QUERY_VAR.'=/webfont,blog-name';
+			}	
+						
+			$domready[] = '/* GD Blog Title		*/ jQuery(\'#blog-title a\').css(\'backgroundImage\', \'url(\'+wpi.home_url + \''.$params.')\');';	
 			$defer = 1;	
 		}				
 		
