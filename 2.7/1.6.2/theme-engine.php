@@ -65,11 +65,12 @@
 				if (isset($_GET['files'])){
 					$request = explode(',',$_GET['files']);
 					
-					if (is_array($request)){	
-						$request = array_flip($request);
+					if ($request){	
+						if (is_array($request)){
+							$request = array_flip($request);
+						}
 						
-						if (isset($request['user-agent.css'])){
-							
+						if (isset($request['user-agent.css']) || $_GET['files'] == 'user-agent.css'){
 							unset($request['user-agent.css']);
 							
 							// Browscap
