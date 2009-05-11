@@ -253,4 +253,23 @@ function rand_array($array){
 	srand((double) microtime() * 1000000);
 	return rand(0, count($array)-1);	
 }
-?>
+
+/**
+ * wpi_has_module()
+ * check for installed Apache modules
+ * 
+ * @param string $name apache register module name
+ * @return bool
+ */
+function wpi_has_module($name){
+	
+	$prop = false;	
+	if (function_exists('apache_get_modules')){
+		$modules = array_flip(apache_get_modules());		
+		$prop =  (isset($modules[$name]));
+		
+		unset($modules);
+	}		
+	
+	return $prop;		
+}
