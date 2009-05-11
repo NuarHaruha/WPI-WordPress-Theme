@@ -42,7 +42,20 @@ function wpi_theme_content_url($params,$ext = '.css'){
 		
 	$params = join(',',$prop);
 		
-	return untrailingslashit(WPI_THEME_URL.$params);
+	$uri = untrailingslashit(WPI_THEME_URL.$params);
+	
+	/**
+	 * check if server support mod-rewrite 
+	 */
+	if (!wpi_has_module('mod_rewrite')){
+				
+		$type = (($ext == '.css') ? 'css' : 'javascript');
+		$rep  = wpiTheme::UID.'/';
+		$request = 'theme-engine.php?type='.$type.'&files=';
+		$uri = str_replace($rep,$rep.$request,$uri);	
+	}
+	
+	return $uri;
 		
 }
 
@@ -384,7 +397,7 @@ function wpi_get_webfont_url($text = WPI_META, $font_size = 36, $font_face_name 
 	$config = array();
 	
 	foreach(array('text'=>$text,'font'=>$font_face_name,'hex'=>str_rem('#',$rgb_hex) ) as $k=> $v){
-		$config[$k] =b64_safe_encode($v);
+		$config[$k] = b64_safe_encode($v);
 	}
 	
 	$uri = WPI_THEME_URL;									
