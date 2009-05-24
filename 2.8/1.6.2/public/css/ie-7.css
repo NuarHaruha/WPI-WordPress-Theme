@@ -1,0 +1,14 @@
+/**
+ * $Id: ie-7.css 108 2008-11-25 09:50:50Z chaoskaizer $
+ * MSIE 7 Stylesheet
+ */
+ 
+.hentry .Person .ava{width:30px}
+.hentry .Person .ava .rtxt{margin-left: -10px}
+.postmeta-comments .comments-link{clear:both}
+
+/* pagination */
+.entry-nextpage a, .pagination a, .pagination span, .postmeta-pages a{padding-bottom:1px}
+
+/* comments */
+#respond-textarea textarea{overflow:auto;background-position:82px 118px;background-attachment: fixed;padding-top:4px}

@@ -1,0 +1,655 @@
+
+/**
+ * $Id: icecream.css 299 2009-03-19 05:57:09Z chaoskaizer $
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
+ * 
+ * WPI fancy class
+ * @author	Avice D <ck+filter@kaizeku.com>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA  
+ */
+.typo-mac,#comments .heading-title,.commentlist .hreview .item,#tooltip h5 {
+font-family:"Lucida Grande", Verdana, Arial, Helvetica, sans-serif
+}
+
+.typo-old,.hentry .postmeta-date,.hentry .entry-title,.drop-cap,#about-articles p big,blockquote p.cite {
+font-family:Georgia,"Times New Roman",Times,serif
+}
+
+.typo-hel {
+font-family:Arial,"Lucida Grande", Verdana, Helvetica, sans-serif
+}
+
+.typo-oen {
+font-family:Georgia,serif
+}
+
+.fl,.cfl li,.alignleft {
+float:left
+}
+
+.-fl {
+float:left!important
+}
+
+.fr,.cfr li {
+float:right
+}
+
+.-fr-i {
+float:right!important
+}
+
+img.fr,img.fl,img.alignleft {
+padding:5px
+}
+
+img.fr {
+margin:0 0 1px 5px
+}
+
+img.fl,img.alignleft,.wp-caption {
+margin:0 5px 1px 0
+}
+
+.fn,.wp-smiley {
+float:none
+}
+
+.-fn {
+float:none!important
+}
+
+.cl {
+clear:left
+}
+
+.cr {
+clear:right
+}
+
+.cb {
+clear:both
+}
+
+.cf:after,.c:after {
+clear:both;
+content:".";
+display:block;
+height:0;
+line-height:0;
+visibility:hidden
+}
+
+.dn,#wpstats,.safari #searchsubmit,.home #sidebar-3 .widget-title dfn img,.ui-tabs .ui-tabs-hide{
+display:none
+}
+
+.di {
+display:inline
+}
+
+.db,.rtxt,#tools #text-size-options a,.edit-links a,#comments .navigation a,#cl-options li a,#tooltip span {
+display:block
+}
+
+.dn-- {
+display:none!important
+}
+
+.di-- {
+display:inline!important
+}
+
+.db-- {
+display:block!important
+}
+
+.r,.rr,dl.r,dl.r dd,dl.r dt,.widget-title,.widget-title dfn,#pages .widget-content ul {
+margin:0;
+padding:0
+}
+
+ul.r,ol.r,dl.r,#pages .widget-content ul {
+list-style:none
+}
+
+.r--,dl.r-- dd,.rr-- dd {
+margin:0!important;
+padding:0!important
+}
+
+.vn {
+visibility:visible
+}
+
+.vh {
+visibility:hidden
+}
+
+.ox,#search,.widget-title,#sidebar .widget-content{
+overflow:hidden
+}
+
+.rtxt,#tools #text-size-options a,.edit-links a,#comments .navigation a,#cl-options li a,#tooltip span {
+overflow:hidden;
+position:relative;
+text-indent:-999em
+}
+
+.br {
+background-position:100% 100%
+}
+
+.bl,#about-articles .widget-content p,#about-articles,#related-article,#iscontent h2 {
+background-position:0 100%
+}
+
+.bc,#wp-header .outer,#wp-header .inner,#wp-pathway .inner {
+background-position:50% 100%
+}
+
+.tr,.widget-title,#main.start,.more-link span,button#submit span {
+background-position:100% 0
+}
+
+.tc {
+background-position:50% 0
+}
+
+.tl,.more-link,#subpages,#pages {
+background-position:0 0
+}
+
+.cr,.icn-r {
+background-position:100% 50%
+}
+
+.cr-dn8,.icn-rs {
+background-position:100% 58%
+}
+
+.cll,.icn-l,.postmeta-info .ptime,acronym.share {
+background-position:0 50%
+}
+
+.cc {
+background-position:50% 50%
+}
+
+.cc-- {
+background-position:50% 50%!important
+}
+
+.ry,#content-top,#content-bottom,.icontent {
+background-repeat:repeat-y
+}
+
+.rx,.hr-line,body,#about-articles .widget-content p,#about-articles,#subpages,#pages,#iscontent h2,#related-article {
+background-repeat:repeat-x
+}
+
+.rn,#tools,a.more-link,.postmeta-info .ptime,.entry-content,.widget-title,.edit-links a,#wpi-bookmarks a,#wp-footer .inner,#pages .widget-content ul li.page_item li,#subpages .widget-content li.parent li,.claimid,#tooltip span,.single .widget-title dfn a.rsswidget,.page .widget-title dfn a.rsswidget,acronym.share,
+.home #sidebar-3 .widget-title dfn a.rsswidget {
+background-repeat:no-repeat!important
+}
+
+.pa {
+position:absolute
+}
+
+.pr {
+position:relative
+}
+
+.ps {
+position:static
+}
+
+.ta-r {
+text-align:right
+}
+
+.ta-c {
+text-align:center
+}
+
+.mgt {
+margin-top:18px
+}
+
+.mgt- {
+margin-top:0
+}
+
+.mgr {
+margin-right:18px
+}
+
+.mgb {
+margin-bottom:18px
+}
+
+.mgb- {
+margin-bottom:0
+}
+
+.mgl {
+margin-left:18px
+}
+
+.mg- {
+margin:0!important
+}
+
+.mgc {
+margin:0 auto!important
+}
+
+h2.fl,h3.fl,h2.fr,h3.fr {
+border:0;
+letter-spacing:-1px;
+margin-bottom:1px
+}
+
+h2.fl,h3.fl {
+margin-right:5px
+}
+
+h2.fr,h3.fr {
+margin-left:5px
+}
+
+.pdt {
+padding-top:18px
+}
+
+.pdt- {
+padding:18px 0 0!important
+}
+
+.pdr- {
+padding:0 10px 0 0!important
+}
+
+.pdb {
+padding-bottom:18px
+}
+
+.pdb- {
+padding:0 0 18px!important
+}
+
+.pdl- {
+padding:0 0 0 10px!important
+}
+
+.pd- {
+padding:0!important
+}
+
+.icn-12,.rss16 {
+height:12px;
+width:12px
+}
+
+.icn-16 {
+height:16px;
+width:16px
+}
+
+.icn-32 {
+height:32px;
+width:32px
+}
+
+.fw {
+font-weight:700
+}
+
+.fw- {
+font-weight:400
+}
+
+.b1s {
+border:1px solid
+}
+
+.b1t {
+border-width:1px 0 0
+}
+
+.b1t- {
+border-top:0!important
+}
+
+.b1b {
+border-width:0 0 1px
+}
+
+.b1tb {
+border-width:1px 0
+}
+
+.b1lr {
+border-width:0 1px
+}
+
+.b1l {
+border-width:0 0 0 1px
+}
+
+.b1r {
+border-width:0 1px 0 0
+}
+
+.b1c-gray {
+border-color:#ccc
+}
+
+.thumb-15 {
+height:15px;
+width:15px
+}
+
+.thumb-20 {
+height:20px;
+width:20px
+}
+
+.thumb-25 {
+height:25px;
+width:25px
+}
+
+.thumb-30 {
+height:30px;
+width:30px
+}
+
+.thumb-35 {
+height:35px;
+width:35px
+}
+
+.thumb-40 {
+height:40px;
+width:40px
+}
+
+.thumb-45 {
+height:45px;
+width:45px
+}
+
+.thumb-50 {
+height:50px;
+width:50px
+}
+
+.thumb-55 {
+height:55px;
+width:55px
+}
+
+.thumb-60 {
+height:60px;
+width:60px
+}
+
+.thumb-65 {
+height:65px;
+width:65px
+}
+
+.thumb-70 {
+height:70px;
+width:70px
+}
+
+.thumb-75 {
+height:75px;
+width:75px
+}
+
+.thumb-80 {
+height:80px;
+width:80px
+}
+
+.thumb-85 {
+height:85px;
+width:85px
+}
+
+.thumb-90 {
+height:90px;
+width:90px
+}
+
+.thumb-95 {
+height:95px;
+width:95px
+}
+
+.thumb-100 {
+height:100px;
+width:100px
+}
+
+.thumb-125 {
+height:125px;
+width:125px
+}
+
+.thumb-130 {
+height:130px;
+width:130px
+}
+
+.thumb-135 {
+height:135px;
+width:135px
+}
+
+.thumb-140 {
+height:140px;
+width:140px
+}
+
+.thumb-145 {
+height:145px;
+width:145px
+}
+
+.thumb-150 {
+height:150px;
+width:150px
+}
+
+.thumb- {
+background-color:transparent!important;
+border:0!important
+}
+
+.wpi-avatar {
+margin:0 5px 1px
+}
+
+.author-avatar {
+background-color:#9BAABF;
+background-position:right top;
+border:2px solid #fff;
+border-width:0 0 1px 1px;
+height:30px;
+width:38px
+}
+
+.prebox,.smallbox {
+background-color:#f6f6f6;
+border:5px solid #eee;
+height:100px;
+overflow:auto;
+padding:10px 0 0 10px;
+width:96%
+}
+
+.smallbox {
+height:30px
+}
+
+.past-entry .thumb-80,.past-entry .thumb-90,.past-entry .thumb-100 {
+background-color:#f7f7f7;
+border:1px solid #C6D9E9;
+margin-top:5px
+}
+
+.dropcap,#metasummary p big {
+display:block;
+float:left;
+font-family:Georgia,"Times New Roman", serif,tahoma;
+font-size:38px;
+height:32px;
+line-height:1em;
+padding:0 8px 0 3px;
+width:20px
+}
+
+#wp-footer .inner {
+background-position:97% 100%;
+height:40px
+}
+
+.icn-l {
+padding-left:18px
+}
+
+.icn-r,.curie,.ext {
+padding-right:18px
+}
+
+.sticky {
+background-position:4px 8px;
+border:0;
+margin:9px 0!important;
+padding-left:36px!important
+}
+
+a.ext,a.curie {
+background-position:right -97px;
+border-bottom:1px dotted #68C3EE;
+color:#3080CB;
+padding:0 13px 0 2px;
+text-decoration:none
+}
+
+a.ext:hover,a.curie {
+background-color:#3080CB;
+background-position:right 2px;
+color:#fff
+}
+
+.icontent .content {
+margin:0 auto;
+width:918px
+}
+
+#sidebar .thumb-1 {
+background-color:#f2f2f2
+}
+
+.drop-cap,#about-articles p big {
+display:block;
+float:left;
+font-size:29px;
+line-height:1.1em;
+margin:0;
+padding:0 5px 0 0
+}
+
+.rr,h2.fl a,h3.fl a,h2.fr a,h3.fr a {
+border:0
+}
+
+.mg,.pd {
+margin:18px
+}
+
+.pdr,.icn-rs {
+padding-right:10px
+}
+
+.pdl,.icn-ls {
+padding-left:10px
+}
+
+.hilite,.hilite-1,.hilite-2,.hilite-3,.hilite-4,.hilite-5,#comments .description blockquote {
+padding:3px 4px 3px 3px
+}
+
+.hilite{background-color:#3080CB !important;color:#fff}
+.hilite-1 {
+background-color:#FFF7C7;
+color:#333
+}
+
+.hilite-2, #comments .description blockquote{
+background-color:#3080CB;
+color:#fff
+}
+
+.hilite-3 {
+background-color:#c33;
+color:#fff
+}
+
+.hilite-4,.dw #comments .description blockquote,.nt #comments .description blockquote {
+background-color:#990;
+color:#fff
+}
+
+.color-red {
+color:#c00
+}
+
+.color-blue {
+color:#369
+}
+
+.color-orange {
+color:#f93
+}
+
+.color-green {
+color:#090
+}
+
+.hilite,.entry-content li.odd {
+background-color:#EDF3FE
+}
+
+.entry-content li.even {
+background-color:#efefef
+}
+
+.fff {
+background-color:#fff
+}
+
+ul.fff,ol.fff {
+line-height:1.8em;
+list-style:inside none none!important
+}
+
+.pad-10 {
+padding:10px!important
+}
+
+/* font size (taxonomy) */
+.fs-20{font-size: 2em}
+.fs-18{font-size: 1.8em}
+.fs-16{font-size: 1.6em}
+.fs-14{font-size: 1.4em}
+.fs-12{font-size: 1.2em;color:#eee !important}
+.fs-10, #comment-sidebar .fs-8{font-size: 1.1em}
+.fs-8, #comment-sidebar .fs-8{font-size: 1em;color:#ddd !important}

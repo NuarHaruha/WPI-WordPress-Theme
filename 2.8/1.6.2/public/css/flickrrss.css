@@ -1,0 +1,8 @@
+#flickrrss .widget-content a img{background-color:#2080AF;display:block;float:left;margin:0 3px 9px 2px;padding:5px}
+.dk #flickrrss .widget-content a img{background-color:#ccc}
+.nt #flickrrss .widget-content a img{background-color:#444}
+.dw #flickrrss .widget-content a img{background-color:#996}
+#flickrrss .widget-content a:hover img{background-color:#5FCAFF}
+.dk #flickrrss .widget-content a:hover img{background-color:#888}
+.nt #flickrrss .widget-content a:hover img{background-color:#636363}
+.dw #flickrrss .widget-content a:hover img{background-color:#9EB847}

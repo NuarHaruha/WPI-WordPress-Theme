@@ -1,0 +1,82 @@
+
+/**
+ * $Id single.css, 0011 10/24/2008 12:22:29 AM ck $
+ * Single page stylesheets (autoload)
+ *
+ */
+ 
+/* browser specific (temporary) */
+.safari #meta-title,.chrome #meta-title{top:0px}
+#meta-title h1{color:#111}
+#meta-title h1 cite{display:block;padding: 0pt;font-size:0.7em}
+
+.nt #content-top{border-bottom-color:#333}
+.dw #content-top{border-bottom-color:#F3F3CC}
+#content-top
+{
+	background-repeat:no-repeat;background-color:#f9f9f9 !important;background-position:0% 0%; border-bottom:10px solid #339BCF;
+}
+
+	
+#content{padding:18px 20px}
+
+/* content */
+.hentry .entry-title{border-bottom:0pt}
+.hentry .postmeta-date{line-height:1.1em;padding-top:5px;height:51px}
+.postmeta-date .pday{font-size:1.5em;margin-top:-2px}
+.postmeta-date .pmonth{font-size:0.9em}
+.postmeta-date .pyear{font-family:Tahoma, "Lucida Grande", Verdana, Helvetica, sans-serif;font-size:0.8em;}
+
+.postmeta-info{color:#666}
+.postmeta-info .ptime{color:#999}
+
+#iscontent  p img{background-color:#fff}
+#iscontent h2{background-position:0% 100%;color:#3F5C7F}
+#iscontent h4{color:#933}
+.postmeta-tags{margin-top:18px !important}
+
+.hentry .postmeta-info{background-position:0% 100%;background-repeat:repeat-x}
+/* post author description */
+#post-author{padding:5px 0pt 0pt;margin:18px 0pt 9px;border:1px solid #eee; border-width:1px 0pt 0pt}
+#post-author legend{color:#aaa;padding-right:6px;font-size:0.9em}
+
+#about-author{color:#414141;margin: 0px;background-color:#f2f2f2;width:88%;padding:10px;height:30px;overflow:hidden;border:1px solid #f3f3f3}
+
+#about-author small{font-size:0.9em;line-height:0.95em;}
+#post-author .author-avatar{width:38px;height:50px}
+
+.author-avatar .rtxt{width:39px;height:48px;background-repeat:no-repeat;background-position: 26px 28px}
+
+/* sidebar */
+#sidebar{margin:18px 4px 18px 0pt;width:324px}
+#sidebar #sidebar-2-single.span-5,#sidebar #sidebar-3-single.span-5{width:160px}
+
+/* widgets */
+
+/* similar tag */
+.odd{background-color:#f2f2f2}
+#related-article,#related-article .widget-title cite{background-color:#fff !important}
+#related-article ul{list-style:none; margin:0pt 1px !important}
+#related-article ul li{padding:5px 4px 5px 12px !important;clear:left}
+#related-article small{color:#999}
+#related-article ul li a{color:#666}
+#related-article ul li a:hover{color:#369;text-decoration:underline}
+#related-article .widget-content{padding:0pt 4px 0pt 0px !important}
+
+/* next/previous widget */
+#entry-navigation,#entry-navigation .widget-title cite{background-color:#f8f8f8 !important}
+#entry-navigation{background-position:0px 0px;background-repeat:repeat-x;border-top:4px solid #f8f8f8}
+#entry-navigation .widget-content dt{border-bottom:1px dotted #ccc;color:#bbb;font-size:0.7em;font-weight:600;margin-top:3px !important;text-transform:uppercase}
+#entry-navigation .widget-content dd{margin-top:2px !important;padding:3px 0pt 3px 3px !important}
+#entry-navigation .widget-content dd a{display:block;color:#555;background-position:99% 0px;background-repeat:no-repeat;padding-right:24px}
+#entry-navigation .widget-content dd a:hover{color:#369;background-position:99% -61px;text-decoration:underline}
+#entry-navigation .widget-content{padding-left:14px !important;padding-right:22px !important}
+#entry-navigation .append-1,#entry-navigation .widget-content{padding-bottom:0pt !important}
+
+/* rss */
+.widget_rss .widget-title dfn a.rsswidget{padding-left:16px;background-position:0px 3px}
+.widget_rss .widget-title dfn a.rsswidget[title='Syndicate this content']{display:none}
+.widget_rss .widget-content ul{padding:0pt 6px}
+.widget_rss .widget-content li{border-bottom:1px solid #ddd;padding:3px 0pt}
+.widget_rss .widget-content a.rsswidget{display:block}
+.widget_rss .rss-date{color:#999}

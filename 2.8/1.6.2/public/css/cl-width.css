@@ -1,0 +1,43 @@
+
+/**
+ * $Id: cl-width.css 214 2008-12-29 15:50:34Z chaoskaizer $
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
+ *
+ * Client Width - Resolution base stylesheet
+ * @author Avice D <ck+filter@kaizeku.com>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA 
+ */
+ 
+/* #6 1280 (I) cl-width=1280 */
+.cl-width-1280.frontpage-type-a .c{width:1200px !important}
+ 
+.cl-width-1280.frontpage-type-a #pathway, 
+.cl-width-1280.frontpage-type-a #pathway-column, 
+.cl-width-1280.frontpage-type-a #content-mid,
+.cl-width-1280.frontpage-type-a #content-top, 
+.cl-width-1280.frontpage-type-a #content-bottom,
+.cl-width-1280.frontpage-type-a #banner{ width: 1118px !important}
+
+.cl-width-1280.frontpage-type-a #content-end,
+.cl-width-1280.frontpage-type-a #nav{ width: 1116px !important}
+
+.cl-width-1280.frontpage-type-a #meta-title{width:1078px !important}
+
+.cl-width-1280.frontpage-type-a #comments,
+.cl-width-1280.frontpage-type-a #respond,
+.cl-width-1280.frontpage-type-a #footer{width:1038px !important}
+
+.cl-width-1280.frontpage-type-a #validation{margin-left:48px}
+
+/* sidebars */
+.cl-width-1280.frontpage-type-a #sidebar{width:528px}
+.cl-width-1280.frontpage-type-a #sidebar .col-1{width:318px}
+.cl-width-1280.frontpage-type-a #sidebar .col-2{margin-left:10px}
+
+.cl-width-1280.frontpage-type-a #sidebar #sidebar-2-frontpage-a{width:318px}
+.cl-width-1280.frontpage-type-a #sidebar #sidebar-3-frontpage-a{width:190px}
+
+/* #nav */
+.cl-width-1280.frontpage-type-a #blog-meta{width: 918px}
+.cl-width-1280.frontpage-type-a #breadcrumb{width:1010px}

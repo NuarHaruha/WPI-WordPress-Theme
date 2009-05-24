@@ -1,0 +1,46 @@
+/**
+ * $Id: ie.css 299 2009-03-19 05:57:09Z chaoskaizer $
+ * @package Paperengine
+ * @subpackage stylesheet
+ * 
+ * MSIE browser stylesheet 
+ *
+ * @author	chaoskaizer <ck+filter@animepaper.net>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA  
+ */
+ 
+.ie .box-reset,.cf,.c{height:1%}
+
+/* jQuery thickbox */
+.TB_overlayBG {
+	background-color:#000;
+	filter:alpha(opacity=75);
+}
+
+#TB_overlay {
+     position: absolute;
+     height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+}
+
+#TB_window { 
+position: absolute;
+margin-top: expression(0 - parseInt(this.offsetHeight / 2) + (TBWindowMargin = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop) + 'px');
+}
+
+#TB_load { 
+position: absolute;
+margin-top: expression(0 - parseInt(this.offsetHeight / 2) + (TBWindowMargin = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop) + 'px');
+}
+
+#TB_HideSelect{	
+	filter:alpha(opacity=0);
+}
+
+#TB_HideSelect { 
+     position: absolute;
+     height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+}
+
+#TB_iframeContent{
+	margin-bottom:1px;
+}

@@ -1,0 +1,1 @@
+jQuery(document).ready( function(){if(!$.browser.opera){ $(".select-odd li:nth-child(odd)").addClass('odd');$(".select-even li:nth-child(even)").addClass('even');};if(jQuery(".home #sidebar-3 .widget-title a.rsswidget[title^='Syndicate']").length >= 1){jQuery(".home #sidebar-3 .widget-title a.rsswidget[title^='Syndicate']").hide();};});

@@ -1,0 +1,54 @@
+/**
+ * $Id: nav.css 282 2009-02-08 12:19:49Z chaoskaizer $
+ * @package WordPress
+ * @subpackage wp-istalker-chrome
+ *
+ * navigation pages menu stylesheets
+ *
+ * @author Avice D <ck+filter@animepaper.net>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA
+ */
+
+#blog-meta{	padding:6px 0 10px 22px !important;	height: auto !important}
+#header blockquote.description{	margin: -10px 0pt 0pt 4px !important;padding: 0pt !important;}
+.has-gdtitle #header blockquote.description{padding-top: 12px !important;} 
+#blog-title{float:none;	font-size:2.2em}
+#wp-nav #nav{overflow: visible}
+#search{height:30px}
+#pathway{border-top-width:0pt}
+
+#pages-menu{padding:8px 0pt 0pt 10px}
+ul#page-links,ul#page-links *{margin:0;padding:0}
+.dw ul#page-links{background-color:#444}
+.nt ul#page-links{background-color:#c2c2c2}
+ul#page-links{background:#139adc;height:2.5em;max-width:100%;position:relative}
+ul#page-links li{cursor:pointer;float:left;font-weight:400;list-style-type:none;text-align:center}
+ul#page-links li ul{background-position:0 0 !important;cursor:default;height:auto;left:-9000px;max-width:100%;position:absolute;top:2.5em;width:100%}
+ul#page-links li ul li{border:none;max-width:none;padding:0;width:auto}
+.dk ul#page-links li a{background-color:#ccc;color:#666}
+.dw ul#page-links li a{background-color:#444;color:#ddd}
+.nt ul#page-links li a{background-color:#c2c2c2;color:#555}
+ul#page-links li a{outline:0pt;background:#139adc;color:#fff;display:block;float:left;font-weight:700;height:2.4em;line-height:2.5em;padding:0 1em;text-decoration:none}
+ul#page-links li ul li a{background-position:0 50% !important;color:#666;cursor:pointer !important;font-weight:400;height:2em;line-height:2em;position:relative !important;white-space:nowrap}
+ul#page-links li:hover a,ul#page-links li a:hover,ul#page-links li a:focus{background:#ccc;color:#000}
+ul#page-links li:hover ul{left:0;z-index:10}
+ul#page-links li:hover ul li a{color:#444}
+.dw ul#page-links li.current_page_item a{background-color:#9EB847;color:#fff}
+.nt ul#page-links li.current_page_item a{background-color:#4f4f4f;color:#fff}
+ul#page-links li.current_page_item a{background:#eee;color:#777;cursor:default;font-weight:700}
+.dy ul#page-links li.current_page_item a{border: 1px solid #168ECB;border-bottom-width:0pt}
+
+ul#page-links li{left:0;position:relative;top:0}
+ul#page-links li ul{border-top:0}
+ul#page-links li ul li{float:left}
+ul#page-links li a{background:#139adc;border:0;color:#fff;height:2.5em;line-height:2.5em}
+ul#page-links li ul li a{background:#139adc;border-top:1px solid #444;color:#fff;height:2em;line-height:2em;text-align:left;width:12em}
+ul#page-links li:hover ul li a{color:#fff}
+ul#page-links li:hover ul li a:hover{background:#444;color:#fff}
+ul#page-links li:hover ul li a:active{background:#222;color:#fff}
+ul#page-links li a:active,ul#page-links li:hover ul li a:active,ul#page-links li ul li.current a,ul#page-links li ul li.current a:hover,ul#page-links li.current:hover ul li a:active{background:#fff;color:#666}
+ul#page-links li ul,ul#page-links li,ul#page-links li.current ul,ul#page-links li.current{background:#ccc !important}
+ul#page-links li:hover ul li a:hover,ul#page-links li.current ul li a:hover{background:#ddd;color:#444}
+ul#page-links li a:focus,ul#page-links li.child-nav:hover a{background:#666;color:#fff}
+ul#page-links li ul li a:hover,ul#page-links li:hover a{background:#555;color:#fff}
+ul#page-links li:hover a:active,ul#page-links li.child-nav:hover a:active{background:#444}

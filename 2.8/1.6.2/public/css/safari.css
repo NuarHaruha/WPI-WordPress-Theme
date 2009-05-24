@@ -1,0 +1,176 @@
+/**
+ * $Id: safari.css 276 2009-02-02 20:24:59Z chaoskaizer $
+ * Stylesheet for all webkit type engine Safari browser 
+ *
+ * @author	Avice D <ck+wp-istalker-chrome@istalker.net>
+ * @author	NH.Noah <noah+wp-istalker-chrome@istalker.net>
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons 3.0 BY-SA
+ *
+ * hash: 7b313c822e364ec6df250db0082cf771
+ */
+
+#blog-meta{height: auto !important;overflow:hidden} 
+
+#search{width:146px}
+#search input:focus{outline:0pt}
+#search input#s{width:144px;position:static;margin-top:-12px;height:18px}
+
+/**
+ * #tools (acl login button)
+ */
+#tools{margin-right:-20px}
+
+/* comments form */ 
+#respond-meta input:focus,#comment{outline:0pt}
+
+/** 
+ * Background Clipping
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+.clip-p,
+#comments .heading-title strong,
+#comments .heading-title span,
+#comments li.normal,
+#comments .commentlist,
+#comments #trackback-meta dl,
+.commentlist .vcard .photo
+{
+	-webkit-background-clip:padding
+}
+
+.clip-b,
+#nav,
+#sidebar-1,
+#sidebar-3,
+#wp-calendar,
+#content-end,
+.page .hentry .entry-content,
+#respond-meta ul,
+#respond .notice
+{
+	-webkit-background-clip:border
+}
+
+/** 
+ * Border Radius (CSS3) 
+ * Smooth border radius
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.br-1px{-webkit-border-radius:1px}
+
+#comments .commentlist{	-webkit-border-radius:0.2em}
+
+.br-3px,
+#sidebar-1,
+#wp-calendar,
+#sidebar-3,
+.page .hentry .entry-content,
+#respond-meta ul
+{
+	-webkit-border-radius:3px
+}
+
+.br-3m,
+#respond .notice,
+#comments #trackback-meta dl,
+#commentform textarea
+{
+	-webkit-border-radius:0.3em
+}
+
+.br-top-3em,
+#sidebar-1 .widgets,
+#sidebar-3 .widgets
+{
+	-webkit-border-top-left-radius:0.3em;
+	-webkit-border-top-right-radius:0.3em
+}
+
+.br-bot-left-3m
+{
+	-webkit-border-bottom-left-radius:0.3em
+}
+
+.br-top-
+{
+	-webkit-border-top-left-radius:0pt;
+	-webkit-border-top-right-radius:0pt
+}
+
+#nav
+{
+	-webkit-border-top-left-radius:0.3em;
+	-webkit-border-top-right-radius:0.3em
+}
+
+#content-end
+{
+	-webkit-border-bottom-left-radius:0.3em;
+	-webkit-border-bottom-right-radius:0.3em
+}
+
+#subpages,#pages
+{
+	-webkit-border-radius:0pt !important
+}
+
+
+#comments .heading-title span
+{
+	-webkit-border-top-left-radius:0.2em;
+	-webkit-border-bottom-left-radius:0.2em
+}
+
+#comments .heading-title strong
+{
+	-webkit-border-top-right-radius:0.2em;
+	-webkit-border-bottom-right-radius:0.2em
+}
+
+#comments li.normal
+{
+	-webkit-border-bottom-left-radius:0.2em;
+	-webkit-border-bottom-rightt-radius:0.2em
+}
+
+.commentlist .vcard .photo
+{
+	-webkit-border-bottom-left-radius:0.8em
+}
+
+#commentform textarea{
+	resize: none
+}
+
+.post-author .vcard .photo
+{
+	-webkit-border-radius:0.3em
+}
+
+#tooltip{opacity: 0.9}
+#translate a{opacity: 0.3}
+#translate a:hover{opacity: .99} /* hack for webkit flickring ck $ */
+
+/* calendar table negative inheritance bugs ck $*/
+#calendar_wrap tbody{background-position:0px -6px;background-repeat:repeat-y;}
+
+/* spec 3 draft Multi column layout */
+.column-2{-webkit-column-count:2}
+.column-3{-webkit-column-count:3}
+.column-4{-webkit-column-count:4}
+.column-5{-webkit-column-count:5}
+
+.column-gap-1{ -webkit-column-gap:10px}
+.column-gap-2{ -webkit-column-gap:20px }
+.column-gap-3{ -webkit-column-gap:30px }
+.column-gap-4{ -webkit-column-gap:40px } 
+
+.entry-content ol li:before{counter-increment: kitty;content: counters(kitty, ".") ". ";}
+
+/* border multi-colors not-supported */
+
+/** 
+ * WP Image Caption
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.entry .wp-caption{
+	border: 1px solid #d2d2d2;
+	-webkit-box-shadow: 0px 0px 5px #bbb; /* safari 3.1+ */
+}
