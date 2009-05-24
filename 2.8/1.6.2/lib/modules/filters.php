@@ -301,6 +301,11 @@ function wpi_default_filters(){
 		$f['http_headers_useragent'] = 'wpi_append_http_ua_string_filter';
 	}	
 	
+	// patch for non-mod-rewrite server
+	if (wpi_option('gd_blogname')){
+		$f['wpi_webfont_uri'] = 'wpi_rewrite_webfont_uri';
+	}
+	
 	// robots
 	$f['do_robotstxt'] = 'wpi_robots_rules_filter';
 
@@ -368,15 +373,15 @@ function wpi_password_form_filters($content){
 
 function wpi_comments_template_filter($file){
 	
-	$version_file = WPI_DIR.'comments-'.WP_VERSION_MAJ.'.php';
-	
-	if (file_exists($version_file)) { 
-		$file = $version_file; 
-	} elseif(WP_VERSION_MAJ >= '2.7' && file_exists(WPI_DIR.'comments-2.7.php')) {
-		$file = WPI_DIR.'comments-2.7.php';	
-	}
-	
-	return $file;
+        $version_file = WPI_DIR.'comments-'.WP_VERSION_MAJ.'.php';
+        
+        if (file_exists($version_file)) { 
+                $file = $version_file; 
+        } elseif(WP_VERSION_MAJ >= '2.7' && file_exists(WPI_DIR.'comments-2.7.php')) {
+                $file = WPI_DIR.'comments-2.7.php';     
+        }
+        
+        return $file;
 }
 
 function wpi_login_form_action(){
@@ -422,6 +427,7 @@ function wpi_meta_keywords_filter($content){
 }
 
 function wpi_custom_content_filter($content){
+	$content = strtr($content, array('%theme-url%'=> rel(WPI_THEME_URL)) ); 
 	return str_replace("\n",PHP_EOL.PHP_T,$content);
 }
 
@@ -828,4 +834,19 @@ function wpi_make_curie_link_filter($content){
 function wpi_flush_widget_recent_entries() {
 	wp_cache_delete('wpi_widget_recent_entries', 'widget');
 }
-?>
+
+/**
+ * rewrite custom webfont uri for non-modrewrite server
+ * filter: wpi_webfont_uri
+ * @see wpi_get_webfont_url()
+ */
+function wpi_rewrite_webfont_uri($uri){
+	
+	if (!wpi_has_module('mod_rewrite') ){
+		$pat = wpiTheme::UID.'/';
+		$request = 'theme-engine.php?type=webfont&files=';
+		$uri = str_replace($pat,$pat.$request,$uri);		
+	}
+	
+	return $uri;
+}
